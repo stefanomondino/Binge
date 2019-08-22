@@ -26,15 +26,34 @@ public class ShowListViewModel: ListViewModelType, SceneViewModelType, Interacti
     
     public var title: String = ""
     
-    init() {
+    static func trending() -> ShowListViewModel {
+        return ShowListViewModel(title: "Trending") {
+            UseCases.trending.trending(currentPage: $0, pageSize: $1).map { $0 }
+        }
+    }
+    static func popular() -> ShowListViewModel {
+        return ShowListViewModel(title: "Popular") {
+            UseCases.trending.popular(currentPage: $0, pageSize: $1).map { $0 }
+        }
+    }
+    static func played() -> ShowListViewModel {
+        return ShowListViewModel(title: "Played") {
+            UseCases.trending.played(currentPage: $0, pageSize: $1).map { $0 }
+        }
+    }
+    init(title: String, paginatedObservable: @escaping (Int, Int) -> Observable<[WithShow]>) {
+        
         //Use proper UseCase from Model
-        let pageSize = 100
-        self.mainTitle = "Trending"
+        let pageSize = 10
+        self.mainTitle = title
        
         let observable: Observable<DataGroup> =  .deferred { [weak self] in
             guard let self = self else { return .empty() }
-            let loadMore = self.loadMoreItem(pageSize: pageSize, {
-                UseCases.trending.trending(currentPage: $0, pageSize: pageSize).map { $0 }.delaySubscription(.milliseconds(500), scheduler: MainScheduler.asyncInstance)
+            
+            let loadMore = self.loadMoreItem(pageSize: pageSize, { [weak self] in
+                let items = self?.dataHolder.count ?? 0
+                let page = Int(ceil(CGFloat(items) / CGFloat(pageSize))) + 1
+                return paginatedObservable(page, pageSize).map { $0 }.delaySubscription(.milliseconds(500), scheduler: MainScheduler.asyncInstance)
             })
             let startGroup = DataGroup([loadMore])
             return .just(DataGroup(groups: [startGroup]))
@@ -47,7 +66,9 @@ public class ShowListViewModel: ListViewModelType, SceneViewModelType, Interacti
     
     public func convert(model: ModelType, at indexPath: IndexPath, for type: String?) -> IdentifiableViewModelType? {
         switch model {
-        case let model as TrendingShow : return ShowItemViewModel(trending: model) 
+        case let model as TrendingShow : return ShowItemViewModel(trending: model)
+        case let model as PlayedShow : return ShowItemViewModel(popular: model)
+        case let model as Show : return ShowItemViewModel(show: model) 
         default: return nil
         }
     }

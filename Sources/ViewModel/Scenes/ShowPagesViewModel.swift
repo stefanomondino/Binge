@@ -27,7 +27,9 @@ public class ShowPagesViewModel: ListViewModelType, SceneViewModelType, Interact
     init() {
         //Use proper UseCase from Model
         //self.dataHolder = DataHolder(data: group(UseCases.start.start()))
-        let pages =  [ShowListViewModel()]
+        let pages =  [ShowListViewModel.trending(),
+                      ShowListViewModel.popular(),
+                      ShowListViewModel.played()]
         self.dataHolder = DataHolder(data: .just(DataGroup(pages)))
         self.selection = defaultSelection()
     }

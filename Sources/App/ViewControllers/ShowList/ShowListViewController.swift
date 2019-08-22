@@ -43,7 +43,7 @@ class ShowListViewController: UIViewController, ViewModelCompatible, Interaction
         collectionView.backgroundColor = .clear
         
         self.view.backgroundColor = .greyishWhite
-//        collectionView.setCollectionViewLayout(layout, animated: false)
+        collectionView.setCollectionViewLayout(layout, animated: false)
         
         collectionView.boomerang.configure(with: viewModel, delegate: delegate)
         

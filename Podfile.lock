@@ -105,7 +105,7 @@ CHECKOUT OPTIONS:
     :commit: b553d4c4241fa51d424a2722c925ffc2d1e84fd0
     :git: https://github.com/Moya/Moya
   PluginLayout:
-    :commit: 6f3c08ab2b83ef7d3a5f64d64d0e3a6f9d77d8f1
+    :commit: 55da4b4f504f81981eb63187439b62c30dade902
     :git: https://github.com/stefanomondino/PluginLayout
 
 SPEC CHECKSUMS:

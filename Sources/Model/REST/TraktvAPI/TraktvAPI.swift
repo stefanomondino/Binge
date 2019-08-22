@@ -16,5 +16,6 @@ enum TraktvAPI: DataSourceParameters {
     }
     
     case trending(Page)
-
+    case popular(Page)
+    case played(Page)
 }

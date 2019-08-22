@@ -22,16 +22,16 @@ extension PageViewModelType {
 }
 
 extension ListViewModelType where Self: AnyObject {
-    func loadMoreItem(pageSize: Int, _ closure: @escaping (Int) -> Observable<[EntityType]>) -> ItemViewModelType {
-        let items = self.dataHolder.count
-        let page = Int(floor(CGFloat(items) / CGFloat(pageSize)))
+    func loadMoreItem(pageSize: Int, _ closure: @escaping () -> Observable<[EntityType]>) -> ItemViewModelType {
+//        let items = self.dataHolder.count
+//        let page = Int(ceil(CGFloat(items) / CGFloat(pageSize)))
         
-        return LoadMoreItemViewModel(observable: closure(page), closure: { [weak self] downloaded in
+        return LoadMoreItemViewModel(observable: closure(), closure: { [weak self] downloaded in
             guard let indexPath = self?.dataHolder.indices.last, let self = self else { return }
-            let elements: [DataType] = downloaded + [self.loadMoreItem(pageSize: pageSize, closure)]
-            
+
             self.dataHolder.delete(at: [indexPath], immediate: false)
-            if elements.count > 0 {
+            if downloaded.count > 0 {
+                let elements: [DataType] = downloaded + [self.loadMoreItem(pageSize: pageSize, closure)]
                 self.dataHolder.insert(elements, at: indexPath, immediate: false)
             }
         })

@@ -23,10 +23,30 @@ public class ShowItemViewModel: ItemViewModelType {
     
     let show: Show
     
+    init(show: Show) {
+        self.show = show
+        self.title = show.title
+        self.counter = nil
+        poster = UseCases.images
+            .poster(forShow: show)
+            .flatMapLatest { $0.getImage() }
+            .share(replay: 1, scope: .forever)
+    }
+    
     init(trending: TrendingShow) {
         self.show = trending.show
         self.title = show.title
         self.counter = "\(trending.watchers)"
+        poster = UseCases.images
+            .poster(forShow: show)
+            .flatMapLatest { $0.getImage() }
+            .share(replay: 1, scope: .forever)
+    }
+    
+    init(popular: PlayedShow) {
+        self.show = popular.show
+        self.title = show.title
+        self.counter = "\(popular.playCount)"
         poster = UseCases.images
             .poster(forShow: show)
             .flatMapLatest { $0.getImage() }

@@ -18,7 +18,7 @@ public struct TrendingShow: WithShow, Codable {
     public let show: Show
 }
 
-public struct PlayedShow: WithShow {
+public struct PlayedShow: WithShow, Codable {
     public let watcherCount: Int
     public let playCount: Int
     public let collectedCount: Int
