@@ -18,12 +18,12 @@ extension TraktvAPI: TargetType {
         return [baseURL.absoluteString, path, method.rawValue, parameters.map { $0.key + "_\($0.value)" }.joined()].joined()
     }
     var baseURL: URL {
-        return Model.Configuration.environment.baseURL
+        return Model.Configuration.environment.traktBaseURL
     }
     
     var path: String {
         switch self {
-        case .test: return ""
+        case .trending: return "shows/trending"
         }
     }
     
@@ -42,12 +42,38 @@ extension TraktvAPI: TargetType {
     }
     
     var headers: [String: String]? {
-        return nil
+        let auth: String?
+        if let token = AccessToken.current?.accessToken {
+            auth = "Bearer \(token)"
+        } else {
+            auth = nil
+        }
+        return [
+            "Content-Type": "application/json",
+            "trakt-api-version": "2",
+            "trakt-api-key": Configuration.environment.traktClientID,
+            "Authorization": auth ?? ""
+        ]
     }
     
-    private var parameters: [String: Any] {
-        //Place here some default parameters
-        return [:]
+    private var pagination: [String: Any] {
+        switch self {
+        //case .played(_, let page), .trending(let page), .search(_, let page): return ["page": page.page, "limit": page.limit]
+        case .trending(let page): return ["page": page.page, "limit": page.limit]
+        default: return [:]
+        }
     }
+    private var parameters: [String: Any] {
+        var parameters = pagination
+        switch self {
+//        case .search(let q, _):
+//            parameters["query"] = q
+//            return parameters
+//        case .myProfile: return ["extended":"full"]
+        default: return parameters
+        }
+        
+    }
+
     
 }

@@ -12,7 +12,12 @@ import Boomerang
 public typealias EntityType = ModelType
 
 public protocol Environment {
-    var baseURL: URL { get }
+    var traktBaseURL: URL { get }
+    var traktRedirectURI: String { get }
+    var traktClientID: String { get }
+    var traktClientSecret: String { get }
+    var tmdbBaseURL: URL { get }
+    var tmdbAPIKey: String { get }
     var debugEnabled: Bool { get }
 }
 

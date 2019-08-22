@@ -12,5 +12,7 @@ import RxSwift
 //Enumerate here every use case
 public struct UseCases {
     public static var splash: SplashUseCaseType = SplashUseCase()
-    //MURRAY PLACEHOLDER - DO NOT REMOVE
+     public static var images: ImagesUseCaseType = ImagesUseCase()
+    public static var trending: TrendingUseCaseType = TrendingUseCase()
+		//MURRAY PLACEHOLDER - DO NOT REMOVE
 }

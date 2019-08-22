@@ -12,11 +12,11 @@ struct ImageDownloader {
     }()
     
     static func  download(_ url: URL) -> Observable<Image> {
-        return Observable.create { observer in
+        return Observable<Image>.create { observer in
             let urlRequest = URLRequest(url: url)
             let start = Date()
             let receipt = downloader.download(urlRequest) { response in
-               
+                
                 if let error =  response.error {
                     observer.onError(error)
                 }
@@ -31,6 +31,9 @@ struct ImageDownloader {
                     downloader.cancelRequest(with: receipt)
                 }
             }
+            }
+            .retryWhen { error in
+                Reachability.rx.status.filter { $0.isReachable }
         }
     }
     

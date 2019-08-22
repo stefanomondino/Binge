@@ -19,6 +19,13 @@ public struct Reachability: ReactiveCompatible {
         
         case reachable(NetworkType)
         case unreachable
+        
+        var isReachable: Bool {
+            switch self {
+            case .reachable: return true
+            case .unreachable: return false
+            }
+        }
     }
     
     public static var currentStatus: Reachability.Status {

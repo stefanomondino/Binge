@@ -14,6 +14,8 @@ public extension Identifiers {
         
         case splash
 		case login
+		case showList
+		case showPages
 		//MURRAY PLACEHOLDER
     }
 }

@@ -11,5 +11,5 @@ import UIKit
 public typealias Color = UIColor
 
 extension UIColor {
-    
+    static let greyishWhite = UIColor(white: 0.9, alpha: 1)
 }

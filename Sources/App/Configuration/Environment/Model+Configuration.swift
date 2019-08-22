@@ -25,4 +25,12 @@ struct ModelEnvironment: Model.Environment, Bootstrappable {
     var debugEnabled: Bool {
         return Environment.current.isDebug
     }
+    
+    var traktBaseURL: URL { return URL(string: "https://api.trakt.tv")! }
+    var tmdbAPIKey: String { return Secrets.tmdbAPIKey }
+    var traktClientID: String { return Secrets.traktClientID }
+    var traktRedirectURI: String { return Secrets.traktRedirectURI }
+    var tmdbBaseURL: URL { return URL(string: "https://api.themoviedb.org/3/")! }
+    var traktClientSecret: String { return Secrets.traktClientSecret }
+    
 }

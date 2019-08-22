@@ -13,6 +13,8 @@ public extension Identifiers {
     enum Views: String, CaseIterable, Hashable, DependencyKey {
         case carousel
         case textPicker
-        //MURRAY PLACEHOLDER
+        case show
+		case loadMore
+		//MURRAY PLACEHOLDER
     }
 }

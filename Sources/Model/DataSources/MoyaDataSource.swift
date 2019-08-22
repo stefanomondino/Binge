@@ -36,16 +36,19 @@ extension MoyaProvider: TraktTVDataSource where Target ==  TraktvAPI {
         let o: Observable<T> = self.object(for: p)
         return o
     }
+}
+
+extension MoyaProvider: TMDBDataSource where Target ==  TMDBAPI {
     
-    func object<T>(for parameters: Target) -> Observable<T> where T: JSONDecodable {
+    func request(for parameters: Target) -> Observable<Any> {
         let p: DataSourceParameters = parameters
-        let o: Observable<T> = self.object(for: p)
+        let o: Observable<Any> = self.object(for: p)
         return o
     }
     
-    func object<T>(for parameters: Target) -> Observable<[T]> where T: JSONDecodable {
+    func object<T>(for parameters: Target) -> Observable<T> where T: Decodable {
         let p: DataSourceParameters = parameters
-        let o: Observable<[T]> = self.object(for: p)
+        let o: Observable<T> = self.object(for: p)
         return o
     }
 }
@@ -68,6 +71,10 @@ extension MoyaProvider {
             .asObservable()
             .observeOn(Scheduler.background)
             .map { $0 }
+            .retryWhen { error in
+                Reachability.rx.status.filter { $0.isReachable }
+        }
+
     }
     func object<T: Decodable>(for parameters: DataSourceParameters) -> Observable<T> {
         guard let request: MoyaDataProviderParameters<Target> = parameters.moyaParameters() else { return .empty() }

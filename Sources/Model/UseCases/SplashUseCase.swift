@@ -14,7 +14,7 @@ public protocol SplashUseCaseType {
 }
 
 public struct SplashUseCase: SplashUseCaseType {
-    var repository = Repositories.main
+    
     public func start() -> Observable<()> {
         Logger.log("Starting Splash UseCase", level: .verbose)
         return .just(())

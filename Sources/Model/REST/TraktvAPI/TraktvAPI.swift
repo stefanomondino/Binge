@@ -10,5 +10,11 @@ import Foundation
 
 enum TraktvAPI: DataSourceParameters {
     
-    case test
+    struct Page {
+        var page: Int
+        var limit: Int
+    }
+    
+    case trending(Page)
+
 }

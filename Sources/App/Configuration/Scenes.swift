@@ -27,7 +27,10 @@ extension Identifiers.Scenes: Bootstrappable {
     }
     
     private var viewController: UIViewController? {
-    
+        switch self {
+            case .showPages: return PagerViewController()
+        default: break
+        }
         if let xibClass = xibClass {
             return xibClass.init(nibName: self.className, bundle: nil)
         }

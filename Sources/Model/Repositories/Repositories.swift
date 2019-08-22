@@ -9,6 +9,7 @@
 import Foundation
 
 public struct Repositories {
-    public static var main: MainRepositoryType = MainRepository()
+    static var shows: ShowsRepository = ShowsAPIRepository()
+    static var configuration: ConfigurationRepository = ConfigurationAPIRepository()
     //MURRAY PLACEHOLDER - DO NOT REMOVE
 }

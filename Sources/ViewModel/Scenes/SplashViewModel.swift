@@ -27,7 +27,7 @@ public class SplashViewModel: SceneViewModelType, InteractionViewModelType {
 //                .delaySubscription(2, scheduler: MainScheduler.instance)
 //        }
         return UseCases.splash.start().debug().map { _ in
-            .route(LoginRoute())
+            .route(RestartRoute(viewModel: ShowPagesViewModel()))
         }
     }
 }

@@ -46,7 +46,7 @@ extension Identifiers.Styles: Bootstrappable {
             $0.font = Fonts.main(.semibold).font(size: 18)
             }
         case .mainRegularStyle: return Style {
-            $0.font = Fonts.main(.semibold).font(size: 18)
+            $0.font = Fonts.main(.semibold).font(size: 14)
             }
             
         default:  return main
