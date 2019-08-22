@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum API: DataSourceParameters {
+enum TraktvAPI: DataSourceParameters {
     
     case test
 }

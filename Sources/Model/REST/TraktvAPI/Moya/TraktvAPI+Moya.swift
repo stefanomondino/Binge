@@ -9,7 +9,7 @@
 import Foundation
 import Moya
 
-extension API: TargetType {
+extension TraktvAPI: TargetType {
     
     var dependencyKey: Int {
         return cacheKey.hashValue

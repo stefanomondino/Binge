@@ -20,8 +20,8 @@ public protocol DataSourceParameters {
 public typealias ObjectType = Codable
 
 protocol TraktTVDataSource {
-    func request(for parameters: API) -> Observable<Any>
-    func object<T: ObjectType>(for parameters: API) -> Observable<T>
+    func request(for parameters: TraktvAPI) -> Observable<Any>
+    func object<T: ObjectType>(for parameters: TraktvAPI) -> Observable<T>
 }
 
 //private struct TraktTVMockDataSource: TraktTVDataSource {
@@ -30,5 +30,5 @@ protocol TraktTVDataSource {
 //}
 
 public struct DataSources {
-    static var traktv: TraktTVDataSource = MoyaProvider<API>(plugins: [NetworkLoggerPlugin(verbose: Configuration.environment.debugEnabled, cURL: Configuration.environment.debugEnabled)])
+    static var traktv: TraktTVDataSource = MoyaProvider<TraktvAPI>(plugins: [NetworkLoggerPlugin(verbose: Configuration.environment.debugEnabled, cURL: Configuration.environment.debugEnabled)])
 }

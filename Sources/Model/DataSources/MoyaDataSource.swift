@@ -23,7 +23,7 @@ private struct MoyaDataProviderParameters<Target: TargetType> {
 }
 
 //DUPLICATE THIS EXTENSION FOR EACH TARGET TYPE
-extension MoyaProvider: TraktTVDataSource where Target ==  API {
+extension MoyaProvider: TraktTVDataSource where Target ==  TraktvAPI {
     
     func request(for parameters: Target) -> Observable<Any> {
         let p: DataSourceParameters = parameters

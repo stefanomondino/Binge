@@ -74,8 +74,8 @@
 		70AE558A2212E4E400F27DAE /* UseCase+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55882212E4E400F27DAE /* UseCase+Mock.swift */; };
 		70AE558B2212E4E400F27DAE /* StartUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55892212E4E400F27DAE /* StartUseCase.swift */; };
 		70AE558E2212E50D00F27DAE /* Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE558D2212E50D00F27DAE /* Empty.swift */; };
-		70AE559C2212E6F100F27DAE /* API+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55972212E6F000F27DAE /* API+Moya.swift */; };
-		70AE559E2212E6F100F27DAE /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55992212E6F000F27DAE /* API.swift */; };
+		70AE559C2212E6F100F27DAE /* TraktvAPI+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55972212E6F000F27DAE /* TraktvAPI+Moya.swift */; };
+		70AE559E2212E6F100F27DAE /* TraktvAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55992212E6F000F27DAE /* TraktvAPI.swift */; };
 		70AE55A72212E85C00F27DAE /* MainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55A62212E85C00F27DAE /* MainRepository.swift */; };
 		70AE55AB2212E99700F27DAE /* SplashUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55AA2212E99700F27DAE /* SplashUseCase.swift */; };
 		70AE55AD2212EB0600F27DAE /* Repositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55AC2212EB0600F27DAE /* Repositories.swift */; };
@@ -279,8 +279,8 @@
 		70AE55882212E4E400F27DAE /* UseCase+Mock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UseCase+Mock.swift"; sourceTree = "<group>"; };
 		70AE55892212E4E400F27DAE /* StartUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartUseCase.swift; sourceTree = "<group>"; };
 		70AE558D2212E50D00F27DAE /* Empty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Empty.swift; sourceTree = "<group>"; };
-		70AE55972212E6F000F27DAE /* API+Moya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "API+Moya.swift"; sourceTree = "<group>"; };
-		70AE55992212E6F000F27DAE /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		70AE55972212E6F000F27DAE /* TraktvAPI+Moya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TraktvAPI+Moya.swift"; sourceTree = "<group>"; };
+		70AE55992212E6F000F27DAE /* TraktvAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraktvAPI.swift; sourceTree = "<group>"; };
 		70AE55A62212E85C00F27DAE /* MainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepository.swift; sourceTree = "<group>"; };
 		70AE55AA2212E99700F27DAE /* SplashUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashUseCase.swift; sourceTree = "<group>"; };
 		70AE55AC2212EB0600F27DAE /* Repositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repositories.swift; sourceTree = "<group>"; };
@@ -563,24 +563,24 @@
 		70AE55942212E6F000F27DAE /* REST */ = {
 			isa = PBXGroup;
 			children = (
-				70AE55952212E6F000F27DAE /* API */,
+				70AE55952212E6F000F27DAE /* TraktvAPI */,
 			);
 			path = REST;
 			sourceTree = "<group>";
 		};
-		70AE55952212E6F000F27DAE /* API */ = {
+		70AE55952212E6F000F27DAE /* TraktvAPI */ = {
 			isa = PBXGroup;
 			children = (
 				70AE55962212E6F000F27DAE /* Moya */,
-				70AE55992212E6F000F27DAE /* API.swift */,
+				70AE55992212E6F000F27DAE /* TraktvAPI.swift */,
 			);
-			path = API;
+			path = TraktvAPI;
 			sourceTree = "<group>";
 		};
 		70AE55962212E6F000F27DAE /* Moya */ = {
 			isa = PBXGroup;
 			children = (
-				70AE55972212E6F000F27DAE /* API+Moya.swift */,
+				70AE55972212E6F000F27DAE /* TraktvAPI+Moya.swift */,
 			);
 			path = Moya;
 			sourceTree = "<group>";
@@ -1552,14 +1552,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70AE559C2212E6F100F27DAE /* API+Moya.swift in Sources */,
+				70AE559C2212E6F100F27DAE /* TraktvAPI+Moya.swift in Sources */,
 				70AE55AB2212E99700F27DAE /* SplashUseCase.swift in Sources */,
 				701C466922300A0300BFFA4A /* MoyaDataSource.swift in Sources */,
 				701C466722300A0300BFFA4A /* DataSource.swift in Sources */,
 				701C465C222FBA7B00BFFA4A /* Errors.swift in Sources */,
 				70DBC8D9220F1E4C00E0BB27 /* Image.swift in Sources */,
 				701C465A222FBA6D00BFFA4A /* Reachability+Rx.swift in Sources */,
-				70AE559E2212E6F100F27DAE /* API.swift in Sources */,
+				70AE559E2212E6F100F27DAE /* TraktvAPI.swift in Sources */,
 				70FB574022A5720300FD8CBD /* Response+Gloss.swift in Sources */,
 				70DBC8D3220EFE8C00E0BB27 /* UseCases.swift in Sources */,
 				701C4660222FBAEC00BFFA4A /* Scheduler.swift in Sources */,
