@@ -10,7 +10,9 @@ import Foundation
 import Boomerang
 
 extension Identifiers {
+    
     public enum Strings: String, CaseIterable, DependencyKey {
+        
         case test
         case ok
         case username
@@ -20,5 +22,11 @@ extension Identifiers {
         case camera
         case library
         case cancel
+        
+        case shows
+        case trending
+        case popular
+        case collected
+        case watched
     }
 }

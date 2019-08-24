@@ -25,6 +25,12 @@ public class ShowPagesViewModel: ListViewModelType, SceneViewModelType, Interact
     
     public var title: String = ""
     
+    public var sceneTitle: String = Identifiers.Strings.shows.translation
+    
+    public var pageTitle: Observable<String> {
+        return .just(sceneTitle)
+    }
+    
     init() {
         //Use proper UseCase from Model
         //self.dataHolder = DataHolder(data: group(UseCases.start.start()))

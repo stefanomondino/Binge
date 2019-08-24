@@ -16,6 +16,7 @@ public extension Identifiers {
 		case login
 		case showList
 		case showPages
+		case tab
 		//MURRAY PLACEHOLDER
     }
 }

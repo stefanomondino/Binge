@@ -11,13 +11,22 @@ import RxSwift
 import Boomerang
 import Model
 
-public protocol PageViewModel: SceneViewModelType {
+public protocol PageViewModel: PageViewModelType {
     var mainTitle: String { get }
     var pageIcon: ObservableImage { get }
 }
 extension PageViewModel {
     public var pageIcon: ObservableImage {
         return .empty()
+    }
+    public var pageTitle: Observable<String> {
+        return .just(mainTitle)
+    }
+    public var selectedPageImage: Observable<Image> {
+        return .empty()
+    }
+    public var pageImage: Observable<Image> {
+        return pageIcon
     }
 }
 

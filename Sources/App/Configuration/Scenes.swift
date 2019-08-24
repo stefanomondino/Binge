@@ -19,7 +19,7 @@ extension Identifiers.Scenes: Bootstrappable {
     private var xibClass: UIViewController.Type? {
         
         switch self {
-        
+            
         default :
             let bundleName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? ""
             return NSClassFromString(bundleName + "." + className) as? UIViewController.Type
@@ -28,7 +28,8 @@ extension Identifiers.Scenes: Bootstrappable {
     
     private var viewController: UIViewController? {
         switch self {
-            case .showPages: return PagerViewController()
+        case .tab: return TabViewController()
+        case .showPages: return PagerViewController()
         default: break
         }
         if let xibClass = xibClass {

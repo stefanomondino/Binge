@@ -15,6 +15,10 @@ public struct RestartRoute: ViewModelRoute {
         self.hasNavigation = false
         self.viewModel = SplashViewModel()
     }
+    init(viewModel: TabViewModel) {
+        self.hasNavigation = false
+        self.viewModel = viewModel
+    }
     init(viewModel: SceneViewModelType) {
         self.hasNavigation = true
         self.viewModel = viewModel
