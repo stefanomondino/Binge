@@ -14,9 +14,8 @@ import RxSwift
     It should handle data from ModelLayer, into group it into sections of data values and lazily convert them into ItemViewModels
 */
 
-public class ShowListViewModel: ListViewModelType, SceneViewModelType, InteractionViewModelType, PageViewModelType {
+public class ShowListViewModel: ListViewModelType, SceneViewModelType, InteractionViewModelType, PageViewModel {
     public var mainTitle: String
-    
 
     public var sceneIdentifier: SceneIdentifier = Identifiers.Scenes.showList
     
@@ -32,13 +31,23 @@ public class ShowListViewModel: ListViewModelType, SceneViewModelType, Interacti
         }
     }
     static func popular() -> ShowListViewModel {
-        return ShowListViewModel(title: "Popular") {
+        return ShowListViewModel(title: "Popular Popular Pop") {
             UseCases.trending.popular(currentPage: $0, pageSize: $1).map { $0 }
         }
     }
     static func played() -> ShowListViewModel {
         return ShowListViewModel(title: "Played") {
             UseCases.trending.played(currentPage: $0, pageSize: $1).map { $0 }
+        }
+    }
+    static func watched() -> ShowListViewModel {
+        return ShowListViewModel(title: "Watched") {
+            UseCases.trending.watched(currentPage: $0, pageSize: $1).map { $0 }
+        }
+    }
+    static func collected() -> ShowListViewModel {
+        return ShowListViewModel(title: "Collected") {
+            UseCases.trending.collected(currentPage: $0, pageSize: $1).map { $0 }
         }
     }
     init(title: String, paginatedObservable: @escaping (Int, Int) -> Observable<[WithShow]>) {

@@ -14,7 +14,10 @@ extension Router: Bootstrappable {
     static func bootstrap() {
         setupImagePicker()
         self.register(RestartRoute.self) { route, _ in
-            UIApplication.shared.delegate?.window??.rootViewController = route.viewModel.setupViewController()
+           let vc = route.viewModel.setupViewController()
+            let destination: UIViewController? =
+                route.hasNavigation ? vc?.embedded() : vc
+            UIApplication.shared.delegate?.window??.rootViewController = destination
         }
         
         self.register(NavigationRoute.self) { route, scene in

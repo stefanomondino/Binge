@@ -23,7 +23,7 @@ class LoadMoreItemView: UIView, ViewModelCompatible {
         super.awakeFromNib()
     }
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 20, height: 500)
+        return CGSize(width: 80, height: 80)
     }
 
     func configure(with viewModel: ViewModel) {

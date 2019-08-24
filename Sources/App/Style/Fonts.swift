@@ -15,14 +15,15 @@ enum Fonts: FontConvertible {
     case secondary(UIFont.Weight)
     ///IMPORTANT! remember to include fonts in Info.plist!
     var fontName: String? {
-        //TODO remove
-        return nil
+
         switch self {
             
         case .main(let weight):
             switch weight {
-            case .bold: return "Helvetica-Bold"
-            default: return "Helvetica-Regular"
+            case .bold: return "Livvic-Bold"
+            case .medium: return "Livvic-Medium"
+            case .semibold: return "Livvic-Semibold"
+            default: return "Livvic-Regular"
         }
             
         default: return nil

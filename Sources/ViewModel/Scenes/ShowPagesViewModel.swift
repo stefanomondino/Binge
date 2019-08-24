@@ -14,7 +14,8 @@ import RxSwift
     It should handle data from ModelLayer, into group it into sections of data values and lazily convert them into ItemViewModels
 */
 
-public class ShowPagesViewModel: ListViewModelType, SceneViewModelType, InteractionViewModelType {
+public class ShowPagesViewModel: ListViewModelType, SceneViewModelType, InteractionViewModelType, PageViewModel {
+    public var mainTitle: String { return sceneTitle }
 
     public var sceneIdentifier: SceneIdentifier = Identifiers.Scenes.showPages
     
@@ -29,7 +30,10 @@ public class ShowPagesViewModel: ListViewModelType, SceneViewModelType, Interact
         //self.dataHolder = DataHolder(data: group(UseCases.start.start()))
         let pages =  [ShowListViewModel.trending(),
                       ShowListViewModel.popular(),
-                      ShowListViewModel.played()]
+                      ShowListViewModel.played(),
+                      ShowListViewModel.watched(),
+                    ShowListViewModel.collected()
+        ]
         self.dataHolder = DataHolder(data: .just(DataGroup(pages)))
         self.selection = defaultSelection()
     }

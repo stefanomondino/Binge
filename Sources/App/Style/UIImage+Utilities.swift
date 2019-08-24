@@ -40,7 +40,7 @@ extension UIImage {
     }
     static func navbar(alpha: CGFloat = 1.0) -> UIImage {
         let alpha = min(0.99, alpha)
-        return UIImage.rectangle(ofSize: CGSize(width: 2, height: 2), color: UIColor.black.withAlphaComponent(alpha))
+        return UIImage.rectangle(ofSize: CGSize(width: 2, height: 2), color: UIColor.navbarColor.withAlphaComponent(alpha))
             .resizableImage(withCapInsets: UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1), resizingMode: .stretch)
             ?? UIImage()
     }

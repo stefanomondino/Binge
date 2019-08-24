@@ -13,9 +13,11 @@ import RxSwift
 import ViewModel
 import Boomerang
 
+
 class PagerViewController: TabmanViewController, ViewModelCompatibleType {
     var viewModel: ListViewModelType?
     private var internalDataSource: PagerDataSource?
+    
     func set(viewModel: ViewModelType) {
         guard let viewModel = viewModel as? ListViewModelType else {
             return
@@ -31,6 +33,7 @@ class PagerViewController: TabmanViewController, ViewModelCompatibleType {
                 switch update {
                 case .reload(let reload):
                     _ = reload()
+                    dataSource.clear()
                     self?.reloadData()
                 case .insertItems(let update):
                     let indexes = update()
@@ -43,42 +46,57 @@ class PagerViewController: TabmanViewController, ViewModelCompatibleType {
                         .sorted()
                         .reversed()
                         .forEach {
-                        self?.deletePage(at: $0, then: .scrollToUpdate)
+                            self?.deletePage(at: $0, then: .scrollToUpdate)
                     }
                 default: break
                 }
-                
             })
-        .disposed(by: disposeBag)
-        let bar = TMBar.ButtonBar()
-        bar.backgroundView.style = .flat(color: .black)
+            .disposed(by: disposeBag)
+        
+        let bar = TMBarView<TMHorizontalBarLayout, TMLabelBarButton, TMLineBarIndicator>()
+        bar.backgroundView.style = .flat(color: Color.navbarColor)
         bar.buttons.customize { (button) in
-            button.contentInset = UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 0)
             button.tintColor = .white
-//            button.font = Fonts.special(.regular).font(size: 20)
-            button.font = Fonts.main(.bold).font(size: 20)
+            button.font = Fonts.main(.bold).font(size: 14)
+            button.tintColor = UIColor(white: 1.0, alpha: 0.6)
             button.selectedTintColor = .white
+            //            button.contentInset = UIEdgeInsets(top: 18, left: 30, bottom: 0, right: 30)
         }
         
-        bar.layout.contentInset = UIEdgeInsets(top: 10, left: 50, bottom: 14, right: 50)
+        bar.layout.contentMode = .intrinsic
+        bar.layout.contentInset = UIEdgeInsets(top: 10, left: 50, bottom: 0, right: 50)
         bar.indicator.tintColor = .white
-        bar.indicator.weight = .custom(value: 3)
+        bar.indicator.overscrollBehavior = .compress
         
         self.addBar(bar, dataSource: dataSource, at: .top)
-        viewModel.load()
+        
+        self.rx.viewDidAppear()
+            .take(1)
+            .bind {
+                viewModel.load()
+            }.disposed(by: disposeBag)
     }
     
     override func viewDidLoad() {
-        self.automaticallyAdjustsChildInsets = false
+        self.automaticallyAdjustsChildInsets = true
         super.viewDidLoad()
         
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }
 
-class PagerDataSource: PageboyViewControllerDataSource, TMBarDataSource {
+class PagerDataSource: PageboyViewControllerDataSource, TMBarDataSource, TMBarDelegate {
     
     let viewModel: ListViewModelType
+    var viewControllers: [PageboyViewController.PageIndex: UIViewController] = [:]
+    
+    func clear() {
+        viewControllers = [:]
+    }
+    
     public var dataHolder: DataHolder {
         return viewModel.dataHolder
     }
@@ -95,19 +113,24 @@ class PagerDataSource: PageboyViewControllerDataSource, TMBarDataSource {
     
     func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
         
+        if let vc = viewControllers[index] {
+            return vc
+        }
+        
         guard let viewModel = self.viewModel.mainViewModel(at: IndexPath(indexes: [index])) as? SceneViewModelType,
             let viewController = viewModel.sceneIdentifier.scene() as?  (UIViewController & ViewModelCompatibleType)  else {
-            return nil
+                return nil
         }
         
         viewController.loadViewAndSet(viewModel: viewModel)
         if #available(iOS 11.0, *) {
             var insets = viewController.additionalSafeAreaInsets
-                insets.top += ((pageboyViewController as? TabmanViewController)?.barInsets ?? .zero).top 
-             viewController.additionalSafeAreaInsets = insets
+            insets.top = 0 //((pageboyViewController as? TabmanViewController)?.barInsets ?? .zero).top
+            viewController.additionalSafeAreaInsets = insets
         } else {
             // Fallback on earlier versions
         }
+        self.viewControllers[index] = viewController
         return viewController
         
     }
@@ -117,8 +140,11 @@ class PagerDataSource: PageboyViewControllerDataSource, TMBarDataSource {
     }
     
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
-        let title = (self.viewModel.mainViewModel(at: IndexPath(indexes: [index])) as? ViewModel.PageViewModelType)?.mainTitle ?? ""
+        let title = (self.viewModel.mainViewModel(at: IndexPath(indexes: [index])) as? PageViewModel)?.mainTitle ?? ""
         return TMBarItem(title: title.uppercased())
     }
     
+    func bar(_ bar: TMBar, didRequestScrollTo index: Int) {
+        
+    }
 }

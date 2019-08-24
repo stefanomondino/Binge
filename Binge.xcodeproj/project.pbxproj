@@ -52,6 +52,22 @@
 		703FD481220F476800A88B5C /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703FD480220F476800A88B5C /* Environment.swift */; };
 		7046E8B52252070100651240 /* Translations.json in Resources */ = {isa = PBXBuildFile; fileRef = 7046E8B42252070100651240 /* Translations.json */; };
 		7046E8B7225209B200651240 /* PagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7046E8B6225209B200651240 /* PagerViewController.swift */; };
+		704891B323112D600022397E /* Livvic-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891A223112D600022397E /* Livvic-Black.ttf */; };
+		704891B423112D600022397E /* Livvic-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891A323112D600022397E /* Livvic-Medium.ttf */; };
+		704891B523112D600022397E /* Livvic-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891A423112D600022397E /* Livvic-RegularItalic.ttf */; };
+		704891B623112D600022397E /* Livvic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891A523112D600022397E /* Livvic-Bold.ttf */; };
+		704891B723112D600022397E /* Livvic-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891A623112D600022397E /* Livvic-Thin.ttf */; };
+		704891B823112D600022397E /* Livvic-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891A723112D600022397E /* Livvic-SemiBold.ttf */; };
+		704891B923112D600022397E /* Livvic-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891A823112D600022397E /* Livvic-BlackItalic.ttf */; };
+		704891BA23112D600022397E /* Livvic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891A923112D600022397E /* Livvic-Regular.ttf */; };
+		704891BC23112D600022397E /* Livvic-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891AB23112D600022397E /* Livvic-ExtraLightItalic.ttf */; };
+		704891BD23112D600022397E /* Livvic-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891AC23112D600022397E /* Livvic-MediumItalic.ttf */; };
+		704891BE23112D600022397E /* Livvic-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891AD23112D600022397E /* Livvic-SemiBoldItalic.ttf */; };
+		704891BF23112D600022397E /* Livvic-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891AE23112D600022397E /* Livvic-Light.ttf */; };
+		704891C023112D600022397E /* Livvic-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891AF23112D600022397E /* Livvic-ExtraLight.ttf */; };
+		704891C123112D600022397E /* Livvic-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891B023112D600022397E /* Livvic-LightItalic.ttf */; };
+		704891C223112D600022397E /* Livvic-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891B123112D600022397E /* Livvic-ThinItalic.ttf */; };
+		704891C323112D600022397E /* Livvic-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891B223112D600022397E /* Livvic-BoldItalic.ttf */; };
 		708139682226E63300A76ABC /* PageViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708139672226E63300A76ABC /* PageViewModelType.swift */; };
 		7081397D2227CF7800A76ABC /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081397C2227CF7800A76ABC /* Images.swift */; };
 		7081397F2227CFB800A76ABC /* Images+Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081397E2227CFB800A76ABC /* Images+Dependency.swift */; };
@@ -278,6 +294,23 @@
 		7040A1E4694BA6844749697E /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7046E8B42252070100651240 /* Translations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Translations.json; sourceTree = "<group>"; };
 		7046E8B6225209B200651240 /* PagerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagerViewController.swift; sourceTree = "<group>"; };
+		704891A223112D600022397E /* Livvic-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-Black.ttf"; sourceTree = "<group>"; };
+		704891A323112D600022397E /* Livvic-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-Medium.ttf"; sourceTree = "<group>"; };
+		704891A423112D600022397E /* Livvic-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-RegularItalic.ttf"; sourceTree = "<group>"; };
+		704891A523112D600022397E /* Livvic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-Bold.ttf"; sourceTree = "<group>"; };
+		704891A623112D600022397E /* Livvic-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-Thin.ttf"; sourceTree = "<group>"; };
+		704891A723112D600022397E /* Livvic-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-SemiBold.ttf"; sourceTree = "<group>"; };
+		704891A823112D600022397E /* Livvic-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-BlackItalic.ttf"; sourceTree = "<group>"; };
+		704891A923112D600022397E /* Livvic-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-Regular.ttf"; sourceTree = "<group>"; };
+		704891AA23112D600022397E /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		704891AB23112D600022397E /* Livvic-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		704891AC23112D600022397E /* Livvic-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-MediumItalic.ttf"; sourceTree = "<group>"; };
+		704891AD23112D600022397E /* Livvic-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		704891AE23112D600022397E /* Livvic-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-Light.ttf"; sourceTree = "<group>"; };
+		704891AF23112D600022397E /* Livvic-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-ExtraLight.ttf"; sourceTree = "<group>"; };
+		704891B023112D600022397E /* Livvic-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-LightItalic.ttf"; sourceTree = "<group>"; };
+		704891B123112D600022397E /* Livvic-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-ThinItalic.ttf"; sourceTree = "<group>"; };
+		704891B223112D600022397E /* Livvic-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-BoldItalic.ttf"; sourceTree = "<group>"; };
 		708139672226E63300A76ABC /* PageViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewModelType.swift; sourceTree = "<group>"; };
 		7081397C2227CF7800A76ABC /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		7081397E2227CFB800A76ABC /* Images+Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Images+Dependency.swift"; sourceTree = "<group>"; };
@@ -471,11 +504,8 @@
 			isa = PBXGroup;
 			children = (
 				99C5E6349414DE8CD0F69AC0 /* LoadMoreItemView.swift */,
-				99C5E6349414DE8CD0F69AC0 /* LoadMoreItemView.swift */,
-				3DC8A4A2D654913D5DE2A9E9 /* LoadMoreItemView.xib */,
 				3DC8A4A2D654913D5DE2A9E9 /* LoadMoreItemView.xib */,
 			);
-			name = LoadMore;
 			path = LoadMore;
 			sourceTree = "<group>";
 		};
@@ -518,6 +548,38 @@
 				7046E8B6225209B200651240 /* PagerViewController.swift */,
 			);
 			path = Pager;
+			sourceTree = "<group>";
+		};
+		704891A023112D4D0022397E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				704891A123112D600022397E /* Livvic */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		704891A123112D600022397E /* Livvic */ = {
+			isa = PBXGroup;
+			children = (
+				704891A223112D600022397E /* Livvic-Black.ttf */,
+				704891A323112D600022397E /* Livvic-Medium.ttf */,
+				704891A423112D600022397E /* Livvic-RegularItalic.ttf */,
+				704891A523112D600022397E /* Livvic-Bold.ttf */,
+				704891A623112D600022397E /* Livvic-Thin.ttf */,
+				704891A723112D600022397E /* Livvic-SemiBold.ttf */,
+				704891A823112D600022397E /* Livvic-BlackItalic.ttf */,
+				704891A923112D600022397E /* Livvic-Regular.ttf */,
+				704891AA23112D600022397E /* OFL.txt */,
+				704891AB23112D600022397E /* Livvic-ExtraLightItalic.ttf */,
+				704891AC23112D600022397E /* Livvic-MediumItalic.ttf */,
+				704891AD23112D600022397E /* Livvic-SemiBoldItalic.ttf */,
+				704891AE23112D600022397E /* Livvic-Light.ttf */,
+				704891AF23112D600022397E /* Livvic-ExtraLight.ttf */,
+				704891B023112D600022397E /* Livvic-LightItalic.ttf */,
+				704891B123112D600022397E /* Livvic-ThinItalic.ttf */,
+				704891B223112D600022397E /* Livvic-BoldItalic.ttf */,
+			);
+			path = Livvic;
 			sourceTree = "<group>";
 		};
 		708FF0322243A8DF005FFC8D /* View */ = {
@@ -794,6 +856,7 @@
 			children = (
 				70DBC826220C3E2300E0BB27 /* AppDelegate.swift */,
 				7046E8B42252070100651240 /* Translations.json */,
+				704891A023112D4D0022397E /* Fonts */,
 				70DBC82D220C3E2400E0BB27 /* Assets.xcassets */,
 				70DBC82F220C3E2400E0BB27 /* LaunchScreen.storyboard */,
 				70DBC832220C3E2400E0BB27 /* Info.plist */,
@@ -843,7 +906,6 @@
 				70DBC8A4220C6D1A00E0BB27 /* SplashViewModel.swift */,
 				C5A947C79C23E0EA65DDE8D6 /* LoginViewModel.swift */,
 				3C955E529325E31ABB638FDF /* ShowListViewModel.swift */,
-				CD7C1F8A80342A7A9971B49C /* ShowPagesViewModel.swift */,
 				CD7C1F8A80342A7A9971B49C /* ShowPagesViewModel.swift */,
 			);
 			path = Scenes;
@@ -934,7 +996,6 @@
 				70FB565122A514FC00FD8CBD /* CarouselItemViewModel.swift */,
 				CEE40C7322A5281800B9E688 /* TextPickerItemViewModel.swift */,
 				A4458FAED8939C4620ED1FC3 /* ShowItemViewModel.swift */,
-				04B3481E59C7BDE99FE872E5 /* LoadMoreItemViewModel.swift */,
 				04B3481E59C7BDE99FE872E5 /* LoadMoreItemViewModel.swift */,
 			);
 			path = Items;
@@ -1250,11 +1311,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				704891B423112D600022397E /* Livvic-Medium.ttf in Resources */,
+				704891BE23112D600022397E /* Livvic-SemiBoldItalic.ttf in Resources */,
+				704891C023112D600022397E /* Livvic-ExtraLight.ttf in Resources */,
 				70FB564F22A514D700FD8CBD /* CarouselItemView.xib in Resources */,
+				704891BC23112D600022397E /* Livvic-ExtraLightItalic.ttf in Resources */,
+				704891B623112D600022397E /* Livvic-Bold.ttf in Resources */,
+				704891B323112D600022397E /* Livvic-Black.ttf in Resources */,
+				704891B823112D600022397E /* Livvic-SemiBold.ttf in Resources */,
+				704891C123112D600022397E /* Livvic-LightItalic.ttf in Resources */,
+				704891B723112D600022397E /* Livvic-Thin.ttf in Resources */,
 				7046E8B52252070100651240 /* Translations.json in Resources */,
 				70DBC831220C3E2400E0BB27 /* LaunchScreen.storyboard in Resources */,
 				70DBC8B8220C76BB00E0BB27 /* SplashViewController.xib in Resources */,
+				704891C223112D600022397E /* Livvic-ThinItalic.ttf in Resources */,
+				704891B523112D600022397E /* Livvic-RegularItalic.ttf in Resources */,
+				704891BA23112D600022397E /* Livvic-Regular.ttf in Resources */,
+				704891BD23112D600022397E /* Livvic-MediumItalic.ttf in Resources */,
+				704891B923112D600022397E /* Livvic-BlackItalic.ttf in Resources */,
+				704891C323112D600022397E /* Livvic-BoldItalic.ttf in Resources */,
 				CEE40C6922A5278700B9E688 /* TextPickerItemView.xib in Resources */,
+				704891BF23112D600022397E /* Livvic-Light.ttf in Resources */,
 				70DBC82E220C3E2400E0BB27 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -26,6 +26,8 @@ extension TraktvAPI: TargetType {
         case .trending: return "shows/trending"
         case .popular: return "shows/popular"
         case .played: return "shows/played"
+        case .watched: return "shows/watched"
+        case .collected: return "shows/collected"
         }
     }
     
@@ -61,8 +63,12 @@ extension TraktvAPI: TargetType {
     private var pagination: [String: Any] {
         switch self {
         //case .played(_, let page), .trending(let page), .search(_, let page): return ["page": page.page, "limit": page.limit]
-        case .trending(let page), .popular(let page), .played(let page): return ["page": page.page, "limit": page.limit]
-        default: return [:]
+        case .trending(let page),
+             .popular(let page),
+             .played(let page),
+             .watched(let page),
+             .collected(let page): return ["page": page.page, "limit": page.limit]
+        @unknown default: return [:]
         }
     }
     private var parameters: [String: Any] {
@@ -72,7 +78,7 @@ extension TraktvAPI: TargetType {
 //            parameters["query"] = q
 //            return parameters
 //        case .myProfile: return ["extended":"full"]
-        default: return parameters
+        @unknown default: return parameters
         }
         
     }
