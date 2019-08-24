@@ -1,11 +1,10 @@
 # Binge
 ![img](Sources/App/Supporting%20Files/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png)
 
-This is a working empty app that can be used as a starting point for a new project.
+## Installation
 
-## Documentation
+Copy the Secrets_template.swift inside Sources/App/Configuration/Environment, add it to the "app target" and use values from TMDB and TRAKTV (you should register and apply for a new app in order to get them)
 
-Full architecture is available [here](Documentation/doc.md)
 
 ## "External" tools needed
 

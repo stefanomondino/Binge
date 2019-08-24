@@ -4,10 +4,9 @@
         "filePlaceholder": "Skeleton",
         "remoteBones": [
             "https://gitlab.com/synesthesia_team/mobile/ios/internal/bones/mvvm",
-            "https://gitlab.com/synesthesia_team/mobile/ios/internal/bones/model.git",
-            "https://gitlab.com/synesthesia_team/mobile/ios/internal/bones/continuousintegration.git"
+            "https://gitlab.com/synesthesia_team/mobile/ios/internal/bones/model.git"
         ],
         "environmentPlaceholders": {
-            "companyName": "Synesthesia"
+            "companyName": ""
         }
 }
