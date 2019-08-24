@@ -13,5 +13,5 @@ public typealias Color = UIColor
 extension UIColor {
     static let greyishWhite = UIColor(white: 0.9, alpha: 1)
     
-    static let navbarColor = UIColor(hex: 0xFFCC00)
+    static let navbarColor = UIColor(hex: 0x015c65)
 }

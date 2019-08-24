@@ -15,6 +15,7 @@ class TabViewController: UITabBarController, WithScenePageConfiguration, ViewMod
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBar.backgroundImage = UIImage.navbar()
+        self.tabBar.tintColor = .white
     }
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
