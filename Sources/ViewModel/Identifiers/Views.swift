@@ -15,6 +15,7 @@ public extension Identifiers {
         case textPicker
         case show
 		case loadMore
+		case showPoster
 		//MURRAY PLACEHOLDER
     }
 }

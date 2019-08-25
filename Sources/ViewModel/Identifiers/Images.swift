@@ -15,8 +15,11 @@ extension Identifiers {
         case eyePasswordSelected
         case cancelTextField
         
+        case tabShows
+        
         public var image: UIImage {
-            if let image = UIImage(named: self.rawValue) {
+            
+            if let image = UIImage(named: self.name) {
                 return image
             }
             Logger.log("\(self.rawValue) not found in asssets", level: .error, tag: "IMAGES")

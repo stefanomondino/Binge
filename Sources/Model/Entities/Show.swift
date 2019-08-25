@@ -14,16 +14,30 @@ public protocol WithShow: EntityType {
 }
 
 public struct TrendingShow: WithShow, Codable {
+    private enum CodingKeys: String, CodingKey {
+        case _show = "show"
+        case watchers = "watchers"
+    }
+    private let _show: ShowItem
     public let watchers: Int
-    public let show: Show
+    public var show: Show { return _show }
 }
 
 public struct PlayedShow: WithShow, Codable {
+    private enum CodingKeys: String, CodingKey {
+        case _show = "show"
+        case watcherCount = "watcherCount"
+        case playCount = "playCount"
+        case collectedCount = "collectedCount"
+        case collectorCount = "collectorcount"
+    }
+    
     public let watcherCount: Int
     public let playCount: Int
     public let collectedCount: Int
     public let collectorCount: Int
-    public let show: Show
+    private let _show: ShowItem
+    public var show: Show { return _show }
 }
 
 public struct SearchedShow: WithShow {
@@ -31,19 +45,40 @@ public struct SearchedShow: WithShow {
     public let show: Show
 }
 
-public struct Show: Codable, WithShow {
+public protocol Show: Codable, WithShow {
+    var title: String { get }
+    var year: Int? { get }
+    var ids: Ids { get }
+}
+public protocol ShowDetail: Show {
+    var overview: String { get }
+    var runtime: Int { get }
+}
+
+public struct Ids: Codable {
+    let trakt: Int
+    let slug: String
+    let tvdb: Int?
+    let tmdb: Int?
+    let imdb: String?
+    let tvrage: Int?
+}
+
+internal struct ShowItem: Show {
     public let title: String
     let ids: Ids
     let year: Int?
     public var show: Show { return self }
-    struct Ids: Codable {
-        let trakt: Int
-        let slug: String
-        let tvdb: Int?
-        let tmdb: Int?
-        let imdb: String?
-        let tvrage: Int?
-    }
+    
+}
+
+internal struct ShowDetailItem: ShowDetail {
+    var overview: String
+    var runtime: Int
+    var title: String
+    var year: Int?
+    var ids: Ids
+    var show: Show { return self }
 }
 
 public struct ShowInfo: Codable, ModelType {

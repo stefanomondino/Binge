@@ -26,35 +26,35 @@ public class ShowListViewModel: ListViewModelType, SceneViewModelType, Interacti
     public var title: String = ""
     
     static func trending() -> ShowListViewModel {
-        return ShowListViewModel(title: "Trending") {
+        return ShowListViewModel(title: .trending) {
             UseCases.trending.trending(currentPage: $0, pageSize: $1).map { $0 }
         }
     }
     static func popular() -> ShowListViewModel {
-        return ShowListViewModel(title: "Popular Popular Pop") {
+        return ShowListViewModel(title: .popular) {
             UseCases.trending.popular(currentPage: $0, pageSize: $1).map { $0 }
         }
     }
     static func played() -> ShowListViewModel {
-        return ShowListViewModel(title: "Played") {
+        return ShowListViewModel(title: .played) {
             UseCases.trending.played(currentPage: $0, pageSize: $1).map { $0 }
         }
     }
     static func watched() -> ShowListViewModel {
-        return ShowListViewModel(title: "Watched") {
+        return ShowListViewModel(title: .watched) {
             UseCases.trending.watched(currentPage: $0, pageSize: $1).map { $0 }
         }
     }
     static func collected() -> ShowListViewModel {
-        return ShowListViewModel(title: "Collected") {
+        return ShowListViewModel(title: .collected) {
             UseCases.trending.collected(currentPage: $0, pageSize: $1).map { $0 }
         }
     }
-    init(title: String, paginatedObservable: @escaping (Int, Int) -> Observable<[WithShow]>) {
+    init(title: Identifiers.Strings, paginatedObservable: @escaping (Int, Int) -> Observable<[WithShow]>) {
         
         //Use proper UseCase from Model
         let pageSize = 10
-        self.mainTitle = title
+        self.mainTitle = title.translation
        
         let observable: Observable<DataGroup> =  .deferred { [weak self] in
             guard let self = self else { return .empty() }
@@ -83,6 +83,11 @@ public class ShowListViewModel: ListViewModelType, SceneViewModelType, Interacti
     }
     
     public func handleSelectItem(_ indexPath: IndexPath) -> Observable<Interaction> {
+        
+        switch self.dataHolder[indexPath] {
+        case let item as WithShow: return .just(.route(NavigationRoute(viewModel: ShowDetailViewModel(show: item.show))))
+        default: break
+        }
         
 //        if let model = self.dataHolder[indexPath] as? DataValue.Element {
 //            //Create some route here, or whatever needed

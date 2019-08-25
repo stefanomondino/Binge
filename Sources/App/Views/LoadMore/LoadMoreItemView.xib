@@ -25,6 +25,9 @@
                 <constraint firstItem="Rco-H4-zJ1" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="eky-QS-Dip"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="activityIndicator" destination="Rco-H4-zJ1" id="eLm-Oo-eCg"/>
+            </connections>
             <point key="canvasLocation" x="120" y="-70.614692653673174"/>
         </view>
     </objects>

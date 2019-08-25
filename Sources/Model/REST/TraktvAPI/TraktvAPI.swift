@@ -20,4 +20,6 @@ enum TraktvAPI: DataSourceParameters {
     case played(Page)
     case watched(Page)
     case collected(Page)
+    
+    case summary(Show)
 }

@@ -36,7 +36,7 @@ class ShowItemView: UIView, ViewModelCompatible {
         self.title.styledText = viewModel.title
 
         self.counter?.style = Identifiers.Styles.mainFilledButton.style
-        self.counter?.styledText = viewModel.counter
+        self.counter?.styledText = viewModel.counter ?? ""
         
         if self.isPlaceholderForAutosize { return }
 

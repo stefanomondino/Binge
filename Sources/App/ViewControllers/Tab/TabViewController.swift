@@ -43,6 +43,7 @@ class TabViewController: UITabBarController, WithScenePageConfiguration, ViewMod
         viewModel.pageImage.asDriver(onErrorJustReturn: UIImage()).drive(nav.tabBarItem.rx.image).disposed(by: scene.disposeBag)
         viewModel.selectedPageImage.asDriver(onErrorJustReturn: UIImage()).drive(nav.tabBarItem.rx.selectedImage).disposed(by: scene.disposeBag)
         viewModel.pageTitle.asDriver(onErrorJustReturn: "").drive(nav.tabBarItem.rx.title).disposed(by: scene.disposeBag)
+        scene.title = viewModel.sceneTitle
         return nav
         
     }

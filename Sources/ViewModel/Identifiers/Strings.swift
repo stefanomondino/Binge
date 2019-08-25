@@ -28,5 +28,6 @@ extension Identifiers {
         case popular
         case collected
         case watched
+        case played
     }
 }

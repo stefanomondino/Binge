@@ -64,7 +64,7 @@ class PagerViewController: TabmanViewController, ViewModelCompatibleType {
         }
         
         bar.layout.contentMode = .intrinsic
-        bar.layout.contentInset = UIEdgeInsets(top: 10, left: 50, bottom: 0, right: 50)
+        bar.layout.contentInset = UIEdgeInsets(top: 0, left: 50, bottom: 0, right: 50)
         bar.indicator.tintColor = .white
         bar.indicator.overscrollBehavior = .compress
         

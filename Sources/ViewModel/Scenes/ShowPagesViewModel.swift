@@ -31,6 +31,10 @@ public class ShowPagesViewModel: ListViewModelType, SceneViewModelType, Interact
         return .just(sceneTitle)
     }
     
+    public var pageImage: Observable<Image> {
+        return Identifiers.Images.tabShows.getImage()
+    }
+    
     init() {
         //Use proper UseCase from Model
         //self.dataHolder = DataHolder(data: group(UseCases.start.start()))

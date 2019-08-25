@@ -28,6 +28,7 @@ extension TraktvAPI: TargetType {
         case .played: return "shows/played"
         case .watched: return "shows/watched"
         case .collected: return "shows/collected"
+        case .summary(let show): return "shows/\(show.ids.trakt)"
         }
     }
     
@@ -74,11 +75,12 @@ extension TraktvAPI: TargetType {
     private var parameters: [String: Any] {
         var parameters = pagination
         switch self {
+        case .summary: return ["extended": "full"]
 //        case .search(let q, _):
 //            parameters["query"] = q
 //            return parameters
 //        case .myProfile: return ["extended":"full"]
-        @unknown default: return parameters
+        default: return parameters
         }
         
     }

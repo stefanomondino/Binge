@@ -15,6 +15,7 @@ public extension Identifiers {
         
         case mainRegularStyle
         case mainBoldStyle
+        case navbarTitle
         case placeholderBig
         case placeholderSmall
         case errorText

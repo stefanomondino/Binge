@@ -26,7 +26,7 @@ extension Identifiers.Images: WithImage, Hashable {
         return name.getImage()
     }
     
-    public var name: WithImage {
+    public var name: String {
         return ImageContainer.resolve(self)?.name ?? rawValue
     }
 }

@@ -1,5 +1,12 @@
 {
     "loading": "Loading...",
     "username" : "User's email",
-    "password": "Password"
+    "password": "Password",
+    
+    "shows": "Shows",
+    "trending" : "Trending",
+    "popular": "Popular",
+    "played": "Played",
+    "collected": "Collected",
+    "watched": "Watched"
 }

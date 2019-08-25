@@ -17,6 +17,7 @@ extension SceneViewModelType {
     func setupViewController<T: UIViewController>() -> T? {
         guard let viewController = self.sceneIdentifier.scene() as? T else { return nil }
         (viewController as? (UIViewController & ViewModelCompatibleType))?.loadViewAndSet(viewModel: self)
+        viewController.title = sceneTitle
         return viewController
     }
 }

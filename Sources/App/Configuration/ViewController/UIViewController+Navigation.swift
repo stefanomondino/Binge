@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import RxCocoa
 import RxSwift
+import ViewModel
 
 class NavigationController: UINavigationController {
     override func viewDidLoad() {
@@ -19,10 +20,10 @@ class NavigationController: UINavigationController {
         self.navigationBar.setBackgroundImage(UIImage.navbar(), for: .default)
         //        self.navigationBar.tintColor = .white
         self.navigationBar.shadowImage = UIImage()
-        self.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor.white,
-            .font: Fonts.secondary(.bold).font(size: 20)
-        ]
+        
+        
+        self.navigationBar.titleTextAttributes = Identifiers.Styles.navbarTitle.style.attributes
+        
     }
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
 }

@@ -41,7 +41,10 @@ extension Identifiers.Styles: Bootstrappable {
         case .placeholderSmall: return Style {
             $0.font = Fonts.main(.semibold).font(size: 12)
             }
-            
+        case .navbarTitle: return Style {
+            $0.font = Fonts.main(.bold).font(size: 16)
+            $0.color = UIColor.white
+            }
         case .placeholderBig: return Style {
             $0.font = Fonts.main(.semibold).font(size: 18)
             }
