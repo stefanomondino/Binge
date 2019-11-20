@@ -16,37 +16,35 @@ import Moya
 
  struct ShowsAPIRepository: ShowsRepository {
     
+    let tmdb: TMDBDataSource
+    let traktv: TraktTVDataSource
+
     func info(forShow show: Show) -> Observable<ShowInfo> {
-        return DataSources.tmdb.object(for: .show(show))
+        return tmdb.object(for: .show(show))
     }
     func detail(forShow show: Show) -> Observable<ShowDetailItem> {
-        return DataSources.traktv.object(for: .summary(show))
+        return traktv.object(for: .summary(show))
     }
     
      func trending(currentPage: Int, pageSize: Int) -> Observable<[TrendingShow]> {
-        return DataSources
-            .traktv
+        return traktv
             .object(for: .trending(TraktvAPI.Page(page: currentPage, limit: pageSize)))
     }
     func played(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]> {
-        return DataSources
-            .traktv
+        return traktv
             .object(for: .played(TraktvAPI.Page(page: currentPage, limit: pageSize)))
     }
     
     func popular(currentPage: Int, pageSize: Int) -> Observable<[ShowItem]> {
-        return DataSources
-            .traktv
+        return traktv
             .object(for: .popular(TraktvAPI.Page(page: currentPage, limit: pageSize)))
     }
     func watched(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]> {
-        return DataSources
-            .traktv
+        return traktv
             .object(for: .watched(TraktvAPI.Page(page: currentPage, limit: pageSize)))
     }
     func collected(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]> {
-        return DataSources
-            .traktv
+        return traktv
             .object(for: .collected(TraktvAPI.Page(page: currentPage, limit: pageSize)))
     }
 }

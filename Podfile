@@ -3,34 +3,28 @@
 
 inhibit_all_warnings!
 use_frameworks!
-platform :ios, '11.0'
+platform :ios, '12.0'
 
 def ios_platform
-  platform :ios, '11.0'
+  platform :ios, '12.0'
 end
 
 def shared_pods
-  pod "Boomerang", :git => "https://github.com/synesthesia-it/Boomerang", :branch => "v5"
+  pod "Boomerang/RxSwift", :git => "https://github.com/stefanomondino/newark", :branch => "master"
+  pod "Boomerang/UIKit", :git => "https://github.com/stefanomondino/newark", :branch => "master"
 end
 
 def model_pods
   shared_pods
   pod 'Alamofire'
-  pod 'Moya/RxSwift', :git => "https://github.com/Moya/Moya",  :branch => "14.0.0-alpha.2"
+  pod 'Moya/RxSwift', :git => "https://github.com/Moya/Moya",  :branch => "14.0.0-beta.5"
   pod 'AlamofireImage', :git => "https://github.com/Alamofire/AlamofireImage", :branch => "master"
-#  pod 'Cache'
   pod 'KeychainAccess'
   pod 'Gloss'
 #MURRAY MODEL_PODS PLACEHOLDER
 end
 
-def viewmodel_pods
-  model_pods
-#MURRAY VIEWMODEL_PODS PLACEHOLDER
-end
-
 def app_pods
-  viewmodel_pods
   pod 'Tabman'
   pod 'SnapKit'
   pod 'Hero'
@@ -64,13 +58,6 @@ end
 target 'Model' do
   model_pods
   target 'ModelTests' do
-    test_pods
-  end
-end
-
-target 'ViewModel' do
-  viewmodel_pods
-  target 'ViewModelTests' do
     test_pods
   end
 end

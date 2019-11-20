@@ -9,9 +9,12 @@ import Moya
 
  struct ImagesUseCase: ImagesUseCaseType {
     
+    let configuration: ConfigurationRepository
+    let shows: ShowsRepository
+    
     func image(from info: ShowInfo, with keyPath: KeyPath<ShowInfo, String?>) -> Observable<WithImage> {
         
-        return Repositories.configuration.tmdbConfiguration().map { configuration in
+        return configuration.tmdbConfiguration().map { configuration in
         
         let url  = configuration.images.secureBaseUrl
         let posterSizes = configuration.images.posterSizes
@@ -25,9 +28,8 @@ import Moya
         }
     }
 
-     
     func poster(forShow show: Show) -> Observable<WithImage> {
-        return Repositories.shows.info(forShow: show).flatMapLatest {
+        return shows.info(forShow: show).flatMapLatest {
             self.image(from: $0, with: \.posterPath)
         }
 //        return

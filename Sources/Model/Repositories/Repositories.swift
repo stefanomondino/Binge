@@ -8,8 +8,3 @@
 
 import Foundation
 
-public struct Repositories {
-    static var shows: ShowsRepository = ShowsAPIRepository()
-    static var configuration: ConfigurationRepository = ConfigurationAPIRepository()
-    //MURRAY PLACEHOLDER - DO NOT REMOVE
-}

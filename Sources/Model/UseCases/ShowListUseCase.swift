@@ -2,7 +2,7 @@
 import Foundation
 import RxSwift
 
-public protocol ShowListUseCaseType {
+public protocol ShowListUseCase {
     func trending(currentPage: Int, pageSize: Int) -> Observable<[TrendingShow]>
     func popular(currentPage: Int, pageSize: Int) -> Observable<[Show]>
     func played(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]>
@@ -10,30 +10,26 @@ public protocol ShowListUseCaseType {
     func collected(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]>
 }
 
-public struct ShowListUseCase: ShowListUseCaseType {
-    
+public struct DefaultShowListUseCase: ShowListUseCase {
+    let shows: ShowsRepository
     public func trending(currentPage: Int, pageSize: Int) -> Observable<[TrendingShow]> {
-        return Repositories
-            .shows
+        return shows
             .trending(currentPage: currentPage, pageSize: pageSize)
     }
     public func popular(currentPage: Int, pageSize: Int) -> Observable<[Show]> {
-        return Repositories
-            .shows
+        return shows
             .popular(currentPage: currentPage, pageSize: pageSize)
             .map { $0 }
     }
     public func played(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]> {
-        return Repositories
-            .shows
+        return shows
             .played(currentPage: currentPage, pageSize: pageSize)
     }
     public func watched(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]> {
-        return Repositories
-            .shows
+        return shows
             .watched(currentPage: currentPage, pageSize: pageSize)
     }
     public func collected(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]> {
-        return Repositories.shows.collected(currentPage: currentPage, pageSize: pageSize)
+        return shows.collected(currentPage: currentPage, pageSize: pageSize)
     }
 }

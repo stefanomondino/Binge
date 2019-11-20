@@ -9,7 +9,7 @@
 import Foundation
 import Boomerang
 
-public typealias EntityType = ModelType
+public protocol EntityType {}
 
 public protocol Environment {
     var traktBaseURL: URL { get }

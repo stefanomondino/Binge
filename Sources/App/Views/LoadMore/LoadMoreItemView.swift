@@ -14,11 +14,13 @@ import Boomerang
     Contents should be entirely driven by `ViewModel`, so that this view can safely deployed in production without being tested.
     
 */
-class LoadMoreItemView: UIView, ViewModelCompatible {
-    typealias ViewModel = LoadMoreItemViewModel
+class LoadMoreItemView: UIView, WithViewModel {
+    
     
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    var disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,9 +35,9 @@ class LoadMoreItemView: UIView, ViewModelCompatible {
         /// Configure here every property that contributes to change view size
         /// Multiline text bindings should go here       
     
-        if self.isPlaceholderForAutosize { return }
-
-        viewModel.start().disposed(by: disposeBag)
+//        if self.isPlaceholderForAutosize { return }
+//
+//        viewModel.start().disposed(by: disposeBag)
         activityIndicator.startAnimating()
         
         /// Configure here every property that doesn't contributes to change view size

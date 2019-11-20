@@ -30,7 +30,7 @@ protocol TMDBDataSource {
 //    func object<T: ObjectType>(for parameters: API) -> Observable<T> { return .empty() }
 //}
 
-public struct DataSources {
-    static var traktv: TraktTVDataSource = MoyaProvider<TraktvAPI>(plugins: [NetworkLoggerPlugin(verbose: Configuration.environment.debugEnabled, cURL: Configuration.environment.debugEnabled)])
-        static var tmdb: TMDBDataSource = MoyaProvider<TMDBAPI>(plugins: [NetworkLoggerPlugin(verbose: Configuration.environment.debugEnabled, cURL: Configuration.environment.debugEnabled)])
-}
+//public struct DataSources {
+//    static var traktv: TraktTVDataSource = MoyaProvider<TraktvAPI>(plugins: [NetworkLoggerPlugin(verbose: Configuration.environment.debugEnabled, cURL: Configuration.environment.debugEnabled)])
+//    static var tmdb: TMDBDataSource = MoyaProvider<TMDBAPI>(plugins: [NetworkLoggerPlugin(verbose: Configuration.environment.debugEnabled, cURL: Configuration.environment.debugEnabled)])
+//}

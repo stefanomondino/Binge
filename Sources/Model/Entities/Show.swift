@@ -9,7 +9,7 @@
 import Foundation
 import Boomerang
 
-public protocol WithShow: EntityType {
+public protocol WithShow {
     var show: Show { get }
 }
 
@@ -81,7 +81,7 @@ internal struct ShowDetailItem: ShowDetail {
     var show: Show { return self }
 }
 
-public struct ShowInfo: Codable, ModelType {
+public struct ShowInfo: Codable {
     let name: String
     let backdropPath: String?
     let posterPath: String?

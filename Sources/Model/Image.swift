@@ -61,7 +61,7 @@ extension Image {
     }
 }
 
-public protocol WithImage: ModelType {
+public protocol WithImage {
     func getImage() -> ObservableImage
     func getImage(with placeholder: WithImage?) -> ObservableImage
 }
