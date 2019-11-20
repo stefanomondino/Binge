@@ -14,6 +14,7 @@ import Model
 protocol RouteFactory {
     var container: AppDependencyContainer { get }
     func restartRoute() -> Route
+    func homeRoute() -> Route
 //    func detailRoute(show: Show) -> Route
 }
 class MainRouteFactory: RouteFactory {
@@ -22,7 +23,11 @@ class MainRouteFactory: RouteFactory {
     init(container: AppDependencyContainer) {
         self.container = container
     }
-    
+    func homeRoute() -> Route {
+        return RestartRoute {
+            self.container.viewControllerFactory.showList(viewModel: self.container.sceneViewModelFactory.showListViewModel())
+        }
+    }
     func restartRoute() -> Route {
         return RestartRoute {
             self.container.viewControllerFactory.root()

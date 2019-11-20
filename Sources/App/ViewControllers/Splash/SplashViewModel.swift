@@ -33,7 +33,7 @@ class SplashViewModel: ViewModel, RxNavigationViewModel {
         useCase
             .start()
             .take(1)
-            .map { factory.restartRoute() }
+            .map { factory.homeRoute() }
             .bind(to: routes)
             .disposed(by: disposeBag)
     }

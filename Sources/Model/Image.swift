@@ -11,11 +11,11 @@ struct ImageDownloader {
         return AlamofireImage.ImageDownloader()
     }()
     
-    static func  download(_ url: URL) -> Observable<Image> {
+    func download(_ url: URL) -> Observable<Image> {
         return Observable<Image>.create { observer in
             let urlRequest = URLRequest(url: url)
             let start = Date()
-            let receipt = downloader.download(urlRequest) { response in
+            let receipt = ImageDownloader.downloader.download(urlRequest) { response in
                 
                 if let error =  response.error {
                     observer.onError(error)
@@ -28,7 +28,7 @@ struct ImageDownloader {
             }
             return Disposables.create {
                 if let receipt = receipt {
-                    downloader.cancelRequest(with: receipt)
+                    ImageDownloader.downloader.cancelRequest(with: receipt)
                 }
             }
             }
@@ -82,7 +82,7 @@ extension Image: WithImage {
 extension URL: WithImage {
     
     public func getImage(with placeholder: WithImage?) -> ObservableImage {
-        return ImageDownloader.download(self)
+        return ImageDownloader().download(self)
             .catchError { _ in return (placeholder ?? "")
                 .getImage()
                 .asObservable()

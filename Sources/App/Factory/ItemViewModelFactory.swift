@@ -12,12 +12,17 @@ import Model
 
 protocol ItemViewModelFactory {
 //    func header(title: String) -> ViewModel
-//    func episode(_ episode: Episode) -> ViewModel
+    func show(_ show: Show) -> ViewModel
 }
 
 struct DefaultItemViewModelFactory: ItemViewModelFactory {
     let container: AppDependencyContainer
-    
+    func show(_ show: Show) -> ViewModel {
+        return ShowItemViewModel(show: show,
+                                 layoutIdentifier: ViewIdentifier.show,
+                                 imageUseCase: container.model.imagesUseCase
+                )
+    }
 //    func header(title: String) -> ViewModel {
 //        return HeaderViewModel(title: title)
 //    }

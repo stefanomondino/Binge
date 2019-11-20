@@ -3,11 +3,11 @@ import Boomerang
 import RxSwift
 import Moya
 
- public protocol ImagesUseCaseType {
+ public protocol ImagesUseCase {
     func poster(forShow show: Show) -> Observable<WithImage>
 }
 
- struct ImagesUseCase: ImagesUseCaseType {
+ struct DefaultImagesUseCase: ImagesUseCase {
     
     let configuration: ConfigurationRepository
     let shows: ShowsRepository

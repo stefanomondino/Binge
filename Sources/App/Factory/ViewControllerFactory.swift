@@ -12,7 +12,7 @@ import Boomerang
 
 enum SceneIdentifier: String, LayoutIdentifier {
     case splash
-    case schedule
+    case showList
     case showDetail
     
     var identifierString: String {
@@ -24,6 +24,7 @@ enum SceneIdentifier: String, LayoutIdentifier {
 
 protocol ViewControllerFactory {
     func root() -> UIViewController
+    func showList(viewModel: ShowListViewModel) -> UIViewController
 //    func schedule(viewModel: ListViewModel & NavigationViewModel) -> UIViewController
 //    func showDetail(viewModel: ShowDetailViewModel) -> UIViewController
 }
@@ -55,5 +56,7 @@ class DefaultViewControllerFactory: ViewControllerFactory {
     func root() -> UIViewController {
         return SplashViewController(viewModel: container.sceneViewModelFactory.splashViewModel())
     }
-    
+    func showList(viewModel: ShowListViewModel) -> UIViewController {
+        return ShowListViewController(nibName: name(from: viewModel.layoutIdentifier), viewModel: viewModel, collectionViewCellFactory: container.collectionViewCellFactory)
+    }
 }

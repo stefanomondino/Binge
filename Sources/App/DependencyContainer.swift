@@ -50,7 +50,7 @@ class DefaultAppDependencyContainer: AppDependencyContainer, DependencyContainer
         self.register(for: .viewControllerFactory) { DefaultViewControllerFactory(container: self) }
         self.register(for: .sceneViewModelFactory) { DefaultSceneViewModelFactory(container: self) }
         self.register(for: .itemViewModelFactory) { DefaultItemViewModelFactory(container: self) }
-        self.register(for: .model) { DefaultModelDependencyContainer() }
+        self.register(for: .model) { DefaultModelDependencyContainer(environment: ModelEnvironment()) }
     }
     
     subscript<T>(index: Key) -> T {

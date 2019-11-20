@@ -22,5 +22,10 @@ public protocol Environment {
 }
 
 public struct Configuration {
-    public static var environment: Environment!
+
+    private static var _environment: Environment!
+    public static var environment: Environment {
+        get { return _environment }
+        set { _environment = newValue }
+    }
 }

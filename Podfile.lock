@@ -13,7 +13,7 @@ PODS:
     - Boomerang/Core
   - Differentiator (4.0.1)
   - Gloss (3.1.0)
-  - Hero (1.4.0)
+  - Hero (1.5.0)
   - KeychainAccess (4.1.0)
   - Moya/Core (14.0.0-beta.5):
     - Alamofire (= 5.0.0-rc.3)
@@ -42,7 +42,7 @@ PODS:
   - RxSwift (5.0.1)
   - SkeletonView (1.8.2)
   - SnapKit (5.0.1)
-  - SwiftLint (0.36.0)
+  - SwiftLint (0.37.0)
   - SwiftRichString (3.0.3)
   - Tabman (2.6.3):
     - AutoInsetter (~> 1.8.0)
@@ -112,7 +112,7 @@ CHECKOUT OPTIONS:
     :commit: 249c411e512e3017b6b426d099db448289db7eb3
     :git: https://github.com/Alamofire/AlamofireImage
   Boomerang:
-    :commit: d1d4a87ca16e5269318a47062851a1f163ffa02a
+    :commit: 4328e82c58d4b087bc3586a6d7d51b68faaaafa2
     :git: https://github.com/stefanomondino/newark
   Moya:
     :commit: c3804a0100f444163e9048149710bd4d4fd56274
@@ -123,12 +123,12 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: ca8c0de6906873be89d6deec5c8de279e00bf872
-  AlamofireImage: edf3216fd178a89d63e681e609909d7ac98fa3c6
+  AlamofireImage: 75e7575bb5ca29685342af2901d2cae50353426c
   AutoInsetter: 0b90ca74e36561c340129045a3722c51a0b15c58
   Boomerang: e264ee8ce86ab0d73f06cdb67c259422d3e355a4
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   Gloss: 2dbf87af0e4dd24753f7de933356ff6c5c012426
-  Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
+  Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   Moya: 3c6e86cda7e3a03b68b4d8ff2f50d9ab2d5ac123
   Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
@@ -144,7 +144,7 @@ SPEC CHECKSUMS:
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   SkeletonView: bb27c39857e5492136f02ee8a3aa78de55d12ecd
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  SwiftLint: fc9859e4e1752340664851f667bb1898b9c90114
+  SwiftLint: c078a14d7d7ade75e5507795d185e3da41d844d2
   SwiftRichString: 2aea7d0761f77f6ef234f6028cde761d7eef40e6
   Tabman: 63eae331ae7a9388ae389b1808f1939269fcdece
 

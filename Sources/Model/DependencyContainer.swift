@@ -11,9 +11,9 @@ import Boomerang
 import Moya
 
 public protocol ModelDependencyContainer  {
-       
-       var splashUseCase: SplashUseCase { get }
-       var showListUseCase: ShowListUseCase { get }
+    var imagesUseCase: ImagesUseCase { get }
+    var splashUseCase: SplashUseCase { get }
+    var showListUseCase: ShowListUseCase { get }
 }
 
 public enum ModelDependencyContainerKeys: CaseIterable, Hashable {
@@ -24,6 +24,7 @@ public enum ModelDependencyContainerKeys: CaseIterable, Hashable {
     
     case splashUseCase
     case showListUseCase
+    case imagesUseCase
     
 }
 
@@ -40,8 +41,9 @@ public class DefaultModelDependencyContainer: ModelDependencyContainer, Dependen
 
     public var splashUseCase: SplashUseCase { return self[.splashUseCase] }
     public var showListUseCase: ShowListUseCase { return self[.showListUseCase] }
-    
-    public init() {
+    public var imagesUseCase: ImagesUseCase { return self[.imagesUseCase] }
+    public init(environment: Environment) {
+        Configuration.environment = environment
         self.register(for: .trakTVDataSource) { MoyaProvider<TraktvAPI>(plugins: [/*NetworkLoggerPlugin(verbose: Configuration.environment.debugEnabled, cURL: Configuration.environment.debugEnabled)*/]) }
         self.register(for: .tmdbDataSource) { MoyaProvider<TMDBAPI>(plugins: [/*NetworkLoggerPlugin(verbose: Configuration.environment.debugEnabled, cURL: Configuration.environment.debugEnabled)*/]) }
         self.register(for: .showsRepository) { ShowsAPIRepository(tmdb: self.tmdbDataSource, traktv: self.trakTVDataSource) }
@@ -49,6 +51,7 @@ public class DefaultModelDependencyContainer: ModelDependencyContainer, Dependen
         
         self.register(for: .splashUseCase) { DefaultSplashUseCase() }
         self.register(for: .showListUseCase) { DefaultShowListUseCase(shows: self.showsRepository)}
+        self.register(for: .imagesUseCase) { DefaultImagesUseCase(configuration: self.configurationRepository, shows: self.showsRepository)}
         
     }
     
