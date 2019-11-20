@@ -4,7 +4,6 @@
 //
 
 import UIKit
-import ViewModel
 import RxSwift
 import RxCocoa
 import Boomerang

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ViewModel
 import Boomerang
 import SnapKit
 import RxSwift

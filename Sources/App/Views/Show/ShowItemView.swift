@@ -4,7 +4,6 @@
 //
 
 import UIKit
-import ViewModel
 import SwiftRichString
 import RxSwift
 import RxCocoa
@@ -34,8 +33,9 @@ class ShowItemView: UIView, WithViewModel {
         /// Configure here every property that contributes to change view size
         /// Multiline text bindings should go here
 //        self.title.style = Identifiers.Styles.mainRegularStyle.style
-        self.title.styledText = viewModel.title
+        self.title.text = viewModel.title
         self.counter?.text = ""
+        if self.isPlaceholderForAutosize { return }
         viewModel.image.asDriver(onErrorJustReturn: UIImage())
             .drive(poster.rx.image)
             .disposed(by: disposeBag)
@@ -43,7 +43,7 @@ class ShowItemView: UIView, WithViewModel {
 //        self.counter?.style = Identifiers.Styles.mainFilledButton.style
 //        self.counter?.styledText = viewModel.counter ?? ""
 //
-//        if self.isPlaceholderForAutosize { return }
+
 
 //        viewModel.poster
 //            .asDriver(onErrorJustReturn: UIImage())

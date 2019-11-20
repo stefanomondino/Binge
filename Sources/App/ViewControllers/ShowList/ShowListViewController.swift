@@ -4,7 +4,6 @@
 //
 
 import UIKit
-import ViewModel
 import Boomerang
 import SnapKit
 import RxSwift
@@ -67,14 +66,14 @@ class ShowListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = UIColor.init(white: 0.97, alpha: 1)
         //        guard let viewModel = viewModel else { return }
         let viewModel = self.viewModel
         let collectionViewDataSource = CollectionViewDataSource(viewModel: viewModel,
                                                                 factory: collectionViewCellFactory)
         
         let collectionViewDelegate = ShowListDelegate(viewModel: viewModel, dataSource: collectionViewDataSource)
-            .withItemsPerLine(itemsPerLine: 3)
+//            .withItemsPerLine(itemsPerLine: 3)
             .withInsets { _, _ in return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10) }
             .withItemSpacing { _, _ in return 10 }
             .withLineSpacing { _, _ in return 10 }
