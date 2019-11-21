@@ -12,8 +12,7 @@ import Moya
 
 public protocol ModelDependencyContainer  {
     var imagesUseCase: ImagesUseCase { get }
-    var splashUseCase: SplashUseCase { get }
-    var showListUseCase: ShowListUseCase { get }
+    var useCases: UseCaseFactory { get }
 }
 
 public enum ModelDependencyContainerKeys: CaseIterable, Hashable {
@@ -22,9 +21,9 @@ public enum ModelDependencyContainerKeys: CaseIterable, Hashable {
     case showsRepository
     case configurationRepository
     
-    case splashUseCase
-    case showListUseCase
     case imagesUseCase
+    
+    case useCases
     
 }
 
@@ -38,9 +37,8 @@ public class DefaultModelDependencyContainer: ModelDependencyContainer, Dependen
     var tmdbDataSource: TMDBDataSource { return self[.tmdbDataSource] }
     var showsRepository: ShowsRepository { return self[.showsRepository] }
     var configurationRepository: ConfigurationRepository { return self[.configurationRepository] }
-
-    public var splashUseCase: SplashUseCase { return self[.splashUseCase] }
-    public var showListUseCase: ShowListUseCase { return self[.showListUseCase] }
+    
+    public var useCases: UseCaseFactory { return self[.useCases] }
     public var imagesUseCase: ImagesUseCase { return self[.imagesUseCase] }
     public init(environment: Environment) {
         Configuration.environment = environment
@@ -50,8 +48,8 @@ public class DefaultModelDependencyContainer: ModelDependencyContainer, Dependen
         self.register(for: .showsRepository) { ShowsAPIRepository(tmdb: self.tmdbDataSource, traktv: self.trakTVDataSource) }
         self.register(for: .configurationRepository) { ConfigurationAPIRepository(tmdb: self.tmdbDataSource) }
         
-        self.register(for: .splashUseCase) { DefaultSplashUseCase() }
-        self.register(for: .showListUseCase) { DefaultShowListUseCase(shows: self.showsRepository)}
+        
+        self.register(for: .useCases) { DefaultUseCaseFactory(showsRepository: self.showsRepository) }
         self.register(for: .imagesUseCase) { DefaultImagesUseCase(configuration: self.configurationRepository, shows: self.showsRepository)}
         
     }

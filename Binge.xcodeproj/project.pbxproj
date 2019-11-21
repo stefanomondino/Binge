@@ -100,7 +100,7 @@
 		70DBC8A9220C6D7B00E0BB27 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC8A8220C6D7B00E0BB27 /* SplashViewController.swift */; };
 		70DBC8C6220DC1AE00E0BB27 /* ScenesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC8C5220DC1AE00E0BB27 /* ScenesTests.swift */; };
 		70DBC8C8220DCDAB00E0BB27 /* ViewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC8C7220DCDAB00E0BB27 /* ViewsTests.swift */; };
-		70DBC8D3220EFE8C00E0BB27 /* UseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC8D2220EFE8C00E0BB27 /* UseCases.swift */; };
+		70DBC8D3220EFE8C00E0BB27 /* UseCaseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC8D2220EFE8C00E0BB27 /* UseCaseFactory.swift */; };
 		70DBC8D9220F1E4C00E0BB27 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC8D8220F1E4C00E0BB27 /* Image.swift */; };
 		70DBC8DB220F1F8500E0BB27 /* Aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC8DA220F1F8500E0BB27 /* Aliases.swift */; };
 		70FB573F22A5720300FD8CBD /* Observable+Gloss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FB573D22A5720300FD8CBD /* Observable+Gloss.swift */; };
@@ -252,7 +252,7 @@
 		70DBC8A8220C6D7B00E0BB27 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		70DBC8C5220DC1AE00E0BB27 /* ScenesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenesTests.swift; sourceTree = "<group>"; };
 		70DBC8C7220DCDAB00E0BB27 /* ViewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewsTests.swift; sourceTree = "<group>"; };
-		70DBC8D2220EFE8C00E0BB27 /* UseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCases.swift; sourceTree = "<group>"; };
+		70DBC8D2220EFE8C00E0BB27 /* UseCaseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseFactory.swift; sourceTree = "<group>"; };
 		70DBC8D8220F1E4C00E0BB27 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		70DBC8DA220F1F8500E0BB27 /* Aliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliases.swift; sourceTree = "<group>"; };
 		70FB573D22A5720300FD8CBD /* Observable+Gloss.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Gloss.swift"; sourceTree = "<group>"; };
@@ -500,7 +500,7 @@
 		70AE55A42212E80D00F27DAE /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				70DBC8D2220EFE8C00E0BB27 /* UseCases.swift */,
+				70DBC8D2220EFE8C00E0BB27 /* UseCaseFactory.swift */,
 				70AE55AA2212E99700F27DAE /* SplashUseCase.swift */,
 				A25EC48937D2C08631D0A798 /* ImagesUseCase.swift */,
 				704891C52312D0850022397E /* ShowListUseCase.swift */,
@@ -1175,7 +1175,7 @@
 				701C465A222FBA6D00BFFA4A /* Reachability+Rx.swift in Sources */,
 				70AE559E2212E6F100F27DAE /* TraktvAPI.swift in Sources */,
 				70FB574022A5720300FD8CBD /* Response+Gloss.swift in Sources */,
-				70DBC8D3220EFE8C00E0BB27 /* UseCases.swift in Sources */,
+				70DBC8D3220EFE8C00E0BB27 /* UseCaseFactory.swift in Sources */,
 				701C4660222FBAEC00BFFA4A /* Scheduler.swift in Sources */,
 				7019D867230EADD00065770C /* SplashUseCase.swift in Sources */,
 				70AE55AD2212EB0600F27DAE /* Repositories.swift in Sources */,

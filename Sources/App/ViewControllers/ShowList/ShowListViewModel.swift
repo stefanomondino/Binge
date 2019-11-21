@@ -33,7 +33,6 @@ class ShowListViewModel: RxListViewModel {
     let useCase: ShowListUseCase
     init(itemViewModelFactory: ItemViewModelFactory,
          useCase: ShowListUseCase) {
-//        self.downloadClosure = downloadClosure
         self.useCase = useCase
         self.itemViewModelFactory = itemViewModelFactory
     }
@@ -68,7 +67,7 @@ class ShowListViewModel: RxListViewModel {
             
             let currentPage = section.items.count / 20
             return self.useCase
-            .popular(currentPage: currentPage + 1, pageSize: 20)
+            .shows(currentPage: currentPage + 1, pageSize: 20)
 //                .downloadClosure(currentPage + 1, 20)
                 .share()
                 .debug()

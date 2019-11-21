@@ -14,26 +14,22 @@ protocol SceneViewModelFactory {
 //    func showDetail(show: Show) -> ShowDetailViewModel
     func splashViewModel() -> SplashViewModel
     func popularShows() -> ShowListViewModel
+    func trendingShows() -> ShowListViewModel
 }
 
 struct DefaultSceneViewModelFactory: SceneViewModelFactory {
     
     let container: AppDependencyContainer
+    
     func splashViewModel() -> SplashViewModel {
-        return SplashViewModel(routeFactory: container.routeFactory, useCase: container.model.splashUseCase)
+        return SplashViewModel(routeFactory: container.routeFactory, useCase: container.model.useCases.splash)
     }
-//    func popularShows() -> ShowListViewModel {
-//        return ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory) { current, total in
-//            return self.container.model.showListUseCase.popular(currentPage: current, pageSize: total).map { $0 }
-//        }
-//    }
+
     func popularShows() -> ShowListViewModel {
-        return ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory, useCase: container.model.showListUseCase)
+        return ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory, useCase: container.model.useCases.popularShows)
     }
-//    func schedule() -> ListViewModel & NavigationViewModel {
-//        return ScheduleViewModel(itemViewModelFactory: container.itemViewModelFactory, routeFactory: container.routeFactory)
-//    }
-//    func showDetail(show: Show) -> ShowDetailViewModel {
-//        return ShowDetailViewModel(show: show)
-//    }
+    
+    func trendingShows() -> ShowListViewModel {
+        return ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory, useCase: container.model.useCases.trendingShows)
+    }
 }
