@@ -30,15 +30,15 @@ class LoadMoreItemView: UIView, WithViewModel {
 
     func configure(with viewModel: ViewModel) {
         self.disposeBag = DisposeBag()
-
+        guard let viewModel = viewModel as? LoadMoreItemViewModel else { return }
         /// Configure here every property that contributes to change view size
         /// Multiline text bindings should go here       
     
-//        if self.isPlaceholderForAutosize { return }
+        if self.isPlaceholderForAutosize { return }
 //
 //        viewModel.start().disposed(by: disposeBag)
+        viewModel.reload().disposed(by: disposeBag)
         activityIndicator.startAnimating()
-        
         /// Configure here every property that doesn't contributes to change view size
         /// UIImage bindings should go here
     }

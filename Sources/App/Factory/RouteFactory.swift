@@ -25,7 +25,7 @@ class MainRouteFactory: RouteFactory {
     }
     func homeRoute() -> Route {
         return RestartRoute {
-            self.container.viewControllerFactory.showList(viewModel: self.container.sceneViewModelFactory.showListViewModel())
+            self.container.viewControllerFactory.showList(viewModel: self.container.sceneViewModelFactory.popularShows())
         }
     }
     func restartRoute() -> Route {

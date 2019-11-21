@@ -9,25 +9,25 @@
 import Foundation
 import Boomerang
 import Model
+import RxSwift
 
 protocol ItemViewModelFactory {
-//    func header(title: String) -> ViewModel
-    func show(_ show: Show) -> ViewModel
+    //    func header(title: String) -> ViewModel
+    func show(_ show: WithShow) -> ViewModel
+    func loadMore(_ closure: @escaping () -> Disposable) -> ViewModel
 }
 
 struct DefaultItemViewModelFactory: ItemViewModelFactory {
     let container: AppDependencyContainer
-    func show(_ show: Show) -> ViewModel {
-        return ShowItemViewModel(show: show,
-                                 layoutIdentifier: ViewIdentifier.show,
-                                 imageUseCase: container.model.imagesUseCase
-                )
+    
+    func loadMore(_ closure: @escaping () -> Disposable) -> ViewModel {
+        LoadMoreItemViewModel(closure)
     }
-//    func header(title: String) -> ViewModel {
-//        return HeaderViewModel(title: title)
-//    }
-//
-//    func episode(_ episode: Episode) -> ViewModel {
-//        return ShowViewModel(episode: episode)
-//    }
+    
+    func show(_ show: WithShow) -> ViewModel {
+        ShowItemViewModel(show: show.show,
+                          layoutIdentifier: ViewIdentifier.show,
+                          imageUseCase: container.model.imagesUseCase)
+    }
+
 }

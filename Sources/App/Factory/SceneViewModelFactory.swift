@@ -13,7 +13,7 @@ protocol SceneViewModelFactory {
 //    func schedule() -> ListViewModel & NavigationViewModel
 //    func showDetail(show: Show) -> ShowDetailViewModel
     func splashViewModel() -> SplashViewModel
-    func showListViewModel() -> ShowListViewModel
+    func popularShows() -> ShowListViewModel
 }
 
 struct DefaultSceneViewModelFactory: SceneViewModelFactory {
@@ -22,8 +22,13 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
     func splashViewModel() -> SplashViewModel {
         return SplashViewModel(routeFactory: container.routeFactory, useCase: container.model.splashUseCase)
     }
-    func showListViewModel() -> ShowListViewModel {
-        return ShowListViewModel(useCase: container.model.showListUseCase, itemViewModelFactory: container.itemViewModelFactory)
+//    func popularShows() -> ShowListViewModel {
+//        return ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory) { current, total in
+//            return self.container.model.showListUseCase.popular(currentPage: current, pageSize: total).map { $0 }
+//        }
+//    }
+    func popularShows() -> ShowListViewModel {
+        return ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory, useCase: container.model.showListUseCase)
     }
 //    func schedule() -> ListViewModel & NavigationViewModel {
 //        return ScheduleViewModel(itemViewModelFactory: container.itemViewModelFactory, routeFactory: container.routeFactory)

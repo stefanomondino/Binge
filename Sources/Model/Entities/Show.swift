@@ -49,6 +49,7 @@ public protocol Show: Codable, WithShow {
     var title: String { get }
     var year: Int? { get }
     var ids: Ids { get }
+    var uniqueIdentifier: String { get }
 }
 public protocol ShowDetail: Show {
     var overview: String { get }
@@ -63,7 +64,11 @@ public struct Ids: Codable {
     let imdb: String?
     let tvrage: Int?
 }
-
+public extension Show {
+    var uniqueIdentifier: String {
+        "\(ids.trakt)"
+    }
+}
 internal struct ShowItem: Show {
     public let title: String
     let ids: Ids

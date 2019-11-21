@@ -11,6 +11,7 @@ import Boomerang
 import Model
 class ShowItemViewModel: ViewModel {
     let layoutIdentifier: LayoutIdentifier
+    var uniqueIdentifier: UniqueIdentifier { show.uniqueIdentifier }
     let show: Show
     let image: ObservableImage
     

@@ -44,8 +44,9 @@ public class DefaultModelDependencyContainer: ModelDependencyContainer, Dependen
     public var imagesUseCase: ImagesUseCase { return self[.imagesUseCase] }
     public init(environment: Environment) {
         Configuration.environment = environment
-        self.register(for: .trakTVDataSource) { MoyaProvider<TraktvAPI>(plugins: [/*NetworkLoggerPlugin(verbose: Configuration.environment.debugEnabled, cURL: Configuration.environment.debugEnabled)*/]) }
-        self.register(for: .tmdbDataSource) { MoyaProvider<TMDBAPI>(plugins: [/*NetworkLoggerPlugin(verbose: Configuration.environment.debugEnabled, cURL: Configuration.environment.debugEnabled)*/]) }
+        let networkLoggerPlugin = NetworkLoggerPlugin(configuration: NetworkLoggerPlugin.Configuration(logOptions: [.formatRequestAscURL]))
+        self.register(for: .trakTVDataSource) { MoyaProvider<TraktvAPI>(plugins: [networkLoggerPlugin]) }
+        self.register(for: .tmdbDataSource) { MoyaProvider<TMDBAPI>(plugins: [networkLoggerPlugin]) }
         self.register(for: .showsRepository) { ShowsAPIRepository(tmdb: self.tmdbDataSource, traktv: self.trakTVDataSource) }
         self.register(for: .configurationRepository) { ConfigurationAPIRepository(tmdb: self.tmdbDataSource) }
         
