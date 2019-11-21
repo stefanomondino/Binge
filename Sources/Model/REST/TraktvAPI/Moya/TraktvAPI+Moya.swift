@@ -18,7 +18,7 @@ extension TraktvAPI: TargetType {
         return [baseURL.absoluteString, path, method.rawValue, parameters.map { $0.key + "_\($0.value)" }.joined()].joined()
     }
     var baseURL: URL {
-        return Model.Configuration.environment.traktBaseURL
+        return Configuration.environment.traktBaseURL
     }
     
     var path: String {
@@ -83,7 +83,5 @@ extension TraktvAPI: TargetType {
         default: return parameters
         }
         
-    }
-
-    
+    }   
 }

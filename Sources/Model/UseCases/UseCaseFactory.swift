@@ -32,25 +32,16 @@ enum UseCaseKeys: CaseIterable, Hashable {
 
 class DefaultUseCaseFactory: UseCaseFactory, DependencyContainer {
     var container: [UseCaseKeys : () -> Any] = [:]
-    
     typealias Key = UseCaseKeys
     
-//    let dependencyContainer: ModelDependencyContainer
     var splash: SplashUseCase { self[.splash] }
     var popularShows: ShowListUseCase { self[.popularShows]}
     var trendingShows: ShowListUseCase { self[.trendingShows] }
     
-    init (showsRepository: ShowsRepository) {
-        self.register(for: .splash) { DefaultSplashUseCase() }
-        self.register(for: .popularShows) { PopularShowsUseCase(repository: showsRepository)}
-        self.register(for: .trendingShows) { TrendingShowsUseCase(repository: showsRepository)}
-    }
-    
-    subscript<T>(index: Key) -> T {
-        guard let element: T = resolve(index) else {
-            fatalError("No dependency found for \(index)")
-        }
+    init (dependencyContainer: ModelDependencyContainer) {
         
-        return element
+        self.register(for: .splash) { DefaultSplashUseCase() }
+        self.register(for: .popularShows) { PopularShowsUseCase(repository: dependencyContainer.repositories.shows)}
+        self.register(for: .trendingShows) { TrendingShowsUseCase(repository: dependencyContainer.repositories.shows) }
     }
 }

@@ -17,7 +17,7 @@ protocol AppDependencyContainer  {
     var viewControllerFactory: ViewControllerFactory { get }
     var sceneViewModelFactory: SceneViewModelFactory { get }
     var itemViewModelFactory: ItemViewModelFactory { get }
-    var model: ModelDependencyContainer { get }
+    var model: UseCaseDependencyContainer { get }
 }
 
 enum DependencyContainerKeys: CaseIterable, Hashable {
@@ -36,7 +36,7 @@ class DefaultAppDependencyContainer: AppDependencyContainer, DependencyContainer
     
     var container: [Key: () -> Any ] = [:]
     
-    var model: ModelDependencyContainer { self[.model] }
+    var model: UseCaseDependencyContainer { self[.model] }
     var routeFactory: RouteFactory { self[.routeFactory] }
     var viewFactory: ViewFactory { self[.viewFactory] }
     var viewControllerFactory: ViewControllerFactory { self[.viewControllerFactory] }
@@ -44,6 +44,7 @@ class DefaultAppDependencyContainer: AppDependencyContainer, DependencyContainer
     var sceneViewModelFactory: SceneViewModelFactory { self[.sceneViewModelFactory] }
     var itemViewModelFactory: ItemViewModelFactory { self[.itemViewModelFactory] }
     init() {
+        
         self.register(for: .routeFactory) { MainRouteFactory(container: self) }
         self.register(for: .viewFactory) { MainViewFactory()}
         self.register(for: .collectionViewCellFactory) { MainCollectionViewCellFactory(viewFactory: self.viewFactory) }

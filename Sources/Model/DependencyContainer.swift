@@ -10,56 +10,39 @@ import Foundation
 import Boomerang
 import Moya
 
-public protocol ModelDependencyContainer  {
+public protocol UseCaseDependencyContainer {
     var imagesUseCase: ImagesUseCase { get }
     var useCases: UseCaseFactory { get }
 }
 
-public enum ModelDependencyContainerKeys: CaseIterable, Hashable {
-    case trakTVDataSource
-    case tmdbDataSource
-    case showsRepository
-    case configurationRepository
-    
-    case imagesUseCase
-    
-    case useCases
-    
+protocol ModelDependencyContainer: UseCaseDependencyContainer  {
+
+    var dataSources: DataSourceFactory { get }
+    var repositories: RepositoryFactory { get }
 }
 
+public enum ModelDependencyContainerKeys: CaseIterable, Hashable {
+    case imagesUseCase
+    case dataSources
+    case repositories
+    case useCases
+}
 
 public class DefaultModelDependencyContainer: ModelDependencyContainer, DependencyContainer {
     public typealias Key = ModelDependencyContainerKeys
     
     public var container: [Key: () -> Any ] = [:]
-
-    var trakTVDataSource: TraktTVDataSource { return self[.trakTVDataSource] }
-    var tmdbDataSource: TMDBDataSource { return self[.tmdbDataSource] }
-    var showsRepository: ShowsRepository { return self[.showsRepository] }
-    var configurationRepository: ConfigurationRepository { return self[.configurationRepository] }
     
     public var useCases: UseCaseFactory { return self[.useCases] }
     public var imagesUseCase: ImagesUseCase { return self[.imagesUseCase] }
-    public init(environment: Environment) {
+     var dataSources: DataSourceFactory { return self[.dataSources] }
+     var repositories: RepositoryFactory { return self[.repositories] }
+     public init(environment: Environment) {
         Configuration.environment = environment
-        let networkLoggerPlugin = NetworkLoggerPlugin(configuration: NetworkLoggerPlugin.Configuration(logOptions: [.formatRequestAscURL]))
-        self.register(for: .trakTVDataSource) { MoyaProvider<TraktvAPI>(plugins: [networkLoggerPlugin]) }
-        self.register(for: .tmdbDataSource) { MoyaProvider<TMDBAPI>(plugins: [networkLoggerPlugin]) }
-        self.register(for: .showsRepository) { ShowsAPIRepository(tmdb: self.tmdbDataSource, traktv: self.trakTVDataSource) }
-        self.register(for: .configurationRepository) { ConfigurationAPIRepository(tmdb: self.tmdbDataSource) }
-        
-        
-        self.register(for: .useCases) { DefaultUseCaseFactory(showsRepository: self.showsRepository) }
-        self.register(for: .imagesUseCase) { DefaultImagesUseCase(configuration: self.configurationRepository, shows: self.showsRepository)}
-        
-    }
-    
-    subscript<T>(index: Key) -> T {
-        guard let element: T = resolve(index) else {
-            fatalError("No dependency found for \(index)")
-        }
-        
-        return element
+
+        self.register(for: .dataSources) { DefaultDataSourceFactory(dependencyContainer: self) }
+        self.register(for: .repositories) { DefaultRepositoryFactory(dependencyContainer: self) }
+        self.register(for: .useCases) { DefaultUseCaseFactory(dependencyContainer: self) }
     }
 }
 
@@ -70,8 +53,7 @@ extension DefaultModelDependencyContainer {
         ModelDependencyContainerKeys.allCases.forEach {
             //expect no throw
             let v: Any = self[$0]
-            print(v)
-            
+            print(v)            
         }
     }
 }
