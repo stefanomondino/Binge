@@ -14,6 +14,7 @@ protocol AppDependencyContainer  {
     var environment: Environment { get }
     var routeFactory: RouteFactory { get }
     var viewFactory: ViewFactory { get }
+    var styleFactory: StyleFactory { get }
     var collectionViewCellFactory: CollectionViewCellFactory { get }
     var viewControllerFactory: ViewControllerFactory { get }
     var sceneViewModelFactory: SceneViewModelFactory { get }
@@ -21,33 +22,37 @@ protocol AppDependencyContainer  {
     var model: UseCaseDependencyContainer { get }
 }
 
-enum DependencyContainerKeys: CaseIterable, Hashable {
+enum DependencyContainerKeys: String, CaseIterable, Hashable {
     case routeFactory
     case collectionViewCellFactory
     case viewFactory
     case viewControllerFactory
     case sceneViewModelFactory
     case itemViewModelFactory
+    case styleFactory
     case model
 }
-
 
 class DefaultAppDependencyContainer: AppDependencyContainer, DependencyContainer {
     
     var container = Container<DependencyContainerKeys>()
+    
     let environment: Environment = MainEnvironment()
+    
     var model: UseCaseDependencyContainer { self[.model] }
     var routeFactory: RouteFactory { self[.routeFactory] }
     var viewFactory: ViewFactory { self[.viewFactory] }
+    var styleFactory: StyleFactory { self[.styleFactory] }
     var viewControllerFactory: ViewControllerFactory { self[.viewControllerFactory] }
     var collectionViewCellFactory: CollectionViewCellFactory { self[.collectionViewCellFactory] }
     var sceneViewModelFactory: SceneViewModelFactory { self[.sceneViewModelFactory] }
     var itemViewModelFactory: ItemViewModelFactory { self[.itemViewModelFactory] }
+    
     init() {
         
-        
         self.register(for: .routeFactory) { MainRouteFactory(container: self) }
-        self.register(for: .viewFactory) { MainViewFactory()}
+        self.register(for: .styleFactory, scope: .singleton) { DefaultStyleFactory(container: self) }
+        self.register(for: .viewFactory) { MainViewFactory(styleFactory: self.styleFactory)}
         self.register(for: .collectionViewCellFactory) { MainCollectionViewCellFactory(viewFactory: self.viewFactory) }
         self.register(for: .viewControllerFactory) { DefaultViewControllerFactory(container: self) }
         self.register(for: .sceneViewModelFactory) { DefaultSceneViewModelFactory(container: self) }

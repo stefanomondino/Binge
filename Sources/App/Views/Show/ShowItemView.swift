@@ -15,16 +15,13 @@ import Boomerang
     
 */
 class ShowItemView: UIView, WithViewModel {
-    
-    
+
     @IBOutlet weak var poster: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var counter: UILabel?
     var disposeBag = DisposeBag()
     override func awakeFromNib() {
         super.awakeFromNib()
-        layer.cornerRadius = 8
-        layer.masksToBounds = true
     }
 
     func configure(with viewModel: ViewModel) {
@@ -33,8 +30,13 @@ class ShowItemView: UIView, WithViewModel {
         /// Configure here every property that contributes to change view size
         /// Multiline text bindings should go here
 //        self.title.style = Identifiers.Styles.mainRegularStyle.style
-        self.title.text = viewModel.title
+        
         self.counter?.text = ""
+        
+        viewModel.styleFactory.apply(.subtitle, to: title)
+        viewModel.styleFactory.apply(.card, to: self)
+        title.text = viewModel.title
+        
         if self.isPlaceholderForAutosize { return }
         viewModel.image.asDriver(onErrorJustReturn: UIImage())
             .drive(poster.rx.image)

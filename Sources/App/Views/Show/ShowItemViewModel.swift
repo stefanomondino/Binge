@@ -14,16 +14,17 @@ class ShowItemViewModel: ViewModel {
     var uniqueIdentifier: UniqueIdentifier { show.uniqueIdentifier }
     let show: Show
     let image: ObservableImage
-    
+    let styleFactory: StyleFactory
     var title: String {
         return show.title
     }
     init(show: Show,
          layoutIdentifier: LayoutIdentifier,
-         imageUseCase: ImagesUseCase
+         imageUseCase: ImagesUseCase,
+         styleFactory: StyleFactory
     ) {
         self.layoutIdentifier = layoutIdentifier
-//        self.uniqueIdentifier = show
+        self.styleFactory = styleFactory
         self.show = show
         
         self.image = imageUseCase

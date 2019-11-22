@@ -19,10 +19,15 @@ enum ViewIdentifier: String, LayoutIdentifier {
 }
 
 class MainViewFactory: ViewFactory {
+    let styleFactory: StyleFactory
+    init(styleFactory: StyleFactory) {
+        self.styleFactory = styleFactory
+    }
     func view(from itemIdentifier: LayoutIdentifier) -> UIView? {
         return nib(from: itemIdentifier)?
         .instantiate(withOwner: nil, options: nil)
         .first as? UIView
+//         return (view as? UIView & WithStyle)?.withStyleFactory(styleFactory) ?? view
     }
 
     func nib(from itemIdentifier: LayoutIdentifier) -> UINib? {
@@ -35,3 +40,4 @@ class MainViewFactory: ViewFactory {
         return identifier.prefix(1).uppercased() + identifier.dropFirst() + "ItemView"
     }
 }
+

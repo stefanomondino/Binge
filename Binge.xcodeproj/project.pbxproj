@@ -90,6 +90,8 @@
 		70AE559C2212E6F100F27DAE /* TraktvAPI+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55972212E6F000F27DAE /* TraktvAPI+Moya.swift */; };
 		70AE559E2212E6F100F27DAE /* TraktvAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55992212E6F000F27DAE /* TraktvAPI.swift */; };
 		70AE55AD2212EB0600F27DAE /* RepositoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55AC2212EB0600F27DAE /* RepositoryFactory.swift */; };
+		70D1E42623883A240007EF9B /* StyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1E42523883A240007EF9B /* StyleFactory.swift */; };
+		70D1E428238840940007EF9B /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1E427238840940007EF9B /* Styles.swift */; };
 		70DBC827220C3E2300E0BB27 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC826220C3E2300E0BB27 /* AppDelegate.swift */; };
 		70DBC82E220C3E2400E0BB27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70DBC82D220C3E2400E0BB27 /* Assets.xcassets */; };
 		70DBC831220C3E2400E0BB27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70DBC82F220C3E2400E0BB27 /* LaunchScreen.storyboard */; };
@@ -238,6 +240,8 @@
 		70AE55992212E6F000F27DAE /* TraktvAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraktvAPI.swift; sourceTree = "<group>"; };
 		70AE55AA2212E99700F27DAE /* SplashUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashUseCase.swift; sourceTree = "<group>"; };
 		70AE55AC2212EB0600F27DAE /* RepositoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFactory.swift; sourceTree = "<group>"; };
+		70D1E42523883A240007EF9B /* StyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleFactory.swift; sourceTree = "<group>"; };
+		70D1E427238840940007EF9B /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		70DBC823220C3E2300E0BB27 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70DBC826220C3E2300E0BB27 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70DBC82D220C3E2400E0BB27 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -393,6 +397,7 @@
 			isa = PBXGroup;
 			children = (
 				706CE1402385AD930070FC4E /* RouteFactory.swift */,
+				70D1E42523883A240007EF9B /* StyleFactory.swift */,
 				706CE1412385AD930070FC4E /* ItemViewModelFactory.swift */,
 				706CE1422385AD930070FC4E /* CollectionViewCellFactory.swift */,
 				706CE1432385AD930070FC4E /* MainViewFactory.swift */,
@@ -534,6 +539,14 @@
 			path = Repositories;
 			sourceTree = "<group>";
 		};
+		70D1E429238840A10007EF9B /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				70D1E427238840940007EF9B /* Styles.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
 		70DBC81A220C3E2300E0BB27 = {
 			isa = PBXGroup;
 			children = (
@@ -611,6 +624,7 @@
 		70DBC83E220C3F3C00E0BB27 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				70D1E429238840A10007EF9B /* Styles */,
 				706CE15C2387F5CD0070FC4E /* Environment */,
 				706CE13F2385AD930070FC4E /* Factory */,
 				706CE13B2385AD920070FC4E /* Routes */,
@@ -1166,6 +1180,7 @@
 				706CE1492385AD930070FC4E /* RouteFactory.swift in Sources */,
 				706CE15B238679240070FC4E /* LoadMoreItemViewModel.swift in Sources */,
 				07ABA28BC4F731FB6CD9ACBD /* LoadMoreItemView.xib in Sources */,
+				70D1E428238840940007EF9B /* Styles.swift in Sources */,
 				706CE1512385ADE30070FC4E /* SplashViewModel.swift in Sources */,
 				706CE1482385AD930070FC4E /* ModalRoute.swift in Sources */,
 				706CE14B2385AD930070FC4E /* CollectionViewCellFactory.swift in Sources */,
@@ -1173,6 +1188,7 @@
 				706CE1472385AD930070FC4E /* RestartRoute.swift in Sources */,
 				706CE1462385AD930070FC4E /* AlertRoute.swift in Sources */,
 				A7294EF60FF828B6E3F721A9 /* ShowPosterItemView.xib in Sources */,
+				70D1E42623883A240007EF9B /* StyleFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
