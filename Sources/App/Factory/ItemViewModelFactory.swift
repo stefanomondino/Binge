@@ -27,7 +27,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
     func show(_ show: WithShow) -> ViewModel {
         ShowItemViewModel(show: show.show,
                           layoutIdentifier: ViewIdentifier.show,
-                          imageUseCase: container.model.imagesUseCase)
+                          imageUseCase: container.model.useCases.images)
     }
 
 }

@@ -112,7 +112,7 @@ CHECKOUT OPTIONS:
     :commit: 249c411e512e3017b6b426d099db448289db7eb3
     :git: https://github.com/Alamofire/AlamofireImage
   Boomerang:
-    :commit: 44ca2a3e2e1de1682c7c4e1098e894134f86d85a
+    :commit: cdbf4fb3420191faca386b494fabae70a01f2eba
     :git: https://github.com/stefanomondino/newark
   Moya:
     :commit: c3804a0100f444163e9048149710bd4d4fd56274
@@ -123,14 +123,14 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: ca8c0de6906873be89d6deec5c8de279e00bf872
-  AlamofireImage: edf3216fd178a89d63e681e609909d7ac98fa3c6
+  AlamofireImage: 75e7575bb5ca29685342af2901d2cae50353426c
   AutoInsetter: 0b90ca74e36561c340129045a3722c51a0b15c58
   Boomerang: e264ee8ce86ab0d73f06cdb67c259422d3e355a4
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   Gloss: 2dbf87af0e4dd24753f7de933356ff6c5c012426
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
-  Moya: 2c16c3fe92eda302070213452281b59198f946d8
+  Moya: 3c6e86cda7e3a03b68b4d8ff2f50d9ab2d5ac123
   Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
   Pageboy: 3794c578aae5fcce06e90b3ed4a0ad6b807d75bb
   PluginLayout: 9018e1c08cec1efe49ad659a9f3887b65b360f05
@@ -148,6 +148,6 @@ SPEC CHECKSUMS:
   SwiftRichString: 2aea7d0761f77f6ef234f6028cde761d7eef40e6
   Tabman: 63eae331ae7a9388ae389b1808f1939269fcdece
 
-PODFILE CHECKSUM: fbe0da6f9eda6f9df39d4ea3a88cee06adc7b5e3
+PODFILE CHECKSUM: a03ef1c66de4f98278325452c3002f8c013d3225
 
 COCOAPODS: 1.7.5

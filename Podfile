@@ -10,6 +10,8 @@ def ios_platform
 end
 
 def shared_pods
+#  pod "Boomerang/RxSwift", :path => "../../newark"
+#  pod "Boomerang/UIKit", :path => "../../newark"
   pod "Boomerang/RxSwift", :git => "https://github.com/stefanomondino/newark", :branch => "master"
   pod "Boomerang/UIKit", :git => "https://github.com/stefanomondino/newark", :branch => "master"
 end

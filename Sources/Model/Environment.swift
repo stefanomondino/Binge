@@ -29,12 +29,3 @@ public struct Configuration {
         set { _environment = newValue }
     }
 }
-
-extension DependencyContainer {
-    subscript<T>(index: Key) -> T {
-        guard let element: T = resolve(index) else {
-            fatalError("No dependency found for \(index)")
-        }
-        return element
-    }
-}

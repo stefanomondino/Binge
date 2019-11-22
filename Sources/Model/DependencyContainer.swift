@@ -11,7 +11,6 @@ import Boomerang
 import Moya
 
 public protocol UseCaseDependencyContainer {
-    var imagesUseCase: ImagesUseCase { get }
     var useCases: UseCaseFactory { get }
 }
 
@@ -22,27 +21,24 @@ protocol ModelDependencyContainer: UseCaseDependencyContainer  {
 }
 
 public enum ModelDependencyContainerKeys: CaseIterable, Hashable {
-    case imagesUseCase
     case dataSources
     case repositories
     case useCases
 }
 
 public class DefaultModelDependencyContainer: ModelDependencyContainer, DependencyContainer {
-    public typealias Key = ModelDependencyContainerKeys
     
-    public var container: [Key: () -> Any ] = [:]
+    public let container = Container<ModelDependencyContainerKeys>()
     
     public var useCases: UseCaseFactory { return self[.useCases] }
-    public var imagesUseCase: ImagesUseCase { return self[.imagesUseCase] }
      var dataSources: DataSourceFactory { return self[.dataSources] }
      var repositories: RepositoryFactory { return self[.repositories] }
      public init(environment: Environment) {
         Configuration.environment = environment
 
-        self.register(for: .dataSources) { DefaultDataSourceFactory(dependencyContainer: self) }
-        self.register(for: .repositories) { DefaultRepositoryFactory(dependencyContainer: self) }
-        self.register(for: .useCases) { DefaultUseCaseFactory(dependencyContainer: self) }
+        self.register(for: .dataSources, scope: .singleton) { DefaultDataSourceFactory(dependencyContainer: self) }
+        self.register(for: .repositories, scope: .singleton) { DefaultRepositoryFactory(dependencyContainer: self) }
+        self.register(for: .useCases, scope: .singleton) { DefaultUseCaseFactory(dependencyContainer: self) }
     }
 }
 

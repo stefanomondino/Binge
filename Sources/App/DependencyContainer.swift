@@ -32,9 +32,8 @@ enum DependencyContainerKeys: CaseIterable, Hashable {
 
 
 class DefaultAppDependencyContainer: AppDependencyContainer, DependencyContainer {
-    typealias Key = DependencyContainerKeys
     
-    var container: [Key: () -> Any ] = [:]
+    var container = Container<DependencyContainerKeys>()
     
     var model: UseCaseDependencyContainer { self[.model] }
     var routeFactory: RouteFactory { self[.routeFactory] }
@@ -51,14 +50,6 @@ class DefaultAppDependencyContainer: AppDependencyContainer, DependencyContainer
         self.register(for: .viewControllerFactory) { DefaultViewControllerFactory(container: self) }
         self.register(for: .sceneViewModelFactory) { DefaultSceneViewModelFactory(container: self) }
         self.register(for: .itemViewModelFactory) { DefaultItemViewModelFactory(container: self) }
-        self.register(for: .model) { DefaultModelDependencyContainer(environment: ModelEnvironment()) }
-    }
-    
-    subscript<T>(index: Key) -> T {
-        guard let element: T = resolve(index) else {
-            fatalError("No dependency found for \(index)")
-        }
-        
-        return element
+        self.register(for: .model, scope: .singleton) { DefaultModelDependencyContainer(environment: ModelEnvironment()) }
     }
 }

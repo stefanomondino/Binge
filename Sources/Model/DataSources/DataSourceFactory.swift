@@ -20,7 +20,7 @@ enum DataSourceKeys: CaseIterable, Hashable {
 }
 
 class DefaultDataSourceFactory: DataSourceFactory, DependencyContainer {
-    var container: [DataSourceKeys : () -> Any] = [:]
+    var container = Container<DataSourceKeys>()
     
     var traktv: TraktTVDataSource { self[.traktv] }
     

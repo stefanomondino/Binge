@@ -22,9 +22,8 @@ enum RepositoryKeys: CaseIterable, Hashable {
 class DefaultRepositoryFactory: RepositoryFactory, DependencyContainer {
     var shows: ShowsRepository { self[.shows]}
     var configuration: ConfigurationRepository { self[.configuration] }
-    var container: [Key : () -> Any] = [:]
+    var container = Container<RepositoryKeys>()
     
-    typealias Key = RepositoryKeys
     init(dependencyContainer: ModelDependencyContainer) {
         
         self.register(for: .shows) { ShowsAPIRepository(tmdb: dependencyContainer.dataSources.tmdb, traktv: dependencyContainer.dataSources.traktv) }
