@@ -2,11 +2,19 @@
 import Foundation
 import RxSwift
 
+public enum PageInfo {
+    case popular
+    case trending
+}
+
 public protocol ShowListUseCase {
+    var page: PageInfo { get }
     func shows(currentPage: Int, pageSize: Int) -> Observable<[WithShow]>
 }
 
 public class PopularShowsUseCase: ShowListUseCase {
+
+    public var page: PageInfo { .popular }
     
     let repository: ShowsRepository
     
@@ -22,6 +30,8 @@ public class PopularShowsUseCase: ShowListUseCase {
 }
 
 public class TrendingShowsUseCase: ShowListUseCase {
+    
+    public var page: PageInfo { .trending }
     
     let repository: ShowsRepository
     

@@ -12,7 +12,16 @@ import RxSwift
 import RxRelay
 import Model
 
-class ShowListViewModel: RxListViewModel {
+extension PageInfo {
+    var title: String {
+        switch self {
+        case .popular: return "POPULAR"
+        case .trending: return "TRENDING"
+        }
+    }
+}
+
+class ShowListViewModel: RxListViewModel, WithPage {
     
     typealias ShowListDownloadClosure = (_ current: Int, _ total: Int) -> Observable<[WithShow]>
     
@@ -25,6 +34,11 @@ class ShowListViewModel: RxListViewModel {
 //    let downloadClosure: ShowListDownloadClosure
     let itemViewModelFactory: ItemViewModelFactory
     
+    var pageTitle: String { useCase.page.title }
+    
+    var pageIcon: UIImage? {
+        return nil
+    }
 //    init(itemViewModelFactory: ItemViewModelFactory,
 //         downloadClosure: @escaping ShowListDownloadClosure) {
 //        self.downloadClosure = downloadClosure

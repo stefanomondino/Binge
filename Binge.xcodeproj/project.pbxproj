@@ -78,6 +78,7 @@
 		706CE15B238679240070FC4E /* LoadMoreItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CE15A238679240070FC4E /* LoadMoreItemViewModel.swift */; };
 		706CE1602387F8D20070FC4E /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CE15F2387F8D20070FC4E /* Environment.swift */; };
 		708139AE22293D7D00A76ABC /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708139AD22293D7D00A76ABC /* AccessToken.swift */; };
+		70A9185023892C2B007740A7 /* WithPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A9184F23892C2B007740A7 /* WithPage.swift */; };
 		70AE556C2212DC6000F27DAE /* Expectation+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55692212DC6000F27DAE /* Expectation+Ext.swift */; };
 		70AE556E2212DC6000F27DAE /* Expectation+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55692212DC6000F27DAE /* Expectation+Ext.swift */; };
 		70AE556F2212DC6000F27DAE /* ViewModel+Interaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE556A2212DC6000F27DAE /* ViewModel+Interaction.swift */; };
@@ -232,6 +233,7 @@
 		706CE15A238679240070FC4E /* LoadMoreItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreItemViewModel.swift; sourceTree = "<group>"; };
 		706CE15F2387F8D20070FC4E /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		708139AD22293D7D00A76ABC /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
+		70A9184F23892C2B007740A7 /* WithPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithPage.swift; sourceTree = "<group>"; };
 		70AE55692212DC6000F27DAE /* Expectation+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Expectation+Ext.swift"; sourceTree = "<group>"; };
 		70AE556A2212DC6000F27DAE /* ViewModel+Interaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewModel+Interaction.swift"; sourceTree = "<group>"; };
 		70AE556B2212DC6000F27DAE /* Expectation+Blocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Expectation+Blocking.swift"; sourceTree = "<group>"; };
@@ -565,6 +567,7 @@
 		70D1E42E2389222E0007EF9B /* Pager */ = {
 			isa = PBXGroup;
 			children = (
+				70A9184F23892C2B007740A7 /* WithPage.swift */,
 				70D1E42F238922460007EF9B /* PagerViewController.swift */,
 				70D1E435238927C20007EF9B /* PagerViewModel.swift */,
 				70D1E4332389275B0007EF9B /* PagerDataSource.swift */,
@@ -1212,6 +1215,7 @@
 				706CE15B238679240070FC4E /* LoadMoreItemViewModel.swift in Sources */,
 				70D1E42D238853A90007EF9B /* CardStyle.swift in Sources */,
 				07ABA28BC4F731FB6CD9ACBD /* LoadMoreItemView.xib in Sources */,
+				70A9185023892C2B007740A7 /* WithPage.swift in Sources */,
 				70D1E428238840940007EF9B /* Styles.swift in Sources */,
 				706CE1512385ADE30070FC4E /* SplashViewModel.swift in Sources */,
 				706CE1482385AD930070FC4E /* ModalRoute.swift in Sources */,

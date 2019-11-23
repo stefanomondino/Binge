@@ -19,7 +19,10 @@ class PagerDataSource: PageboyViewControllerDataSource, TMBarDataSource {
         self.viewModel = viewModel
         self.factory = factory
     }
-    
+    private func item(at index: PageboyViewController.PageIndex) -> ViewModel {
+        let items = viewModel.sections.flatMap { $0.items }
+        return items[index]
+    }
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
         return viewModel
             .sections
@@ -33,9 +36,9 @@ class PagerDataSource: PageboyViewControllerDataSource, TMBarDataSource {
         //            let viewController = viewModel.sceneIdentifier.scene() as?  (UIViewController & ViewModelCompatibleType)  else {
         //            return nil
         //        }
-        let items = viewModel.sections.flatMap { $0.items }
+        
         guard let viewController = factory
-            .pageRoute(from: items[index])
+            .pageRoute(from: item(at: index))
             .createScene() else { return nil }
         
         if #available(iOS 11.0, *) {
@@ -54,8 +57,9 @@ class PagerDataSource: PageboyViewControllerDataSource, TMBarDataSource {
     }
     
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
-        //        let title = (self.viewModel.mainViewModel(at: IndexPath(indexes: [index])) as? PageViewModel)?.mainTitle ?? ""
-        return TMBarItem(title: "TEST")
+        let title = (item(at: index) as? WithPage)?
+            .pageTitle ?? ""
+        return TMBarItem(title: title)
     }
     
 }
