@@ -33,7 +33,7 @@ class ShowItemView: UIView, WithViewModel {
         
         self.counter?.text = ""
         
-        viewModel.styleFactory.apply(.subtitle, to: title)
+        viewModel.styleFactory.apply(.title, to: title)
         viewModel.styleFactory.apply(.card, to: self)
         title.text = viewModel.title
         

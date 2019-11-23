@@ -15,11 +15,19 @@ protocol SceneViewModelFactory {
     func splashViewModel() -> SplashViewModel
     func popularShows() -> ShowListViewModel
     func trendingShows() -> ShowListViewModel
+    func showsPager() -> ListViewModel
 }
 
 struct DefaultSceneViewModelFactory: SceneViewModelFactory {
     
     let container: AppDependencyContainer
+    
+    func showsPager() -> ListViewModel {
+        return PagerViewModel(pages:[
+            popularShows(),
+            trendingShows()
+        ])
+    }
     
     func splashViewModel() -> SplashViewModel {
         return SplashViewModel(routeFactory: container.routeFactory, useCase: container.model.useCases.splash)

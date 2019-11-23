@@ -73,7 +73,7 @@ class ShowListViewController: UIViewController {
                                                                 factory: collectionViewCellFactory)
         
         let collectionViewDelegate = ShowListDelegate(viewModel: viewModel, dataSource: collectionViewDataSource)
-//            .withItemsPerLine(itemsPerLine: 3)
+            .withItemsPerLine(itemsPerLine: 3)
             .withInsets { _, _ in return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10) }
             .withItemSpacing { _, _ in return 10 }
             .withLineSpacing { _, _ in return 10 }
@@ -83,7 +83,7 @@ class ShowListViewController: UIViewController {
         collectionView.backgroundColor = .clear
         
         
-        collectionView.setCollectionViewLayout(layout, animated: false)
+//        collectionView.setCollectionViewLayout(layout, animated: false)
         
         
         collectionView.rx

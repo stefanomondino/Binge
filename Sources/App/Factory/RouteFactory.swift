@@ -14,8 +14,9 @@ import Model
 protocol RouteFactory {
     var container: AppDependencyContainer { get }
     func restartRoute() -> Route
+    func pageRoute(from viewModel: ViewModel) -> Route
     func homeRoute() -> Route
-//    func detailRoute(show: Show) -> Route
+    //    func detailRoute(show: Show) -> Route
 }
 class MainRouteFactory: RouteFactory {
     let container: AppDependencyContainer
@@ -25,7 +26,7 @@ class MainRouteFactory: RouteFactory {
     }
     func homeRoute() -> Route {
         return RestartRoute {
-            self.container.viewControllerFactory.showList(viewModel: self.container.sceneViewModelFactory.popularShows())
+            self.container.viewControllerFactory.showPager()
         }
     }
     func restartRoute() -> Route {
@@ -34,6 +35,22 @@ class MainRouteFactory: RouteFactory {
         }
     }
     
+    func pageRoute(from viewModel: ViewModel) -> Route {
+        switch viewModel {
+        case let viewModel as ShowListViewModel:
+            return EmptyRoute {
+                self.container
+                    .viewControllerFactory
+                    .showList(viewModel: viewModel)
+            }
+        default:
+            return EmptyRoute {
+                UIViewController()
+            }
+        }
+    }
+}
+
 //    func detailRoute(show: Show) -> Route {
 //        //return AlertRoute(viewModel: ShowDetailViewModel(show: show))
 //        //        return ModalRoute(viewModel: ShowDetailViewModel(show: show), factory: container.viewControllerFactory)
@@ -43,4 +60,3 @@ class MainRouteFactory: RouteFactory {
 //        }
 //        //return ModalRoute(viewModel: ScheduleViewModel())
 //    }
-}

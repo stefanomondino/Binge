@@ -6,10 +6,7 @@
 //  Copyright © 2019 Synesthesia. All rights reserved.
 //
 
-import Foundation
 import UIKit
-import RxCocoa
-import RxSwift
 import Boomerang
 
 protocol StyleFactory {
@@ -17,8 +14,6 @@ protocol StyleFactory {
     func apply(_ style: Styles, to view: UIView)
     func apply(_ style: Styles, to view: UILabel)
     func apply(_ style: Styles, to view: UIButton)
-//    var container: AppDependencyContainer { get }
-//    func detailRoute(show: Show) -> Route
 }
 
 class DefaultStyleFactory: StyleFactory, DependencyContainer {
@@ -26,8 +21,8 @@ class DefaultStyleFactory: StyleFactory, DependencyContainer {
     var container: Container<Styles> = Container()
     
     init(container: AppDependencyContainer) {
-        self.register(for: .title) { TitleStyle() }
-        self.register(for: .subtitle) { TitleStyle(size: 12) }
+        self.register(for: .title) { TextStyle(size: 20) }
+        self.register(for: .subtitle) { TextStyle(size: 12) }
         self.register(for: .card) { CardStyle() }
     }
     
@@ -42,11 +37,11 @@ class DefaultStyleFactory: StyleFactory, DependencyContainer {
     func apply(_ style: Styles, to label: UILabel) {
         let concrete: GenericStyle = self[style]
         label.style = concrete.style
+        label.numberOfLines = 0
     }
     func apply(_ style: Styles, to view: UIView) {
-        let concrete: GenericStyle = resolve(style) ?? TitleStyle()
+        let concrete: GenericStyle = self[style]
         view.backgroundColor = concrete.backgroundColor
         view.layer.cornerRadius = concrete.cornerRadius
     }
-    
 }

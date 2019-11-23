@@ -92,6 +92,12 @@
 		70AE55AD2212EB0600F27DAE /* RepositoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55AC2212EB0600F27DAE /* RepositoryFactory.swift */; };
 		70D1E42623883A240007EF9B /* StyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1E42523883A240007EF9B /* StyleFactory.swift */; };
 		70D1E428238840940007EF9B /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1E427238840940007EF9B /* Styles.swift */; };
+		70D1E42B238853A00007EF9B /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1E42A238853A00007EF9B /* TextStyle.swift */; };
+		70D1E42D238853A90007EF9B /* CardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1E42C238853A90007EF9B /* CardStyle.swift */; };
+		70D1E430238922460007EF9B /* PagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1E42F238922460007EF9B /* PagerViewController.swift */; };
+		70D1E432238923E00007EF9B /* SceneRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1E431238923E00007EF9B /* SceneRoute.swift */; };
+		70D1E4342389275B0007EF9B /* PagerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1E4332389275B0007EF9B /* PagerDataSource.swift */; };
+		70D1E436238927C20007EF9B /* PagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1E435238927C20007EF9B /* PagerViewModel.swift */; };
 		70DBC827220C3E2300E0BB27 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC826220C3E2300E0BB27 /* AppDelegate.swift */; };
 		70DBC82E220C3E2400E0BB27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70DBC82D220C3E2400E0BB27 /* Assets.xcassets */; };
 		70DBC831220C3E2400E0BB27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70DBC82F220C3E2400E0BB27 /* LaunchScreen.storyboard */; };
@@ -242,6 +248,12 @@
 		70AE55AC2212EB0600F27DAE /* RepositoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFactory.swift; sourceTree = "<group>"; };
 		70D1E42523883A240007EF9B /* StyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleFactory.swift; sourceTree = "<group>"; };
 		70D1E427238840940007EF9B /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		70D1E42A238853A00007EF9B /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
+		70D1E42C238853A90007EF9B /* CardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStyle.swift; sourceTree = "<group>"; };
+		70D1E42F238922460007EF9B /* PagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerViewController.swift; sourceTree = "<group>"; };
+		70D1E431238923E00007EF9B /* SceneRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneRoute.swift; sourceTree = "<group>"; };
+		70D1E4332389275B0007EF9B /* PagerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerDataSource.swift; sourceTree = "<group>"; };
+		70D1E435238927C20007EF9B /* PagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerViewModel.swift; sourceTree = "<group>"; };
 		70DBC823220C3E2300E0BB27 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70DBC826220C3E2300E0BB27 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70DBC82D220C3E2400E0BB27 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -389,6 +401,7 @@
 				706CE13C2385AD920070FC4E /* AlertRoute.swift */,
 				706CE13D2385AD920070FC4E /* RestartRoute.swift */,
 				706CE13E2385AD920070FC4E /* ModalRoute.swift */,
+				70D1E431238923E00007EF9B /* SceneRoute.swift */,
 			);
 			path = Routes;
 			sourceTree = "<group>";
@@ -543,8 +556,20 @@
 			isa = PBXGroup;
 			children = (
 				70D1E427238840940007EF9B /* Styles.swift */,
+				70D1E42A238853A00007EF9B /* TextStyle.swift */,
+				70D1E42C238853A90007EF9B /* CardStyle.swift */,
 			);
 			path = Styles;
+			sourceTree = "<group>";
+		};
+		70D1E42E2389222E0007EF9B /* Pager */ = {
+			isa = PBXGroup;
+			children = (
+				70D1E42F238922460007EF9B /* PagerViewController.swift */,
+				70D1E435238927C20007EF9B /* PagerViewModel.swift */,
+				70D1E4332389275B0007EF9B /* PagerDataSource.swift */,
+			);
+			path = Pager;
 			sourceTree = "<group>";
 		};
 		70DBC81A220C3E2300E0BB27 = {
@@ -674,6 +699,7 @@
 		70DBC8A7220C6D6A00E0BB27 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				70D1E42E2389222E0007EF9B /* Pager */,
 				70DBC8AA220C6DC700E0BB27 /* Splash */,
 				8BFA75441FF385C891B0BECD /* ShowList */,
 			);
@@ -1159,15 +1185,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70D1E4342389275B0007EF9B /* PagerDataSource.swift in Sources */,
 				706CE1592385EF400070FC4E /* Environment+Staging.swift in Sources */,
 				70DBC827220C3E2300E0BB27 /* AppDelegate.swift in Sources */,
 				706CE14E2385AD930070FC4E /* ViewControllerFactory.swift in Sources */,
 				701C469622312CB200BFFA4A /* Logger.swift in Sources */,
 				70DBC8A9220C6D7B00E0BB27 /* SplashViewController.swift in Sources */,
 				C981227517476715D69279A7 /* ShowListViewController.swift in Sources */,
+				70D1E436238927C20007EF9B /* PagerViewModel.swift in Sources */,
 				706CE14D2385AD930070FC4E /* SceneViewModelFactory.swift in Sources */,
 				706CE14C2385AD930070FC4E /* MainViewFactory.swift in Sources */,
 				706CE14F2385ADBE0070FC4E /* DependencyContainer.swift in Sources */,
+				70D1E430238922460007EF9B /* PagerViewController.swift in Sources */,
 				7B716A8623872A8D00ADA2AB /* Secrets.swift in Sources */,
 				0EB7C02B97C83C7A5D1AEF29 /* ShowListViewController.xib in Sources */,
 				6DA4DCA9AFC2D9DAC021660B /* ShowItemView.swift in Sources */,
@@ -1177,8 +1206,11 @@
 				706CE14A2385AD930070FC4E /* ItemViewModelFactory.swift in Sources */,
 				706CE1552385B6DD0070FC4E /* ShowItemViewModel.swift in Sources */,
 				706CE1602387F8D20070FC4E /* Environment.swift in Sources */,
+				70D1E42B238853A00007EF9B /* TextStyle.swift in Sources */,
+				70D1E432238923E00007EF9B /* SceneRoute.swift in Sources */,
 				706CE1492385AD930070FC4E /* RouteFactory.swift in Sources */,
 				706CE15B238679240070FC4E /* LoadMoreItemViewModel.swift in Sources */,
+				70D1E42D238853A90007EF9B /* CardStyle.swift in Sources */,
 				07ABA28BC4F731FB6CD9ACBD /* LoadMoreItemView.xib in Sources */,
 				70D1E428238840940007EF9B /* Styles.swift in Sources */,
 				706CE1512385ADE30070FC4E /* SplashViewModel.swift in Sources */,
