@@ -43,5 +43,6 @@ class DefaultStyleFactory: StyleFactory, DependencyContainer {
         let concrete: GenericStyle = self[style]
         view.backgroundColor = concrete.backgroundColor
         view.layer.cornerRadius = concrete.cornerRadius
+        view.layer.masksToBounds = true
     }
 }

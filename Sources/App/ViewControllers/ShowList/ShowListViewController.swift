@@ -19,7 +19,7 @@ class ShowListDelegate: CollectionViewDelegate, StaggeredLayoutDelegate, PluginL
         
         let size = self.sizeCalculator(for: collectionView)
             .automaticSizeForItem(at: indexPath, itemsPerLine: 3)
-        return size.width / size.height
+        return size.width / size.height 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForItemAt indexPath: IndexPath, kind: String?) -> [PluginEffect] {
@@ -63,7 +63,7 @@ class ShowListViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.init(white: 0.97, alpha: 1)
@@ -72,20 +72,19 @@ class ShowListViewController: UIViewController {
         let collectionViewDataSource = CollectionViewDataSource(viewModel: viewModel,
                                                                 factory: collectionViewCellFactory)
         
+        let spacing: CGFloat = 9
         let collectionViewDelegate = ShowListDelegate(viewModel: viewModel, dataSource: collectionViewDataSource)
             .withItemsPerLine(itemsPerLine: 3)
-            .withInsets { _, _ in return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10) }
-            .withItemSpacing { _, _ in return 10 }
-            .withLineSpacing { _, _ in return 10 }
+            .withInsets { _, _ in return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing) }
+            .withItemSpacing { _, _ in return spacing }
+            .withLineSpacing { _, _ in return spacing }
             .withSelect { viewModel.selectItem(at: $0) }
         
         let layout = StaggeredLayout()
         collectionView.backgroundColor = .clear
         
-        
-//        collectionView.setCollectionViewLayout(layout, animated: false)
-        
-        
+        collectionView.setCollectionViewLayout(layout, animated: false)
+
         collectionView.rx
             .animated(by: viewModel, dataSource: collectionViewDataSource)
             .disposed(by: disposeBag)
@@ -103,5 +102,4 @@ class ShowListViewController: UIViewController {
         viewModel.reload()
         
     }
-    
 }

@@ -19,10 +19,12 @@ class PagerDataSource: PageboyViewControllerDataSource, TMBarDataSource {
         self.viewModel = viewModel
         self.factory = factory
     }
+    
     private func item(at index: PageboyViewController.PageIndex) -> ViewModel {
         let items = viewModel.sections.flatMap { $0.items }
         return items[index]
     }
+    
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
         return viewModel
             .sections
