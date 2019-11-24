@@ -15,6 +15,7 @@ protocol SceneViewModelFactory {
     func splashViewModel() -> SplashViewModel
     func popularShows() -> ShowListViewModel
     func trendingShows() -> ShowListViewModel
+    func watchedShows() -> ShowListViewModel
     func showsPager() -> ListViewModel
 }
 
@@ -25,7 +26,8 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
     func showsPager() -> ListViewModel {
         return PagerViewModel(pages:[
             popularShows(),
-            trendingShows()
+            trendingShows(),
+            watchedShows()
         ])
     }
     
@@ -40,4 +42,7 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
     func trendingShows() -> ShowListViewModel {
         return ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory, useCase: container.model.useCases.trendingShows)
     }
+    func watchedShows() -> ShowListViewModel {
+           return ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory, useCase: container.model.useCases.watchedShows)
+       }
 }

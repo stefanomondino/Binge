@@ -29,7 +29,7 @@ public struct PlayedShow: WithShow, Codable {
         case watcherCount = "watcherCount"
         case playCount = "playCount"
         case collectedCount = "collectedCount"
-        case collectorCount = "collectorcount"
+        case collectorCount = "collectorCount"
     }
     
     public let watcherCount: Int

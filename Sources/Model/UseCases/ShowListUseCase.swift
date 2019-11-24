@@ -5,6 +5,7 @@ import RxSwift
 public enum PageInfo {
     case popular
     case trending
+    case watched
 }
 
 public protocol ShowListUseCase {
@@ -42,6 +43,23 @@ public class TrendingShowsUseCase: ShowListUseCase {
     public func shows(currentPage: Int, pageSize: Int) -> Observable<[WithShow]> {
         return repository
                 .trending(currentPage: currentPage, pageSize: pageSize)
+                .map { $0 }
+    }
+}
+
+public class WatchedShowsUseCase: ShowListUseCase {
+    
+    public var page: PageInfo { .watched }
+    
+    let repository: ShowsRepository
+    
+    init(repository: ShowsRepository) {
+        self.repository = repository
+    }
+    
+    public func shows(currentPage: Int, pageSize: Int) -> Observable<[WithShow]> {
+        return repository
+                .watched(currentPage: currentPage, pageSize: pageSize)
                 .map { $0 }
     }
 }

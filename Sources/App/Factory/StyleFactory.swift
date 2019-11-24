@@ -16,16 +16,17 @@ protocol StyleFactory {
     func apply(_ style: Styles, to view: UIButton)
 }
 
-class DefaultStyleFactory: StyleFactory, DependencyContainer {
+class DefaultStyleFactory: DependencyContainer {
     
     var container: Container<Styles> = Container()
     
     init(container: AppDependencyContainer) {
-        self.register(for: .title) { TextStyle(size: 20) }
+        self.register(for: .title) { TextStyle(size: 14) }
         self.register(for: .subtitle) { TextStyle(size: 12) }
         self.register(for: .card) { CardStyle() }
     }
-    
+}
+extension DefaultStyleFactory: StyleFactory {
     func apply(_ style: Styles, to view: UIImageView) {
         
     }

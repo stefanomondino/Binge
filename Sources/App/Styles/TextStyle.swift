@@ -17,7 +17,7 @@ struct TextStyle: GenericStyle {
     var backgroundColor: UIColor { .clear }
     var style: StyleProtocol? {
         Style {
-            $0.font = UIFont.systemFont(ofSize: self.size)
+            $0.font = UIFont.init(name: Fonts.mainBold.fontName, size: self.size)
             $0.color = UIColor.black
             $0.alignment = .center
         }

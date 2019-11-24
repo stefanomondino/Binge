@@ -22,6 +22,7 @@ public protocol UseCaseFactory {
     var splash: SplashUseCase { get }
     var popularShows: ShowListUseCase { get }
     var trendingShows: ShowListUseCase { get }
+    var watchedShows: ShowListUseCase { get }
     var images: ImagesUseCase { get }
 }
 
@@ -30,6 +31,7 @@ enum UseCaseKeys: CaseIterable, Hashable {
     case images
     case popularShows
     case trendingShows
+    case watchedShows
 }
 
 class DefaultUseCaseFactory: UseCaseFactory, DependencyContainer {
@@ -37,6 +39,7 @@ class DefaultUseCaseFactory: UseCaseFactory, DependencyContainer {
 
     var splash: SplashUseCase { self[.splash] }
     var popularShows: ShowListUseCase { self[.popularShows] }
+    var watchedShows: ShowListUseCase { self[.watchedShows] }
     var trendingShows: ShowListUseCase { self[.trendingShows] }
     var images: ImagesUseCase { self[.images] }
     
@@ -46,6 +49,7 @@ class DefaultUseCaseFactory: UseCaseFactory, DependencyContainer {
         self.register(for: .images) { DefaultImagesUseCase(configuration: dependencyContainer.repositories.configuration,
                                                            shows: dependencyContainer.repositories.shows) }
         self.register(for: .popularShows) { PopularShowsUseCase(repository: dependencyContainer.repositories.shows)}
+        self.register(for: .watchedShows) { WatchedShowsUseCase(repository: dependencyContainer.repositories.shows)}
         self.register(for: .trendingShows) { TrendingShowsUseCase(repository: dependencyContainer.repositories.shows) }
     }
 }

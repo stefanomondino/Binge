@@ -17,6 +17,7 @@ extension PageInfo {
         switch self {
         case .popular: return "POPULAR"
         case .trending: return "TRENDING"
+        case .watched: return "WATCHED"
         }
     }
 }

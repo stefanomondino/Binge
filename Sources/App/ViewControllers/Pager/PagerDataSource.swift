@@ -15,6 +15,11 @@ class PagerDataSource: PageboyViewControllerDataSource, TMBarDataSource {
     
     let viewModel: ListViewModel
     let factory: RouteFactory
+    
+    private var cache: [Int: UIViewController] = [:]
+    func clear() {
+        self.cache = [:]
+    }
     init(viewModel: ListViewModel, factory: RouteFactory) {
         self.viewModel = viewModel
         self.factory = factory
@@ -38,7 +43,9 @@ class PagerDataSource: PageboyViewControllerDataSource, TMBarDataSource {
         //            let viewController = viewModel.sceneIdentifier.scene() as?  (UIViewController & ViewModelCompatibleType)  else {
         //            return nil
         //        }
-        
+        if let cached = cache[index] {
+            return cached
+        }
         guard let viewController = factory
             .pageRoute(from: item(at: index))
             .createScene() else { return nil }
@@ -50,6 +57,7 @@ class PagerDataSource: PageboyViewControllerDataSource, TMBarDataSource {
         } else {
             // Fallback on earlier versions
         }
+        cache[index] = viewController
         return viewController
         
     }

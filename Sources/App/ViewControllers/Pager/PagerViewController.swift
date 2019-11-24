@@ -86,6 +86,7 @@ class PagerViewController: TabmanViewController {
         self.setupBar()
         viewModel.onUpdate = { [weak self] in
             DispatchQueue.main.async {
+                self?.internalDataSource.clear()
                 self?.reloadData()
             }
             
