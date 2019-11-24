@@ -45,10 +45,15 @@ class ShowListViewModel: RxListViewModel, WithPage {
 //        self.downloadClosure = downloadClosure
 //        self.itemViewModelFactory = itemViewModelFactory
 //    }
-    let useCase: ShowListUseCase
+    private let useCase: ShowListUseCase
+    
+    let styleFactory: StyleFactory
+    
     init(itemViewModelFactory: ItemViewModelFactory,
-         useCase: ShowListUseCase) {
+         useCase: ShowListUseCase,
+         styleFactory: StyleFactory) {
         self.useCase = useCase
+        self.styleFactory = styleFactory
         self.itemViewModelFactory = itemViewModelFactory
     }
     

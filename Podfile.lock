@@ -112,7 +112,7 @@ CHECKOUT OPTIONS:
     :commit: 249c411e512e3017b6b426d099db448289db7eb3
     :git: https://github.com/Alamofire/AlamofireImage
   Boomerang:
-    :commit: 65c6fb351d80c6d20c627996aae89e1c709894a7
+    :commit: 3a1053c9577fe308db9b4b99b0f25b5b3efb1b74
     :git: https://github.com/stefanomondino/newark
   Moya:
     :commit: c3804a0100f444163e9048149710bd4d4fd56274

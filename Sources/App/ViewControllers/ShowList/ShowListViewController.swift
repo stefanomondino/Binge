@@ -66,12 +66,13 @@ class ShowListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.view.backgroundColor = UIColor.init(white: 0.97, alpha: 1)
-        //        guard let viewModel = viewModel else { return }
+        
         let viewModel = self.viewModel
         let collectionViewDataSource = CollectionViewDataSource(viewModel: viewModel,
                                                                 factory: collectionViewCellFactory)
-        
+        viewModel.styleFactory.apply(.container, to: self.view)
         let spacing: CGFloat = 9
         let collectionViewDelegate = ShowListDelegate(viewModel: viewModel, dataSource: collectionViewDataSource)
             .withItemsPerLine(itemsPerLine: 3)
@@ -83,7 +84,7 @@ class ShowListViewController: UIViewController {
         let layout = StaggeredLayout()
         collectionView.backgroundColor = .clear
         
-        collectionView.setCollectionViewLayout(layout, animated: false)
+        
 
         collectionView.rx
             .animated(by: viewModel, dataSource: collectionViewDataSource)
@@ -98,6 +99,8 @@ class ShowListViewController: UIViewController {
         }
         
         self.collectionViewDelegate = collectionViewDelegate
+        
+        collectionView.setCollectionViewLayout(layout, animated: false)
         
         viewModel.reload()
         

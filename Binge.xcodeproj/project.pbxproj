@@ -80,6 +80,8 @@
 		708139AE22293D7D00A76ABC /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708139AD22293D7D00A76ABC /* AccessToken.swift */; };
 		70A9185023892C2B007740A7 /* WithPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A9184F23892C2B007740A7 /* WithPage.swift */; };
 		70A918522389C6AA007740A7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A918512389C6AA007740A7 /* Fonts.swift */; };
+		70A91854238B2C7A007740A7 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A91853238B2C7A007740A7 /* Colors.swift */; };
+		70A91856238B2D2E007740A7 /* ContainerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A91855238B2D2E007740A7 /* ContainerStyle.swift */; };
 		70AE556C2212DC6000F27DAE /* Expectation+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55692212DC6000F27DAE /* Expectation+Ext.swift */; };
 		70AE556E2212DC6000F27DAE /* Expectation+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55692212DC6000F27DAE /* Expectation+Ext.swift */; };
 		70AE556F2212DC6000F27DAE /* ViewModel+Interaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE556A2212DC6000F27DAE /* ViewModel+Interaction.swift */; };
@@ -236,6 +238,8 @@
 		708139AD22293D7D00A76ABC /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
 		70A9184F23892C2B007740A7 /* WithPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithPage.swift; sourceTree = "<group>"; };
 		70A918512389C6AA007740A7 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		70A91853238B2C7A007740A7 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		70A91855238B2D2E007740A7 /* ContainerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerStyle.swift; sourceTree = "<group>"; };
 		70AE55692212DC6000F27DAE /* Expectation+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Expectation+Ext.swift"; sourceTree = "<group>"; };
 		70AE556A2212DC6000F27DAE /* ViewModel+Interaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewModel+Interaction.swift"; sourceTree = "<group>"; };
 		70AE556B2212DC6000F27DAE /* Expectation+Blocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Expectation+Blocking.swift"; sourceTree = "<group>"; };
@@ -561,8 +565,10 @@
 			children = (
 				70D1E427238840940007EF9B /* Styles.swift */,
 				70A918512389C6AA007740A7 /* Fonts.swift */,
+				70A91853238B2C7A007740A7 /* Colors.swift */,
 				70D1E42A238853A00007EF9B /* TextStyle.swift */,
 				70D1E42C238853A90007EF9B /* CardStyle.swift */,
+				70A91855238B2D2E007740A7 /* ContainerStyle.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -1210,6 +1216,7 @@
 				6B7B236991A2D8B117A3238D /* LoadMoreItemView.swift in Sources */,
 				706CE1532385B5D30070FC4E /* ShowListViewModel.swift in Sources */,
 				706CE14A2385AD930070FC4E /* ItemViewModelFactory.swift in Sources */,
+				70A91856238B2D2E007740A7 /* ContainerStyle.swift in Sources */,
 				706CE1552385B6DD0070FC4E /* ShowItemViewModel.swift in Sources */,
 				706CE1602387F8D20070FC4E /* Environment.swift in Sources */,
 				70D1E42B238853A00007EF9B /* TextStyle.swift in Sources */,
@@ -1225,6 +1232,7 @@
 				706CE14B2385AD930070FC4E /* CollectionViewCellFactory.swift in Sources */,
 				1CB93A0B5BED89640520DC43 /* ShowPosterItemView.swift in Sources */,
 				706CE1472385AD930070FC4E /* RestartRoute.swift in Sources */,
+				70A91854238B2C7A007740A7 /* Colors.swift in Sources */,
 				706CE1462385AD930070FC4E /* AlertRoute.swift in Sources */,
 				A7294EF60FF828B6E3F721A9 /* ShowPosterItemView.xib in Sources */,
 				70A918522389C6AA007740A7 /* Fonts.swift in Sources */,

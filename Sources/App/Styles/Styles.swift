@@ -11,6 +11,7 @@ import SwiftRichString
 
 enum Styles: String, CaseIterable {
     case title
+    case container
     case subtitle
     case card
     var identifier: String {

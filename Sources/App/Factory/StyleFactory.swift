@@ -21,6 +21,7 @@ class DefaultStyleFactory: DependencyContainer {
     var container: Container<Styles> = Container()
     
     init(container: AppDependencyContainer) {
+        self.register(for: .container) { ContainerStyle() }
         self.register(for: .title) { TextStyle(size: 14) }
         self.register(for: .subtitle) { TextStyle(size: 12) }
         self.register(for: .card) { CardStyle() }

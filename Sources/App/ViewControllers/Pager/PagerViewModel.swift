@@ -21,8 +21,10 @@ class PagerViewModel: ListViewModel {
         }
     }
     private let pages: [ViewModel]
-    init(pages: [ViewModel]) {
+    let styleFactory: StyleFactory
+    init(pages: [ViewModel], styleFactory: StyleFactory) {
         self.pages = pages
+        self.styleFactory = styleFactory
     }
     func reload() {
         self.sections = [Section(items: pages)]

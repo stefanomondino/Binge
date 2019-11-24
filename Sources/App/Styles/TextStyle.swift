@@ -18,8 +18,9 @@ struct TextStyle: GenericStyle {
     var style: StyleProtocol? {
         Style {
             $0.font = UIFont.init(name: Fonts.mainBold.fontName, size: self.size)
-            $0.color = UIColor.black
+            $0.color = UIColor.mainText
             $0.alignment = .center
+            
         }
     }
     init(size: CGFloat = 14,

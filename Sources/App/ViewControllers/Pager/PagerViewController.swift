@@ -82,6 +82,8 @@ class PagerViewController: TabmanViewController {
         self.automaticallyAdjustsChildInsets = true
         super.viewDidLoad()
         
+//        viewModel.styleFactory.apply(.background, to: self.view)
+        
         self.dataSource = internalDataSource
         self.setupBar()
         viewModel.onUpdate = { [weak self] in
@@ -95,7 +97,7 @@ class PagerViewController: TabmanViewController {
     }
     private func setupBar() {
         let bar = TMBarView<TMConstrainedHorizontalBarLayout, TMLabelBarButton, TMLineBarIndicator>()
-        bar.backgroundView.style = .flat(color: .white)
+        bar.backgroundView.style = .flat(color: .clear)
         bar.buttons.customize { (button) in
             button.contentInset = UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 0)
             button.tintColor = .black

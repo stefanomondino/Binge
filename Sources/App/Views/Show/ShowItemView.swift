@@ -38,7 +38,8 @@ class ShowItemView: UIView, WithViewModel {
         title.text = viewModel.title
         
         if self.isPlaceholderForAutosize { return }
-        viewModel.image.asDriver(onErrorJustReturn: UIImage())
+        viewModel.image
+            .asDriver(onErrorJustReturn: UIImage())
             .drive(poster.rx.image)
             .disposed(by: disposeBag)
 //

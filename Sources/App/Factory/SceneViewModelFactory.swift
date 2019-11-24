@@ -10,8 +10,8 @@ import Foundation
 import Boomerang
 import Model
 protocol SceneViewModelFactory {
-//    func schedule() -> ListViewModel & NavigationViewModel
-//    func showDetail(show: Show) -> ShowDetailViewModel
+    //    func schedule() -> ListViewModel & NavigationViewModel
+    //    func showDetail(show: Show) -> ShowDetailViewModel
     func splashViewModel() -> SplashViewModel
     func popularShows() -> ShowListViewModel
     func trendingShows() -> ShowListViewModel
@@ -28,21 +28,27 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
             popularShows(),
             trendingShows(),
             watchedShows()
-        ])
+        ], styleFactory: container.styleFactory)
     }
     
     func splashViewModel() -> SplashViewModel {
         return SplashViewModel(routeFactory: container.routeFactory, useCase: container.model.useCases.splash)
     }
-
+    
     func popularShows() -> ShowListViewModel {
-        return ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory, useCase: container.model.useCases.popularShows)
+        ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory,
+                          useCase: container.model.useCases.popularShows,
+                          styleFactory: container.styleFactory)
     }
     
     func trendingShows() -> ShowListViewModel {
-        return ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory, useCase: container.model.useCases.trendingShows)
+        ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory,
+                          useCase: container.model.useCases.trendingShows,
+                          styleFactory: container.styleFactory)
     }
     func watchedShows() -> ShowListViewModel {
-           return ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory, useCase: container.model.useCases.watchedShows)
-       }
+        ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory,
+                          useCase: container.model.useCases.watchedShows,
+                          styleFactory: container.styleFactory)
+    }
 }
