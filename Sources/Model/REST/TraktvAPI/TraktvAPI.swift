@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum TraktvAPI: DataSourceParameters {
+enum TraktvAPI {
     
     struct Page {
         var page: Int

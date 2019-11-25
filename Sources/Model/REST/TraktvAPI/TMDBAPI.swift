@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum TMDBAPI: DataSourceParameters {
+enum TMDBAPI {
     struct Configuration: Codable {
         let images: Image
         struct Image: Codable {

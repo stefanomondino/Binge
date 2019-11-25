@@ -36,7 +36,6 @@
 		701C465A222FBA6D00BFFA4A /* Reachability+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C4659222FBA6D00BFFA4A /* Reachability+Rx.swift */; };
 		701C465C222FBA7B00BFFA4A /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C465B222FBA7B00BFFA4A /* Errors.swift */; };
 		701C4660222FBAEC00BFFA4A /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C465F222FBAEC00BFFA4A /* Scheduler.swift */; };
-		701C466722300A0300BFFA4A /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C466422300A0200BFFA4A /* DataSource.swift */; };
 		701C469322312B9800BFFA4A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C469222312B9800BFFA4A /* Logger.swift */; };
 		701C469622312CB200BFFA4A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C469222312B9800BFFA4A /* Logger.swift */; };
 		7030C068230EA5C90038A548 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7030C066230EA5C70038A548 /* Show.swift */; };
@@ -188,7 +187,6 @@
 		701C4659222FBA6D00BFFA4A /* Reachability+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reachability+Rx.swift"; sourceTree = "<group>"; };
 		701C465B222FBA7B00BFFA4A /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		701C465F222FBAEC00BFFA4A /* Scheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
-		701C466422300A0200BFFA4A /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		701C466B2230128400BFFA4A /* Skeletonspec.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Skeletonspec.json; sourceTree = "<group>"; };
 		701C466C2230128400BFFA4A /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		701C466D2230128400BFFA4A /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
@@ -493,7 +491,6 @@
 		70AE558F2212E6C400F27DAE /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
-				701C466422300A0200BFFA4A /* DataSource.swift */,
 				7B716A83238727E500ADA2AB /* DataSourceFactory.swift */,
 				70A91857238C5553007740A7 /* RESTDataSource.swift */,
 				70FB573D22A5720300FD8CBD /* Observable+Gloss.swift */,
@@ -1246,7 +1243,6 @@
 			files = (
 				7019D86B230ECA400065770C /* TMDBAPI+Moya.swift in Sources */,
 				70AE559C2212E6F100F27DAE /* TraktvAPI+Moya.swift in Sources */,
-				701C466722300A0300BFFA4A /* DataSource.swift in Sources */,
 				70A91858238C5553007740A7 /* RESTDataSource.swift in Sources */,
 				701C465C222FBA7B00BFFA4A /* Errors.swift in Sources */,
 				70DBC8D9220F1E4C00E0BB27 /* Image.swift in Sources */,

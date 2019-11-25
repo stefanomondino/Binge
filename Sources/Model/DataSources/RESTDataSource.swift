@@ -24,12 +24,17 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
     init(jsonDecoder: JSONDecoder = JSONDecoder()) {
         self.jsonDecoder = jsonDecoder
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-        let networkLoggerPlugin = NetworkLoggerPlugin(configuration: NetworkLoggerPlugin.Configuration(logOptions: [.formatRequestAscURL]))
+        let networkLoggerPlugin = NetworkLoggerPlugin(configuration: .init(logOptions: [.formatRequestAscURL]))
+        
         self.register(for: ObjectIdentifier(TraktvAPI.self).hashValue,
-                      scope: .singleton) { MoyaProvider<TraktvAPI>(plugins:
-                        [networkLoggerPlugin]) }
+                      scope: .singleton) {
+                        MoyaProvider<TraktvAPI>(plugins: [networkLoggerPlugin])
+        }
+        
         self.register(for: ObjectIdentifier(TMDBAPI.self).hashValue,
-                      scope: .singleton) { MoyaProvider<TMDBAPI>(plugins: [networkLoggerPlugin]) }
+                      scope: .singleton) {
+                        MoyaProvider<TMDBAPI>(plugins: [networkLoggerPlugin])
+        }
     }
     
     func provider<Endpoint: TargetType>(for type: Endpoint.Type) -> MoyaProvider<Endpoint> {
@@ -41,15 +46,15 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
     
     func get<Result, Endpoint>(_ type: Result.Type, at endpoint: Endpoint) -> Observable<Result> where Result: Decodable, Endpoint: TargetType {
         let decoder = self.jsonDecoder
-            return response(at: endpoint)
-                .map { try decoder.decode(Result.self, from: $0.data) }
+        return response(at: endpoint)
+            .map { try decoder.decode(Result.self, from: $0.data) }
     }
     
     private func response<Endpoint: TargetType>(at endpoint: Endpoint) -> Observable<Response> {
         return provider(for: Endpoint.self).rx
-                   .request(endpoint)
-                   .asObservable()
-                   .filterSuccessfulStatusAndRedirectCodes()
-                    
+            .request(endpoint)
+            .asObservable()
+            .filterSuccessfulStatusAndRedirectCodes()
+        
     }
 }
