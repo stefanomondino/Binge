@@ -30,8 +30,11 @@ class DefaultDataSourceFactory: DataSourceFactory, DependencyContainer {
     
     init(dependencyContainer: ModelDependencyContainer) {
         let networkLoggerPlugin = NetworkLoggerPlugin(configuration: NetworkLoggerPlugin.Configuration(logOptions: [.formatRequestAscURL]))
-        self.register(for: .traktv) { MoyaProvider<TraktvAPI>(plugins: [networkLoggerPlugin]) }
-        self.register(for: .tmdb) { MoyaProvider<TMDBAPI>(plugins: [networkLoggerPlugin]) }
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        
+        self.register(for: .traktv, scope: .singleton) { DefaultRESTDataSource<TraktvAPI>(endpointType: TraktvAPI.self, jsonDecoder: decoder) }
+        self.register(for: .tmdb, scope: .singleton) { DefaultRESTDataSource<TMDBAPI>(endpointType: TMDBAPI.self, jsonDecoder: decoder) }
     }
     
 }

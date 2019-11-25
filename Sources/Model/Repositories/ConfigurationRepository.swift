@@ -8,7 +8,8 @@ import Moya
 }
 
 class ConfigurationAPIRepository: ConfigurationRepository {
-    private lazy var tmbdConfigurationObservable: Observable<TMDBAPI.Configuration> = self.tmdb.object(for: .configuration).share(replay: 1, scope: .forever)
+    private lazy var tmbdConfigurationObservable: Observable<TMDBAPI.Configuration> = self.tmdb.get(TMDBAPI.Configuration.self, at: .configuration)
+        .share(replay: 1, scope: .forever)
     
     let tmdb: TMDBDataSource
     

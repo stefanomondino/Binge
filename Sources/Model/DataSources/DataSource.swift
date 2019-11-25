@@ -17,14 +17,16 @@ public protocol DataSourceParameters {
 }
 
 protocol TraktTVDataSource {
-    func request(for parameters: TraktvAPI) -> Observable<Any>
-    func object<T: Codable>(for parameters: TraktvAPI) -> Observable<T>
+   func get<Result: Decodable>(_ type: Result.Type, at endpoint: TraktvAPI) -> Observable<Result>
+}
+protocol TMDBDataSource {
+   func get<Result: Decodable>(_ type: Result.Type, at endpoint: TMDBAPI) -> Observable<Result>
 }
 
-protocol TMDBDataSource {
-    func request(for parameters: TMDBAPI) -> Observable<Any>
-    func object<T: Codable>(for parameters: TMDBAPI) -> Observable<T>
-}
+//protocol TMDBDataSource {
+//    func request(for parameters: TMDBAPI) -> Observable<Any>
+//    func object<T: Codable>(for parameters: TMDBAPI) -> Observable<T>
+//}
 
 //private struct TraktTVMockDataSource: TraktTVDataSource {
 //    func request(for parameters: API) -> Observable<Any> { return .empty() }

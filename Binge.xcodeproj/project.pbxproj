@@ -37,7 +37,6 @@
 		701C465C222FBA7B00BFFA4A /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C465B222FBA7B00BFFA4A /* Errors.swift */; };
 		701C4660222FBAEC00BFFA4A /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C465F222FBAEC00BFFA4A /* Scheduler.swift */; };
 		701C466722300A0300BFFA4A /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C466422300A0200BFFA4A /* DataSource.swift */; };
-		701C466922300A0300BFFA4A /* MoyaDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C466622300A0300BFFA4A /* MoyaDataSource.swift */; };
 		701C469322312B9800BFFA4A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C469222312B9800BFFA4A /* Logger.swift */; };
 		701C469622312CB200BFFA4A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C469222312B9800BFFA4A /* Logger.swift */; };
 		7030C068230EA5C90038A548 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7030C066230EA5C70038A548 /* Show.swift */; };
@@ -82,6 +81,7 @@
 		70A918522389C6AA007740A7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A918512389C6AA007740A7 /* Fonts.swift */; };
 		70A91854238B2C7A007740A7 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A91853238B2C7A007740A7 /* Colors.swift */; };
 		70A91856238B2D2E007740A7 /* ContainerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A91855238B2D2E007740A7 /* ContainerStyle.swift */; };
+		70A91858238C5553007740A7 /* RESTDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A91857238C5553007740A7 /* RESTDataSource.swift */; };
 		70AE556C2212DC6000F27DAE /* Expectation+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55692212DC6000F27DAE /* Expectation+Ext.swift */; };
 		70AE556E2212DC6000F27DAE /* Expectation+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55692212DC6000F27DAE /* Expectation+Ext.swift */; };
 		70AE556F2212DC6000F27DAE /* ViewModel+Interaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE556A2212DC6000F27DAE /* ViewModel+Interaction.swift */; };
@@ -189,7 +189,6 @@
 		701C465B222FBA7B00BFFA4A /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		701C465F222FBAEC00BFFA4A /* Scheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
 		701C466422300A0200BFFA4A /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
-		701C466622300A0300BFFA4A /* MoyaDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoyaDataSource.swift; sourceTree = "<group>"; };
 		701C466B2230128400BFFA4A /* Skeletonspec.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Skeletonspec.json; sourceTree = "<group>"; };
 		701C466C2230128400BFFA4A /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		701C466D2230128400BFFA4A /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
@@ -240,6 +239,7 @@
 		70A918512389C6AA007740A7 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		70A91853238B2C7A007740A7 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		70A91855238B2D2E007740A7 /* ContainerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerStyle.swift; sourceTree = "<group>"; };
+		70A91857238C5553007740A7 /* RESTDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RESTDataSource.swift; sourceTree = "<group>"; };
 		70AE55692212DC6000F27DAE /* Expectation+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Expectation+Ext.swift"; sourceTree = "<group>"; };
 		70AE556A2212DC6000F27DAE /* ViewModel+Interaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewModel+Interaction.swift"; sourceTree = "<group>"; };
 		70AE556B2212DC6000F27DAE /* Expectation+Blocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Expectation+Blocking.swift"; sourceTree = "<group>"; };
@@ -495,9 +495,9 @@
 			children = (
 				701C466422300A0200BFFA4A /* DataSource.swift */,
 				7B716A83238727E500ADA2AB /* DataSourceFactory.swift */,
+				70A91857238C5553007740A7 /* RESTDataSource.swift */,
 				70FB573D22A5720300FD8CBD /* Observable+Gloss.swift */,
 				70FB573E22A5720300FD8CBD /* Response+Gloss.swift */,
-				701C466622300A0300BFFA4A /* MoyaDataSource.swift */,
 			);
 			path = DataSources;
 			sourceTree = "<group>";
@@ -1246,8 +1246,8 @@
 			files = (
 				7019D86B230ECA400065770C /* TMDBAPI+Moya.swift in Sources */,
 				70AE559C2212E6F100F27DAE /* TraktvAPI+Moya.swift in Sources */,
-				701C466922300A0300BFFA4A /* MoyaDataSource.swift in Sources */,
 				701C466722300A0300BFFA4A /* DataSource.swift in Sources */,
+				70A91858238C5553007740A7 /* RESTDataSource.swift in Sources */,
 				701C465C222FBA7B00BFFA4A /* Errors.swift in Sources */,
 				70DBC8D9220F1E4C00E0BB27 /* Image.swift in Sources */,
 				706CE1392385A6B20070FC4E /* DependencyContainer.swift in Sources */,
