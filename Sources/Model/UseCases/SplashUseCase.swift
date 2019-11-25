@@ -9,11 +9,11 @@
 import Foundation
 import RxSwift
 
-public protocol SplashUseCaseType {
+public protocol SplashUseCase {
     func start() -> Observable<()>
 }
 
-public struct SplashUseCase: SplashUseCaseType {
+public struct DefaultSplashUseCase: SplashUseCase {
     
     public func start() -> Observable<()> {
         Logger.log("Starting Splash UseCase", level: .verbose)

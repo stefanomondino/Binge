@@ -9,7 +9,7 @@
 import Foundation
 import Boomerang
 
-public protocol WithShow: EntityType {
+public protocol WithShow {
     var show: Show { get }
 }
 
@@ -29,7 +29,7 @@ public struct PlayedShow: WithShow, Codable {
         case watcherCount = "watcherCount"
         case playCount = "playCount"
         case collectedCount = "collectedCount"
-        case collectorCount = "collectorcount"
+        case collectorCount = "collectorCount"
     }
     
     public let watcherCount: Int
@@ -49,6 +49,7 @@ public protocol Show: Codable, WithShow {
     var title: String { get }
     var year: Int? { get }
     var ids: Ids { get }
+    var uniqueIdentifier: String { get }
 }
 public protocol ShowDetail: Show {
     var overview: String { get }
@@ -63,7 +64,11 @@ public struct Ids: Codable {
     let imdb: String?
     let tvrage: Int?
 }
-
+public extension Show {
+    var uniqueIdentifier: String {
+        "\(ids.trakt)"
+    }
+}
 internal struct ShowItem: Show {
     public let title: String
     let ids: Ids
@@ -81,7 +86,7 @@ internal struct ShowDetailItem: ShowDetail {
     var show: Show { return self }
 }
 
-public struct ShowInfo: Codable, ModelType {
+public struct ShowInfo: Codable {
     let name: String
     let backdropPath: String?
     let posterPath: String?

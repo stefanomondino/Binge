@@ -2,38 +2,88 @@
 import Foundation
 import RxSwift
 
-public protocol ShowListUseCaseType {
-    func trending(currentPage: Int, pageSize: Int) -> Observable<[TrendingShow]>
-    func popular(currentPage: Int, pageSize: Int) -> Observable<[Show]>
-    func played(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]>
-    func watched(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]>
-    func collected(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]>
+public enum PageInfo {
+    case popular
+    case trending
+    case watched
 }
 
-public struct ShowListUseCase: ShowListUseCaseType {
+public protocol ShowListUseCase {
+    var page: PageInfo { get }
+    func shows(currentPage: Int, pageSize: Int) -> Observable<[WithShow]>
+}
+
+public class PopularShowsUseCase: ShowListUseCase {
+
+    public var page: PageInfo { .popular }
     
-    public func trending(currentPage: Int, pageSize: Int) -> Observable<[TrendingShow]> {
-        return Repositories
-            .shows
-            .trending(currentPage: currentPage, pageSize: pageSize)
+    let repository: ShowsRepository
+    
+    init(repository: ShowsRepository) {
+        self.repository = repository
     }
-    public func popular(currentPage: Int, pageSize: Int) -> Observable<[Show]> {
-        return Repositories
-            .shows
-            .popular(currentPage: currentPage, pageSize: pageSize)
-            .map { $0 }
-    }
-    public func played(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]> {
-        return Repositories
-            .shows
-            .played(currentPage: currentPage, pageSize: pageSize)
-    }
-    public func watched(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]> {
-        return Repositories
-            .shows
-            .watched(currentPage: currentPage, pageSize: pageSize)
-    }
-    public func collected(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]> {
-        return Repositories.shows.collected(currentPage: currentPage, pageSize: pageSize)
+    
+    public func shows(currentPage: Int, pageSize: Int) -> Observable<[WithShow]> {
+        return repository
+                .popular(currentPage: currentPage, pageSize: pageSize)
+                .map { $0 }
     }
 }
+
+public class TrendingShowsUseCase: ShowListUseCase {
+    
+    public var page: PageInfo { .trending }
+    
+    let repository: ShowsRepository
+    
+    init(repository: ShowsRepository) {
+        self.repository = repository
+    }
+    
+    public func shows(currentPage: Int, pageSize: Int) -> Observable<[WithShow]> {
+        return repository
+                .trending(currentPage: currentPage, pageSize: pageSize)
+                .map { $0 }
+    }
+}
+
+public class WatchedShowsUseCase: ShowListUseCase {
+    
+    public var page: PageInfo { .watched }
+    
+    let repository: ShowsRepository
+    
+    init(repository: ShowsRepository) {
+        self.repository = repository
+    }
+    
+    public func shows(currentPage: Int, pageSize: Int) -> Observable<[WithShow]> {
+        return repository
+                .watched(currentPage: currentPage, pageSize: pageSize)
+                .map { $0 }
+    }
+}
+
+//public struct DefaultShowListUseCase: ShowListUseCase {
+//    let shows: ShowsRepository
+//    public func trending(currentPage: Int, pageSize: Int) -> Observable<[TrendingShow]> {
+//        return shows
+//            .trending(currentPage: currentPage, pageSize: pageSize)
+//    }
+//    public func popular(currentPage: Int, pageSize: Int) -> Observable<[Show]> {
+//        return shows
+//            .popular(currentPage: currentPage, pageSize: pageSize)
+//            .map { $0 }
+//    }
+//    public func played(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]> {
+//        return shows
+//            .played(currentPage: currentPage, pageSize: pageSize)
+//    }
+//    public func watched(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]> {
+//        return shows
+//            .watched(currentPage: currentPage, pageSize: pageSize)
+//    }
+//    public func collected(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]> {
+//        return shows.collected(currentPage: currentPage, pageSize: pageSize)
+//    }
+//}

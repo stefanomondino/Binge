@@ -4,7 +4,6 @@
 //
 
 import UIKit
-import ViewModel
 import Boomerang
 import SnapKit
 import RxSwift
@@ -17,8 +16,10 @@ class ShowListDelegate: CollectionViewDelegate, StaggeredLayoutDelegate, PluginL
     }
     
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat {
-        let size = collectionView.boomerang.automaticSizeForItem(at: indexPath, itemsPerLine: 3)
-        return size.width / size.height
+        
+        let size = self.sizeCalculator(for: collectionView)
+            .automaticSizeForItem(at: indexPath, itemsPerLine: 3)
+        return size.width / size.height 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForItemAt indexPath: IndexPath, kind: String?) -> [PluginEffect] {
@@ -27,27 +28,81 @@ class ShowListDelegate: CollectionViewDelegate, StaggeredLayoutDelegate, PluginL
     }
 }
 
-class ShowListViewController: UIViewController, ViewModelCompatible, InteractionCompatible {
+class ShowListViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    var viewModel: ShowListViewModel
+    
+    var collectionViewDataSource: CollectionViewDataSource? {
+        didSet {
+            self.collectionView.dataSource = collectionViewDataSource
+            self.collectionView.reloadData()
+        }
+    }
+    
+    var collectionViewDelegate: CollectionViewDelegate? {
+        didSet {
+            self.collectionView.delegate = collectionViewDelegate
+            self.collectionView.collectionViewLayout.invalidateLayout()
+        }
+    }
+    
+    var disposeBag = DisposeBag()
+    private let collectionViewCellFactory: CollectionViewCellFactory
+    
+    init(nibName: String?,
+         bundle: Bundle? = nil,
+         viewModel: ShowListViewModel,
+         collectionViewCellFactory: CollectionViewCellFactory) {
+        self.viewModel = viewModel
+        self.collectionViewCellFactory = collectionViewCellFactory
+        super.init(nibName: nibName, bundle: bundle)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-    func configure(with viewModel: ShowListViewModel) {
-        let spacing: CGFloat = 4.0
-        let delegate = ShowListDelegate()
-            .with(lineSpacing: { _, _ in return spacing })
-            .with(itemSpacing: { _, _ in return spacing })
-            .with(insets: { _, _ in return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)})
-            .with(select: { viewModel.interact(.selectItem($0)) })
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.view.backgroundColor = UIColor.init(white: 0.97, alpha: 1)
+        
+        let viewModel = self.viewModel
+        let collectionViewDataSource = CollectionViewDataSource(viewModel: viewModel,
+                                                                factory: collectionViewCellFactory)
+        viewModel.styleFactory.apply(.container, to: self.view)
+        let spacing: CGFloat = 9
+        let collectionViewDelegate = ShowListDelegate(viewModel: viewModel, dataSource: collectionViewDataSource)
+            .withItemsPerLine(itemsPerLine: 3)
+            .withInsets { _, _ in return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing) }
+            .withItemSpacing { _, _ in return spacing }
+            .withLineSpacing { _, _ in return spacing }
+            .withSelect { viewModel.selectItem(at: $0) }
         
         let layout = StaggeredLayout()
         collectionView.backgroundColor = .clear
         
-        self.view.backgroundColor = .greyishWhite
+        
+
+        collectionView.rx
+            .animated(by: viewModel, dataSource: collectionViewDataSource)
+            .disposed(by: disposeBag)
+        
+        if let viewModel = viewModel as? RxNavigationViewModel {
+            viewModel.routes
+                .observeOn(MainScheduler.instance)
+                .bind { [weak self] route in
+                    route.execute(from: self)
+            }.disposed(by: disposeBag)
+        }
+        
+        self.collectionViewDelegate = collectionViewDelegate
+        
         collectionView.setCollectionViewLayout(layout, animated: false)
         
-        collectionView.boomerang.configure(with: viewModel, delegate: delegate)
-        
-        rx.viewDidAppear().take(1).bind { viewModel.load() }.disposed(by: disposeBag)
+        viewModel.reload()
         
     }
 }

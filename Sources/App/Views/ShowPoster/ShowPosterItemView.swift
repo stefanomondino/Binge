@@ -4,7 +4,6 @@
 //
 
 import UIKit
-import ViewModel
 import RxSwift
 import RxCocoa
 import Boomerang
@@ -14,10 +13,11 @@ import Boomerang
     Contents should be entirely driven by `ViewModel`, so that this view can safely deployed in production without being tested.
     
 */
-class ShowPosterItemView: UIView, ViewModelCompatible {
-    typealias ViewModel = ShowPosterItemViewModel
+class ShowPosterItemView: UIView, WithViewModel {
     
     @IBOutlet weak var title: UILabel!
+    
+    var disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,9 +28,9 @@ class ShowPosterItemView: UIView, ViewModelCompatible {
 
         /// Configure here every property that contributes to change view size
         /// Multiline text bindings should go here       
-        self.title.text = viewModel.title
-
-        if self.isPlaceholderForAutosize { return }
+//        self.title.text = viewModel.title
+//
+//        if self.isPlaceholderForAutosize { return }
 
         /// Configure here every property that doesn't contributes to change view size
         /// UIImage bindings should go here

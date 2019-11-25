@@ -4,7 +4,6 @@
 //
 
 import UIKit
-import ViewModel
 import RxSwift
 import RxCocoa
 import Boomerang
@@ -14,11 +13,13 @@ import Boomerang
     Contents should be entirely driven by `ViewModel`, so that this view can safely deployed in production without being tested.
     
 */
-class LoadMoreItemView: UIView, ViewModelCompatible {
-    typealias ViewModel = LoadMoreItemViewModel
+class LoadMoreItemView: UIView, WithViewModel {
+    
     
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    var disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,15 +30,15 @@ class LoadMoreItemView: UIView, ViewModelCompatible {
 
     func configure(with viewModel: ViewModel) {
         self.disposeBag = DisposeBag()
-
+        guard let viewModel = viewModel as? LoadMoreItemViewModel else { return }
         /// Configure here every property that contributes to change view size
         /// Multiline text bindings should go here       
     
         if self.isPlaceholderForAutosize { return }
-
-        viewModel.start().disposed(by: disposeBag)
+//
+//        viewModel.start().disposed(by: disposeBag)
+        viewModel.reload().disposed(by: disposeBag)
         activityIndicator.startAnimating()
-        
         /// Configure here every property that doesn't contributes to change view size
         /// UIImage bindings should go here
     }

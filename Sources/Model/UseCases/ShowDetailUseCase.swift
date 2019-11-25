@@ -8,9 +8,11 @@ public protocol ShowDetailUseCaseType {
 
 public struct ShowDetailUseCase: ShowDetailUseCaseType {
 
+    let shows: ShowsRepository
+    
     public func showDetail(for show: Show) -> Observable<ShowDetail> {
-        return Repositories
-            .shows
+        return
+            shows
             .detail(forShow: show)
             .map { $0 }
     }

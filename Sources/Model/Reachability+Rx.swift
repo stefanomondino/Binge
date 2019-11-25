@@ -32,14 +32,15 @@ public struct Reachability: ReactiveCompatible {
         if !networkReachability.isReachable {
             return .unreachable
         } else {
-            return .reachable(networkReachability.isReachableOnWWAN ? .cellular : .wifi)
+            return .reachable(networkReachability.isReachableOnCellular ? .cellular : .wifi)
         }
     }
     
     private static let networkReachability = NetworkReachabilityManager()!
     fileprivate static let status: Observable<Reachability.Status> = {
         return Observable.create { obs in
-            Reachability.networkReachability.listener = { status in
+      
+            Reachability.networkReachability.startListening { (status) in
                 switch status {
                 case .notReachable:
                     obs.onNext(.unreachable)
@@ -52,7 +53,6 @@ public struct Reachability: ReactiveCompatible {
                     break
                 }
             }
-            Reachability.networkReachability.startListening()
             return Disposables.create {
                 Reachability.networkReachability.stopListening()
             }
