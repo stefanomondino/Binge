@@ -16,38 +16,37 @@ import Moya
 
  struct ShowsAPIRepository: ShowsRepository {
     
-    let tmdb: TMDBDataSource
-    let traktv: TraktTVDataSource
+    let rest: RESTDataSource
 
     func info(forShow show: Show) -> Observable<ShowInfo> {
-        return tmdb.get(ShowInfo.self, at: .show(show))
+        return rest.get(ShowInfo.self, at: TMDBAPI.show(show))
     }
     func detail(forShow show: Show) -> Observable<ShowDetailItem> {
-        return traktv.get(ShowDetailItem.self, at: .summary(show))
+        return rest.get(ShowDetailItem.self, at: TraktvAPI.summary(show))
     }
     
      func trending(currentPage: Int, pageSize: Int) -> Observable<[TrendingShow]> {
-        return traktv
+        return rest
             .get([TrendingShow].self,
-                 at: .trending(TraktvAPI.Page(page: currentPage, limit: pageSize)))
+                 at: TraktvAPI.trending(TraktvAPI.Page(page: currentPage, limit: pageSize)))
     }
     func played(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]> {
-        return traktv
-            .get([PlayedShow].self, at: .played(TraktvAPI.Page(page: currentPage, limit: pageSize)))
+        return rest
+            .get([PlayedShow].self, at: TraktvAPI.played(TraktvAPI.Page(page: currentPage, limit: pageSize)))
     }
     
     func popular(currentPage: Int, pageSize: Int) -> Observable<[ShowItem]> {
-        return traktv
-            .get([ShowItem].self, at: .popular(TraktvAPI.Page(page: currentPage, limit: pageSize)))
+        return rest
+            .get([ShowItem].self, at: TraktvAPI.popular(TraktvAPI.Page(page: currentPage, limit: pageSize)))
     }
     func watched(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]> {
-        return traktv
-            .get([PlayedShow].self, at: .watched(TraktvAPI.Page(page: currentPage, limit: pageSize)))
+        return rest
+            .get([PlayedShow].self, at: TraktvAPI.watched(TraktvAPI.Page(page: currentPage, limit: pageSize)))
     }
     func collected(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]> {
-        return traktv
+        return rest
             .get([PlayedShow].self, at:
-             .collected(TraktvAPI.Page(page: currentPage, limit: pageSize)))
+             TraktvAPI.collected(TraktvAPI.Page(page: currentPage, limit: pageSize)))
     }
 }
 

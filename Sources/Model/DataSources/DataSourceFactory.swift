@@ -8,33 +8,28 @@
 
 import Foundation
 import Boomerang
-import Moya
 
+typealias TraktTVDataSource = RESTDataSource
+typealias TMDBDataSource = RESTDataSource
 protocol DataSourceFactory {
-    var traktv: TraktTVDataSource { get }
-    var tmdb: TMDBDataSource { get }
+    var rest: RESTDataSource { get }
+
 }
 enum DataSourceKeys: CaseIterable, Hashable {
-    case traktv
-    case tmdb
+    
+    case rest
 }
 
 class DefaultDataSourceFactory: DataSourceFactory, DependencyContainer {
     var container = Container<DataSourceKeys>()
-    
-    var traktv: TraktTVDataSource { self[.traktv] }
-    
-    var tmdb: TMDBDataSource { self[.tmdb] }
+
+    var rest: RESTDataSource { self[.rest] }
     
     typealias Key = DataSourceKeys
     
     init(dependencyContainer: ModelDependencyContainer) {
-        let networkLoggerPlugin = NetworkLoggerPlugin(configuration: NetworkLoggerPlugin.Configuration(logOptions: [.formatRequestAscURL]))
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
-        self.register(for: .traktv, scope: .singleton) { DefaultRESTDataSource<TraktvAPI>(endpointType: TraktvAPI.self, jsonDecoder: decoder) }
-        self.register(for: .tmdb, scope: .singleton) { DefaultRESTDataSource<TMDBAPI>(endpointType: TMDBAPI.self, jsonDecoder: decoder) }
+
+        self.register(for: .rest, scope: .singleton) { DefaultRESTDataSource() }
     }
     
 }

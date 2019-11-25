@@ -8,13 +8,13 @@ import Moya
 }
 
 class ConfigurationAPIRepository: ConfigurationRepository {
-    private lazy var tmbdConfigurationObservable: Observable<TMDBAPI.Configuration> = self.tmdb.get(TMDBAPI.Configuration.self, at: .configuration)
+    private lazy var tmbdConfigurationObservable: Observable<TMDBAPI.Configuration> = self.rest.get(TMDBAPI.Configuration.self, at: TMDBAPI.configuration)
         .share(replay: 1, scope: .forever)
     
-    let tmdb: TMDBDataSource
+    let rest: RESTDataSource
     
-    init(tmdb: TMDBDataSource) {
-        self.tmdb = tmdb
+    init(rest: RESTDataSource) {
+        self.rest = rest
     }
     func tmdbConfiguration() -> Observable<TMDBAPI.Configuration> {
         return tmbdConfigurationObservable

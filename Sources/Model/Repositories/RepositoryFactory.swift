@@ -26,7 +26,7 @@ class DefaultRepositoryFactory: RepositoryFactory, DependencyContainer {
     
     init(dependencyContainer: ModelDependencyContainer) {
         
-        self.register(for: .shows, scope: .singleton) { ShowsAPIRepository(tmdb: dependencyContainer.dataSources.tmdb, traktv: dependencyContainer.dataSources.traktv) }
-        self.register(for: .configuration, scope: .singleton) { ConfigurationAPIRepository(tmdb: dependencyContainer.dataSources.tmdb) }
+        self.register(for: .shows, scope: .singleton) { ShowsAPIRepository(rest: dependencyContainer.dataSources.rest) }
+        self.register(for: .configuration, scope: .singleton) { ConfigurationAPIRepository(rest: dependencyContainer.dataSources.rest) }
     }
 }

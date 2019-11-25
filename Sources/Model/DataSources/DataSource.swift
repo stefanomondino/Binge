@@ -16,12 +16,12 @@ public protocol DataSourceParameters {
     var cacheKey: String { get }
 }
 
-protocol TraktTVDataSource {
-   func get<Result: Decodable>(_ type: Result.Type, at endpoint: TraktvAPI) -> Observable<Result>
-}
-protocol TMDBDataSource {
-   func get<Result: Decodable>(_ type: Result.Type, at endpoint: TMDBAPI) -> Observable<Result>
-}
+//protocol TraktTVDataSource {
+//   func get<Result: Decodable>(_ type: Result.Type, at endpoint: TraktvAPI) -> Observable<Result>
+//}
+//protocol TMDBDataSource {
+//   func get<Result: Decodable>(_ type: Result.Type, at endpoint: TMDBAPI) -> Observable<Result>
+//}
 
 //protocol TMDBDataSource {
 //    func request(for parameters: TMDBAPI) -> Observable<Any>
