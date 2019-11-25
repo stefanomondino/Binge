@@ -10,10 +10,13 @@ import Foundation
 import Moya
 import RxSwift
 import Boomerang
+import Gloss
 
 protocol RESTDataSource {
     
     func get<Result: Codable, Endpoint: TargetType>(_ type: Result.Type, at endpoint: Endpoint) -> Observable<Result>
+    func get<Result: JSONDecodable, Endpoint: TargetType>(_ type: Result.Type, at endpoint: Endpoint) -> Observable<Result>
+    func get<Result: JSONDecodable, Endpoint: TargetType>(_ type: Result.Type, at endpoint: Endpoint) -> Observable<[Result]>
 }
 
 class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
@@ -49,7 +52,15 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
         return response(at: endpoint)
             .map { try decoder.decode(Result.self, from: $0.data) }
     }
+    func get<Result, Endpoint>(_ type: Result.Type, at endpoint: Endpoint) -> Observable<Result> where Result: JSONDecodable, Endpoint: TargetType {
+        return response(at: endpoint)
+            .mapObject(type: Result.self)
+    }
     
+    func get<Result, Endpoint>(_ type: Result.Type, at endpoint: Endpoint) -> Observable<[Result]> where Result: JSONDecodable, Endpoint: TargetType {
+        return response(at: endpoint)
+            .mapArray(type: Result.self)
+    }
     private func response<Endpoint: TargetType>(at endpoint: Endpoint) -> Observable<Response> {
         return provider(for: Endpoint.self).rx
             .request(endpoint)
