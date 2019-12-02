@@ -37,6 +37,7 @@
 		701C4660222FBAEC00BFFA4A /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C465F222FBAEC00BFFA4A /* Scheduler.swift */; };
 		701C469322312B9800BFFA4A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C469222312B9800BFFA4A /* Logger.swift */; };
 		701C469622312CB200BFFA4A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C469222312B9800BFFA4A /* Logger.swift */; };
+		702B24CA23956A71007F210E /* BoolPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702B24C923956A71007F210E /* BoolPickerViewModel.swift */; };
 		7030C068230EA5C90038A548 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7030C066230EA5C70038A548 /* Show.swift */; };
 		703FD479220F44AA00A88B5C /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703FD477220F42F300A88B5C /* Environment.swift */; };
 		704891B323112D600022397E /* Livvic-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891A223112D600022397E /* Livvic-Black.ttf */; };
@@ -62,6 +63,7 @@
 		706558262395553200AB8821 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 706558252395550400AB8821 /* LoginViewController.xib */; };
 		706558282395569F00AB8821 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706558272395569F00AB8821 /* LoginViewModel.swift */; };
 		7065582A239558CA00AB8821 /* StringPickerItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70655829239558CA00AB8821 /* StringPickerItemView.xib */; };
+		7065582C23955ED700AB8821 /* StringPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7065582B23955ED700AB8821 /* StringPickerViewModel.swift */; };
 		706CE1392385A6B20070FC4E /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CE1382385A6B20070FC4E /* DependencyContainer.swift */; };
 		706CE1462385AD930070FC4E /* AlertRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CE13C2385AD920070FC4E /* AlertRoute.swift */; };
 		706CE1472385AD930070FC4E /* RestartRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CE13D2385AD920070FC4E /* RestartRoute.swift */; };
@@ -199,6 +201,7 @@
 		701C466F2230132100BFFA4A /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = "<group>"; };
 		701C46702230136500BFFA4A /* config.swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.swiftlint.yml; sourceTree = "<group>"; };
 		701C469222312B9800BFFA4A /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		702B24C923956A71007F210E /* BoolPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolPickerViewModel.swift; sourceTree = "<group>"; };
 		7030C066230EA5C70038A548 /* Show.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		703FD477220F42F300A88B5C /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		704891A223112D600022397E /* Livvic-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-Black.ttf"; sourceTree = "<group>"; };
@@ -225,6 +228,7 @@
 		706558252395550400AB8821 /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		706558272395569F00AB8821 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		70655829239558CA00AB8821 /* StringPickerItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StringPickerItemView.xib; sourceTree = "<group>"; };
+		7065582B23955ED700AB8821 /* StringPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringPickerViewModel.swift; sourceTree = "<group>"; };
 		706CE1382385A6B20070FC4E /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		706CE13A2385A6CA0070FC4E /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		706CE13C2385AD920070FC4E /* AlertRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertRoute.swift; sourceTree = "<group>"; };
@@ -421,6 +425,25 @@
 				706558252395550400AB8821 /* LoginViewController.xib */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		7065582D239562D900AB8821 /* Forms */ = {
+			isa = PBXGroup;
+			children = (
+				706558202395530A00AB8821 /* StringPickerItemView.swift */,
+				70655829239558CA00AB8821 /* StringPickerItemView.xib */,
+			);
+			path = Forms;
+			sourceTree = "<group>";
+		};
+		7065582E239562F000AB8821 /* Forms */ = {
+			isa = PBXGroup;
+			children = (
+				7065581E2395506200AB8821 /* FormViewModel.swift */,
+				7065582B23955ED700AB8821 /* StringPickerViewModel.swift */,
+				702B24C923956A71007F210E /* BoolPickerViewModel.swift */,
+			);
+			path = Forms;
 			sourceTree = "<group>";
 		};
 		706CE13B2385AD920070FC4E /* Routes */ = {
@@ -674,6 +697,7 @@
 				70D1E429238840A10007EF9B /* Styles */,
 				706CE15C2387F5CD0070FC4E /* Environment */,
 				706CE13F2385AD930070FC4E /* Factory */,
+				7065582E239562F000AB8821 /* Forms */,
 				706CE13B2385AD920070FC4E /* Routes */,
 				7BC1DEDA22354E83009EFD5B /* Views */,
 				70DBC8A7220C6D6A00E0BB27 /* ViewControllers */,
@@ -769,9 +793,7 @@
 				FA81126A9420ADFEBC058CCC /* Show */,
 				0B79192C6D43492810C84499 /* LoadMore */,
 				A11FFC7B2DF7357C6D8B179F /* ShowPoster */,
-				7065581E2395506200AB8821 /* FormViewModel.swift */,
-				706558202395530A00AB8821 /* StringPickerItemView.swift */,
-				70655829239558CA00AB8821 /* StringPickerItemView.xib */,
+				7065582D239562D900AB8821 /* Forms */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1224,6 +1246,7 @@
 			files = (
 				706558282395569F00AB8821 /* LoginViewModel.swift in Sources */,
 				70D1E4342389275B0007EF9B /* PagerDataSource.swift in Sources */,
+				7065582C23955ED700AB8821 /* StringPickerViewModel.swift in Sources */,
 				706CE1592385EF400070FC4E /* Environment+Staging.swift in Sources */,
 				70DBC827220C3E2300E0BB27 /* AppDelegate.swift in Sources */,
 				706CE14E2385AD930070FC4E /* ViewControllerFactory.swift in Sources */,
@@ -1247,6 +1270,7 @@
 				706CE14A2385AD930070FC4E /* ItemViewModelFactory.swift in Sources */,
 				7065581F2395506200AB8821 /* FormViewModel.swift in Sources */,
 				70A91856238B2D2E007740A7 /* ContainerStyle.swift in Sources */,
+				702B24CA23956A71007F210E /* BoolPickerViewModel.swift in Sources */,
 				706CE1552385B6DD0070FC4E /* ShowItemViewModel.swift in Sources */,
 				706CE1602387F8D20070FC4E /* Environment.swift in Sources */,
 				70D1E42B238853A00007EF9B /* TextStyle.swift in Sources */,
