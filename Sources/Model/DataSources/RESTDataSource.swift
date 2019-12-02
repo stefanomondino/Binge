@@ -21,7 +21,7 @@ protocol RESTDataSource {
 
 class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
     
-    let container = Container<Int>()
+    let container = Container<ObjectIdentifier>()
     let jsonDecoder: JSONDecoder
     
     init(jsonDecoder: JSONDecoder = JSONDecoder()) {
@@ -29,19 +29,19 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
         let networkLoggerPlugin = NetworkLoggerPlugin(configuration: .init(logOptions: [.formatRequestAscURL]))
         
-        self.register(for: ObjectIdentifier(TraktvAPI.self).hashValue,
+        self.register(for: ObjectIdentifier(TraktvAPI.self),
                       scope: .singleton) {
                         MoyaProvider<TraktvAPI>(plugins: [networkLoggerPlugin])
         }
         
-        self.register(for: ObjectIdentifier(TMDBAPI.self).hashValue,
+        self.register(for: ObjectIdentifier(TMDBAPI.self),
                       scope: .singleton) {
                         MoyaProvider<TMDBAPI>(plugins: [networkLoggerPlugin])
         }
     }
     
     func provider<Endpoint: TargetType>(for type: Endpoint.Type) -> MoyaProvider<Endpoint> {
-        guard let result: MoyaProvider<Endpoint> = self.resolve(ObjectIdentifier(Endpoint.self).hashValue) else {
+        guard let result: MoyaProvider<Endpoint> = self.resolve(ObjectIdentifier(Endpoint.self)) else {
             fatalError("No provider available")
         }
         return result

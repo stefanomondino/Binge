@@ -56,6 +56,12 @@
 		704891C223112D600022397E /* Livvic-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891B123112D600022397E /* Livvic-ThinItalic.ttf */; };
 		704891C323112D600022397E /* Livvic-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891B223112D600022397E /* Livvic-BoldItalic.ttf */; };
 		704891C72312D09C0022397E /* ShowListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704891C52312D0850022397E /* ShowListUseCase.swift */; };
+		7065581F2395506200AB8821 /* FormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7065581E2395506200AB8821 /* FormViewModel.swift */; };
+		706558212395530A00AB8821 /* StringPickerItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706558202395530A00AB8821 /* StringPickerItemView.swift */; };
+		70655823239554EB00AB8821 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70655822239554EB00AB8821 /* LoginViewController.swift */; };
+		706558262395553200AB8821 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 706558252395550400AB8821 /* LoginViewController.xib */; };
+		706558282395569F00AB8821 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706558272395569F00AB8821 /* LoginViewModel.swift */; };
+		7065582A239558CA00AB8821 /* StringPickerItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70655829239558CA00AB8821 /* StringPickerItemView.xib */; };
 		706CE1392385A6B20070FC4E /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CE1382385A6B20070FC4E /* DependencyContainer.swift */; };
 		706CE1462385AD930070FC4E /* AlertRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CE13C2385AD920070FC4E /* AlertRoute.swift */; };
 		706CE1472385AD930070FC4E /* RestartRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CE13D2385AD920070FC4E /* RestartRoute.swift */; };
@@ -213,6 +219,12 @@
 		704891B123112D600022397E /* Livvic-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-ThinItalic.ttf"; sourceTree = "<group>"; };
 		704891B223112D600022397E /* Livvic-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-BoldItalic.ttf"; sourceTree = "<group>"; };
 		704891C52312D0850022397E /* ShowListUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowListUseCase.swift; sourceTree = "<group>"; };
+		7065581E2395506200AB8821 /* FormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewModel.swift; sourceTree = "<group>"; };
+		706558202395530A00AB8821 /* StringPickerItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringPickerItemView.swift; sourceTree = "<group>"; };
+		70655822239554EB00AB8821 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		706558252395550400AB8821 /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		706558272395569F00AB8821 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		70655829239558CA00AB8821 /* StringPickerItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StringPickerItemView.xib; sourceTree = "<group>"; };
 		706CE1382385A6B20070FC4E /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		706CE13A2385A6CA0070FC4E /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		706CE13C2385AD920070FC4E /* AlertRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertRoute.swift; sourceTree = "<group>"; };
@@ -399,6 +411,16 @@
 				704891B223112D600022397E /* Livvic-BoldItalic.ttf */,
 			);
 			path = Livvic;
+			sourceTree = "<group>";
+		};
+		70655824239554FC00AB8821 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				70655822239554EB00AB8821 /* LoginViewController.swift */,
+				706558272395569F00AB8821 /* LoginViewModel.swift */,
+				706558252395550400AB8821 /* LoginViewController.xib */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		706CE13B2385AD920070FC4E /* Routes */ = {
@@ -698,6 +720,7 @@
 		70DBC8A7220C6D6A00E0BB27 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				70655824239554FC00AB8821 /* Login */,
 				70D1E42E2389222E0007EF9B /* Pager */,
 				70DBC8AA220C6DC700E0BB27 /* Splash */,
 				8BFA75441FF385C891B0BECD /* ShowList */,
@@ -746,6 +769,9 @@
 				FA81126A9420ADFEBC058CCC /* Show */,
 				0B79192C6D43492810C84499 /* LoadMore */,
 				A11FFC7B2DF7357C6D8B179F /* ShowPoster */,
+				7065581E2395506200AB8821 /* FormViewModel.swift */,
+				706558202395530A00AB8821 /* StringPickerItemView.swift */,
+				70655829239558CA00AB8821 /* StringPickerItemView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -967,6 +993,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				706558262395553200AB8821 /* LoginViewController.xib in Resources */,
 				704891B423112D600022397E /* Livvic-Medium.ttf in Resources */,
 				704891BE23112D600022397E /* Livvic-SemiBoldItalic.ttf in Resources */,
 				704891C023112D600022397E /* Livvic-ExtraLight.ttf in Resources */,
@@ -986,6 +1013,7 @@
 				704891C323112D600022397E /* Livvic-BoldItalic.ttf in Resources */,
 				704891BF23112D600022397E /* Livvic-Light.ttf in Resources */,
 				70DBC82E220C3E2400E0BB27 /* Assets.xcassets in Resources */,
+				7065582A239558CA00AB8821 /* StringPickerItemView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1194,11 +1222,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				706558282395569F00AB8821 /* LoginViewModel.swift in Sources */,
 				70D1E4342389275B0007EF9B /* PagerDataSource.swift in Sources */,
 				706CE1592385EF400070FC4E /* Environment+Staging.swift in Sources */,
 				70DBC827220C3E2300E0BB27 /* AppDelegate.swift in Sources */,
 				706CE14E2385AD930070FC4E /* ViewControllerFactory.swift in Sources */,
 				701C469622312CB200BFFA4A /* Logger.swift in Sources */,
+				706558212395530A00AB8821 /* StringPickerItemView.swift in Sources */,
 				70DBC8A9220C6D7B00E0BB27 /* SplashViewController.swift in Sources */,
 				C981227517476715D69279A7 /* ShowListViewController.swift in Sources */,
 				70D1E436238927C20007EF9B /* PagerViewModel.swift in Sources */,
@@ -1211,9 +1241,11 @@
 				0EB7C02B97C83C7A5D1AEF29 /* ShowListViewController.xib in Sources */,
 				6DA4DCA9AFC2D9DAC021660B /* ShowItemView.swift in Sources */,
 				2DE8785F1754BE67A49A10B2 /* ShowItemView.xib in Sources */,
+				70655823239554EB00AB8821 /* LoginViewController.swift in Sources */,
 				6B7B236991A2D8B117A3238D /* LoadMoreItemView.swift in Sources */,
 				706CE1532385B5D30070FC4E /* ShowListViewModel.swift in Sources */,
 				706CE14A2385AD930070FC4E /* ItemViewModelFactory.swift in Sources */,
+				7065581F2395506200AB8821 /* FormViewModel.swift in Sources */,
 				70A91856238B2D2E007740A7 /* ContainerStyle.swift in Sources */,
 				706CE1552385B6DD0070FC4E /* ShowItemViewModel.swift in Sources */,
 				706CE1602387F8D20070FC4E /* Environment.swift in Sources */,

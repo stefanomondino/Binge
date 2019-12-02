@@ -43,6 +43,11 @@ class MainRouteFactory: RouteFactory {
                     .viewControllerFactory
                     .showList(viewModel: viewModel)
             }
+        case let viewModel as LoginViewModel:
+            return EmptyRoute {
+                self.container.viewControllerFactory
+                    .login(viewModel: viewModel)
+            }
         default:
             return EmptyRoute {
                 UIViewController()

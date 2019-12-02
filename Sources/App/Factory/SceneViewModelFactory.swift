@@ -27,10 +27,13 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
         return PagerViewModel(pages:[
             popularShows(),
             trendingShows(),
-            watchedShows()
+            watchedShows(),
+            login()
         ], styleFactory: container.styleFactory)
     }
-    
+    func login() -> LoginViewModel {
+        return LoginViewModel()
+    }
     func splashViewModel() -> SplashViewModel {
         return SplashViewModel(routeFactory: container.routeFactory, useCase: container.model.useCases.splash)
     }

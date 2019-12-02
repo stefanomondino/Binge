@@ -52,7 +52,7 @@ class DefaultAppDependencyContainer: AppDependencyContainer, DependencyContainer
     var itemViewModelFactory: ItemViewModelFactory { self[.itemViewModelFactory] }
     
     init() {
-        self.register(for: .translations, scope: .singleton) { StringsFactory(container: self) }
+        self.register(for: .translations, scope: .eagerSingleton) { StringsFactory(container: self) }
         self.register(for: .routeFactory) { MainRouteFactory(container: self) }
         self.register(for: .styleFactory, scope: .singleton) { DefaultStyleFactory(container: self) }
         self.register(for: .viewFactory) { MainViewFactory(styleFactory: self.styleFactory)}
@@ -61,8 +61,6 @@ class DefaultAppDependencyContainer: AppDependencyContainer, DependencyContainer
         self.register(for: .sceneViewModelFactory) { DefaultSceneViewModelFactory(container: self) }
         self.register(for: .itemViewModelFactory) { DefaultItemViewModelFactory(container: self) }
         self.register(for: .model, scope: .singleton) { DefaultModelDependencyContainer(environment: self.environment) }
-        
-        _ = self.translations
         
     }
 }

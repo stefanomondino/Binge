@@ -13,6 +13,8 @@ enum ViewIdentifier: String, LayoutIdentifier {
     case show
     case header
     case loadMore
+    case stringPicker
+    
     var identifierString: String {
         return self.rawValue
     }

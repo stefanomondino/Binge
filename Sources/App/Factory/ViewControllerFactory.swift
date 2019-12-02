@@ -15,6 +15,7 @@ enum SceneIdentifier: String, LayoutIdentifier {
     case pager
     case showList
     case showDetail
+    case login
     
     var identifierString: String {
         switch self {
@@ -27,6 +28,7 @@ protocol ViewControllerFactory {
     func root() -> UIViewController
     func showPager() -> UIViewController
     func showList(viewModel: ShowListViewModel) -> UIViewController
+    func login(viewModel: LoginViewModel) -> UIViewController
 //    func schedule(viewModel: ListViewModel & NavigationViewModel) -> UIViewController
 //    func showDetail(viewModel: ShowDetailViewModel) -> UIViewController
 }
@@ -65,6 +67,13 @@ class DefaultViewControllerFactory: ViewControllerFactory {
     }
     
     func showList(viewModel: ShowListViewModel) -> UIViewController {
-        return ShowListViewController(nibName: name(from: viewModel.layoutIdentifier), viewModel: viewModel, collectionViewCellFactory: container.collectionViewCellFactory)
+        return ShowListViewController(nibName: name(from: viewModel.layoutIdentifier),
+                                      viewModel: viewModel,
+                                      collectionViewCellFactory: container.collectionViewCellFactory)
+    }
+    func login(viewModel: LoginViewModel) -> UIViewController {
+        return LoginViewController(nibName: name(from: viewModel.layoutIdentifier),
+                                   viewModel: viewModel,
+                                   collectionViewCellFactory: container.collectionViewCellFactory)
     }
 }
