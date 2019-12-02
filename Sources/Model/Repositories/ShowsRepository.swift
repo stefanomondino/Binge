@@ -1,7 +1,6 @@
 import Foundation
 import Boomerang
 import RxSwift
-import Moya
 
  protocol ShowsRepository {
     func trending(currentPage: Int, pageSize: Int) -> Observable<[TrendingShow]>

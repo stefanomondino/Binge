@@ -14,6 +14,7 @@ protocol StyleFactory {
     func apply(_ style: Styles, to view: UIView)
     func apply(_ style: Styles, to view: UILabel)
     func apply(_ style: Styles, to view: UIButton)
+    func apply(_ style: Styles, to view: PagerButton)
 }
 
 class DefaultStyleFactory: DependencyContainer {
@@ -46,5 +47,12 @@ extension DefaultStyleFactory: StyleFactory {
         view.backgroundColor = concrete.backgroundColor
         view.layer.cornerRadius = concrete.cornerRadius
         view.layer.masksToBounds = true
+    }
+    func apply(_ style: Styles, to view: PagerButton) {
+        view.contentInset = UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 0)
+        view.tintColor = .darkGray
+                    //            button.font = Fonts.special(.regular).font(size: 20)
+        //            button.font = Fonts.main(.bold).font(size: 16)
+        view.selectedTintColor = .black
     }
 }

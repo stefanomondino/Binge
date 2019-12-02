@@ -61,7 +61,7 @@ class DefaultViewControllerFactory: ViewControllerFactory {
     
     func showPager() -> UIViewController {
         let viewModel = container.sceneViewModelFactory.showsPager()
-        return PagerViewController(viewModel: viewModel, routeFactory: container.routeFactory)
+        return PagerViewController(viewModel: viewModel, routeFactory: container.routeFactory, styleFactory: container.styleFactory)
     }
     
     func showList(viewModel: ShowListViewModel) -> UIViewController {

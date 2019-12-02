@@ -11,12 +11,18 @@ import Tabman
 import Pageboy
 import Boomerang
 
+typealias PagerButton = Tabman.TMLabelBarButton
+
 class PagerViewController: TabmanViewController {
     let viewModel: ListViewModel
+    let styleFactory: StyleFactory
     let internalDataSource: PagerDataSource
     init(viewModel: ListViewModel,
-         routeFactory: RouteFactory) {
+         routeFactory: RouteFactory,
+         styleFactory: StyleFactory
+         ) {
         self.viewModel = viewModel
+        self.styleFactory = styleFactory
         self.internalDataSource = PagerDataSource(viewModel: viewModel, factory: routeFactory)
         super.init(nibName: nil, bundle: nil)
     }
@@ -96,14 +102,11 @@ class PagerViewController: TabmanViewController {
         viewModel.reload()
     }
     private func setupBar() {
+        let styleFactory = self.styleFactory
         let bar = TMBarView<TMConstrainedHorizontalBarLayout, TMLabelBarButton, TMLineBarIndicator>()
         bar.backgroundView.style = .flat(color: .clear)
         bar.buttons.customize { (button) in
-            button.contentInset = UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 0)
-            button.tintColor = .black
-            //            button.font = Fonts.special(.regular).font(size: 20)
-//            button.font = Fonts.main(.bold).font(size: 16)
-            button.selectedTintColor = .black
+            styleFactory.apply(.title, to: button)
         }
         
         bar.layout.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)

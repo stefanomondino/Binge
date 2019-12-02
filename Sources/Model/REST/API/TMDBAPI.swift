@@ -1,5 +1,5 @@
 //
-//  Moya.swift
+//  DataRequest.swift
 //  Model
 //
 //  Created by Stefano Mondino on 08/02/2019.
@@ -8,7 +8,22 @@
 
 import Foundation
 import Moya
-import Boomerang
+
+enum TMDBAPI {
+    struct Configuration: Codable {
+        let images: Image
+        struct Image: Codable {
+            let baseUrl: URL
+            let secureBaseUrl: URL
+            let backdropSizes: [String]
+            let posterSizes: [String]
+        }
+    }
+    
+    case configuration
+    case show(Show)
+
+}
 
 extension TMDBAPI: TargetType {
     var dependencyKey: Int { return cacheKey.hashValue }

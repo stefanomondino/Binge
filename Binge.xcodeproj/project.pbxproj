@@ -32,7 +32,6 @@
 		6DA4DCA9AFC2D9DAC021660B /* ShowItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE8F68EF7CFAEA0D7AB1AB /* ShowItemView.swift */; };
 		7019D867230EADD00065770C /* SplashUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55AA2212E99700F27DAE /* SplashUseCase.swift */; };
 		7019D869230ECA360065770C /* TMDBAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7019D868230ECA350065770C /* TMDBAPI.swift */; };
-		7019D86B230ECA400065770C /* TMDBAPI+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7019D86A230ECA400065770C /* TMDBAPI+Moya.swift */; };
 		701C465A222FBA6D00BFFA4A /* Reachability+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C4659222FBA6D00BFFA4A /* Reachability+Rx.swift */; };
 		701C465C222FBA7B00BFFA4A /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C465B222FBA7B00BFFA4A /* Errors.swift */; };
 		701C4660222FBAEC00BFFA4A /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C465F222FBAEC00BFFA4A /* Scheduler.swift */; };
@@ -40,7 +39,6 @@
 		701C469622312CB200BFFA4A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C469222312B9800BFFA4A /* Logger.swift */; };
 		7030C068230EA5C90038A548 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7030C066230EA5C70038A548 /* Show.swift */; };
 		703FD479220F44AA00A88B5C /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703FD477220F42F300A88B5C /* Environment.swift */; };
-		7046E8B52252070100651240 /* Translations.json in Resources */ = {isa = PBXBuildFile; fileRef = 7046E8B42252070100651240 /* Translations.json */; };
 		704891B323112D600022397E /* Livvic-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891A223112D600022397E /* Livvic-Black.ttf */; };
 		704891B423112D600022397E /* Livvic-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891A323112D600022397E /* Livvic-Medium.ttf */; };
 		704891B523112D600022397E /* Livvic-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891A423112D600022397E /* Livvic-RegularItalic.ttf */; };
@@ -90,7 +88,6 @@
 		70AE55792212DC8000F27DAE /* Mock+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55762212DC8000F27DAE /* Mock+Utilities.swift */; };
 		70AE557B2212DC8000F27DAE /* MockDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55782212DC8000F27DAE /* MockDataSource.swift */; };
 		70AE557E2212DCA500F27DAE /* SplashUseCaseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE557D2212DCA500F27DAE /* SplashUseCaseSpec.swift */; };
-		70AE559C2212E6F100F27DAE /* TraktvAPI+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55972212E6F000F27DAE /* TraktvAPI+Moya.swift */; };
 		70AE559E2212E6F100F27DAE /* TraktvAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55992212E6F000F27DAE /* TraktvAPI.swift */; };
 		70AE55AD2212EB0600F27DAE /* RepositoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55AC2212EB0600F27DAE /* RepositoryFactory.swift */; };
 		70D1E42623883A240007EF9B /* StyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1E42523883A240007EF9B /* StyleFactory.swift */; };
@@ -114,6 +111,9 @@
 		70DBC8D3220EFE8C00E0BB27 /* UseCaseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC8D2220EFE8C00E0BB27 /* UseCaseFactory.swift */; };
 		70DBC8D9220F1E4C00E0BB27 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC8D8220F1E4C00E0BB27 /* Image.swift */; };
 		70DBC8DB220F1F8500E0BB27 /* Aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC8DA220F1F8500E0BB27 /* Aliases.swift */; };
+		70FA232F23952C3E001ADAA5 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FA232E23952C3E001ADAA5 /* Strings.swift */; };
+		70FA233123952CAC001ADAA5 /* Translations.json in Resources */ = {isa = PBXBuildFile; fileRef = 70FA233023952CAC001ADAA5 /* Translations.json */; };
+		70FA233323952CDC001ADAA5 /* StringsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FA233223952CDC001ADAA5 /* StringsFactory.swift */; };
 		70FB573F22A5720300FD8CBD /* Observable+Gloss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FB573D22A5720300FD8CBD /* Observable+Gloss.swift */; };
 		70FB574022A5720300FD8CBD /* Response+Gloss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FB573E22A5720300FD8CBD /* Response+Gloss.swift */; };
 		7B716A84238727E500ADA2AB /* DataSourceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B716A83238727E500ADA2AB /* DataSourceFactory.swift */; };
@@ -183,7 +183,6 @@
 		66CE8F68EF7CFAEA0D7AB1AB /* ShowItemView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShowItemView.swift; sourceTree = "<group>"; };
 		66E609815DFAA3C9F103DC90 /* Pods-App.prodrun.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.prodrun.xcconfig"; path = "Target Support Files/Pods-App/Pods-App.prodrun.xcconfig"; sourceTree = "<group>"; };
 		7019D868230ECA350065770C /* TMDBAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBAPI.swift; sourceTree = "<group>"; };
-		7019D86A230ECA400065770C /* TMDBAPI+Moya.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TMDBAPI+Moya.swift"; sourceTree = "<group>"; };
 		701C4659222FBA6D00BFFA4A /* Reachability+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reachability+Rx.swift"; sourceTree = "<group>"; };
 		701C465B222FBA7B00BFFA4A /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		701C465F222FBAEC00BFFA4A /* Scheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
@@ -196,7 +195,6 @@
 		701C469222312B9800BFFA4A /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		7030C066230EA5C70038A548 /* Show.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		703FD477220F42F300A88B5C /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
-		7046E8B42252070100651240 /* Translations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Translations.json; sourceTree = "<group>"; };
 		704891A223112D600022397E /* Livvic-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-Black.ttf"; sourceTree = "<group>"; };
 		704891A323112D600022397E /* Livvic-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-Medium.ttf"; sourceTree = "<group>"; };
 		704891A423112D600022397E /* Livvic-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-RegularItalic.ttf"; sourceTree = "<group>"; };
@@ -248,7 +246,6 @@
 		70AE55882212E4E400F27DAE /* UseCase+Mock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UseCase+Mock.swift"; sourceTree = "<group>"; };
 		70AE55892212E4E400F27DAE /* StartUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartUseCase.swift; sourceTree = "<group>"; };
 		70AE558D2212E50D00F27DAE /* Empty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Empty.swift; sourceTree = "<group>"; };
-		70AE55972212E6F000F27DAE /* TraktvAPI+Moya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TraktvAPI+Moya.swift"; sourceTree = "<group>"; };
 		70AE55992212E6F000F27DAE /* TraktvAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraktvAPI.swift; sourceTree = "<group>"; };
 		70AE55AA2212E99700F27DAE /* SplashUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashUseCase.swift; sourceTree = "<group>"; };
 		70AE55AC2212EB0600F27DAE /* RepositoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFactory.swift; sourceTree = "<group>"; };
@@ -279,6 +276,9 @@
 		70DBC8D2220EFE8C00E0BB27 /* UseCaseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseFactory.swift; sourceTree = "<group>"; };
 		70DBC8D8220F1E4C00E0BB27 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		70DBC8DA220F1F8500E0BB27 /* Aliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliases.swift; sourceTree = "<group>"; };
+		70FA232E23952C3E001ADAA5 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		70FA233023952CAC001ADAA5 /* Translations.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Translations.json; sourceTree = "<group>"; };
+		70FA233223952CDC001ADAA5 /* StringsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringsFactory.swift; sourceTree = "<group>"; };
 		70FB573D22A5720300FD8CBD /* Observable+Gloss.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Gloss.swift"; sourceTree = "<group>"; };
 		70FB573E22A5720300FD8CBD /* Response+Gloss.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+Gloss.swift"; sourceTree = "<group>"; };
 		750119513A47056667B1E6B5 /* ShowPosterItemView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = ShowPosterItemView.xib; sourceTree = "<group>"; };
@@ -502,28 +502,18 @@
 		70AE55942212E6F000F27DAE /* REST */ = {
 			isa = PBXGroup;
 			children = (
-				70AE55952212E6F000F27DAE /* TraktvAPI */,
+				70AE55952212E6F000F27DAE /* API */,
 			);
 			path = REST;
 			sourceTree = "<group>";
 		};
-		70AE55952212E6F000F27DAE /* TraktvAPI */ = {
+		70AE55952212E6F000F27DAE /* API */ = {
 			isa = PBXGroup;
 			children = (
-				70AE55962212E6F000F27DAE /* Moya */,
 				7019D868230ECA350065770C /* TMDBAPI.swift */,
 				70AE55992212E6F000F27DAE /* TraktvAPI.swift */,
 			);
-			path = TraktvAPI;
-			sourceTree = "<group>";
-		};
-		70AE55962212E6F000F27DAE /* Moya */ = {
-			isa = PBXGroup;
-			children = (
-				7019D86A230ECA400065770C /* TMDBAPI+Moya.swift */,
-				70AE55972212E6F000F27DAE /* TraktvAPI+Moya.swift */,
-			);
-			path = Moya;
+			path = API;
 			sourceTree = "<group>";
 		};
 		70AE55A12212E79900F27DAE /* Entities */ = {
@@ -658,6 +648,7 @@
 		70DBC83E220C3F3C00E0BB27 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				70FA232D23952C2B001ADAA5 /* Strings */,
 				70D1E429238840A10007EF9B /* Styles */,
 				706CE15C2387F5CD0070FC4E /* Environment */,
 				706CE13F2385AD930070FC4E /* Factory */,
@@ -696,7 +687,6 @@
 			children = (
 				7B716A8523872A8D00ADA2AB /* Secrets.swift */,
 				70DBC826220C3E2300E0BB27 /* AppDelegate.swift */,
-				7046E8B42252070100651240 /* Translations.json */,
 				704891A023112D4D0022397E /* Fonts */,
 				70DBC82D220C3E2400E0BB27 /* Assets.xcassets */,
 				70DBC82F220C3E2400E0BB27 /* LaunchScreen.storyboard */,
@@ -738,6 +728,16 @@
 				70DBC8C5220DC1AE00E0BB27 /* ScenesTests.swift */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		70FA232D23952C2B001ADAA5 /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				70FA232E23952C3E001ADAA5 /* Strings.swift */,
+				70FA233223952CDC001ADAA5 /* StringsFactory.swift */,
+				70FA233023952CAC001ADAA5 /* Translations.json */,
+			);
+			path = Strings;
 			sourceTree = "<group>";
 		};
 		7BC1DEDA22354E83009EFD5B /* Views */ = {
@@ -976,8 +976,8 @@
 				704891B823112D600022397E /* Livvic-SemiBold.ttf in Resources */,
 				704891C123112D600022397E /* Livvic-LightItalic.ttf in Resources */,
 				704891B723112D600022397E /* Livvic-Thin.ttf in Resources */,
-				7046E8B52252070100651240 /* Translations.json in Resources */,
 				70DBC831220C3E2400E0BB27 /* LaunchScreen.storyboard in Resources */,
+				70FA233123952CAC001ADAA5 /* Translations.json in Resources */,
 				704891C223112D600022397E /* Livvic-ThinItalic.ttf in Resources */,
 				704891B523112D600022397E /* Livvic-RegularItalic.ttf in Resources */,
 				704891BA23112D600022397E /* Livvic-Regular.ttf in Resources */,
@@ -1205,6 +1205,7 @@
 				706CE14D2385AD930070FC4E /* SceneViewModelFactory.swift in Sources */,
 				706CE14C2385AD930070FC4E /* MainViewFactory.swift in Sources */,
 				706CE14F2385ADBE0070FC4E /* DependencyContainer.swift in Sources */,
+				70FA233323952CDC001ADAA5 /* StringsFactory.swift in Sources */,
 				70D1E430238922460007EF9B /* PagerViewController.swift in Sources */,
 				7B716A8623872A8D00ADA2AB /* Secrets.swift in Sources */,
 				0EB7C02B97C83C7A5D1AEF29 /* ShowListViewController.xib in Sources */,
@@ -1226,6 +1227,7 @@
 				70D1E428238840940007EF9B /* Styles.swift in Sources */,
 				706CE1512385ADE30070FC4E /* SplashViewModel.swift in Sources */,
 				706CE1482385AD930070FC4E /* ModalRoute.swift in Sources */,
+				70FA232F23952C3E001ADAA5 /* Strings.swift in Sources */,
 				706CE14B2385AD930070FC4E /* CollectionViewCellFactory.swift in Sources */,
 				1CB93A0B5BED89640520DC43 /* ShowPosterItemView.swift in Sources */,
 				706CE1472385AD930070FC4E /* RestartRoute.swift in Sources */,
@@ -1241,8 +1243,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7019D86B230ECA400065770C /* TMDBAPI+Moya.swift in Sources */,
-				70AE559C2212E6F100F27DAE /* TraktvAPI+Moya.swift in Sources */,
 				70A91858238C5553007740A7 /* RESTDataSource.swift in Sources */,
 				701C465C222FBA7B00BFFA4A /* Errors.swift in Sources */,
 				70DBC8D9220F1E4C00E0BB27 /* Image.swift in Sources */,

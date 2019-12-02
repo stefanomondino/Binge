@@ -13,11 +13,11 @@ import RxRelay
 import Model
 
 extension PageInfo {
-    var title: String {
+    var title: Translation {
         switch self {
-        case .popular: return "POPULAR"
-        case .trending: return "TRENDING"
-        case .watched: return "WATCHED"
+        case .popular: return Strings.Shows.popular
+        case .trending: return Strings.Shows.trending
+        case .watched: return Strings.Shows.watched
         }
     }
 }
@@ -35,7 +35,7 @@ class ShowListViewModel: RxListViewModel, WithPage {
 //    let downloadClosure: ShowListDownloadClosure
     let itemViewModelFactory: ItemViewModelFactory
     
-    var pageTitle: String { useCase.page.title }
+    var pageTitle: String { useCase.page.title.description }
     
     var pageIcon: UIImage? {
         return nil

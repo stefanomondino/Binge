@@ -1,5 +1,5 @@
 //
-//  Moya.swift
+//  DataRequest.swift
 //  Model
 //
 //  Created by Stefano Mondino on 08/02/2019.
@@ -8,6 +8,22 @@
 
 import Foundation
 import Moya
+
+enum TraktvAPI {
+    
+    struct Page {
+        var page: Int
+        var limit: Int
+    }
+    
+    case trending(Page)
+    case popular(Page)
+    case played(Page)
+    case watched(Page)
+    case collected(Page)
+    
+    case summary(Show)
+}
 
 extension TraktvAPI: TargetType {
     
@@ -83,5 +99,5 @@ extension TraktvAPI: TargetType {
         default: return parameters
         }
         
-    }   
+    }
 }
