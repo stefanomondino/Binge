@@ -34,6 +34,7 @@ class LoginViewModel: RxListViewModel, WithPage {
         let password = BehaviorRelay<String?>(value: "")
         let passwordVM = itemFactory.password(relay: password, title: "password")
                 
+    
 //        let multiValue = BehaviorRelay<ListItemViewModel?>(value: nil)
 //        let values = (0..<100).map { ListItemViewModel(title: "\($0)") }
 //        let multi = ListPickerViewModel(items: .just(values), value: multiValue, layout: ViewIdentifier.stringPicker)

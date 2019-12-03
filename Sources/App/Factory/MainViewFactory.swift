@@ -42,4 +42,3 @@ class MainViewFactory: ViewFactory {
         return identifier.prefix(1).uppercased() + identifier.dropFirst() + "ItemView"
     }
 }
-
