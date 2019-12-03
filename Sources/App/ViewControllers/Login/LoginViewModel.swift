@@ -11,6 +11,7 @@ import Boomerang
 import RxRelay
 import RxCocoa
 import RxSwift
+import Core
 
 class LoginViewModel: RxListViewModel, WithPage {
     var pageTitle: String = "Login"
@@ -57,9 +58,10 @@ class ListItemViewModel: ViewModel, CustomStringConvertible, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(description)
     }
-    var layoutIdentifier: LayoutIdentifier = ViewIdentifier.header
+    var layoutIdentifier: LayoutIdentifier
     var description: String
-    init(title: String) {
+    init(title: String, layout: LayoutIdentifier) {
         self.description = title
+        self.layoutIdentifier = layout
     }
 }

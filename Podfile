@@ -12,6 +12,7 @@ end
 def shared_pods
 #  pod "Boomerang/RxSwift", :path => "../../newark"
 #  pod "Boomerang/UIKit", :path => "../../newark"
+  pod 'SnapKit'
   pod "Boomerang/RxSwift", :git => "https://github.com/stefanomondino/newark", :branch => "master"
   pod "Boomerang/UIKit", :git => "https://github.com/stefanomondino/newark", :branch => "master"
 end
@@ -28,9 +29,6 @@ end
 
 def app_pods
   pod 'Tabman'
-  pod 'SnapKit'
-  pod 'Hero'
-  pod 'pop'
   pod 'SwiftRichString'
   pod 'SwiftLint'
   pod 'RxGesture'
@@ -62,6 +60,10 @@ target 'Model' do
   target 'ModelTests' do
     test_pods
   end
+end
+
+target 'Core' do
+  shared_pods
 end
 
 target 'App' do

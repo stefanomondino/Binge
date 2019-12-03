@@ -24,7 +24,7 @@ class StringPickerViewModel: FormViewModel {
     let layoutIdentifier: LayoutIdentifier
     let additionalInfo: FormAdditionalInfo
     init(relay: BehaviorRelay<String?>,
-         layout: LayoutIdentifier = ViewIdentifier.stringPicker,
+         layout: LayoutIdentifier,
          info: FormAdditionalInfo,
          validating validate: @escaping ValidationCallback = {_ in nil } ) {
         self.value = relay

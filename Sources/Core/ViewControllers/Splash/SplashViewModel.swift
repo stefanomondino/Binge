@@ -12,22 +12,22 @@ import RxRelay
 import RxSwift
 import Model
 
-class SplashViewModel: ViewModel, RxNavigationViewModel {
-    var routes: PublishRelay<Route> = PublishRelay()
+public class SplashViewModel: ViewModel, RxNavigationViewModel {
+    public var routes: PublishRelay<Route> = PublishRelay()
     
-    var layoutIdentifier: LayoutIdentifier = SceneIdentifier.splash
+    public var layoutIdentifier: LayoutIdentifier = CoreSceneIdentifier.splash
     
-    let routeFactory: RouteFactory
+    let routeFactory: CoreRouteFactory
     let useCase: SplashUseCase
     
     var disposeBag = DisposeBag()
     
-    init(routeFactory: RouteFactory, useCase: SplashUseCase) {
+    public init(routeFactory: CoreRouteFactory, useCase: SplashUseCase) {
         self.routeFactory = routeFactory
         self.useCase = useCase
     }
     
-    func start() {
+    public func start() {
         disposeBag = DisposeBag()
         let factory = routeFactory
         useCase

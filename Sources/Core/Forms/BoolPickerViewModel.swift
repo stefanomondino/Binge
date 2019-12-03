@@ -26,7 +26,7 @@ class BoolPickerViewModel: FormViewModel {
     var additionalInfo: FormAdditionalInfo
     
     init(relay: BehaviorRelay<Bool?>,
-         layout: LayoutIdentifier = ViewIdentifier.stringPicker,
+         layout: LayoutIdentifier,
          info: FormAdditionalInfo,
          validating validate: @escaping ValidationCallback = {_ in nil } ) {
         self.value = relay

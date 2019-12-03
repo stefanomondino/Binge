@@ -9,32 +9,36 @@
 import Foundation
 import Boomerang
 import UIKit
+import Core
 import Model
 
-protocol RouteFactory {
+protocol RouteFactory: CoreRouteFactory {
     var container: AppDependencyContainer { get }
-    func restartRoute() -> Route
+    
     func pageRoute(from viewModel: ViewModel) -> Route
-    func homeRoute() -> Route
-    //    func detailRoute(show: Show) -> Route
+//    func detailRoute(show: Show) -> Route
+    
 }
 class MainRouteFactory: RouteFactory {
+    
     let container: AppDependencyContainer
     
     init(container: AppDependencyContainer) {
         self.container = container
     }
+//
     func homeRoute() -> Route {
         return RestartRoute {
-            self.container.viewControllerFactory.showPager()
+            self.container.viewControllerFactory.home()
         }
     }
+
     func restartRoute() -> Route {
         return RestartRoute {
             self.container.viewControllerFactory.root()
         }
     }
-    
+
     func pageRoute(from viewModel: ViewModel) -> Route {
         switch viewModel {
         case let viewModel as ShowListViewModel:

@@ -13,7 +13,6 @@ PODS:
     - Boomerang/Core
   - Differentiator (4.0.1)
   - Gloss (3.1.0)
-  - Hero (1.5.0)
   - KeychainAccess (4.1.0)
   - Moya/Core (14.0.0-beta.5):
     - Alamofire (= 5.0.0-rc.3)
@@ -23,7 +22,6 @@ PODS:
   - Nimble (8.0.4)
   - Pageboy (3.5.0)
   - PluginLayout (0.0.1)
-  - pop (1.0.12)
   - Quick (2.2.0)
   - RxBlocking (5.0.1):
     - RxSwift (~> 5)
@@ -54,12 +52,10 @@ DEPENDENCIES:
   - Boomerang/RxSwift (from `https://github.com/stefanomondino/newark`, branch `master`)
   - Boomerang/UIKit (from `https://github.com/stefanomondino/newark`, branch `master`)
   - Gloss
-  - Hero
   - KeychainAccess
   - Moya/RxSwift (from `https://github.com/Moya/Moya`, branch `14.0.0-beta.5`)
   - Nimble
   - PluginLayout (from `https://github.com/stefanomondino/PluginLayout`, branch `master`)
-  - pop
   - Quick
   - RxBlocking
   - RxGesture
@@ -75,11 +71,9 @@ SPEC REPOS:
     - AutoInsetter
     - Differentiator
     - Gloss
-    - Hero
     - KeychainAccess
     - Nimble
     - Pageboy
-    - pop
     - Quick
     - RxBlocking
     - RxCocoa
@@ -128,13 +122,11 @@ SPEC CHECKSUMS:
   Boomerang: e264ee8ce86ab0d73f06cdb67c259422d3e355a4
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   Gloss: 2dbf87af0e4dd24753f7de933356ff6c5c012426
-  Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   Moya: 2c16c3fe92eda302070213452281b59198f946d8
   Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
   Pageboy: 3794c578aae5fcce06e90b3ed4a0ad6b807d75bb
   PluginLayout: 9018e1c08cec1efe49ad659a9f3887b65b360f05
-  pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   RxBlocking: c5e090f42d046df8b0e7752742510f349963710f
   RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
@@ -148,6 +140,6 @@ SPEC CHECKSUMS:
   SwiftRichString: 2aea7d0761f77f6ef234f6028cde761d7eef40e6
   Tabman: 63eae331ae7a9388ae389b1808f1939269fcdece
 
-PODFILE CHECKSUM: a03ef1c66de4f98278325452c3002f8c013d3225
+PODFILE CHECKSUM: f7a150a389d3b5c88c4d72333cc3df9b10682bd7
 
 COCOAPODS: 1.8.4

@@ -11,6 +11,7 @@ import Boomerang
 import RxSwift
 import RxRelay
 import Model
+import Core
 
 extension PageInfo {
     var title: Translation {

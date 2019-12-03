@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Boomerang
+import Core
 
 enum SceneIdentifier: String, LayoutIdentifier {
     case splash
@@ -24,7 +25,7 @@ enum SceneIdentifier: String, LayoutIdentifier {
     }
 }
 
-protocol ViewControllerFactory {
+protocol ViewControllerFactory: CoreSceneFactory {
     func root() -> UIViewController
     func showPager() -> UIViewController
     func showList(viewModel: ShowListViewModel) -> UIViewController
@@ -58,9 +59,12 @@ class DefaultViewControllerFactory: ViewControllerFactory {
 //    }
     
     func root() -> UIViewController {
-        return SplashViewController(viewModel: container.sceneViewModelFactory.splashViewModel())
+        let viewModel = SplashViewModel(routeFactory: container.core.routeFactory, useCase: container.model.useCases.splash)
+        return SplashViewController(viewModel: viewModel)
     }
-    
+    func home() -> Scene {
+        return showPager()
+    }
     func showPager() -> UIViewController {
         let viewModel = container.sceneViewModelFactory.showsPager()
         return PagerViewController(viewModel: viewModel, routeFactory: container.routeFactory, styleFactory: container.styleFactory)

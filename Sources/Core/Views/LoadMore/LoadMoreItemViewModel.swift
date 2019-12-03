@@ -10,11 +10,11 @@ import Foundation
 import Boomerang
 import RxSwift
 
-class LoadMoreItemViewModel: ViewModel {
-    let layoutIdentifier: LayoutIdentifier
+public class LoadMoreItemViewModel: ViewModel {
+    public let layoutIdentifier: LayoutIdentifier
     let closure: () -> Disposable
     
-    init(_ closure: @escaping () -> Disposable) {
+    public init(_ closure: @escaping () -> Disposable) {
         self.layoutIdentifier = ViewIdentifier.loadMore
         self.closure = closure
     }
@@ -22,6 +22,4 @@ class LoadMoreItemViewModel: ViewModel {
     func reload() -> Disposable {
         closure()
     }
-    
-    
 }

@@ -11,10 +11,10 @@ import Boomerang
 import SnapKit
 import RxSwift
 
-class SplashViewController: UIViewController {
+public class SplashViewController: UIViewController {
     let viewModel: SplashViewModel
     let disposeBag = DisposeBag()
-    init(
+    public init(
         nibName: String? = nil,
         viewModel: SplashViewModel) {
         self.viewModel = viewModel
@@ -25,7 +25,7 @@ class SplashViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         if let launchScreen = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()?.view {
             self.view.insertSubview(launchScreen, at: 0)

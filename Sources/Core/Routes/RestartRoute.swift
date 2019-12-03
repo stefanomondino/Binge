@@ -10,20 +10,20 @@ import Foundation
 import Boomerang
 import UIKit
 
-struct RestartRoute: Route {
-    let createScene: () -> Scene?
-    init(createScene: @escaping () -> Scene) {
+public struct RestartRoute: Route {
+    public let createScene: () -> Scene?
+    public init(createScene: @escaping () -> Scene) {
         self.createScene = createScene
     }
     
-    func execute(from scene: Scene?) {
+    public func execute(from scene: Scene?) {
         
         //TODO Dismiss all modals
         UIApplication.shared.delegate?.window??.rootViewController = createScene()
         UIApplication.shared.delegate?.window??.makeKeyAndVisible()
     }
     
-    init(factory: ViewControllerFactory) {
+    public init(factory: CoreSceneFactory) {
         
         self.createScene = {
             

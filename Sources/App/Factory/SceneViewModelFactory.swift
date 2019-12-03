@@ -12,7 +12,7 @@ import Model
 protocol SceneViewModelFactory {
     //    func schedule() -> ListViewModel & NavigationViewModel
     //    func showDetail(show: Show) -> ShowDetailViewModel
-    func splashViewModel() -> SplashViewModel
+//    func splashViewModel() -> SplashViewModel
     func popularShows() -> ShowListViewModel
     func trendingShows() -> ShowListViewModel
     func watchedShows() -> ShowListViewModel
@@ -34,9 +34,9 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
     func login() -> LoginViewModel {
         return LoginViewModel(itemFactory: container.pickerViewModelFactory)
     }
-    func splashViewModel() -> SplashViewModel {
-        return SplashViewModel(routeFactory: container.routeFactory, useCase: container.model.useCases.splash)
-    }
+//    func splashViewModel() -> SplashViewModel {
+//        return SplashViewModel(routeFactory: container.routeFactory, useCase: container.model.useCases.splash)
+//    }
     
     func popularShows() -> ShowListViewModel {
         ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory,

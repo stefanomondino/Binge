@@ -10,6 +10,7 @@ import UIKit
 import Boomerang
 import RxSwift
 import RxCocoa
+import SnapKit
 
 class StringPickerItemView: UIView, WithViewModel {
     

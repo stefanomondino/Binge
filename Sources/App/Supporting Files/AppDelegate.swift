@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        window.makeKeyAndVisible()
         dependencyContainer
+                    .core
                    .routeFactory
                    .restartRoute()
                    .execute(from: nil)

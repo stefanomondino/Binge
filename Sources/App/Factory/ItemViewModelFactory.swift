@@ -11,6 +11,15 @@ import Boomerang
 import Model
 import RxSwift
 import RxRelay
+import Core
+
+enum ItemViewIdentifier: String, LayoutIdentifier {
+
+    case show
+    var identifierString: String {
+        return self.rawValue
+    }
+}
 
 protocol ItemViewModelFactory {
     //    func header(title: String) -> ViewModel
@@ -28,7 +37,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
     
     func show(_ show: WithShow) -> ViewModel {
         ShowItemViewModel(show: show.show,
-                          layoutIdentifier: ViewIdentifier.show,
+                          layoutIdentifier: ItemViewIdentifier.show,
                           imageUseCase: container.model.useCases.images,
                           styleFactory: container.styleFactory
         )

@@ -12,7 +12,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-protocol FormViewModelType: ViewModel {
+public protocol FormViewModelType: ViewModel {
     typealias NavigationCallback = () -> ()
     var textValue: Driver<String> { get }
     var additionalInfo: FormAdditionalInfo { get }
@@ -22,19 +22,19 @@ protocol FormViewModelType: ViewModel {
     var onPrevious: NavigationCallback? { get set }
 }
 
-protocol FormViewModel: FormViewModelType {
+public protocol FormViewModel: FormViewModelType {
     typealias ValidationCallback = (Value?) -> Error?
     associatedtype Value: Hashable
     var validate: ValidationCallback { get }
     var value: BehaviorRelay<Value?> { get }
 }
 
-extension FormViewModel where Value: CustomStringConvertible {
+public extension FormViewModel where Value: CustomStringConvertible {
     var textValue: Driver<String> {
         return value.asDriver().map { $0?.description ?? "" }
     }
 }
-extension FormViewModel {
+public extension FormViewModel {
     
     var errors: Observable<Error?> {
         let validation = self.validate
@@ -42,7 +42,7 @@ extension FormViewModel {
     }
 }
 
-enum KeyboardType {
+public enum KeyboardType {
     case email
     case password
     case phone
@@ -50,13 +50,13 @@ enum KeyboardType {
     case `default`
 }
 
-struct FormAdditionalInfo {
+public struct FormAdditionalInfo {
     var title: Observable<String>
     var errorString: Observable<String>
     var keyboardType: KeyboardType
 }
 
-extension Array where Element == FormViewModelType {
+public extension Array where Element == FormViewModelType {
     func withNavigation(_ confirmation: @escaping FormViewModel.NavigationCallback) -> [FormViewModelType] {
         let elements: [FormViewModelType] = self.reduce([]) { acc, element -> [FormViewModelType] in
             var accumulator = acc
