@@ -22,22 +22,23 @@ class LoginViewModel: RxListViewModel, WithPage {
     var disposeBag: DisposeBag = DisposeBag()
     
     let layoutIdentifier: LayoutIdentifier
-
-    init() {
+    let itemFactory: PickerViewModelFactory
+    init(itemFactory: PickerViewModelFactory) {
+        self.itemFactory = itemFactory
         self.layoutIdentifier = SceneIdentifier.login
     }
     func reload() {
         let name = BehaviorRelay<String?>(value: nil)
-        let nameVM = StringPickerViewModel(relay: name)
+        let nameVM = itemFactory.email(relay: name, title: "name")
         
         let password = BehaviorRelay<String?>(value: "")
-        let passwordVM = StringPickerViewModel(relay: password)
+        let passwordVM = itemFactory.password(relay: password, title: "password")
                 
-        let multiValue = BehaviorRelay<ListItemViewModel?>(value: nil)
-        let values = (0..<100).map { ListItemViewModel(title: "\($0)") }
-        let multi = ListPickerViewModel(items: .just(values), value: multiValue, layout: ViewIdentifier.stringPicker)
+//        let multiValue = BehaviorRelay<ListItemViewModel?>(value: nil)
+//        let values = (0..<100).map { ListItemViewModel(title: "\($0)") }
+//        let multi = ListPickerViewModel(items: .just(values), value: multiValue, layout: ViewIdentifier.stringPicker)
         
-        let items: [FormViewModelType] = [nameVM,multi, passwordVM].withNavigation {
+        let items: [FormViewModelType] = [nameVM, passwordVM].withNavigation {
             print("Final element in form")
         }
             

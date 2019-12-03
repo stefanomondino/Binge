@@ -38,6 +38,7 @@
 		701C469322312B9800BFFA4A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C469222312B9800BFFA4A /* Logger.swift */; };
 		701C469622312CB200BFFA4A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C469222312B9800BFFA4A /* Logger.swift */; };
 		702B24CA23956A71007F210E /* BoolPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702B24C923956A71007F210E /* BoolPickerViewModel.swift */; };
+		702B24CC23957CC4007F210E /* PickerViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702B24CB23957CC4007F210E /* PickerViewModelFactory.swift */; };
 		7030C068230EA5C90038A548 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7030C066230EA5C70038A548 /* Show.swift */; };
 		703FD479220F44AA00A88B5C /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703FD477220F42F300A88B5C /* Environment.swift */; };
 		704891B323112D600022397E /* Livvic-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 704891A223112D600022397E /* Livvic-Black.ttf */; };
@@ -202,6 +203,7 @@
 		701C46702230136500BFFA4A /* config.swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.swiftlint.yml; sourceTree = "<group>"; };
 		701C469222312B9800BFFA4A /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		702B24C923956A71007F210E /* BoolPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolPickerViewModel.swift; sourceTree = "<group>"; };
+		702B24CB23957CC4007F210E /* PickerViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewModelFactory.swift; sourceTree = "<group>"; };
 		7030C066230EA5C70038A548 /* Show.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		703FD477220F42F300A88B5C /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		704891A223112D600022397E /* Livvic-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Livvic-Black.ttf"; sourceTree = "<group>"; };
@@ -463,6 +465,7 @@
 				706CE1402385AD930070FC4E /* RouteFactory.swift */,
 				70D1E42523883A240007EF9B /* StyleFactory.swift */,
 				706CE1412385AD930070FC4E /* ItemViewModelFactory.swift */,
+				702B24CB23957CC4007F210E /* PickerViewModelFactory.swift */,
 				706CE1422385AD930070FC4E /* CollectionViewCellFactory.swift */,
 				706CE1432385AD930070FC4E /* MainViewFactory.swift */,
 				706CE1442385AD930070FC4E /* SceneViewModelFactory.swift */,
@@ -1277,6 +1280,7 @@
 				70D1E432238923E00007EF9B /* SceneRoute.swift in Sources */,
 				706CE1492385AD930070FC4E /* RouteFactory.swift in Sources */,
 				706CE15B238679240070FC4E /* LoadMoreItemViewModel.swift in Sources */,
+				702B24CC23957CC4007F210E /* PickerViewModelFactory.swift in Sources */,
 				70D1E42D238853A90007EF9B /* CardStyle.swift in Sources */,
 				07ABA28BC4F731FB6CD9ACBD /* LoadMoreItemView.xib in Sources */,
 				70A9185023892C2B007740A7 /* WithPage.swift in Sources */,

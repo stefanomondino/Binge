@@ -20,6 +20,7 @@ protocol AppDependencyContainer  {
     var sceneViewModelFactory: SceneViewModelFactory { get }
     var translations: StringsFactory { get }
     var itemViewModelFactory: ItemViewModelFactory { get }
+    var pickerViewModelFactory: PickerViewModelFactory { get }
     var model: UseCaseDependencyContainer { get }
 }
 
@@ -30,6 +31,7 @@ enum DependencyContainerKeys: String, CaseIterable, Hashable {
     case viewControllerFactory
     case sceneViewModelFactory
     case itemViewModelFactory
+    case pickerViewModelFactory
     case styleFactory
     case translations
     case model
@@ -50,6 +52,7 @@ class DefaultAppDependencyContainer: AppDependencyContainer, DependencyContainer
     var collectionViewCellFactory: CollectionViewCellFactory { self[.collectionViewCellFactory] }
     var sceneViewModelFactory: SceneViewModelFactory { self[.sceneViewModelFactory] }
     var itemViewModelFactory: ItemViewModelFactory { self[.itemViewModelFactory] }
+    var pickerViewModelFactory: PickerViewModelFactory { self[.pickerViewModelFactory] }
     
     init() {
         self.register(for: .translations, scope: .eagerSingleton) { StringsFactory(container: self) }
@@ -60,7 +63,9 @@ class DefaultAppDependencyContainer: AppDependencyContainer, DependencyContainer
         self.register(for: .viewControllerFactory) { DefaultViewControllerFactory(container: self) }
         self.register(for: .sceneViewModelFactory) { DefaultSceneViewModelFactory(container: self) }
         self.register(for: .itemViewModelFactory) { DefaultItemViewModelFactory(container: self) }
+        self.register(for: .pickerViewModelFactory) { DefaultPickerViewModelFactory(container: self) }
         self.register(for: .model, scope: .singleton) { DefaultModelDependencyContainer(environment: self.environment) }
+        
         
     }
 }

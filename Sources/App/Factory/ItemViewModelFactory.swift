@@ -10,11 +10,13 @@ import Foundation
 import Boomerang
 import Model
 import RxSwift
+import RxRelay
 
 protocol ItemViewModelFactory {
     //    func header(title: String) -> ViewModel
     func show(_ show: WithShow) -> ViewModel
     func loadMore(_ closure: @escaping () -> Disposable) -> ViewModel
+    
 }
 
 struct DefaultItemViewModelFactory: ItemViewModelFactory {
@@ -31,5 +33,4 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                           styleFactory: container.styleFactory
         )
     }
-
 }

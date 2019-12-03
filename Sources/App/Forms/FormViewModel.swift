@@ -15,6 +15,7 @@ import RxCocoa
 protocol FormViewModelType: ViewModel {
     typealias NavigationCallback = () -> ()
     var textValue: Driver<String> { get }
+    var additionalInfo: FormAdditionalInfo { get }
     var errors: Observable<Error?> { get }
     var focus: PublishRelay<()> { get }
     var onNext: NavigationCallback? { get set }
@@ -39,6 +40,20 @@ extension FormViewModel {
         let validation = self.validate
         return value.asObservable().map { validation($0) }
     }
+}
+
+enum KeyboardType {
+    case email
+    case password
+    case phone
+    case number
+    case `default`
+}
+
+struct FormAdditionalInfo {
+    var title: Observable<String>
+    var errorString: Observable<String>
+    var keyboardType: KeyboardType
 }
 
 extension Array where Element == FormViewModelType {

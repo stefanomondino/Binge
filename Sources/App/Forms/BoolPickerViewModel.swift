@@ -23,11 +23,15 @@ class BoolPickerViewModel: FormViewModel {
     let validate: ValidationCallback
     let layoutIdentifier: LayoutIdentifier
     
+    var additionalInfo: FormAdditionalInfo
+    
     init(relay: BehaviorRelay<Bool?>,
          layout: LayoutIdentifier = ViewIdentifier.stringPicker,
+         info: FormAdditionalInfo,
          validating validate: @escaping ValidationCallback = {_ in nil } ) {
         self.value = relay
         self.validate = validate
+        self.additionalInfo = info
         self.layoutIdentifier = layout
     }
     

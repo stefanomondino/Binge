@@ -22,11 +22,13 @@ class StringPickerViewModel: FormViewModel {
     let value: BehaviorRelay<String?>
     let validate: (String?) -> Error?
     let layoutIdentifier: LayoutIdentifier
-    
+    let additionalInfo: FormAdditionalInfo
     init(relay: BehaviorRelay<String?>,
          layout: LayoutIdentifier = ViewIdentifier.stringPicker,
+         info: FormAdditionalInfo,
          validating validate: @escaping ValidationCallback = {_ in nil } ) {
         self.value = relay
+        self.additionalInfo = info
         self.validate = validate
         self.layoutIdentifier = layout
     }
@@ -49,6 +51,8 @@ class ListPickerViewModel<Element: ViewModel & Hashable & CustomStringConvertibl
     
     let sectionsRelay = BehaviorRelay<[Section]>(value: [])
     
+    let additionalInfo: FormAdditionalInfo
+    
     func reload() {
         self.disposeBag = DisposeBag()
         self.items
@@ -68,9 +72,11 @@ class ListPickerViewModel<Element: ViewModel & Hashable & CustomStringConvertibl
     let items: Observable<[Element]>
     init(items: Observable<[Element]>,
          value: BehaviorRelay<Element?>,
+         info: FormAdditionalInfo,
          layout: LayoutIdentifier) {
         self.layoutIdentifier = layout
         self.items = items
+        self.additionalInfo = info
         self.value = value
     }
     

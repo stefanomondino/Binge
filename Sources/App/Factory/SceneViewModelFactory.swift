@@ -32,7 +32,7 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
         ], styleFactory: container.styleFactory)
     }
     func login() -> LoginViewModel {
-        return LoginViewModel()
+        return LoginViewModel(itemFactory: container.pickerViewModelFactory)
     }
     func splashViewModel() -> SplashViewModel {
         return SplashViewModel(routeFactory: container.routeFactory, useCase: container.model.useCases.splash)

@@ -45,9 +45,25 @@ class StringPickerItemView: UIView, WithViewModel {
             .disposed(by: disposeBag)
     }
     
+    func setStyle(_ info: FormAdditionalInfo) {
+        switch info.keyboardType {
+        case .email:
+            textField.keyboardType = .emailAddress
+            textField.autocorrectionType = .no
+            textField.isSecureTextEntry = false
+        case .password:
+            textField.keyboardType = .default
+            textField.isSecureTextEntry = true
+            textField.autocorrectionType = .no
+        default:
+            textField.keyboardType = .default
+            textField.isSecureTextEntry = false
+            textField.autocorrectionType = .default
+        }
+    }
     
     func configure(with viewModel: StringPickerViewModel) {
-        
+        self.setStyle(viewModel.additionalInfo)
         textField.rx.textInput
             .text
             .map { $0 ?? "" }
@@ -69,6 +85,7 @@ class StringPickerItemView: UIView, WithViewModel {
     }
     
     func configure(with viewModel: RxListViewModel & FormViewModelType) {
+        self.setStyle(viewModel.additionalInfo)
         let picker = UIPickerView()
         
         viewModel.sectionsRelay
