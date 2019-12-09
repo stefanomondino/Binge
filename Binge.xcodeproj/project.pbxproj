@@ -26,8 +26,10 @@
 		0EB7C02B97C83C7A5D1AEF29 /* ShowListViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = D42B3D145DE13A3AF8EFEC7B /* ShowListViewController.xib */; };
 		145884CB74471D143841AAAE /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4C03D2BAF1892383D9FE238 /* Pods_App.framework */; };
 		1CB93A0B5BED89640520DC43 /* ShowPosterItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8E4CBB10EE992E2CFD641D /* ShowPosterItemView.swift */; };
+		212F6B513BAC870CF9B80033 /* ShowDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BD4C8B998151BCB8B6ED7E /* ShowDetailViewModel.swift */; };
 		2DE8785F1754BE67A49A10B2 /* ShowItemView.xib in Sources */ = {isa = PBXBuildFile; fileRef = 9D243B97AAD60BC731DEE40B /* ShowItemView.xib */; };
 		3425BF73038074844E382E76 /* ConfigurationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BD1AB2F69A6CA84CA52E0B /* ConfigurationRepository.swift */; };
+		44A153CF470B6383B7C04694 /* ShowDetailViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 15B2D004D82A9DC3F0C5917D /* ShowDetailViewController.xib */; };
 		6B7B236991A2D8B117A3238D /* LoadMoreItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5E6349414DE8CD0F69AC0 /* LoadMoreItemView.swift */; };
 		6DA4DCA9AFC2D9DAC021660B /* ShowItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE8F68EF7CFAEA0D7AB1AB /* ShowItemView.swift */; };
 		7019D867230EADD00065770C /* SplashUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55AA2212E99700F27DAE /* SplashUseCase.swift */; };
@@ -128,6 +130,7 @@
 		7B716A84238727E500ADA2AB /* DataSourceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B716A83238727E500ADA2AB /* DataSourceFactory.swift */; };
 		7B716A8623872A8D00ADA2AB /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B716A8523872A8D00ADA2AB /* Secrets.swift */; };
 		8D188D6A93CF2433E684E014 /* Pods_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C60288C35ED765B5A0720ED7 /* Pods_AppTests.framework */; };
+		9192CBF764D1EDDE0F0C106C /* ShowDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377FB861E10B9BB4E88EE16C /* ShowDetailViewController.swift */; };
 		A7294EF60FF828B6E3F721A9 /* ShowPosterItemView.xib in Sources */ = {isa = PBXBuildFile; fileRef = 750119513A47056667B1E6B5 /* ShowPosterItemView.xib */; };
 		B882686F9D57E6F8934C1564 /* Pods_Model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16B655723CB58A3A51D8DF23 /* Pods_Model.framework */; };
 		C981227517476715D69279A7 /* ShowListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB515CCA62917DB0F900A25 /* ShowListViewController.swift */; };
@@ -182,9 +185,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		15B2D004D82A9DC3F0C5917D /* ShowDetailViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = ShowDetailViewController.xib; sourceTree = "<group>"; };
 		16B655723CB58A3A51D8DF23 /* Pods_Model.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Model.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CF33F997F23DE5F450976CD /* Pods-Model.prodrun.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Model.prodrun.xcconfig"; path = "Target Support Files/Pods-Model/Pods-Model.prodrun.xcconfig"; sourceTree = "<group>"; };
+		377FB861E10B9BB4E88EE16C /* ShowDetailViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShowDetailViewController.swift; sourceTree = "<group>"; };
 		3DC8A4A2D654913D5DE2A9E9 /* LoadMoreItemView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = LoadMoreItemView.xib; sourceTree = "<group>"; };
+		49BD4C8B998151BCB8B6ED7E /* ShowDetailViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShowDetailViewModel.swift; sourceTree = "<group>"; };
 		4DB515CCA62917DB0F900A25 /* ShowListViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShowListViewController.swift; sourceTree = "<group>"; };
 		529A48DC51B50427F92EFEDA /* Pods-Model.develrun.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Model.develrun.xcconfig"; path = "Target Support Files/Pods-Model/Pods-Model.develrun.xcconfig"; sourceTree = "<group>"; };
 		59B5B4EF32199FE16F6342A8 /* ShowsRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShowsRepository.swift; sourceTree = "<group>"; };
@@ -372,6 +378,20 @@
 				3DC8A4A2D654913D5DE2A9E9 /* LoadMoreItemView.xib */,
 			);
 			path = LoadMore;
+			sourceTree = "<group>";
+		};
+		30913D4242721DC67256CAEE /* ShowDetail */ = {
+			isa = PBXGroup;
+			children = (
+				49BD4C8B998151BCB8B6ED7E /* ShowDetailViewModel.swift */,
+				49BD4C8B998151BCB8B6ED7E /* ShowDetailViewModel.swift */,
+				377FB861E10B9BB4E88EE16C /* ShowDetailViewController.swift */,
+				377FB861E10B9BB4E88EE16C /* ShowDetailViewController.swift */,
+				15B2D004D82A9DC3F0C5917D /* ShowDetailViewController.xib */,
+				15B2D004D82A9DC3F0C5917D /* ShowDetailViewController.xib */,
+			);
+			name = ShowDetail;
+			path = ShowDetail;
 			sourceTree = "<group>";
 		};
 		701C466A2230125F00BFFA4A /* Tools */ = {
@@ -751,6 +771,7 @@
 				70D1E42E2389222E0007EF9B /* Pager */,
 				70DBC8AA220C6DC700E0BB27 /* Splash */,
 				8BFA75441FF385C891B0BECD /* ShowList */,
+				30913D4242721DC67256CAEE /* ShowDetail */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1296,6 +1317,9 @@
 				A7294EF60FF828B6E3F721A9 /* ShowPosterItemView.xib in Sources */,
 				70A918522389C6AA007740A7 /* Fonts.swift in Sources */,
 				70D1E42623883A240007EF9B /* StyleFactory.swift in Sources */,
+				212F6B513BAC870CF9B80033 /* ShowDetailViewModel.swift in Sources */,
+				9192CBF764D1EDDE0F0C106C /* ShowDetailViewController.swift in Sources */,
+				44A153CF470B6383B7C04694 /* ShowDetailViewController.xib in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

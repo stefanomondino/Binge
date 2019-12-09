@@ -6,6 +6,7 @@
             "git@github.com:stefanomondino/Jenkins-Murray.git@master",
         ],
         "environmentPlaceholders": {
-            "companyName": ""
+            "companyName": "",
+            "target": "App"
         }
 }

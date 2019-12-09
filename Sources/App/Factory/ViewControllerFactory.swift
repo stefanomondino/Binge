@@ -29,8 +29,8 @@ protocol ViewControllerFactory {
     func showPager() -> UIViewController
     func showList(viewModel: ShowListViewModel) -> UIViewController
     func login(viewModel: LoginViewModel) -> UIViewController
-//    func schedule(viewModel: ListViewModel & NavigationViewModel) -> UIViewController
-//    func showDetail(viewModel: ShowDetailViewModel) -> UIViewController
+    //    func schedule(viewModel: ListViewModel & NavigationViewModel) -> UIViewController
+    //    func showDetail(viewModel: ShowDetailViewModel) -> UIViewController
 }
 
 class DefaultViewControllerFactory: ViewControllerFactory {
@@ -45,17 +45,17 @@ class DefaultViewControllerFactory: ViewControllerFactory {
         return identifier.prefix(1).uppercased() + identifier.dropFirst() + "ViewController"
     }
     
-//    func schedule(viewModel: ListViewModel & NavigationViewModel) -> UIViewController {
-//        return ScheduleViewController(nibName: name(from: viewModel.layoutIdentifier),
-//                                      viewModel: viewModel,
-//                                      collectionViewCellFactory: container.collectionViewCellFactory)
-//    }
-//
-//    func showDetail(viewModel: ShowDetailViewModel) -> UIViewController {
-//        return ShowDetailViewController(nibName: name(from: viewModel.layoutIdentifier),
-//                                        viewModel: viewModel,
-//                                        collectionViewCellFactory: container.collectionViewCellFactory)
-//    }
+    //    func schedule(viewModel: ListViewModel & NavigationViewModel) -> UIViewController {
+    //        return ScheduleViewController(nibName: name(from: viewModel.layoutIdentifier),
+    //                                      viewModel: viewModel,
+    //                                      collectionViewCellFactory: container.collectionViewCellFactory)
+    //    }
+    //
+    //    func showDetail(viewModel: ShowDetailViewModel) -> UIViewController {
+    //        return ShowDetailViewController(nibName: name(from: viewModel.layoutIdentifier),
+    //                                        viewModel: viewModel,
+    //                                        collectionViewCellFactory: container.collectionViewCellFactory)
+    //    }
     
     func root() -> UIViewController {
         return SplashViewController(viewModel: container.sceneViewModelFactory.splashViewModel())
@@ -76,4 +76,13 @@ class DefaultViewControllerFactory: ViewControllerFactory {
                                    viewModel: viewModel,
                                    collectionViewCellFactory: container.collectionViewCellFactory)
     }
+    
+    func showDetail(viewModel: ShowDetailViewModel) -> UIViewController {
+        return ShowDetailViewController(
+                                    nibName: name(from: viewModel.layoutIdentifier),
+                                       viewModel: viewModel,
+                                       collectionViewCellFactory: container.collectionViewCellFactory)
+    }
+
+    //MURRAY PLACEHOLDER
 }
