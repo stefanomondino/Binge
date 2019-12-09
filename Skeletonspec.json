@@ -3,8 +3,7 @@
         "foldersToRename" : ["Skeleton.xcodeproj"],
         "filePlaceholder": "Skeleton",
         "remoteBones": [
-            "https://gitlab.com/synesthesia_team/mobile/ios/internal/bones/mvvm",
-            "https://gitlab.com/synesthesia_team/mobile/ios/internal/bones/model.git"
+            "git@github.com:stefanomondino/Jenkins-Murray.git@master",
         ],
         "environmentPlaceholders": {
             "companyName": ""
