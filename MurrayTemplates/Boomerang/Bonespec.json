@@ -9,16 +9,16 @@
         ]
       },
       "createSubfolder" : true,
-      "folderPath" : "App\/ViewControllers",
+      "folderPath" : "{{ target || \"App\" }}\/ViewControllers",
       "otherFilesRules" : [
         {
-          "filePath" : "Sources\/App\/Factory\/ViewControllerFactory.swift",
+          "filePath" : "Sources\/{{ target || \"App\" }}\/Factory\/ViewControllerFactory.swift",
           "fileTemplate" : "viewController\/ViewControllerFactoryImplementation.replacement.swift",
           "placeholder" : "\/\/MURRAY IMPLEMENTATION PLACEHOLDER",
           "text" : ""
         },
         {
-          "filePath" : "Sources\/App\/Factory\/ViewControllerFactory.swift",
+          "filePath" : "Sources\/{{ target || \"App\" }}\/Factory\/ViewControllerFactory.swift",
           "fileTemplate" : "viewController\/ViewControllerFactoryDeclaration.replacement.swift",
           "placeholder" : "\/\/MURRAY DECLARATION PLACEHOLDER",
           "text" : ""
@@ -26,7 +26,7 @@
         {
           "placeholder" : "\/\/MURRAY ENUM PLACEHOLDER",
           "text" : "case {{ name|firstLowercase }}\n\t",
-          "filePath" : "Sources\/App\/Factory\/ViewControllerFactory.swift"
+          "filePath" : "Sources\/{{ target || \"App\" }}\/Factory\/ViewControllerFactory.swift"
         }
       ],
       "scripts" : [
@@ -50,16 +50,16 @@
         ]
       },
       "createSubfolder" : true,
-      "folderPath" : "App\/ViewControllers",
+      "folderPath" : "{{ target || \"App\" }}\/ViewControllers",
       "otherFilesRules" : [
         {
-          "filePath" : "Sources\/App\/Factory\/SceneViewModelFactory.swift",
+          "filePath" : "Sources\/{{ target || \"App\" }}\/Factory\/SceneViewModelFactory.swift",
           "fileTemplate" : "rxListViewModel\/ViewModelFactoryImplementation.replacement.swift",
           "placeholder" : "\/\/MURRAY IMPLEMENTATION PLACEHOLDER",
           "text" : ""
         },
         {
-          "filePath" : "Sources\/App\/Factory\/SceneViewModelFactory.swift",
+          "filePath" : "Sources\/{{ target || \"App\" }}\/Factory\/SceneViewModelFactory.swift",
           "fileTemplate" : "rxListViewModel\/ViewModelFactoryDeclaration.replacement.swift",
           "placeholder" : "\/\/MURRAY DECLARATION PLACEHOLDER",
           "text" : ""
@@ -90,7 +90,7 @@
     {
       "placeholder" : "Bone",
       "createSubfolder" : true,
-      "folderPath" : "App/Views",
+      "folderPath" : "{{ target || \"App\" }}/Views",
       "pluginData" : {
         "targetNames" : [
           "{{ target || \"App\"}}"
@@ -101,7 +101,7 @@
       ],
       "otherFilesRules" : [
         {
-          "filePath" : "Sources\/App\/Factory\/MainViewFactory.swift",
+          "filePath" : "Sources\/{{ target || \"App\" }}\/Factory\/MainViewFactory.swift",
           "placeholder" : "//MURRAY PLACEHOLDER",
           "text" : "case {{name|firstLowercase}}\n\t"
         }
