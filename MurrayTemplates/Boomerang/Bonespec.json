@@ -91,6 +91,11 @@
       "placeholder" : "Bone",
       "createSubfolder" : true,
       "folderPath" : "App/Views",
+      "pluginData" : {
+        "targetNames" : [
+          "{{ target || \"App\"}}"
+        ]
+      },
       "scripts" : [
 
       ],
