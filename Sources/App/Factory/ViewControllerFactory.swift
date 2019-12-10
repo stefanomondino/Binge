@@ -77,13 +77,6 @@ class DefaultViewControllerFactory: ViewControllerFactory {
                                    viewModel: viewModel,
                                    collectionViewCellFactory: container.collectionViewCellFactory)
     }
-    
-    func showDetail(viewModel: ShowDetailViewModel) -> UIViewController {
-        return ShowDetailViewController(
-                                    nibName: name(from: viewModel.layoutIdentifier),
-                                       viewModel: viewModel,
-                                       collectionViewCellFactory: container.collectionViewCellFactory)
-    }
 
     //MURRAY IMPLEMENTATION PLACEHOLDER
 }
