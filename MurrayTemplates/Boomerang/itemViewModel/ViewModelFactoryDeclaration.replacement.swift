@@ -1,2 +1,2 @@
-func {{ name|firstLowercase }}() -> {{name|firstUppercase}}ViewModel
+func {{ name|firstLowercase }}(_ {{name|firstLowercase}}: {{name|firstUppercase}}) -> ViewModel
     
