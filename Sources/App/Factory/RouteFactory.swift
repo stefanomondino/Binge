@@ -16,6 +16,7 @@ protocol RouteFactory {
     func restartRoute() -> Route
     func pageRoute(from viewModel: ViewModel) -> Route
     func homeRoute() -> Route
+    func showDetailRoute(for show: WithShow) -> Route
     //    func detailRoute(show: Show) -> Route
 }
 class MainRouteFactory: RouteFactory {
@@ -32,6 +33,13 @@ class MainRouteFactory: RouteFactory {
     func restartRoute() -> Route {
         return RestartRoute {
             self.container.viewControllerFactory.root()
+        }
+    }
+    
+    func showDetailRoute(for show: WithShow) -> Route {
+        return ModalRoute {
+            let viewModel = self.container.sceneViewModelFactory.showDetail(for: show)
+            return self.container.viewControllerFactory.showDetail(viewModel: viewModel)
         }
     }
     

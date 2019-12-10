@@ -14,9 +14,9 @@ enum SceneIdentifier: String, LayoutIdentifier {
     case splash
     case pager
     case showList
-    case showDetail
     case login
-    //MURRAY ENUM PLACEHOLDER
+    case showDetail
+	//MURRAY ENUM PLACEHOLDER
 
     var identifierString: String {
         switch self {
@@ -30,6 +30,7 @@ protocol ViewControllerFactory {
     func showPager() -> UIViewController
     func showList(viewModel: ShowListViewModel) -> UIViewController
     func login(viewModel: LoginViewModel) -> UIViewController
+    func showDetail(viewModel: ShowDetailViewModel) -> UIViewController
     //MURRAY DECLARATION PLACEHOLDER
     
 }
@@ -78,5 +79,11 @@ class DefaultViewControllerFactory: ViewControllerFactory {
                                    collectionViewCellFactory: container.collectionViewCellFactory)
     }
 
+    func showDetail(viewModel: ShowDetailViewModel) -> UIViewController {
+        return ShowDetailViewController(nibName: name(from: viewModel.layoutIdentifier),
+                                   	viewModel: viewModel,
+                                   	collectionViewCellFactory: container.collectionViewCellFactory)
+    }
+    
     //MURRAY IMPLEMENTATION PLACEHOLDER
 }

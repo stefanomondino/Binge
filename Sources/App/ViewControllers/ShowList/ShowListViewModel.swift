@@ -22,7 +22,9 @@ extension PageInfo {
     }
 }
 
-class ShowListViewModel: RxListViewModel, WithPage {
+class ShowListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
+    
+    var routes: PublishRelay<Route> = PublishRelay()
     
     typealias ShowListDownloadClosure = (_ current: Int, _ total: Int) -> Observable<[WithShow]>
     
@@ -48,11 +50,14 @@ class ShowListViewModel: RxListViewModel, WithPage {
     private let useCase: ShowListUseCase
     
     let styleFactory: StyleFactory
+    let routeFactory: RouteFactory
     
     init(itemViewModelFactory: ItemViewModelFactory,
          useCase: ShowListUseCase,
-         styleFactory: StyleFactory) {
+         styleFactory: StyleFactory,
+         routeFactory: RouteFactory) {
         self.useCase = useCase
+        self.routeFactory = routeFactory
         self.styleFactory = styleFactory
         self.itemViewModelFactory = itemViewModelFactory
     }
@@ -63,7 +68,9 @@ class ShowListViewModel: RxListViewModel, WithPage {
     }
     
     func selectItem(at indexPath: IndexPath) {
-        
+        guard let show = (self[indexPath] as? ShowItemViewModel)?.show else { return }
+        let route = routeFactory.showDetailRoute(for: show)
+        self.routes.accept(route)
     }
     
     private func items(from shows: [WithShow]) -> [ViewModel] {

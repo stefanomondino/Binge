@@ -17,6 +17,7 @@ protocol SceneViewModelFactory {
     func trendingShows() -> ShowListViewModel
     func watchedShows() -> ShowListViewModel
     func showsPager() -> ListViewModel
+    func showDetail(for show: WithShow) -> ShowDetailViewModel
     //MURRAY DECLARATION PLACEHOLDER
 }
 
@@ -42,20 +43,30 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
     func popularShows() -> ShowListViewModel {
         ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory,
                           useCase: container.model.useCases.popularShows,
-                          styleFactory: container.styleFactory)
+                          styleFactory: container.styleFactory,
+                          routeFactory: container.routeFactory)
     }
     
     func trendingShows() -> ShowListViewModel {
         ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory,
                           useCase: container.model.useCases.trendingShows,
-                          styleFactory: container.styleFactory)
+                          styleFactory: container.styleFactory,
+                          routeFactory: container.routeFactory)
     }
     
     func watchedShows() -> ShowListViewModel {
         ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory,
                           useCase: container.model.useCases.watchedShows,
-                          styleFactory: container.styleFactory)
+                          styleFactory: container.styleFactory,
+                          routeFactory: container.routeFactory)
     }
     
+    func showDetail(for show: WithShow) -> ShowDetailViewModel {
+        ShowDetailViewModel(show: show,
+                            itemViewModelFactory: container.itemViewModelFactory,
+                          useCase: container.model.useCases.showDetail,
+                          styleFactory: container.styleFactory)
+    }
+
     //MURRAY IMPLEMENTATION PLACEHOLDER
 }
