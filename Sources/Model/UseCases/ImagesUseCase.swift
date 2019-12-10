@@ -5,20 +5,26 @@ import Moya
 
  public protocol ImagesUseCase {
     func poster(forShow show: Show) -> Observable<WithImage>
+    func image(forPerson person: Person) -> Observable<WithImage> 
 }
 
- struct DefaultImagesUseCase: ImagesUseCase {
+ class DefaultImagesUseCase: ImagesUseCase {
     
     let configuration: ConfigurationRepository
     let shows: ShowsRepository
     
-    func image(from info: ShowInfo, with keyPath: KeyPath<ShowInfo, String?>) -> Observable<WithImage> {
+    init(configuration: ConfigurationRepository, shows: ShowsRepository) {
+        self.configuration = configuration
+        self.shows = shows
+    }
+    
+    func image<T:Codable>(from info: T, with keyPath: KeyPath<T, String?>, sizes: KeyPath<TMDBAPI.Configuration.Image, [String]>) -> Observable<WithImage> {
         
         return configuration.tmdbConfiguration().map { configuration in
         
         let url  = configuration.images.secureBaseUrl
-        let posterSizes = configuration.images.posterSizes
-        let prefix = posterSizes.first(where: { $0 == "w500"}) ?? posterSizes.last ?? ""
+        let sizes = configuration.images[keyPath: sizes]
+        let prefix = sizes.first(where: { $0 == "w500"}) ?? sizes.last ?? ""
         guard let path = info[keyPath: keyPath] else {
             return ""
         }
@@ -30,9 +36,14 @@ import Moya
 
     func poster(forShow show: Show) -> Observable<WithImage> {
         return shows.info(forShow: show).flatMapLatest {
-            self.image(from: $0, with: \.posterPath)
+            self.image(from: $0, with: \.posterPath, sizes: \.posterSizes)
         }
 //        return
     }
+    func image(forPerson person: Person) -> Observable<WithImage> {
+            return shows.info(forPerson: person).flatMapLatest {
+                self.image(from: $0, with: \.profilePath, sizes: \.profileSizes)
+            }
+        }
 }
 

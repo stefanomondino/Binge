@@ -1,5 +1,5 @@
 func {{ name|firstLowercase }}(_ {{name|firstLowercase}}: {{name|firstUppercase}}) -> ViewModel {
-        {{name|firstUppercase}}ViewModel({{name|firstLowercase}}: {{name|firstUppercase}},
+        {{name|firstUppercase}}ItemViewModel({{name|firstLowercase}}: {{name|firstLowercase}},
                         layoutIdentifier: ViewIdentifier.{{name|firstLowercase}},
                         styleFactory: container.styleFactory)
     }

@@ -12,7 +12,7 @@ import RxRelay
 class {{ name|firstUppercase }}ItemViewModel: ViewModel {
 
     let layoutIdentifier: LayoutIdentifier
-    var uniqueIdentifier: UniqueIdentifier { UUID() }
+    var uniqueIdentifier: UniqueIdentifier = UUID() 
     let {{ name|firstLowercase }}: {{ name|firstUppercase }}
     let image: ObservableImage
     let styleFactory: StyleFactory

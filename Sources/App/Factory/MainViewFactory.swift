@@ -15,7 +15,9 @@ enum ViewIdentifier: String, LayoutIdentifier {
     case loadMore
     case stringPicker
     
-    //MURRAY PLACEHOLDER
+    case carousel
+	case person
+	//MURRAY PLACEHOLDER
     
     var identifierString: String {
         return self.rawValue

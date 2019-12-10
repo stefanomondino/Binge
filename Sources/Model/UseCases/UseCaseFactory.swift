@@ -49,7 +49,7 @@ class DefaultUseCaseFactory: UseCaseFactory, DependencyContainer {
     init (dependencyContainer: ModelDependencyContainer) {
         
         self.register(for: .splash) { DefaultSplashUseCase() }
-        self.register(for: .images) { DefaultImagesUseCase(configuration: dependencyContainer.repositories.configuration,
+        self.register(for: .images, scope: .singleton) { DefaultImagesUseCase(configuration: dependencyContainer.repositories.configuration,
                                                            shows: dependencyContainer.repositories.shows) }
         self.register(for: .popularShows) { PopularShowsUseCase(repository: dependencyContainer.repositories.shows)}
         self.register(for: .watchedShows) { WatchedShowsUseCase(repository: dependencyContainer.repositories.shows)}

@@ -27,7 +27,7 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
     init(jsonDecoder: JSONDecoder = JSONDecoder()) {
         self.jsonDecoder = jsonDecoder
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-        let networkLoggerPlugin = NetworkLoggerPlugin(configuration: .init(logOptions: [.formatRequestAscURL]))
+        let networkLoggerPlugin = NetworkLoggerPlugin(configuration: .init(logOptions: [.formatRequestAscURL, .successResponseBody]))
         
         self.register(for: ObjectIdentifier(TraktvAPI.self),
                       scope: .singleton) {

@@ -17,11 +17,14 @@ enum TMDBAPI {
             let secureBaseUrl: URL
             let backdropSizes: [String]
             let posterSizes: [String]
+            let profileSizes: [String]
+            let stillSizes: [String]
         }
     }
     
     case configuration
     case show(Show)
+    case person(Person)
 
 }
 
@@ -39,6 +42,7 @@ extension TMDBAPI: TargetType {
         switch self {
         case .configuration: return "configuration"
         case .show( let show ): return "tv/\(show.ids.tmdb ?? -1)"
+        case .person( let person ): return "person/\(person.ids.tmdb ?? -1)"
         }
     }
     
