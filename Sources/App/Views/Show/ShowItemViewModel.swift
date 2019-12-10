@@ -21,8 +21,7 @@ class ShowItemViewModel: ViewModel {
     init(show: Show,
          layoutIdentifier: LayoutIdentifier,
          imageUseCase: ImagesUseCase,
-         styleFactory: StyleFactory
-    ) {
+         styleFactory: StyleFactory) {
         self.layoutIdentifier = layoutIdentifier
         self.styleFactory = styleFactory
         self.show = show
@@ -32,6 +31,7 @@ class ShowItemViewModel: ViewModel {
             .flatMapLatest { $0.getImage() }
             .share(replay: 1, scope: .forever)
             .startWith(UIImage())
-            
+        
     }
 }
+
