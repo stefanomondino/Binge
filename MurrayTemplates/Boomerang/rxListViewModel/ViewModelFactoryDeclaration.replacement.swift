@@ -1,2 +1,2 @@
-func {{ name|firstLowercase }}() -> {{name|firstLowercase}}ViewModel
-    
+func {{ name|firstLowercase }}() -> {{name|firstUppercase}}ViewModel
+
