@@ -27,7 +27,7 @@ class MainRouteFactory: RouteFactory {
     }
     func homeRoute() -> Route {
         return RestartRoute {
-            self.container.viewControllerFactory.showPager()
+            UINavigationController(rootViewController: self.container.viewControllerFactory.showPager())
         }
     }
     func restartRoute() -> Route {
@@ -37,7 +37,7 @@ class MainRouteFactory: RouteFactory {
     }
     
     func showDetailRoute(for show: WithShow) -> Route {
-        return ModalRoute {
+        return NavigationRoute {
             let viewModel = self.container.sceneViewModelFactory.showDetail(for: show)
             return self.container.viewControllerFactory.showDetail(viewModel: viewModel)
         }
