@@ -23,10 +23,21 @@
       ],
       "otherFilesRules": [
           {
-          "placeholder": "//MURRAY PLACEHOLDER",
+          "placeholder": "//MURRAY IMPLEMENTATION PLACEHOLDER",
           "filePath": "Sources/App/Factory/ViewControllerFactory.swift",
           "text": "",
-          "fileTemplate": "viewController/ViewControllerFactory.replacement.swift"
+          "fileTemplate": "viewController/ViewControllerFactoryImplementation.replacement.swift"
+          },
+          {
+            "placeholder": "//MURRAY DECLARATION PLACEHOLDER",
+            "filePath": "Sources/App/Factory/ViewControllerFactory.swift",
+            "text": "",
+            "fileTemplate": "viewController/ViewControllerFactoryDeclaration.replacement.swift"
+          },
+          {
+            "placeholder": "//MURRAY ENUM PLACEHOLDER",
+            "filePath": "Sources/App/Factory/ViewControllerFactory.swift",
+            "text": "case {{ name|firstLowercase }}\n\t"
           }
         ],
       "name" : "collectionViewController"
@@ -40,6 +51,20 @@
           "{{ target || \"App\"}}"
         ]
       },
+      "otherFilesRules": [
+        {
+        "placeholder": "//MURRAY IMPLEMENTATION PLACEHOLDER",
+        "filePath": "Sources/App/Factory/SceneViewModelFactory.swift",
+        "text": "",
+        "fileTemplate": "rxListViewModel/ViewModelFactoryImplementation.replacement.swift"
+        },
+        {
+          "placeholder": "//MURRAY DECLARATION PLACEHOLDER",
+          "filePath": "Sources/App/Factory/SceneViewModelFactory.swift",
+          "text": "",
+          "fileTemplate": "rxListViewModel/ViewModelFactoryDeclaration.replacement.swift"
+        }
+      ],
       "scripts" : [
 
       ],

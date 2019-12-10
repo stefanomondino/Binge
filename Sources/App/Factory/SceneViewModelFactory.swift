@@ -17,6 +17,7 @@ protocol SceneViewModelFactory {
     func trendingShows() -> ShowListViewModel
     func watchedShows() -> ShowListViewModel
     func showsPager() -> ListViewModel
+    //MURRAY DECLARATION PLACEHOLDER
 }
 
 struct DefaultSceneViewModelFactory: SceneViewModelFactory {
@@ -49,9 +50,12 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
                           useCase: container.model.useCases.trendingShows,
                           styleFactory: container.styleFactory)
     }
+    
     func watchedShows() -> ShowListViewModel {
         ShowListViewModel(itemViewModelFactory: container.itemViewModelFactory,
                           useCase: container.model.useCases.watchedShows,
                           styleFactory: container.styleFactory)
     }
+    
+    //MURRAY IMPLEMENTATION PLACEHOLDER
 }

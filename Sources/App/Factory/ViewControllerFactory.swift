@@ -16,7 +16,8 @@ enum SceneIdentifier: String, LayoutIdentifier {
     case showList
     case showDetail
     case login
-    
+    //MURRAY ENUM PLACEHOLDER
+
     var identifierString: String {
         switch self {
         default: return rawValue
@@ -29,8 +30,8 @@ protocol ViewControllerFactory {
     func showPager() -> UIViewController
     func showList(viewModel: ShowListViewModel) -> UIViewController
     func login(viewModel: LoginViewModel) -> UIViewController
-    //    func schedule(viewModel: ListViewModel & NavigationViewModel) -> UIViewController
-    //    func showDetail(viewModel: ShowDetailViewModel) -> UIViewController
+    //MURRAY DECLARATION PLACEHOLDER
+    
 }
 
 class DefaultViewControllerFactory: ViewControllerFactory {
@@ -84,5 +85,5 @@ class DefaultViewControllerFactory: ViewControllerFactory {
                                        collectionViewCellFactory: container.collectionViewCellFactory)
     }
 
-    //MURRAY PLACEHOLDER
+    //MURRAY IMPLEMENTATION PLACEHOLDER
 }
