@@ -4,3 +4,4 @@ func {{ name|firstLowercase }}() -> ViewModel {
                           styleFactory: container.styleFactory)
     }
 
+    

@@ -3,4 +3,5 @@ func {{ name|firstLowercase }}(viewModel: {{ name|firstUppercase }}ViewModel) ->
                                    	viewModel: viewModel,
                                    	collectionViewCellFactory: container.collectionViewCellFactory)
     }
-
+    
+    
