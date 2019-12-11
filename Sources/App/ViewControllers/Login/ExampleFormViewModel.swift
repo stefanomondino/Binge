@@ -12,7 +12,7 @@ import RxRelay
 import RxCocoa
 import RxSwift
 
-class LoginViewModel: RxListViewModel, WithPage {
+class ExampleFormViewModel: RxListViewModel, WithPage {
     var pageTitle: String = "Login"
     
     var pageIcon: UIImage?

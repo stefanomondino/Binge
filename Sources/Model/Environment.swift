@@ -13,6 +13,7 @@ public protocol EntityType {}
 
 public protocol Environment {
     var traktBaseURL: URL { get }
+    var traktWebURL: URL { get }
     var traktRedirectURI: String { get }
     var traktClientID: String { get }
     var traktClientSecret: String { get }

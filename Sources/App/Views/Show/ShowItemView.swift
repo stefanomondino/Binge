@@ -22,6 +22,7 @@ class ShowItemView: UIView, WithViewModel {
     var disposeBag = DisposeBag()
     override func awakeFromNib() {
         super.awakeFromNib()
+        
     }
 
     func configure(with viewModel: ViewModel) {

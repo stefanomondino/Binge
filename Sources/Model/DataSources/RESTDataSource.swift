@@ -13,7 +13,7 @@ import Boomerang
 import Gloss
 
 protocol RESTDataSource {
-    
+    func request<Endpoint: TargetType>(for endpoint: Endpoint) -> URLRequest?
     func get<Result: Codable, Endpoint: TargetType>(_ type: Result.Type, at endpoint: Endpoint) -> Observable<Result>
     func get<Result: JSONDecodable, Endpoint: TargetType>(_ type: Result.Type, at endpoint: Endpoint) -> Observable<Result>
     func get<Result: JSONDecodable, Endpoint: TargetType>(_ type: Result.Type, at endpoint: Endpoint) -> Observable<[Result]>
@@ -39,7 +39,10 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
                         MoyaProvider<TMDBAPI>(plugins: [networkLoggerPlugin])
         }
     }
-    
+    func request<Endpoint>(for endpoint: Endpoint) -> URLRequest? where Endpoint : TargetType {
+        let provider = self.provider(for: Endpoint.self)
+        return try? provider.endpoint(endpoint).urlRequest()
+    }
     func provider<Endpoint: TargetType>(for type: Endpoint.Type) -> MoyaProvider<Endpoint> {
         guard let result: MoyaProvider<Endpoint> = self.resolve(ObjectIdentifier(Endpoint.self)) else {
             fatalError("No provider available")

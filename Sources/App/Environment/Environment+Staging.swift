@@ -17,6 +17,8 @@ struct StagingEnvironment: Environment {
     
     var traktBaseURL: URL { URL(string: "https://api.trakt.tv")! }
     
+    var traktWebURL: URL { URL(string: "https://trakt.tv")! }
+    
     var tmdbAPIKey: String { Secrets.tmdbAPIKey }
     
     var traktClientID: String { Secrets.traktClientID }

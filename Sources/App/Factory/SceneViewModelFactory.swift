@@ -19,6 +19,7 @@ protocol SceneViewModelFactory {
     func showsPager() -> PagerViewModel
     func homePager() -> PagerViewModel
     func showDetail(for show: WithShow) -> ShowDetailViewModel
+    func login() -> LoginViewModel
     //MURRAY DECLARATION PLACEHOLDER
 }
 
@@ -43,8 +44,8 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
                               layout: SceneIdentifier.tab,
                               styleFactory: container.styleFactory)
     }
-    func login() -> LoginViewModel {
-        return LoginViewModel(itemFactory: container.pickerViewModelFactory)
+    func exampleForm() -> ExampleFormViewModel {
+        return ExampleFormViewModel(itemFactory: container.pickerViewModelFactory)
     }
     func splashViewModel() -> SplashViewModel {
         return SplashViewModel(routeFactory: container.routeFactory, useCase: container.model.useCases.splash)
@@ -75,6 +76,13 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
         ShowDetailViewModel(show: show,
                             itemViewModelFactory: container.itemViewModelFactory,
                           useCase: container.model.useCases.showDetail,
+                          styleFactory: container.styleFactory)
+    }
+
+    func login() -> LoginViewModel {
+        LoginViewModel(itemViewModelFactory: container.itemViewModelFactory,
+                          useCase: container.model.useCases.login,
+                          routeFactory: container.routeFactory,
                           styleFactory: container.styleFactory)
     }
 

@@ -12,16 +12,16 @@ import RxRelay
 import RxCocoa
 import RxSwift
 
-class LoginViewController: UIViewController {
+class ExampleFormViewController: UIViewController {
     
-    let viewModel: LoginViewModel
+    let viewModel: ExampleFormViewModel
     let collectionViewCellFactory: CollectionViewCellFactory
     @IBOutlet weak var stackView: UIStackView!
     var disposeBag = DisposeBag()
     
     init(nibName: String?,
          bundle: Bundle? = nil,
-         viewModel: LoginViewModel,
+         viewModel: ExampleFormViewModel,
          collectionViewCellFactory: CollectionViewCellFactory) {
         self.viewModel = viewModel
         self.collectionViewCellFactory = collectionViewCellFactory

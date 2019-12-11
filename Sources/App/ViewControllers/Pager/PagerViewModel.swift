@@ -54,11 +54,3 @@ class PagerViewModel: RxListViewModel, WithPage {
     }
     func selectItem(at indexPath: IndexPath) {}
 }
-
-extension ViewModel where Self: AnyObject {
-    func with<T>(_ value: T, to keyPath: WritableKeyPath<Self, T>) -> Self {
-        var obj = self
-        obj[keyPath: keyPath] = value
-        return obj
-    }
-}

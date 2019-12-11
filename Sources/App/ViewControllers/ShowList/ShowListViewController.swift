@@ -92,10 +92,8 @@ class ShowListViewController: UIViewController {
         
         if let viewModel = viewModel as? RxNavigationViewModel {
             viewModel.routes
-                .observeOn(MainScheduler.instance)
-                .bind { [weak self] route in
-                    route.execute(from: self)
-            }.disposed(by: disposeBag)
+                .bind(to: self.rx.routes())
+                .disposed(by: disposeBag)
         }
         
         self.collectionViewDelegate = collectionViewDelegate
@@ -104,5 +102,13 @@ class ShowListViewController: UIViewController {
         
         viewModel.reload()
         
+    }
+}
+
+extension Reactive where Base: UIViewController {
+    func routes() -> Binder<Route> {
+        return Binder(base) { base, route in
+            route.execute(from: base)
+        }
     }
 }

@@ -17,6 +17,7 @@ protocol RouteFactory {
     func pageRoute(from viewModel: ViewModel) -> Route
     func homeRoute() -> Route
     func showDetailRoute(for show: WithShow) -> Route
+    func urlRoute(for url: URL) -> Route
     //    func detailRoute(show: Show) -> Route
 }
 class MainRouteFactory: RouteFactory {
@@ -24,6 +25,9 @@ class MainRouteFactory: RouteFactory {
     
     init(container: AppDependencyContainer) {
         self.container = container
+    }
+    func urlRoute(for url: URL) -> Route {
+        return SafariRoute(url: url)
     }
     func homeRoute() -> Route {
         return RestartRoute {

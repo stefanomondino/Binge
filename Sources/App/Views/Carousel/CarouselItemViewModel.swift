@@ -39,6 +39,7 @@ class CarouselItemViewModel: RxListViewModel {
         self.cellFactory = cellFactory
         self.layoutIdentifier = layoutIdentifier
         self.styleFactory = styleFactory
+        
         reload()
     }
 }

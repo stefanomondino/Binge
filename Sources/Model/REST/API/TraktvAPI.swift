@@ -16,6 +16,8 @@ enum TraktvAPI {
         var limit: Int
     }
     
+    case authorize
+    case token(code: String)
     case trending(Page)
     case popular(Page)
     case played(Page)
@@ -35,11 +37,16 @@ extension TraktvAPI: TargetType {
         return [baseURL.absoluteString, path, method.rawValue, parameters.map { $0.key + "_\($0.value)" }.joined()].joined()
     }
     var baseURL: URL {
-        return Configuration.environment.traktBaseURL
+        switch self {
+        case .authorize: return Configuration.environment.traktWebURL
+        default: return Configuration.environment.traktBaseURL
+        }
     }
     
     var path: String {
         switch self {
+        case .authorize: return "oauth/authorize"
+        case .token: return "oauth/token"
         case .trending: return "shows/trending"
         case .popular: return "shows/popular"
         case .played: return "shows/played"
@@ -52,6 +59,8 @@ extension TraktvAPI: TargetType {
     
     var method: Moya.Method {
         switch self {
+            
+        case .token: return .post
         default: return .get
         }
     }
@@ -61,7 +70,10 @@ extension TraktvAPI: TargetType {
     }
     
     var task: Task {
-        return Task.requestParameters(parameters: parameters, encoding: URLEncoding.default)
+        switch method {
+        case .post: return Task.requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+        default: return Task.requestParameters(parameters: parameters, encoding: URLEncoding.default)
+        }
     }
     
     var headers: [String: String]? {
@@ -93,6 +105,17 @@ extension TraktvAPI: TargetType {
     private var parameters: [String: Any] {
         var parameters = pagination
         switch self {
+        case .token(let code):
+            return ["code": code,
+                    "client_id": Configuration.environment.traktClientID,
+                    "client_secret": Configuration.environment.traktClientSecret,
+                    "grant_type": "authorization_code",
+                    "redirect_uri": Configuration.environment.traktRedirectURI
+            ]
+        case .authorize: return ["response_type": "code",
+                                 "client_id": Configuration.environment.traktClientID,
+                                 "redirect_uri": Configuration.environment.traktRedirectURI
+            ]
         case .summary: return ["extended": "full"]
 //        case .search(let q, _):
 //            parameters["query"] = q
