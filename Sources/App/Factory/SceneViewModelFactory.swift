@@ -16,7 +16,8 @@ protocol SceneViewModelFactory {
     func popularShows() -> ShowListViewModel
     func trendingShows() -> ShowListViewModel
     func watchedShows() -> ShowListViewModel
-    func showsPager() -> ListViewModel
+    func showsPager() -> PagerViewModel
+    func homePager() -> PagerViewModel
     func showDetail(for show: WithShow) -> ShowDetailViewModel
     //MURRAY DECLARATION PLACEHOLDER
 }
@@ -25,13 +26,22 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
     
     let container: AppDependencyContainer
     
-    func showsPager() -> ListViewModel {
+    func showsPager() -> PagerViewModel {
         return PagerViewModel(pages:[
             popularShows(),
             trendingShows(),
             watchedShows(),
             login()
         ], styleFactory: container.styleFactory)
+        .with(Strings.Shows.popular.translation, to: \.pageTitle)
+    }
+    func homePager() -> PagerViewModel {
+        return PagerViewModel(pages:[
+            showsPager(),
+            login()
+        ],
+                              layout: SceneIdentifier.tab,
+                              styleFactory: container.styleFactory)
     }
     func login() -> LoginViewModel {
         return LoginViewModel(itemFactory: container.pickerViewModelFactory)

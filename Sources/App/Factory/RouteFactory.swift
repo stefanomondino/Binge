@@ -27,7 +27,7 @@ class MainRouteFactory: RouteFactory {
     }
     func homeRoute() -> Route {
         return RestartRoute {
-            UINavigationController(rootViewController: self.container.viewControllerFactory.showPager())
+            UINavigationController(rootViewController: self.container.viewControllerFactory.mainTabBar())
         }
     }
     func restartRoute() -> Route {
@@ -45,6 +45,10 @@ class MainRouteFactory: RouteFactory {
     
     func pageRoute(from viewModel: ViewModel) -> Route {
         switch viewModel {
+        case let viewModel as PagerViewModel:
+            return EmptyRoute {
+                return self.container.viewControllerFactory.pager(viewModel: viewModel)
+            }
         case let viewModel as ShowListViewModel:
             return EmptyRoute {
                 self.container

@@ -10,17 +10,18 @@ import UIKit
 import Tabman
 import Pageboy
 import Boomerang
-
+import RxSwift
 typealias PagerButton = Tabman.TMLabelBarButton
 
 class PagerViewController: TabmanViewController {
     let viewModel: ListViewModel
     let styleFactory: StyleFactory
     let internalDataSource: PagerDataSource
+    let disposeBag = DisposeBag()
     init(viewModel: ListViewModel,
          routeFactory: RouteFactory,
          styleFactory: StyleFactory
-         ) {
+    ) {
         self.viewModel = viewModel
         self.styleFactory = styleFactory
         self.internalDataSource = PagerDataSource(viewModel: viewModel, factory: routeFactory)
@@ -30,7 +31,7 @@ class PagerViewController: TabmanViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-  
+    
     override func viewDidLoad() {
         self.automaticallyAdjustsChildInsets = true
         super.viewDidLoad()
@@ -39,14 +40,27 @@ class PagerViewController: TabmanViewController {
         
         self.dataSource = internalDataSource
         self.setupBar()
-        viewModel.onUpdate = { [weak self] in
-            DispatchQueue.main.async {
-                self?.internalDataSource.clear()
-                self?.reloadData()
-            }
+        if let viewModel = viewModel as? RxListViewModel {
             
+            viewModel.sectionsRelay.asDriver()
+                .drive(onNext: { [weak self] _ in
+                    self?.internalDataSource.clear()
+                    self?.reloadData()
+                })
+                .disposed(by: disposeBag)
+        } else {
+            viewModel.onUpdate = { [weak self] in
+                DispatchQueue.main.async {
+                    self?.internalDataSource.clear()
+                    self?.reloadData()
+                }
+                
+            }
         }
-        viewModel.reload()
+        DispatchQueue.main.async {
+            self.viewModel.reload()
+        }
+        
     }
     private func setupBar() {
         let styleFactory = self.styleFactory

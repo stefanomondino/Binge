@@ -9,26 +9,56 @@
 
 import Boomerang
 import Foundation
+import RxSwift
+import RxRelay
 
-class PagerViewModel: ListViewModel {
+class PagerViewModel: RxListViewModel, WithPage {
+    var pageTitle: String = ""
+    
+    var pageIcon: UIImage? = nil
+    
+    let sectionsRelay: BehaviorRelay<[Section]> = BehaviorRelay(value:[])
+    
+    var disposeBag: DisposeBag = DisposeBag()
 
-    var layoutIdentifier: LayoutIdentifier = SceneIdentifier.pager
+    var layoutIdentifier: LayoutIdentifier
     
     var onUpdate = {}
-    var sections: [Section] = [] {
-        didSet {
-            self.onUpdate()
-        }
-    }
-    private let pages: [ViewModel]
+//    var sections: [Section] = [] {
+//        didSet {
+//            self.onUpdate()
+//        }
+//    }
+    private let pages: Observable<[ViewModel]>
     let styleFactory: StyleFactory
-    init(pages: [ViewModel], styleFactory: StyleFactory) {
-        self.pages = pages
-        self.styleFactory = styleFactory
+    
+    convenience init(pages: [ViewModel],
+                     layout: LayoutIdentifier = SceneIdentifier.pager,
+                     styleFactory: StyleFactory) {
+        self.init(pages: .just(pages), layout: layout, styleFactory: styleFactory)
+    }
+    
+    init(pages: Observable<[ViewModel]>,
+         layout: LayoutIdentifier = SceneIdentifier.pager,
+         styleFactory: StyleFactory) {
+           self.pages = pages
+            self.layoutIdentifier = layout
+           self.styleFactory = styleFactory
     }
     func reload() {
-        self.sections = [Section(items: pages)]
+        self.disposeBag = DisposeBag()
+        pages
+            .map { [Section(items: $0)] }
+            .bind(to: sectionsRelay)
+            .disposed(by: disposeBag)
     }
     func selectItem(at indexPath: IndexPath) {}
 }
 
+extension ViewModel where Self: AnyObject {
+    func with<T>(_ value: T, to keyPath: WritableKeyPath<Self, T>) -> Self {
+        var obj = self
+        obj[keyPath: keyPath] = value
+        return obj
+    }
+}
