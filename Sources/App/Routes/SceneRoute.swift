@@ -12,7 +12,7 @@ import UIKit
     A simple route to create generic scenes.
     Executing this kind of route does nothing.
  */
-struct EmptyRoute: Route {
-    var createScene: () -> Scene?
-    func execute(from scene: Scene?) {}
+struct EmptyRoute: UIKitRoute {
+    var createViewController: () -> UIViewController?
+    func execute<T: UIViewController>(from scene: T?) {}
 }

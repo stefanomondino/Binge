@@ -35,14 +35,12 @@ class DefaultAuthorizationRepository: AuthorizationRepository {
     }
     
     func onAuthorizationURL(url: URL) {
-        //synit://auth?code=918d022f0ebd037acec31bed26f95394b4940d77a4898cb5480720a15d602b86
         if url.absoluteString.starts(with:  Configuration.environment.traktRedirectURI),
             let code = url.query?
                 .components(separatedBy: "&")
                 .first(where: { $0.starts(with: "code=")})?
                 .dropFirst("code=".count) {
-            let authorizationCode = String(code)
-            self.authorizationCode.accept(authorizationCode)
+            self.authorizationCode.accept(String(code))
         }
         
     }

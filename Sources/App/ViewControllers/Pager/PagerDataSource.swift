@@ -48,7 +48,7 @@ class PagerDataSource: PageboyViewControllerDataSource, TMBarDataSource {
         }
         guard let viewController = factory
             .pageRoute(from: item(at: index))
-            .createScene() else { return nil }
+            .createScene() as? UIViewController else { return nil }
         
         if #available(iOS 11.0, *) {
             var insets = viewController.additionalSafeAreaInsets

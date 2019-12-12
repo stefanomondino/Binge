@@ -10,14 +10,14 @@ import Foundation
 import Boomerang
 import SafariServices
 
-struct SafariRoute: Route {
-    let createScene: () -> Scene?
+struct SafariRoute: UIKitRoute {
+    let createViewController: () -> UIViewController?
     let url: URL
     init(url: URL) {
-        self.createScene = { nil }
+        self.createViewController = { nil }
         self.url = url
     }
-    func execute(from scene: Scene?) {
+    func execute<T: UIViewController>(from scene: T?) {
         let vc = SFSafariViewController(url: url)
         scene?.present(vc, animated: true, completion: nil)
     }

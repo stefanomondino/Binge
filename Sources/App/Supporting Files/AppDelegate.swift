@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dependencyContainer
                    .routeFactory
                    .restartRoute()
-                   .execute(from: nil)
+                   .execute(from: nil as UIViewController?)
         return true
     }
 

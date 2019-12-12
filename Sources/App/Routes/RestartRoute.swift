@@ -10,22 +10,35 @@ import Foundation
 import Boomerang
 import UIKit
 
-struct RestartRoute: Route {
-    let createScene: () -> Scene?
-    init(createScene: @escaping () -> Scene) {
-        self.createScene = createScene
+struct RestartRoute: UIKitRoute {
+    let createViewController: () -> UIViewController?
+    init(createViewController: @escaping () -> UIViewController) {
+        self.createViewController = createViewController
     }
     
-    func execute(from scene: Scene?) {
+    func execute<T: UIViewController>(from scene: T?) {
         
-        //TODO Dismiss all modals
-        UIApplication.shared.delegate?.window??.rootViewController = createScene()
+        let scene = scene ?? UIApplication.shared.delegate?.window??.rootViewController
+        
+        if let presented = scene?.presentedViewController {
+            self.execute(from: presented)
+            return
+        }
+        
+        if let presenting = scene?.presentingViewController {
+            scene?.dismiss(animated: false) {
+                self.execute(from: presenting)
+            }
+            return
+        }
+        
+        UIApplication.shared.delegate?.window??.rootViewController = createViewController()
         UIApplication.shared.delegate?.window??.makeKeyAndVisible()
     }
     
     init(factory: ViewControllerFactory) {
         
-        self.createScene = {
+        self.createViewController = {
             
             return factory.root()
             

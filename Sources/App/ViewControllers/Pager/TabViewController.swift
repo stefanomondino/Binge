@@ -35,10 +35,10 @@ class TabViewController: UITabBarController {
         super.viewDidLoad()
         styleFactory.apply(.container, to: self.view)
         let factory = routeFactory
-        let configurationClosure = { (sections: [Section]) -> [Scene] in
+        let configurationClosure = { (sections: [Section]) -> [UIViewController] in
             sections.flatMap {
                 $0.items.compactMap { item in
-                    let vc = factory.pageRoute(from: item).createScene()
+                    let vc = factory.pageRoute(from: item).createScene() as? UIViewController
                     vc?.tabBarItem.title = (item as? WithPage)?.pageTitle
                     vc?.tabBarItem.image = (item as? WithPage)?.pageIcon
                     return vc

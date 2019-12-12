@@ -10,16 +10,17 @@ import Foundation
 import Boomerang
 import UIKit
 
-struct NavigationRoute: Route {
-    let createScene: () -> Scene?
+struct NavigationRoute: UIKitRoute {
+
+    let createViewController: () -> UIViewController?
     let animated: Bool
-    init(animated: Bool = true, createScene: @escaping () -> Scene) {
+    init(animated: Bool = true, createViewController: @escaping () -> UIViewController) {
         self.animated = animated
-        self.createScene = createScene
+        self.createViewController = createViewController
     }
-    func execute(from scene: Scene?) {
+    func execute<T>(from scene: T?) where T : UIViewController {
         guard let navigationController = scene?.navigationController else { return }
-        if let destination = createScene() {
+        if let destination = createViewController() {
             navigationController.pushViewController(destination, animated: animated)
             //scene?.present(destination, animated: true, completion: nil)
         }
