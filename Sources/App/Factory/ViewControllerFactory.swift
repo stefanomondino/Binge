@@ -18,6 +18,7 @@ enum SceneIdentifier: String, LayoutIdentifier {
     case showDetail
     case exampleForm
 	case login
+	case person
 	//MURRAY ENUM PLACEHOLDER
 
     var identifierString: String {
@@ -36,6 +37,8 @@ protocol ViewControllerFactory {
     func exampleForm(viewModel: ExampleFormViewModel) -> UIViewController
     func showDetail(viewModel: ShowDetailViewModel) -> UIViewController
     func login(viewModel: LoginViewModel) -> UIViewController
+    
+func person(viewModel: PersonViewModel) -> UIViewController
     
 //MURRAY DECLARATION PLACEHOLDER
     
@@ -87,6 +90,12 @@ class DefaultViewControllerFactory: ViewControllerFactory {
     
     func login(viewModel: LoginViewModel) -> UIViewController {
         return LoginViewController(nibName: name(from: viewModel.layoutIdentifier),
+                                   	viewModel: viewModel,
+                                   	collectionViewCellFactory: container.collectionViewCellFactory)
+    }
+    
+    func person(viewModel: PersonViewModel) -> UIViewController {
+        return PersonViewController(nibName: name(from: viewModel.layoutIdentifier),
                                    	viewModel: viewModel,
                                    	collectionViewCellFactory: container.collectionViewCellFactory)
     }

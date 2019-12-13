@@ -28,6 +28,15 @@ public extension Person {
     }
 }
 public struct PersonInfo: Codable {
-    let name: String
-    let profilePath: String?
+    public enum Gender: Int, Codable {
+        case unknown = 0
+        case female = 1
+        case male = 2
+    }
+    public let name: String
+    public let profilePath: String?
+    public let homepage: String?
+    public let placeOfBirth: String?
+    public let biography: String
+    public let gender: Gender
 }

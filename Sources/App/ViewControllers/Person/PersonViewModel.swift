@@ -1,6 +1,6 @@
 //
-//  {{ name|firstUppercase }}UseCaseViewModel.swift
-//  {{ target }}
+//  PersonUseCaseViewModel.swift
+//  App
 //
 
 import Foundation
@@ -9,37 +9,38 @@ import RxSwift
 import RxRelay
 import Model
 
-class {{ name|firstUppercase }}ViewModel: RxListViewModel, RxNavigationViewModel {
+class PersonViewModel: RxListViewModel, RxNavigationViewModel {
         
     var sectionsRelay: BehaviorRelay<[Section]> = BehaviorRelay(value: [])
-    
     var routes: PublishRelay<Route> = PublishRelay()
-    
     var disposeBag: DisposeBag = DisposeBag()
     
-    var layoutIdentifier: LayoutIdentifier = SceneIdentifier.{{ name|firstLowercase }}
+    var layoutIdentifier: LayoutIdentifier = SceneIdentifier.person
     
     let itemViewModelFactory: ItemViewModelFactory
 
-    private let useCase: {{ name|firstUppercase }}UseCase
+    private let useCase: PersonDetailUseCase
     
     let styleFactory: StyleFactory
+    let person: Person
     
-    let routeFactory: RouteFactory
-    
-    init(itemViewModelFactory: ItemViewModelFactory,
-         useCase: {{ name|firstUppercase }}UseCase,
-         styleFactory: StyleFactory,
-         routeFactory: RouteFactory) {
+    init(person: Person,
+        itemViewModelFactory: ItemViewModelFactory,
+         useCase: PersonDetailUseCase,
+         styleFactory: StyleFactory) {
         self.useCase = useCase
-        self.routeFactory = routeFactory
+        self.person = person
         self.styleFactory = styleFactory
         self.itemViewModelFactory = itemViewModelFactory
     }
     
     func reload() {
         disposeBag = DisposeBag()
-		//Bind here to use case and set sectionsRelay
+        useCase
+            .personDetail(for: self.person)
+            .debug()
+            .subscribe()
+        .disposed(by: disposeBag)
     }
     
     func selectItem(at indexPath: IndexPath) {

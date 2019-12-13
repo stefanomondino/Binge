@@ -18,6 +18,7 @@ protocol RouteFactory {
     func homeRoute() -> Route
     func showDetailRoute(for show: WithShow) -> Route
     func urlRoute(for url: URL) -> Route
+    func personDetailRoute(for person: Person) -> Route 
     //    func detailRoute(show: Show) -> Route
 }
 class MainRouteFactory: RouteFactory {
@@ -44,6 +45,12 @@ class MainRouteFactory: RouteFactory {
         return NavigationRoute {
             let viewModel = self.container.sceneViewModelFactory.showDetail(for: show)
             return self.container.viewControllerFactory.showDetail(viewModel: viewModel)
+        }
+    }
+    func personDetailRoute(for person: Person) -> Route {
+        return NavigationRoute {
+            let viewModel = self.container.sceneViewModelFactory.personDetail(for: person)
+            return self.container.viewControllerFactory.person(viewModel: viewModel)
         }
     }
     

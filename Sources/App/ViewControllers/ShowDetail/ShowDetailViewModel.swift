@@ -9,9 +9,11 @@ import RxSwift
 import RxRelay
 import Model
 
-class ShowDetailViewModel: RxListViewModel {
+class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
         
     var sectionsRelay: BehaviorRelay<[Section]> = BehaviorRelay(value: [])
+    
+    var routes: PublishRelay<Route> = PublishRelay()
     
     var disposeBag: DisposeBag = DisposeBag()
     
@@ -25,12 +27,16 @@ class ShowDetailViewModel: RxListViewModel {
     
     let show: WithShow
     
+    let routeFactory: RouteFactory
+    
     init(
         show: WithShow,
+        routeFactory: RouteFactory,
         itemViewModelFactory: ItemViewModelFactory,
          useCase: ShowDetailUseCaseType,
          styleFactory: StyleFactory) {
         self.show = show
+        self.routeFactory = routeFactory
         self.useCase = useCase
         self.styleFactory = styleFactory
         self.itemViewModelFactory = itemViewModelFactory
@@ -45,9 +51,16 @@ class ShowDetailViewModel: RxListViewModel {
     }
     
     func map(_ show: ShowDetail) -> [Section] {
+        let routes = self.routes
+        let routeFactory = self.routeFactory
         return [Section(id:"",items:[
             itemViewModelFactory.show(show.show),
-            itemViewModelFactory.castCarousel(for: show) { print($0) }
+            itemViewModelFactory.castCarousel(for: show) {
+                routes.accept(routeFactory.personDetailRoute(for: $0))
+            },
+            itemViewModelFactory.relatedShowsCarousel(for: show) {
+                routes.accept(routeFactory.showDetailRoute(for: $0))
+            },
         ])]
     }
     

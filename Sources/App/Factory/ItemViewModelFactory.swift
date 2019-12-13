@@ -17,6 +17,7 @@ protocol ItemViewModelFactory {
     func show(_ show: WithShow) -> ViewModel
     func loadMore(_ closure: @escaping () -> Disposable) -> ViewModel
     func castCarousel(for show: WithShow, onSelection: @escaping (Person) -> ()) -> ViewModel
+    func relatedShowsCarousel(for show: WithShow, onSelection: @escaping (Show) -> ()) -> ViewModel
     func person(_ person: Person) -> ViewModel
     //MURRAY DECLARATION PLACEHOLDER
 }
@@ -49,6 +50,23 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                         styleFactory: container.styleFactory) { itemViewModel in
                             if let person = (itemViewModel as? PersonItemViewModel)?.person {
                                 onSelection(person)
+                            }
+        }
+    }
+    
+    func relatedShowsCarousel(for show: WithShow, onSelection: @escaping (Show) -> ()) -> ViewModel {
+        let observable = container.model.useCases.showDetail
+            .related(for: show.show)
+            .map { $0.map { self.show($0) } }
+            .map { [Section(items: $0)] }
+            .share(replay: 1, scope: .forever)
+            
+        return CarouselItemViewModel(sections: observable,
+                        layoutIdentifier: ViewIdentifier.carousel,
+                        cellFactory: container.collectionViewCellFactory,
+                        styleFactory: container.styleFactory) { itemViewModel in
+                            if let show = (itemViewModel as? ShowItemViewModel)?.show {
+                                onSelection(show.show)
                             }
         }
     }

@@ -24,6 +24,7 @@ public protocol UseCaseFactory {
     var trendingShows: ShowListUseCase { get }
     var watchedShows: ShowListUseCase { get }
     var showDetail: ShowDetailUseCaseType { get }
+    var personDetail: PersonDetailUseCase { get }
     var images: ImagesUseCase { get }
     var login: LoginUseCase { get }
 }
@@ -35,6 +36,7 @@ enum UseCaseKeys: CaseIterable, Hashable {
     case popularShows
     case trendingShows
     case watchedShows
+    case personDetail
     case showDetail
 }
 
@@ -47,6 +49,7 @@ class DefaultUseCaseFactory: UseCaseFactory, DependencyContainer {
     var watchedShows: ShowListUseCase { self[.watchedShows] }
     var trendingShows: ShowListUseCase { self[.trendingShows] }
     var showDetail: ShowDetailUseCaseType { self[.showDetail] }
+    var personDetail: PersonDetailUseCase { self[.personDetail] }
     var images: ImagesUseCase { self[.images] }
     
     init (dependencyContainer: ModelDependencyContainer) {
@@ -59,5 +62,6 @@ class DefaultUseCaseFactory: UseCaseFactory, DependencyContainer {
         self.register(for: .trendingShows) { TrendingShowsUseCase(repository: dependencyContainer.repositories.shows) }
         self.register(for: .showDetail) { ShowDetailUseCase(shows: dependencyContainer.repositories.shows) }
         self.register(for: .login, scope: .singleton) { DefaultLoginUseCase(authorization: dependencyContainer.repositories.authorization) }
+        self.register(for: .personDetail) { DefaultPersonDetailUseCase(shows: dependencyContainer.repositories.shows) }
     }
 }

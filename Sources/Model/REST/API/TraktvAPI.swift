@@ -26,6 +26,7 @@ enum TraktvAPI {
     
     case people(Show)
     case summary(Show)
+    case relatedShows(Show)
 }
 
 extension TraktvAPI: TargetType {
@@ -54,6 +55,7 @@ extension TraktvAPI: TargetType {
         case .collected: return "shows/collected"
         case .summary(let show): return "shows/\(show.ids.trakt)"
         case .people(let show): return "shows/\(show.ids.trakt)/people"
+        case .relatedShows(let show): return "shows/\(show.ids.trakt)/related"
         }
     }
     

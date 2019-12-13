@@ -1,5 +1,5 @@
 //
-//  ShowDetailViewController.swift
+//  PersonViewController.swift
 //  App
 //
 
@@ -10,11 +10,11 @@ import RxSwift
 import RxCocoa
 import PluginLayout
 
-class ShowDetailViewController: UIViewController {
+class PersonViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var viewModel: ShowDetailViewModel
+    var viewModel: PersonViewModel
     
     var collectionViewDataSource: CollectionViewDataSource? {
         didSet {
@@ -35,7 +35,7 @@ class ShowDetailViewController: UIViewController {
     
     init(nibName: String?,
          bundle: Bundle? = nil,
-         viewModel: ShowDetailViewModel,
+         viewModel: PersonViewModel,
          collectionViewCellFactory: CollectionViewCellFactory) {
         self.viewModel = viewModel
         self.collectionViewCellFactory = collectionViewCellFactory
@@ -46,14 +46,14 @@ class ShowDetailViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         let viewModel = self.viewModel
         let collectionViewDataSource = CollectionViewDataSource(viewModel: viewModel,
                                                                 factory: collectionViewCellFactory)
-        
+                                                                
         viewModel.styleFactory.apply(.container, to: self.view)
         
         let spacing: CGFloat = 10
@@ -62,21 +62,28 @@ class ShowDetailViewController: UIViewController {
             .withItemSpacing { _, _ in return spacing }
             .withLineSpacing { _, _ in return spacing }
             .withInsets { _, _ in return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing) }
+            
         
-        
-        let collectionViewDelegate = ShowListDelegate(sizeCalculator: sizeCalculator)
+        let collectionViewDelegate = CollectionViewDelegate(sizeCalculator: sizeCalculator)
             .withSelect { viewModel.selectItem(at: $0) }
         
         collectionView.backgroundColor = .clear
-        
+
         collectionView.rx
             .animated(by: viewModel, dataSource: collectionViewDataSource)
             .disposed(by: disposeBag)
-
+        
+        if let viewModel = viewModel as? RxNavigationViewModel {
+            viewModel.routes
+                .observeOn(MainScheduler.instance)
+                .bind { [weak self] route in
+                    route.execute(from: self)
+            }.disposed(by: disposeBag)
+        }
+        
         self.collectionViewDelegate = collectionViewDelegate        
         
-        viewModel
-            .routes
+        viewModel.routes
             .bind(to: self.rx.routes())
             .disposed(by: disposeBag)
         

@@ -73,14 +73,6 @@ class {{ name|firstUppercase }}ViewController: UIViewController {
             .animated(by: viewModel, dataSource: collectionViewDataSource)
             .disposed(by: disposeBag)
         
-        if let viewModel = viewModel as? RxNavigationViewModel {
-            viewModel.routes
-                .observeOn(MainScheduler.instance)
-                .bind { [weak self] route in
-                    route.execute(from: self)
-            }.disposed(by: disposeBag)
-        }
-        
         self.collectionViewDelegate = collectionViewDelegate        
         
         viewModel.routes

@@ -20,6 +20,7 @@ protocol SceneViewModelFactory {
     func homePager() -> PagerViewModel
     func showDetail(for show: WithShow) -> ShowDetailViewModel
     func login() -> LoginViewModel
+    func personDetail(for person: Person) -> PersonViewModel
     //MURRAY DECLARATION PLACEHOLDER
 }
 
@@ -40,7 +41,7 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
         return PagerViewModel(pages:[
             showsPager(),
             login()
-        ],
+            ],
                               layout: SceneIdentifier.tab,
                               styleFactory: container.styleFactory)
     }
@@ -74,17 +75,25 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
     
     func showDetail(for show: WithShow) -> ShowDetailViewModel {
         ShowDetailViewModel(show: show,
+                            routeFactory: container.routeFactory,
                             itemViewModelFactory: container.itemViewModelFactory,
-                          useCase: container.model.useCases.showDetail,
-                          styleFactory: container.styleFactory)
+                            useCase: container.model.useCases.showDetail,
+                            styleFactory: container.styleFactory)
     }
-
+    
     func login() -> LoginViewModel {
         LoginViewModel(itemViewModelFactory: container.itemViewModelFactory,
-                          useCase: container.model.useCases.login,
-                          routeFactory: container.routeFactory,
-                          styleFactory: container.styleFactory)
+                       useCase: container.model.useCases.login,
+                       routeFactory: container.routeFactory,
+                       styleFactory: container.styleFactory)
     }
-
+    
+    func personDetail(for person: Person) -> PersonViewModel {
+        PersonViewModel(person: person,
+                        itemViewModelFactory: container.itemViewModelFactory,
+                        useCase: container.model.useCases.personDetail,
+                        styleFactory: container.styleFactory)
+    }
+    
     //MURRAY IMPLEMENTATION PLACEHOLDER
 }
