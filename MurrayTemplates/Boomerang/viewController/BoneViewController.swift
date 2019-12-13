@@ -57,11 +57,14 @@ class {{ name|firstUppercase }}ViewController: UIViewController {
         viewModel.styleFactory.apply(.container, to: self.view)
         
         let spacing: CGFloat = 10
-        let collectionViewDelegate = ShowListDelegate(viewModel: viewModel, dataSource: collectionViewDataSource)
-            .withItemsPerLine(itemsPerLine: 1)
-            .withInsets { _, _ in return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing) }
+        let sizeCalculator = AutomaticCollectionViewSizeCalculator(viewModel: viewModel,
+                                                                   factory: collectionViewCellFactory, itemsPerLine: 1)
             .withItemSpacing { _, _ in return spacing }
             .withLineSpacing { _, _ in return spacing }
+            .withInsets { _, _ in return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing) }
+            
+        
+        let collectionViewDelegate = CollectionViewDelegate(sizeCalculator: sizeCalculator)
             .withSelect { viewModel.selectItem(at: $0) }
         
         collectionView.backgroundColor = .clear
@@ -79,7 +82,11 @@ class {{ name|firstUppercase }}ViewController: UIViewController {
         }
         
         self.collectionViewDelegate = collectionViewDelegate        
-                
+        
+        viewModel.routes
+            .bind(to: self.rx.routes())
+            .disposed(by: disposeBag)
+        
         viewModel.reload()
         
     }

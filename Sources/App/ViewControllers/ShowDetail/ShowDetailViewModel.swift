@@ -47,7 +47,7 @@ class ShowDetailViewModel: RxListViewModel {
     func map(_ show: ShowDetail) -> [Section] {
         return [Section(id:"",items:[
             itemViewModelFactory.show(show.show),
-            itemViewModelFactory.castCarousel(for: show)
+            itemViewModelFactory.castCarousel(for: show) { print($0) }
         ])]
     }
     

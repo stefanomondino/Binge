@@ -43,6 +43,7 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
                         MoyaProvider<TMDBAPI>(plugins: [networkLoggerPlugin])
         }
     }
+    
     func request<Endpoint>(for endpoint: Endpoint) -> URLRequest? where Endpoint : TargetType {
         let provider = self.provider(for: Endpoint.self)
         return try? provider.endpoint(endpoint).urlRequest()

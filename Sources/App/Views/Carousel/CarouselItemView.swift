@@ -54,7 +54,6 @@ class CarouselItemView: UIView, WithViewModel {
             
             let collectionViewDelegate = ShowListDelegate(sizeCalculator: sizeCalculator)
                 .withSelect { viewModel.selectItem(at: $0) }
-                .withSelect { viewModel.selectItem(at: $0) }
             
             collectionView.backgroundColor = .clear
             

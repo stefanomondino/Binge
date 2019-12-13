@@ -299,6 +299,7 @@
 		70AE55992212E6F000F27DAE /* TraktvAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraktvAPI.swift; sourceTree = "<group>"; };
 		70AE55AA2212E99700F27DAE /* SplashUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashUseCase.swift; sourceTree = "<group>"; };
 		70AE55AC2212EB0600F27DAE /* RepositoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFactory.swift; sourceTree = "<group>"; };
+		70CACF0A23A3DA5B00E9F657 /* MurrayTemplates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MurrayTemplates; sourceTree = "<group>"; };
 		70D1E42523883A240007EF9B /* StyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleFactory.swift; sourceTree = "<group>"; };
 		70D1E427238840940007EF9B /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		70D1E42A238853A00007EF9B /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
@@ -435,6 +436,7 @@
 		701C466A2230125F00BFFA4A /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				70CACF0A23A3DA5B00E9F657 /* MurrayTemplates */,
 				701C466E2230128400BFFA4A /* install.sh */,
 				701C466C2230128400BFFA4A /* Podfile */,
 				701C466D2230128400BFFA4A /* Readme.md */,

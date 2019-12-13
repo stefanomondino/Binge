@@ -46,29 +46,29 @@ class ShowDetailViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         let viewModel = self.viewModel
         let collectionViewDataSource = CollectionViewDataSource(viewModel: viewModel,
                                                                 factory: collectionViewCellFactory)
-                                                                
+        
         viewModel.styleFactory.apply(.container, to: self.view)
         
-       let spacing: CGFloat = 10
+        let spacing: CGFloat = 10
         let sizeCalculator = AutomaticCollectionViewSizeCalculator(viewModel: viewModel,
-                                                                   factory: collectionViewCellFactory, itemsPerLine: 3)
+                                                                   factory: collectionViewCellFactory, itemsPerLine: 1)
             .withItemSpacing { _, _ in return spacing }
             .withLineSpacing { _, _ in return spacing }
             .withInsets { _, _ in return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing) }
-            
+        
         
         let collectionViewDelegate = ShowListDelegate(sizeCalculator: sizeCalculator)
             .withSelect { viewModel.selectItem(at: $0) }
         
         collectionView.backgroundColor = .clear
-
+        
         collectionView.rx
             .animated(by: viewModel, dataSource: collectionViewDataSource)
             .disposed(by: disposeBag)
@@ -82,7 +82,7 @@ class ShowDetailViewController: UIViewController {
         }
         
         self.collectionViewDelegate = collectionViewDelegate        
-                
+        
         viewModel.reload()
         
     }
