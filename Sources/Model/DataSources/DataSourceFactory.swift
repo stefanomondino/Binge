@@ -28,8 +28,8 @@ class DefaultDataSourceFactory: DataSourceFactory, DependencyContainer {
     typealias Key = DataSourceKeys
     
     init(dependencyContainer: ModelDependencyContainer) {
-
-        self.register(for: .rest, scope: .singleton) { DefaultRESTDataSource() }
+        
+        self.register(for: .rest, scope: .eagerSingleton) { DefaultRESTDataSource() }
     }
     
 }

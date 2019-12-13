@@ -34,7 +34,7 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
             watchedShows(),
             login()
         ], styleFactory: container.styleFactory)
-        .with(Strings.Shows.popular.translation, to: \.pageTitle)
+            .with(\.pageTitle, to: Strings.Shows.popular.translation)
     }
     func homePager() -> PagerViewModel {
         return PagerViewModel(pages:[

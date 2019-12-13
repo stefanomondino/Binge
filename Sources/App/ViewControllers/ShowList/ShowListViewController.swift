@@ -17,8 +17,8 @@ class ShowListDelegate: CollectionViewDelegate, StaggeredLayoutDelegate, PluginL
     
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat {
         
-        let size = self.sizeCalculator(for: collectionView)
-            .automaticSizeForItem(at: indexPath, itemsPerLine: 3)
+        let size = self.sizeCalculator
+            .sizeForItem(at: indexPath, in: collectionView, direction: nil, type: nil)
         return size.width / size.height 
     }
     
@@ -73,12 +73,16 @@ class ShowListViewController: UIViewController {
         let collectionViewDataSource = CollectionViewDataSource(viewModel: viewModel,
                                                                 factory: collectionViewCellFactory)
         viewModel.styleFactory.apply(.container, to: self.view)
-        let spacing: CGFloat = 9
-        let collectionViewDelegate = ShowListDelegate(viewModel: viewModel, dataSource: collectionViewDataSource)
-            .withItemsPerLine(itemsPerLine: 3)
-            .withInsets { _, _ in return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing) }
+        
+        let spacing: CGFloat = 10
+        let sizeCalculator = AutomaticCollectionViewSizeCalculator(viewModel: viewModel,
+                                                                   factory: collectionViewCellFactory, itemsPerLine: 3)
             .withItemSpacing { _, _ in return spacing }
             .withLineSpacing { _, _ in return spacing }
+            .withInsets { _, _ in return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing) }
+            
+        
+        let collectionViewDelegate = ShowListDelegate(sizeCalculator: sizeCalculator)
             .withSelect { viewModel.selectItem(at: $0) }
         
         let layout = StaggeredLayout()
@@ -102,13 +106,5 @@ class ShowListViewController: UIViewController {
         
         viewModel.reload()
         
-    }
-}
-
-extension Reactive where Base: UIViewController {
-    func routes() -> Binder<Route> {
-        return Binder(base) { base, route in
-            route.execute(from: base)
-        }
     }
 }

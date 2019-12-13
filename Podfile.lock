@@ -51,8 +51,8 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - AlamofireImage (from `https://github.com/Alamofire/AlamofireImage`, branch `master`)
-  - Boomerang/RxSwift (from `https://github.com/stefanomondino/newark`, branch `master`)
-  - Boomerang/UIKit (from `https://github.com/stefanomondino/newark`, branch `master`)
+  - Boomerang/RxSwift (from `https://github.com/synesthesia-it/Boomerang`, branch `v6`)
+  - Boomerang/UIKit (from `https://github.com/synesthesia-it/Boomerang`, branch `v6`)
   - Gloss
   - Hero
   - KeychainAccess
@@ -98,8 +98,8 @@ EXTERNAL SOURCES:
     :branch: master
     :git: https://github.com/Alamofire/AlamofireImage
   Boomerang:
-    :branch: master
-    :git: https://github.com/stefanomondino/newark
+    :branch: v6
+    :git: https://github.com/synesthesia-it/Boomerang
   Moya:
     :branch: 14.0.0-beta.5
     :git: https://github.com/Moya/Moya
@@ -112,8 +112,8 @@ CHECKOUT OPTIONS:
     :commit: 249c411e512e3017b6b426d099db448289db7eb3
     :git: https://github.com/Alamofire/AlamofireImage
   Boomerang:
-    :commit: fec0f773f6b7063bc5d3ce3d81de2aa8c1a0fdd4
-    :git: https://github.com/stefanomondino/newark
+    :commit: fb45df4e42657fb4bda9a8fe44e97c30c5245a28
+    :git: https://github.com/synesthesia-it/Boomerang
   Moya:
     :commit: c3804a0100f444163e9048149710bd4d4fd56274
     :git: https://github.com/Moya/Moya
@@ -148,6 +148,6 @@ SPEC CHECKSUMS:
   SwiftRichString: a3b9fcc409034069c4d480bf5f0a11d9009d2dc9
   Tabman: 63eae331ae7a9388ae389b1808f1939269fcdece
 
-PODFILE CHECKSUM: a03ef1c66de4f98278325452c3002f8c013d3225
+PODFILE CHECKSUM: f8e35c8a96abf39b4f846e07e3f39ab9fba72a3b
 
 COCOAPODS: 1.8.4

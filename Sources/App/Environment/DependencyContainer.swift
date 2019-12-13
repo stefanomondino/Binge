@@ -64,7 +64,7 @@ class DefaultAppDependencyContainer: AppDependencyContainer, DependencyContainer
         self.register(for: .sceneViewModelFactory) { DefaultSceneViewModelFactory(container: self) }
         self.register(for: .itemViewModelFactory) { DefaultItemViewModelFactory(container: self) }
         self.register(for: .pickerViewModelFactory) { DefaultPickerViewModelFactory(container: self) }
-        self.register(for: .model, scope: .singleton) { DefaultModelDependencyContainer(environment: self.environment) }
+        self.register(for: .model, scope: .eagerSingleton) { DefaultModelDependencyContainer(environment: self.environment) }
         
         
     }

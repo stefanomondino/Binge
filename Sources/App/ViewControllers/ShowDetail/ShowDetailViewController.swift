@@ -56,12 +56,15 @@ class ShowDetailViewController: UIViewController {
                                                                 
         viewModel.styleFactory.apply(.container, to: self.view)
         
-        let spacing: CGFloat = 10
-        let collectionViewDelegate = ShowListDelegate(viewModel: viewModel, dataSource: collectionViewDataSource)
-            .withItemsPerLine(itemsPerLine: 1)
-            .withInsets { _, _ in return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing) }
+       let spacing: CGFloat = 10
+        let sizeCalculator = AutomaticCollectionViewSizeCalculator(viewModel: viewModel,
+                                                                   factory: collectionViewCellFactory, itemsPerLine: 3)
             .withItemSpacing { _, _ in return spacing }
             .withLineSpacing { _, _ in return spacing }
+            .withInsets { _, _ in return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing) }
+            
+        
+        let collectionViewDelegate = ShowListDelegate(sizeCalculator: sizeCalculator)
             .withSelect { viewModel.selectItem(at: $0) }
         
         collectionView.backgroundColor = .clear

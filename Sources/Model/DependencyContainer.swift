@@ -43,7 +43,7 @@ public class DefaultModelDependencyContainer: ModelDependencyContainer, Dependen
      public init(environment: Environment) {
         Configuration.environment = environment
         
-        self.register(for: .dataSources, scope: .singleton) { DefaultDataSourceFactory(dependencyContainer: self) }
+        self.register(for: .dataSources, scope: .eagerSingleton) { DefaultDataSourceFactory(dependencyContainer: self) }
         self.register(for: .repositories, scope: .singleton) { DefaultRepositoryFactory(dependencyContainer: self) }
         self.register(for: .useCases, scope: .singleton) { DefaultUseCaseFactory(dependencyContainer: self) }
         

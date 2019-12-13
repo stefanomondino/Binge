@@ -45,11 +45,15 @@ class CarouselItemView: UIView, WithViewModel {
         
         if let collectionView = self.collectionView {
             let spacing: CGFloat = 10
-            let collectionViewDelegate = CollectionViewDelegate(viewModel: viewModel, dataSource: collectionViewDataSource)
-                .withAspectRatio(9.0/16.0, direction: .horizontal)
-                .withInsets { _, _ in return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing) }
+            let sizeCalculator = AutomaticCollectionViewSizeCalculator(viewModel: viewModel,
+                                                                       factory: viewModel.cellFactory, itemsPerLine: 1)
                 .withItemSpacing { _, _ in return spacing }
                 .withLineSpacing { _, _ in return spacing }
+                .withInsets { _, _ in return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing) }
+                
+            
+            let collectionViewDelegate = ShowListDelegate(sizeCalculator: sizeCalculator)
+                .withSelect { viewModel.selectItem(at: $0) }
                 .withSelect { viewModel.selectItem(at: $0) }
             
             collectionView.backgroundColor = .clear
@@ -64,21 +68,21 @@ class CarouselItemView: UIView, WithViewModel {
     }
 }
 
-extension CollectionViewDelegate {
-    open func withAspectRatio(_ ratio: CGFloat, direction: Direction) -> Self {
-        return self.withSize(size: {[weak self] collectionView, indexPath, type in
-            guard let self = self else {
-                return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.itemSize ?? .zero
-            }
-            if type != nil { return .zero }
-            let fixed = self.sizeCalculator(for: collectionView)
-                .calculateFixedDimension(for: direction, at: indexPath, itemsPerLine: 1, type: type)
-            switch direction {
-            case .horizontal: return CGSize(width: fixed * ratio, height: fixed)
-            case .vertical: return CGSize(width: fixed, height: fixed / ratio)
-            @unknown default: return CGSize(width: fixed, height: fixed)
-            }
-            
-        })
-    }
-}
+//extension CollectionViewDelegate {
+//    open func withAspectRatio(_ ratio: CGFloat, direction: Direction) -> Self {
+//        return self.withSize(size: {[weak self] collectionView, indexPath, type in
+//            guard let self = self else {
+//                return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.itemSize ?? .zero
+//            }
+//            if type != nil { return .zero }
+//            let fixed = self.sizeCalculator(for: collectionView)
+//                .calculateFixedDimension(for: direction, at: indexPath, itemsPerLine: 1, type: type)
+//            switch direction {
+//            case .horizontal: return CGSize(width: fixed * ratio, height: fixed)
+//            case .vertical: return CGSize(width: fixed, height: fixed / ratio)
+//            @unknown default: return CGSize(width: fixed, height: fixed)
+//            }
+//            
+//        })
+//    }
+//}
