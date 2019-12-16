@@ -10,6 +10,48 @@ import Foundation
 
 public struct FanartResponse: Codable {
     
+    
+    let name: String
+    let thetvdbId: String
+    let clearlogo: [FanartImage]?
+    let hdtvlogo: [FanartImage]?
+    let clearart: [FanartImage]?
+    let showbackground: [FanartImage]?
+    let seasonposter: [FanartImage]?
+    let seasonthumb: [FanartImage]?
+    let hdclearart: [FanartImage]?
+    let tvbanner: [FanartImage]?
+    let tvthumb: [FanartImage]?
+    let characterart: [FanartImage]?
+    let tvposter: [FanartImage]?
+    let seasonbanner: [FanartImage]?
+    
+    public func image(for format: Fanart.Format, language: String = "en") -> Fanart? {
+        let array: [FanartImage]?
+        switch format {
+        case .clearLogo: array = clearlogo
+        case .thumb: array = tvthumb
+        case .hdtvLogo: array = hdtvlogo
+        case .clearArt: array = clearart
+        case .background: array = showbackground
+        case .seasonPoster: array = seasonposter
+        case .seasonThumb: array = seasonthumb
+        case .hdClearArt: array = hdclearart
+        case .tvBanner: array = tvbanner
+        case .characterArt: array = characterart
+        case .tvPoster: array = tvposter
+        case .seasonBanner: array = seasonbanner
+        }
+        if let image = array?.first(where: { $0.lang == language }) ?? array?.first {
+            return Fanart(format: format, image: image)
+        } else {
+            return nil
+        }
+    }
+}
+
+public struct Fanart {
+    
     public enum Format: String, CaseIterable {
         case clearLogo
         case hdtvLogo
@@ -23,7 +65,9 @@ public struct FanartResponse: Codable {
         case tvPoster
         case thumb
         case seasonBanner
-        
+        public var ratio: CGFloat {
+            return size.width / size.height
+        }
         public var size: CGSize {
             switch self {
             case .clearLogo: return CGSize(width: 400, height: 155)
@@ -42,39 +86,9 @@ public struct FanartResponse: Codable {
         }
     }
     
-    let name: String
-    let thetvdbId: String
-    let clearlogo: [FanartImage]?
-    let hdtvlogo: [FanartImage]?
-    let clearart: [FanartImage]?
-    let showbackground: [FanartImage]?
-    let seasonposter: [FanartImage]?
-    let seasonthumb: [FanartImage]?
-    let hdclearart: [FanartImage]?
-    let tvbanner: [FanartImage]?
-    let tvthumb: [FanartImage]?
-    let characterart: [FanartImage]?
-    let tvposter: [FanartImage]?
-    let seasonbanner: [FanartImage]?
-    
-    public func image(for format: Format, language: String = "en") -> WithImage? {
-        let array: [FanartImage]?
-        switch format {
-        case .clearLogo: array = clearlogo
-        case .thumb: array = tvthumb
-        case .hdtvLogo: array = hdtvlogo
-        case .clearArt: array = clearart
-        case .background: array = showbackground
-        case .seasonPoster: array = seasonposter
-        case .seasonThumb: array = seasonthumb
-        case .hdClearArt: array = hdclearart
-        case .tvBanner: array = tvbanner
-        case .characterArt: array = characterart
-        case .tvPoster: array = tvposter
-        case .seasonBanner: array = seasonbanner
-        }
-        return array?.first(where: { $0.lang == language }) ?? array?.first
-    }
+    public let format: Fanart.Format
+    public var id: String { return image.id }
+    let image: FanartImage
 }
 
 struct FanartImage: Codable {
@@ -85,8 +99,8 @@ struct FanartImage: Codable {
     let season: String?
 }
 
-extension FanartImage: WithImage {
-    func getImage(with placeholder: WithImage?) -> ObservableImage {
-        return url.getImage(with: placeholder)
+extension Fanart: WithImage {
+    public func getImage(with placeholder: WithImage?) -> ObservableImage {
+        return image.url.getImage(with: placeholder)
     }
 }

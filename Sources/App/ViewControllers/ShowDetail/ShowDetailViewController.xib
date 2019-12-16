@@ -10,7 +10,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShowDetailViewController" customModule="App" customModuleProvider="target">
             <connections>
-                <outlet property="backgroundImage" destination="nK0-IK-6Tw" id="Rc4-qO-ZXp"/>
                 <outlet property="collectionView" destination="2ll-Pr-7vE" id="ZYg-4p-QjY"/>
                 <outlet property="view" destination="bDM-5O-YBy" id="1cQ-BP-As1"/>
             </connections>
@@ -20,9 +19,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nK0-IK-6Tw">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                </imageView>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="2ll-Pr-7vE">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -38,11 +34,7 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="2ll-Pr-7vE" secondAttribute="bottom" id="0Ii-zm-2l2"/>
                 <constraint firstItem="ulr-uJ-a7D" firstAttribute="trailing" secondItem="2ll-Pr-7vE" secondAttribute="trailing" id="1kg-uz-URn"/>
-                <constraint firstAttribute="trailing" secondItem="nK0-IK-6Tw" secondAttribute="trailing" id="7W5-8p-Kez"/>
-                <constraint firstItem="nK0-IK-6Tw" firstAttribute="top" secondItem="bDM-5O-YBy" secondAttribute="top" id="9cH-q7-ZHS"/>
                 <constraint firstItem="2ll-Pr-7vE" firstAttribute="top" secondItem="ulr-uJ-a7D" secondAttribute="top" id="FKs-fR-17x"/>
-                <constraint firstAttribute="bottom" secondItem="nK0-IK-6Tw" secondAttribute="bottom" id="G1K-pt-thZ"/>
-                <constraint firstItem="nK0-IK-6Tw" firstAttribute="leading" secondItem="bDM-5O-YBy" secondAttribute="leading" id="NBz-0d-wjl"/>
                 <constraint firstItem="2ll-Pr-7vE" firstAttribute="leading" secondItem="bDM-5O-YBy" secondAttribute="leading" id="gEW-ld-f2Q"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ulr-uJ-a7D"/>

@@ -80,11 +80,7 @@ class ShowDetailViewController: UIViewController {
             .routes
             .bind(to: self.rx.routes())
             .disposed(by: disposeBag)
-        
-        viewModel.backgroundImage
-            .bind(to: backgroundImage.rx.animatedImage())
-            .disposed(by: disposeBag)
-        
+                
         viewModel.reload()
         
     }

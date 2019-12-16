@@ -49,17 +49,25 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
     
     func reload() {
         disposeBag = DisposeBag()
-        useCase.showDetail(for: show.show)
-        .map(map(_:))
+        Observable.combineLatest(useCase.showDetail(for: show.show), useCase.fanart(for: show.show))
+        .map { [weak self] in self?.map($0.0, fanart: $0.1) ?? []}
         .bind(to: sectionsRelay)
         .disposed(by: disposeBag)
     }
     
-    func map(_ show: ShowDetail) -> [Section] {
+    func map(_ show: ShowDetail, fanart: FanartResponse) -> [Section] {
         let routes = self.routes
         let routeFactory = self.routeFactory
-        return [Section(id:"",items:[
-            itemViewModelFactory.show(show.show, layout: .full),
+        let fanarts = Fanart.Format
+            .allCases
+            .compactMap { fanart.image(for: $0)}
+            .map { itemViewModelFactory.fanart($0) }
+            
+        
+        
+        return [
+            Section(id: "test", items: fanarts),
+            Section(id: "misc", items:[
             itemViewModelFactory.castCarousel(for: show) {
                 routes.accept(routeFactory.personDetailRoute(for: $0))
             },

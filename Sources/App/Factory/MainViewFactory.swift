@@ -17,6 +17,7 @@ enum ViewIdentifier: String, LayoutIdentifier {
     
     case carousel
 	case person
+	case fanart
 	//MURRAY PLACEHOLDER
     
     var identifierString: String {

@@ -19,6 +19,7 @@ protocol ItemViewModelFactory {
     func castCarousel(for show: WithShow, onSelection: @escaping (Person) -> ()) -> ViewModel
     func relatedShowsCarousel(for show: WithShow, onSelection: @escaping (Show) -> ()) -> ViewModel
     func person(_ person: Person) -> ViewModel
+    func fanart(_ fanart: Fanart) -> ViewModel
     //MURRAY DECLARATION PLACEHOLDER
 }
 
@@ -75,6 +76,12 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         PersonItemViewModel(person: person,
                         layoutIdentifier: ViewIdentifier.person,
                         imagesUseCase: container.model.useCases.images,
+                        styleFactory: container.styleFactory)
+    }
+
+    func fanart(_ fanart: Fanart) -> ViewModel {
+        FanartItemViewModel(fanart: fanart,
+                        layoutIdentifier: ViewIdentifier.fanart,
                         styleFactory: container.styleFactory)
     }
 
