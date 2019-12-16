@@ -54,7 +54,7 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
         let routes = self.routes
         let routeFactory = self.routeFactory
         return [Section(id:"",items:[
-            itemViewModelFactory.show(show.show),
+            itemViewModelFactory.show(show.show, layout: .full),
             itemViewModelFactory.castCarousel(for: show) {
                 routes.accept(routeFactory.personDetailRoute(for: $0))
             },

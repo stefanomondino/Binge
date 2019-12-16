@@ -19,7 +19,7 @@ def model_pods
   shared_pods
   pod 'Alamofire'
   pod 'Moya/RxSwift', :git => "https://github.com/Moya/Moya",  :branch => "14.0.0-beta.5"
-  pod 'AlamofireImage', :git => "https://github.com/Alamofire/AlamofireImage", :branch => "master"
+  pod 'Kingfisher'
   pod 'KeychainAccess'
   pod 'Gloss'
 #MURRAY MODEL_PODS PLACEHOLDER

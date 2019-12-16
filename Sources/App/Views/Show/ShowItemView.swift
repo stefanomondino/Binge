@@ -17,7 +17,7 @@ import Boomerang
 class ShowItemView: UIView, WithViewModel {
 
     @IBOutlet weak var poster: UIImageView!
-    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var title: UILabel?
     @IBOutlet weak var counter: UILabel?
     var disposeBag = DisposeBag()
     override func awakeFromNib() {
@@ -34,14 +34,16 @@ class ShowItemView: UIView, WithViewModel {
         
         self.counter?.text = ""
         
-        viewModel.styleFactory.apply(.title, to: title)
-        viewModel.styleFactory.apply(.card, to: self)
-        title.text = viewModel.title
         
+        viewModel.styleFactory.apply(.card, to: self)
+        if let title = title {
+            viewModel.styleFactory.apply(.title, to: title)
+        title.text = viewModel.title
+        }
         if self.isPlaceholderForAutosize { return }
         viewModel.image
             .asDriver(onErrorJustReturn: UIImage())
-            .drive(poster.rx.image)
+            .drive(poster.rx.animatedImage())
             .disposed(by: disposeBag)
 //
 //        self.counter?.style = Identifiers.Styles.mainFilledButton.style

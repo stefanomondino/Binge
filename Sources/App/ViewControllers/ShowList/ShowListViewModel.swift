@@ -74,7 +74,8 @@ class ShowListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
     }
     
     private func items(from shows: [WithShow]) -> [ViewModel] {
-        return shows.map(itemViewModelFactory.show(_:))
+        let factory = itemViewModelFactory
+        return shows.map { factory.show($0, layout: .posterOnly)}
     }
     
     private func addItems(from shows: [WithShow]) {

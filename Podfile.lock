@@ -1,7 +1,5 @@
 PODS:
   - Alamofire (5.0.0-rc.3)
-  - AlamofireImage (4.0.0-beta.6):
-    - Alamofire (~> 5.0.0-rc.3)
   - AutoInsetter (1.8.0)
   - Boomerang/Core (6.0)
   - Boomerang/RxSwift (6.0):
@@ -15,6 +13,9 @@ PODS:
   - Gloss (3.1.0)
   - Hero (1.5.0)
   - KeychainAccess (4.1.0)
+  - Kingfisher (5.11.0):
+    - Kingfisher/Core (= 5.11.0)
+  - Kingfisher/Core (5.11.0)
   - Moya/Core (14.0.0-beta.5):
     - Alamofire (= 5.0.0-rc.3)
   - Moya/RxSwift (14.0.0-beta.5):
@@ -50,12 +51,12 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
-  - AlamofireImage (from `https://github.com/Alamofire/AlamofireImage`, branch `master`)
   - Boomerang/RxSwift (from `https://github.com/synesthesia-it/Boomerang`, branch `v6`)
   - Boomerang/UIKit (from `https://github.com/synesthesia-it/Boomerang`, branch `v6`)
   - Gloss
   - Hero
   - KeychainAccess
+  - Kingfisher
   - Moya/RxSwift (from `https://github.com/Moya/Moya`, branch `14.0.0-beta.5`)
   - Nimble
   - PluginLayout (from `https://github.com/stefanomondino/PluginLayout`, branch `master`)
@@ -77,6 +78,7 @@ SPEC REPOS:
     - Gloss
     - Hero
     - KeychainAccess
+    - Kingfisher
     - Nimble
     - Pageboy
     - pop
@@ -94,9 +96,6 @@ SPEC REPOS:
     - Tabman
 
 EXTERNAL SOURCES:
-  AlamofireImage:
-    :branch: master
-    :git: https://github.com/Alamofire/AlamofireImage
   Boomerang:
     :branch: v6
     :git: https://github.com/synesthesia-it/Boomerang
@@ -108,9 +107,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/stefanomondino/PluginLayout
 
 CHECKOUT OPTIONS:
-  AlamofireImage:
-    :commit: 249c411e512e3017b6b426d099db448289db7eb3
-    :git: https://github.com/Alamofire/AlamofireImage
   Boomerang:
     :commit: fb45df4e42657fb4bda9a8fe44e97c30c5245a28
     :git: https://github.com/synesthesia-it/Boomerang
@@ -123,13 +119,13 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: ca8c0de6906873be89d6deec5c8de279e00bf872
-  AlamofireImage: edf3216fd178a89d63e681e609909d7ac98fa3c6
   AutoInsetter: 0b90ca74e36561c340129045a3722c51a0b15c58
   Boomerang: e264ee8ce86ab0d73f06cdb67c259422d3e355a4
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   Gloss: 2dbf87af0e4dd24753f7de933356ff6c5c012426
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
+  Kingfisher: 4569606189149e19c7d9439f47e885d0679b7a90
   Moya: 2c16c3fe92eda302070213452281b59198f946d8
   Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
   Pageboy: 3794c578aae5fcce06e90b3ed4a0ad6b807d75bb
@@ -148,6 +144,6 @@ SPEC CHECKSUMS:
   SwiftRichString: a3b9fcc409034069c4d480bf5f0a11d9009d2dc9
   Tabman: 63eae331ae7a9388ae389b1808f1939269fcdece
 
-PODFILE CHECKSUM: f8e35c8a96abf39b4f846e07e3f39ab9fba72a3b
+PODFILE CHECKSUM: b19127182bf4e0eb341080777af18b92da3a02ba
 
 COCOAPODS: 1.8.4

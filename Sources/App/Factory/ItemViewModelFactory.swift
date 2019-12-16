@@ -14,7 +14,7 @@ import RxRelay
 
 protocol ItemViewModelFactory {
     //    func header(title: String) -> ViewModel
-    func show(_ show: WithShow) -> ViewModel
+    func show(_ show: WithShow, layout: ShowIdentifier) -> ViewModel
     func loadMore(_ closure: @escaping () -> Disposable) -> ViewModel
     func castCarousel(for show: WithShow, onSelection: @escaping (Person) -> ()) -> ViewModel
     func relatedShowsCarousel(for show: WithShow, onSelection: @escaping (Show) -> ()) -> ViewModel
@@ -29,9 +29,9 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         LoadMoreItemViewModel(closure)
     }
     
-    func show(_ show: WithShow) -> ViewModel {
+    func show(_ show: WithShow, layout: ShowIdentifier) -> ViewModel {
         ShowItemViewModel(show: show.show,
-                          layoutIdentifier: ViewIdentifier.show,
+                          layoutIdentifier: layout,
                           imageUseCase: container.model.useCases.images,
                           styleFactory: container.styleFactory
         )
@@ -57,7 +57,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
     func relatedShowsCarousel(for show: WithShow, onSelection: @escaping (Show) -> ()) -> ViewModel {
         let observable = container.model.useCases.showDetail
             .related(for: show.show)
-            .map { $0.map { self.show($0) } }
+            .map { $0.map { self.show($0, layout: .full) } }
             .map { [Section(items: $0)] }
             .share(replay: 1, scope: .forever)
             

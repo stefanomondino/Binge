@@ -42,7 +42,9 @@ class MainViewFactory: ViewFactory {
 
     func name(from itemIdentifier: LayoutIdentifier) -> String {
         let identifier = itemIdentifier.identifierString
-
-        return identifier.prefix(1).uppercased() + identifier.dropFirst() + "ItemView"
+        switch itemIdentifier {
+        case is ShowIdentifier: return identifier
+        default: return identifier.prefix(1).uppercased() + identifier.dropFirst() + "ItemView"
+        }
     }
 }

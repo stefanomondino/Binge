@@ -9,6 +9,7 @@
 import Foundation
 import Moya
 import RxSwift
+import RxCocoa
 import Boomerang
 import Gloss
 
@@ -23,9 +24,11 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
     
     let container = Container<ObjectIdentifier>()
     let jsonDecoder: JSONDecoder
-    
-    init(jsonDecoder: JSONDecoder = JSONDecoder()) {
+    let scheduler: SchedulerType
+    init(jsonDecoder: JSONDecoder = JSONDecoder(),
+         scheduler: SchedulerType = SerialDispatchQueueScheduler(qos: .utility)) {
         self.jsonDecoder = jsonDecoder
+        self.scheduler = scheduler
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
         
         let cacheSize = 1024 * 1024 * 200
@@ -58,15 +61,18 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
     func get<Result, Endpoint>(_ type: Result.Type, at endpoint: Endpoint) -> Observable<Result> where Result: Decodable, Endpoint: TargetType {
         let decoder = self.jsonDecoder
         return response(at: endpoint)
+            .observeOn(scheduler)
             .map { try decoder.decode(Result.self, from: $0.data) }
     }
     func get<Result, Endpoint>(_ type: Result.Type, at endpoint: Endpoint) -> Observable<Result> where Result: JSONDecodable, Endpoint: TargetType {
         return response(at: endpoint)
+            .observeOn(scheduler)
             .mapObject(type: Result.self)
     }
     
     func get<Result, Endpoint>(_ type: Result.Type, at endpoint: Endpoint) -> Observable<[Result]> where Result: JSONDecodable, Endpoint: TargetType {
         return response(at: endpoint)
+            .observeOn(scheduler)
             .mapArray(type: Result.self)
     }
     private func response<Endpoint: TargetType>(at endpoint: Endpoint) -> Observable<Response> {

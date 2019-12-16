@@ -116,6 +116,10 @@
 		70AE559E2212E6F100F27DAE /* TraktvAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55992212E6F000F27DAE /* TraktvAPI.swift */; };
 		70AE55AD2212EB0600F27DAE /* RepositoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE55AC2212EB0600F27DAE /* RepositoryFactory.swift */; };
 		70CACF0C23A3DE3D00E9F657 /* PersonDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CACF0B23A3DE3D00E9F657 /* PersonDetailUseCase.swift */; };
+		70CACF0E23A7BB7D00E9F657 /* PosterShowItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70CACF0D23A7BB1F00E9F657 /* PosterShowItemView.xib */; };
+		70CACF1123A7BC8200E9F657 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CACF1023A7BC8200E9F657 /* UIImage+Extensions.swift */; };
+		70CACF1323A7BD9400E9F657 /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CACF1223A7BD9400E9F657 /* UIImageView+Extensions.swift */; };
+		70CACF1523A7CF0F00E9F657 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CACF1423A7CF0F00E9F657 /* String+Extensions.swift */; };
 		70D1E42623883A240007EF9B /* StyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1E42523883A240007EF9B /* StyleFactory.swift */; };
 		70D1E428238840940007EF9B /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1E427238840940007EF9B /* Styles.swift */; };
 		70D1E42B238853A00007EF9B /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1E42A238853A00007EF9B /* TextStyle.swift */; };
@@ -306,6 +310,10 @@
 		70AE55AC2212EB0600F27DAE /* RepositoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFactory.swift; sourceTree = "<group>"; };
 		70CACF0A23A3DA5B00E9F657 /* MurrayTemplates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MurrayTemplates; sourceTree = "<group>"; };
 		70CACF0B23A3DE3D00E9F657 /* PersonDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailUseCase.swift; sourceTree = "<group>"; };
+		70CACF0D23A7BB1F00E9F657 /* PosterShowItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PosterShowItemView.xib; sourceTree = "<group>"; };
+		70CACF1023A7BC8200E9F657 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		70CACF1223A7BD9400E9F657 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
+		70CACF1423A7CF0F00E9F657 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		70D1E42523883A240007EF9B /* StyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleFactory.swift; sourceTree = "<group>"; };
 		70D1E427238840940007EF9B /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		70D1E42A238853A00007EF9B /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
@@ -672,6 +680,16 @@
 			path = Repositories;
 			sourceTree = "<group>";
 		};
+		70CACF0F23A7BC6600E9F657 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				70CACF1023A7BC8200E9F657 /* UIImage+Extensions.swift */,
+				70CACF1223A7BD9400E9F657 /* UIImageView+Extensions.swift */,
+				70CACF1423A7CF0F00E9F657 /* String+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		70D1E429238840A10007EF9B /* Styles */ = {
 			isa = PBXGroup;
 			children = (
@@ -774,6 +792,7 @@
 		70DBC83E220C3F3C00E0BB27 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				70CACF0F23A7BC6600E9F657 /* Extensions */,
 				70FA232D23952C2B001ADAA5 /* Strings */,
 				70D1E429238840A10007EF9B /* Styles */,
 				706CE15C2387F5CD0070FC4E /* Environment */,
@@ -962,6 +981,7 @@
 			children = (
 				66CE8F68EF7CFAEA0D7AB1AB /* ShowItemView.swift */,
 				706CE1542385B6DD0070FC4E /* ShowItemViewModel.swift */,
+				70CACF0D23A7BB1F00E9F657 /* PosterShowItemView.xib */,
 				9D243B97AAD60BC731DEE40B /* ShowItemView.xib */,
 			);
 			path = Show;
@@ -1140,6 +1160,7 @@
 				704891B923112D600022397E /* Livvic-BlackItalic.ttf in Resources */,
 				704891C323112D600022397E /* Livvic-BoldItalic.ttf in Resources */,
 				704891BF23112D600022397E /* Livvic-Light.ttf in Resources */,
+				70CACF0E23A7BB7D00E9F657 /* PosterShowItemView.xib in Resources */,
 				70DBC82E220C3E2400E0BB27 /* Assets.xcassets in Resources */,
 				7065582A239558CA00AB8821 /* StringPickerItemView.xib in Resources */,
 			);
@@ -1381,6 +1402,7 @@
 				706CE1552385B6DD0070FC4E /* ShowItemViewModel.swift in Sources */,
 				706CE1602387F8D20070FC4E /* Environment.swift in Sources */,
 				70D1E42B238853A00007EF9B /* TextStyle.swift in Sources */,
+				70CACF1123A7BC8200E9F657 /* UIImage+Extensions.swift in Sources */,
 				70D1E432238923E00007EF9B /* SceneRoute.swift in Sources */,
 				706CE1492385AD930070FC4E /* RouteFactory.swift in Sources */,
 				706CE15B238679240070FC4E /* LoadMoreItemViewModel.swift in Sources */,
@@ -1399,10 +1421,12 @@
 				706CE1462385AD930070FC4E /* AlertRoute.swift in Sources */,
 				A7294EF60FF828B6E3F721A9 /* ShowPosterItemView.xib in Sources */,
 				708ACF4C23A132F3004A6FF4 /* TabViewController.swift in Sources */,
+				70CACF1523A7CF0F00E9F657 /* String+Extensions.swift in Sources */,
 				70A918522389C6AA007740A7 /* Fonts.swift in Sources */,
 				70D1E42623883A240007EF9B /* StyleFactory.swift in Sources */,
 				DBA218A99BA9E0B420A8A3C7 /* ShowDetailViewModel.swift in Sources */,
 				2A80AE8E2881A52331D7641D /* ShowDetailViewController.swift in Sources */,
+				70CACF1323A7BD9400E9F657 /* UIImageView+Extensions.swift in Sources */,
 				27247B0A3B10E623AD34C91E /* ShowDetailViewController.xib in Sources */,
 				89F113DC16BBEE291096816E /* CarouselItemViewModel.swift in Sources */,
 				708ACF5123A14AD5004A6FF4 /* SafariRoute.swift in Sources */,

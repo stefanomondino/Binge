@@ -10,6 +10,19 @@ import Foundation
 import Boomerang
 import Model
 
+enum ShowIdentifier: String, LayoutIdentifier {
+    case posterOnly
+    case title
+    case full
+    
+    var identifierString: String {
+        switch self {
+        case .posterOnly: return "PosterShowItemView"
+        default: return "ShowItemView"
+        }
+    }
+}
+
 class ShowItemViewModel: ViewModel {
     let layoutIdentifier: LayoutIdentifier
     var uniqueIdentifier: UniqueIdentifier { show.uniqueIdentifier }
@@ -20,7 +33,7 @@ class ShowItemViewModel: ViewModel {
         return show.title
     }
     init(show: Show,
-         layoutIdentifier: LayoutIdentifier,
+         layoutIdentifier: ShowIdentifier,
          imageUseCase: ImagesUseCase,
          styleFactory: StyleFactory) {
         self.layoutIdentifier = layoutIdentifier
@@ -30,7 +43,7 @@ class ShowItemViewModel: ViewModel {
         self.image = imageUseCase
             .poster(forShow: show)
             .flatMapLatest { $0.getImage() }
-            .share(replay: 1, scope: .forever)
+//            .share(replay: 1, scope: .forever)
             .startWith(UIImage())
         
     }
