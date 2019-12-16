@@ -74,7 +74,7 @@ class ShowListViewController: UIViewController {
                                                                 factory: collectionViewCellFactory)
         viewModel.styleFactory.apply(.container, to: self.view)
         
-        let spacing: CGFloat = 10
+        let spacing: CGFloat = 4
         let sizeCalculator = AutomaticCollectionViewSizeCalculator(viewModel: viewModel,
                                                                    factory: collectionViewCellFactory, itemsPerLine: 3)
             .withItemSpacing { _, _ in return spacing }

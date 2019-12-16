@@ -45,6 +45,10 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
                       scope: .singleton) {
                         MoyaProvider<TMDBAPI>(plugins: [networkLoggerPlugin])
         }
+        self.register(for: ObjectIdentifier(FanartAPI.self),
+                      scope: .singleton) {
+                        MoyaProvider<FanartAPI>(plugins: [networkLoggerPlugin])
+        }
     }
     
     func request<Endpoint>(for endpoint: Endpoint) -> URLRequest? where Endpoint : TargetType {

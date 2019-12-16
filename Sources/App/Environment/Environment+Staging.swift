@@ -15,6 +15,8 @@ struct StagingEnvironment: Environment {
 
     var debugEnabled: Bool { true }
     
+    var fanartAPIKey: String { Secrets.fanartApiKey }
+    
     var traktBaseURL: URL { URL(string: "https://api.trakt.tv")! }
     
     var traktWebURL: URL { URL(string: "https://trakt.tv")! }
@@ -26,6 +28,8 @@ struct StagingEnvironment: Environment {
     var traktRedirectURI: String { Secrets.traktRedirectURI }
     
     var tmdbBaseURL: URL { URL(string: "https://api.themoviedb.org/3/")! }
+    
+    var fanartBaseURL: URL { URL(string: "https://webservice.fanart.tv/v3")! }
     
     var traktClientSecret: String { Secrets.traktClientSecret }
     

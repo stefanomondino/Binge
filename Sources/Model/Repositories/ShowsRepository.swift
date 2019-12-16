@@ -14,6 +14,7 @@ protocol ShowsRepository {
     func detail(forShow show: Show) -> Observable<ShowDetailItem>
     func people(forShow show: Show) -> Observable<PeopleResult>
     func related(of show: Show) -> Observable<[ShowItem]>
+    func fanart(for show: Show) -> Observable<FanartResponse> 
 }
 
 struct ShowsAPIRepository: ShowsRepository {
@@ -59,6 +60,9 @@ struct ShowsAPIRepository: ShowsRepository {
     }
     func related(of show: Show) -> Observable<[ShowItem]> {
         return rest.get([ShowItem].self, at: TraktvAPI.relatedShows(show))
+    }
+    func fanart(for show: Show) -> Observable<FanartResponse> {
+        return rest.get(FanartResponse.self, at: FanartAPI.show(show))
     }
 }
 

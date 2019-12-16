@@ -13,6 +13,7 @@ import PluginLayout
 class ShowDetailViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var backgroundImage: UIImageView!
     
     var viewModel: ShowDetailViewModel
     
@@ -78,6 +79,10 @@ class ShowDetailViewController: UIViewController {
         viewModel
             .routes
             .bind(to: self.rx.routes())
+            .disposed(by: disposeBag)
+        
+        viewModel.backgroundImage
+            .bind(to: backgroundImage.rx.animatedImage())
             .disposed(by: disposeBag)
         
         viewModel.reload()

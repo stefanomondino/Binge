@@ -17,6 +17,8 @@ public protocol Environment {
     var traktRedirectURI: String { get }
     var traktClientID: String { get }
     var traktClientSecret: String { get }
+    var fanartAPIKey: String { get }
+    var fanartBaseURL: URL { get }
     var tmdbBaseURL: URL { get }
     var tmdbAPIKey: String { get }
     var debugEnabled: Bool { get }

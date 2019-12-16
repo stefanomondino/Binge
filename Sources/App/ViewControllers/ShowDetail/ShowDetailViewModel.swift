@@ -29,6 +29,8 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
     
     let routeFactory: RouteFactory
     
+    let backgroundImage: ObservableImage
+    
     init(
         show: WithShow,
         routeFactory: RouteFactory,
@@ -40,6 +42,9 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
         self.useCase = useCase
         self.styleFactory = styleFactory
         self.itemViewModelFactory = itemViewModelFactory
+        self.backgroundImage = useCase
+            .fanart(for: show.show)
+            .flatMap { $0.image(for: .background)?.getImage() ?? .empty() }
     }
     
     func reload() {
