@@ -1,0 +1,30 @@
+
+import Boomerang
+import Nimble
+import Quick
+import RxBlocking
+import RxSwift
+@testable import Model
+
+class {{name|firstUppercase}}UseCaseSpec: QuickSpec {
+
+    override func spec() {
+
+        let container = TestContainer()
+
+        describe("The {{name|firstUppercase}} use case") {
+            var useCase: {{name|firstUppercase}}UseCase { container.useCases.{{name|firstLowercase}} }
+            beforeEach {
+//                container.mockJSONFile("test", at: .test)
+            }
+            context("when started") {
+                it("should succeed") {
+//                    expect(useCase.start()).first() == ()
+                }
+                it("should not error out") {
+//                    expect(useCase.start()).notTo(throwError())
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,39 @@
+{
+  "name" : "Repository",
+  "paths" : [
+      {
+      "from": "Repository.swift.stencil",
+      "to": "Sources/Model/Repositories/{{name|firstUppercase}}Repository.swift"
+      }
+  ],
+  "replacements" : [
+      {
+          "placeholder": "// MURRAY PROTOCOL",
+          "text": "var {{name|firstLowercase}}: {{name|firstUppercase}}Repository { get }\n",
+          "destination": "Sources/Model/Repositories/RepositoryContainer.swift"
+      },
+      {
+          "placeholder": "// MURRAY VAR",
+          "text": "var {{name|firstLowercase}}: {{name|firstUppercase}}Repository { self[.{{name|firstLowercase}}] }\n",
+          "destination": "Sources/Model/Repositories/RepositoryContainer.swift"
+      },
+      {
+          "placeholder": "// MURRAY KEY",
+          "text": "case {{name|firstLowercase}}\n",
+          "destination": "Sources/Model/Repositories/RepositoryContainer.swift"
+      },
+      {
+          "placeholder": "// MURRAY REGISTER",
+          "text": "register(for: .{{name|firstLowercase}}, scope: .singleton) {\n{{name|firstUppercase}}RepositoryImplementation(dataSource: dependencyContainer.dataSources.rest)\n}\n",
+          "destination": "Sources/Model/Repositories/RepositoryContainer.swift"
+      }
+  ],
+  "parameters" : [
+      {"name": "name", "isRequired": true}
+  ],
+  "plugins" : {
+      "xcode": {
+          "targets": ["Model"]
+      }
+  }
+}

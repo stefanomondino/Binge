@@ -1,0 +1,10 @@
+vendor
+Pods
+Carthage
+
+*.xcodeproj
+*.xcworkspace
+default.profraw
+
+Configuration/Resources/Secrets.json
+Sources/App/Supporting Files/Generated

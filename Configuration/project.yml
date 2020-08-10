@@ -1,0 +1,129 @@
+name: ${APP_NAME}
+configs:
+  Devel Run: debug
+  Devel Archive: release
+  Prod Run: debug
+  Prod Archive: release
+settingGroups:
+  testing:
+    TEST_HOST: $(BUILT_PRODUCTS_DIR)/${APP_NAME}.app/${APP_NAME}
+settings:
+      configs:
+        Devel Run:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEVEL DEBUG
+        Devel Archive:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEVEL
+        Prod Run:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: PROD DEBUG
+        Prod Archive:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: PROD
+options:
+  bundleIdPrefix: it.synesthesia
+  createIntermediateGroups: true
+  deploymentTarget:
+    iOS: "11.0"
+fileGroups:
+  - Podfile
+  - Gemfile
+  - Brewfile
+  - Makefile
+  - README.md
+  - Configuration
+  - .gitignore
+targets:
+  ${APP_NAME}:
+    type: application
+    platform: iOS
+    sources: "Sources/App"
+    configs:
+        Devel Run:
+          PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}.devel
+        Devel Archive:
+          PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}.devel
+        Prod Run:
+          PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}
+        Prod Archive:
+          PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}
+    scheme:
+      gatherCoverageData: true
+      testTargets:
+        - ${APP_NAME}Tests
+        - ModelTests
+        - CoreTests
+      configVariants:
+        - Devel
+        - Prod
+    dependencies:
+      - target: Model
+      - target: Core
+    preBuildScripts:
+      - name: "SwiftLint"
+        script: |
+                swiftlint --config "${SRCROOT}/Configuration/config.swiftlint.yml"
+    postBuildScripts:
+      - name: "Crashlytics"
+        script: |
+                #"${PODS_ROOT}/FirebaseCrashlytics/run"
+        inputFiles: |
+                    $(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)
+
+  Core:
+    type: library.static
+    platform: iOS
+    sources: "Sources/Core"
+    scheme:
+      gatherCoverageData: true
+      testTargets:
+      - CoreTests
+#    dependencies:
+#      - package: "RxSwift"
+#      - package: "RxSwift"
+#        product: "RxRelay"
+#      - package: "Boomerang"
+  Model:
+    type: library.static
+    platform: iOS
+    sources: "Sources/Model"
+    dependencies:
+    - target: "Core"
+    scheme:
+      gatherCoverageData: true
+      testTargets:
+      - ModelTests
+  CoreTests:
+    type: bundle.unit-test
+    platform: iOS
+    dependencies:
+      - target: "Core"
+    settings:
+      groups:
+      - testing
+    sources:
+    - "Tests/Shared"
+    - "Tests/Core"
+  ModelTests:
+    type: bundle.unit-test
+    platform: iOS
+    settings:
+      groups:
+      - testing
+    sources:
+    - "Tests/Shared"
+    - "Tests/Model"
+    - path: "Tests/JSONMocks"
+      buildPhase: resources
+    dependencies:
+    - target: "Model"
+    - target: "Core"
+
+        
+  ${APP_NAME}Tests:
+    type: bundle.unit-test
+    platform: iOS
+    gatherCoverageData: true
+    settings:
+      groups:
+      - testing
+    sources:
+    - "Tests/Shared"
+    - "Tests/App"

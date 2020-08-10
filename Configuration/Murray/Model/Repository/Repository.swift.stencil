@@ -1,0 +1,12 @@
+protocol {{name | firstUppercase }}Repository {
+
+}
+
+class {{name | firstUppercase }}RepositoryImplementation: {{name | firstUppercase }}Repository {
+    let dataSource: RESTDataSource
+
+    init(dataSource: RESTDataSource) {
+        self.dataSource = dataSource
+    }
+}
+

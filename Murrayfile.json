@@ -1,0 +1,8 @@
+{
+  "environment" : {
+
+  },
+  "packages" : [
+    "Configuration\/Murray\/Model\/BonePackage.json"
+  ]
+}

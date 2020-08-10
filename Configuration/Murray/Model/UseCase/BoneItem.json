@@ -1,0 +1,43 @@
+{
+  "plugins" : {
+      "xcode": {
+          "targets": ["Model"]
+      }
+  },
+  "replacements" : [
+      {
+          "placeholder": "// MURRAY PROTOCOL",
+          "text": "var {{name|firstLowercase}}: {{name|firstUppercase}}UseCase { get }\n",
+          "destination": "Sources/Model/UseCases/UseCaseContainer.swift"
+      },
+      {
+          "placeholder": "// MURRAY VAR",
+          "text": "var {{name|firstLowercase}}: {{name|firstUppercase}}UseCase { self[.{{name|firstLowercase}}] }\n",
+          "destination": "Sources/Model/UseCases/UseCaseContainer.swift"
+      },
+      {
+          "placeholder": "// MURRAY KEY",
+          "text": "case {{name|firstLowercase}}\n",
+          "destination": "Sources/Model/UseCases/UseCaseContainer.swift"
+      },
+      {
+          "placeholder": "// MURRAY REGISTER",
+          "text": "register(for: .{{name|firstLowercase}}, scope: .singleton) {\n{{name|firstUppercase}}UseCaseImplementation()\n}\n",
+          "destination": "Sources/Model/UseCases/UseCaseContainer.swift"
+      }
+  ],
+  "paths" : [
+    {
+      "from" : "UseCaseImplementation.swift.stencil",
+      "to" : "Sources/Model/UseCases/Implementations/{{name|firstUppercase}}UseCaseImplementation.swift"
+    },
+    {
+        "from" : "UseCase.swift.stencil",
+        "to" : "Sources/Model/UseCases/{{name|firstUppercase}}UseCase.swift"
+    }
+  ],
+  "parameters" : [
+      { "name": "name", "isRequired": true }
+  ],
+  "name" : "UseCase"
+}

@@ -1,0 +1,5 @@
+import RxSwift
+
+struct {{ name|firstUppercase }}UseCaseImplementation: {{ name|firstUppercase}}UseCase {
+    init() {}
+}

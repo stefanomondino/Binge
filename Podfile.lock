@@ -1,0 +1,118 @@
+PODS:
+  - Alamofire (5.2.1)
+  - Boomerang/Core (6.0)
+  - Boomerang/RxSwift (6.0):
+    - Boomerang/UIKit
+    - RxCocoa
+    - RxDataSources
+    - RxSwift
+  - Boomerang/UIKit (6.0):
+    - Boomerang/Core
+  - Differentiator (4.0.1)
+  - Gloss (3.1.0)
+  - KeychainAccess (4.2.0)
+  - Kingfisher (5.14.1):
+    - Kingfisher/Core (= 5.14.1)
+  - Kingfisher/Core (5.14.1)
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
+  - Moya/RxSwift (14.0.0):
+    - Moya/Core
+    - RxSwift (~> 5.0)
+  - Nimble (8.1.1)
+  - Pageboy (3.6.1)
+  - Quick (3.0.0)
+  - RxBlocking (5.1.1):
+    - RxSwift (~> 5)
+  - RxCocoa (5.1.1):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxDataSources (4.0.1):
+    - Differentiator (~> 4.0)
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
+  - RxGesture (3.0.2):
+    - RxCocoa (~> 5.1)
+    - RxSwift (~> 5.1)
+  - RxNimble (4.7.1):
+    - RxNimble/RxBlocking (= 4.7.1)
+  - RxNimble/Core (4.7.1):
+    - Nimble (~> 8.0)
+    - RxSwift (~> 5.0)
+  - RxNimble/RxBlocking (4.7.1):
+    - RxBlocking
+    - RxNimble/Core
+  - RxRelay (5.1.1):
+    - RxSwift (~> 5)
+  - RxSwift (5.1.1)
+  - SnapKit (5.0.1)
+  - SwiftRichString (3.7.2)
+  - Tabman (2.9.0):
+    - Pageboy (~> 3.6.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - Boomerang/RxSwift
+  - Gloss
+  - KeychainAccess
+  - Kingfisher
+  - Moya/RxSwift
+  - Nimble
+  - Quick
+  - RxBlocking
+  - RxCocoa
+  - RxGesture
+  - RxNimble
+  - RxRelay
+  - SnapKit
+  - SwiftRichString
+  - Tabman
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Boomerang
+    - Differentiator
+    - Gloss
+    - KeychainAccess
+    - Kingfisher
+    - Moya
+    - Nimble
+    - Pageboy
+    - Quick
+    - RxBlocking
+    - RxCocoa
+    - RxDataSources
+    - RxGesture
+    - RxNimble
+    - RxRelay
+    - RxSwift
+    - SnapKit
+    - SwiftRichString
+    - Tabman
+
+SPEC CHECKSUMS:
+  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
+  Boomerang: 34e5429c283a7de78137a33f8ae2f6d5d838d112
+  Differentiator: 886080237d9f87f322641dedbc5be257061b0602
+  Gloss: 2dbf87af0e4dd24753f7de933356ff6c5c012426
+  KeychainAccess: 3f760109aa99b05d0f231e28b22642da7153e38a
+  Kingfisher: 8050bc6f7f68cbf3908bd04df7ccbac188f6d6d6
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
+  Nimble: 5f8a2fb6fa343a7242dfdd9d42f7267419d464b2
+  Pageboy: 29a2d474ad99404b4d77f325e0ab6d705930a4fb
+  Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
+  RxBlocking: 5f700a78cad61ce253ebd37c9a39b5ccc76477b4
+  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
+  RxGesture: d6bd7447ca3a596c7a9702a6a2b6a2bb5d8bae54
+  RxNimble: dca9840cfa96ce73847813432ddc6e84e1fcdd61
+  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SwiftRichString: d61b807db1f8834c26fee92b6dd3e1be2dc5af03
+  Tabman: 55d3d18f393ce5119515cd0349c841a07774c895
+
+PODFILE CHECKSUM: 326de58b689d22450e6b6f042d1f6f310db5eaca
+
+COCOAPODS: 1.9.3

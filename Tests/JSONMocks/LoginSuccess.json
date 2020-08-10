@@ -1,0 +1,7 @@
+{
+    "accessToken": "success",
+    "refreshToken": "refresh",
+    "tokenType": "refresh_token",
+    "scope": "",
+    "expiresIn": 3600
+}

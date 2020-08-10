@@ -1,0 +1,16 @@
+{
+  "plugins" : {
+      "xcode": { "targets": ["ModelTests"]}
+  },
+  "name" : "UseCaseTest",
+  "parameters" : [
+      { "name": "name", "isRequired": true }
+  ],
+  "paths" : [
+    {
+      "from" : "UseCaseTest.swift.stencil",
+      "to" : "Tests/Model/UseCases/{{name|firstUppercase}}UseCaseSpec.swift"
+    }
+  ],
+  "replacements" : []
+}

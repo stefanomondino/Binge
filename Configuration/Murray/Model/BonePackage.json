@@ -1,0 +1,21 @@
+{
+  "procedures" : [
+    {
+      "name" : "Repository",
+      "items" : [
+          "Repository/BoneItem.json"
+      ],
+      "description" : "Creates a new repository"
+    },
+    {
+        "name" : "UseCase",
+        "items" : [
+            "UseCase/BoneItem.json",
+            "UseCaseTest/BoneItem.json"
+        ],
+        "description" : "Creates a new use case"
+    }
+  ],
+  "name" : "Model",
+  "description" : "Manage Model concepts"
+}
