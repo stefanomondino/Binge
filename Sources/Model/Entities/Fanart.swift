@@ -9,8 +9,6 @@
 import Foundation
 
 public struct FanartResponse: Codable {
-    
-    
     let name: String
     let thetvdbId: String
     let clearlogo: [FanartImage]?
@@ -25,7 +23,7 @@ public struct FanartResponse: Codable {
     let characterart: [FanartImage]?
     let tvposter: [FanartImage]?
     let seasonbanner: [FanartImage]?
-    
+
     public func image(for format: Fanart.Format, language: String = "en") -> Fanart? {
         let array: [FanartImage]?
         switch format {
@@ -55,6 +53,7 @@ public struct Fanart {
         let width: Double
         let height: Double
     }
+
     public enum Format: String, CaseIterable {
         case clearLogo
         case hdtvLogo
@@ -71,6 +70,7 @@ public struct Fanart {
         var ratio: Double {
             return size.width / size.height
         }
+
         var size: Size {
             switch self {
             case .clearLogo: return Size(width: 400, height: 155)
@@ -88,7 +88,7 @@ public struct Fanart {
             }
         }
     }
-    
+
     public let format: Fanart.Format
     public var id: String { return image.id }
     let image: FanartImage

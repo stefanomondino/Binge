@@ -22,17 +22,20 @@ public struct CastMember: Codable {
     public let characters: [String]
     let episodeCount: Int
 }
+
 public extension Person {
     var uniqueIdentifier: String {
         "\(ids.trakt)"
     }
 }
+
 public struct PersonInfo: Codable {
     public enum Gender: Int, Codable {
         case unknown = 0
         case female = 1
         case male = 2
     }
+
     public let name: String
     public let profilePath: String?
     public let homepage: String?

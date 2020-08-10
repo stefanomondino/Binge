@@ -21,7 +21,7 @@ class DefaultAuthorizationRepository: AuthorizationRepository {
         self.dataSource = dataSource
     }
 
-    func login(username: String, password: String) -> Observable<AccessToken> {
+    func login(username _: String, password _: String) -> Observable<AccessToken> {
         .empty()
 //        dataSource.get(AccessToken.self, at: APIProvider.login(username: username, password: password))
 //            .do(onNext: { AccessToken.current = $0 })

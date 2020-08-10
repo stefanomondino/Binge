@@ -41,52 +41,47 @@ enum TMDBAPI {
             let stillSizes: [String]
         }
     }
-    
+
     case configuration
     case show(Show)
     case person(Person)
-
 }
 
 extension TMDBAPI: TargetType {
-
     var baseURL: URL {
         return Model.Configuration.environment.tmdbBaseURL
     }
-    
+
     var path: String {
         switch self {
         case .configuration: return "configuration"
-        case .show( let show ): return "tv/\(show.ids.tmdb ?? -1)"
-        case .person( let person ): return "person/\(person.ids.tmdb ?? -1)"
+        case let .show(show): return "tv/\(show.ids.tmdb ?? -1)"
+        case let .person(person): return "person/\(person.ids.tmdb ?? -1)"
         }
     }
-    
+
     var method: Moya.Method {
         switch self {
         default: return .get
         }
     }
-    
+
     var sampleData: Data {
         return Data()
     }
-    
+
     var task: Task {
         return Task.requestParameters(parameters: parameters, encoding: URLEncoding.default)
     }
-    
-    var headers: [String : String]? {
+
+    var headers: [String: String]? {
         return nil
     }
-    
-     var parameters: [String: Any] {
+
+    var parameters: [String: Any] {
         let parameters = ["api_key": Model.Configuration.environment.tmdbAPIKey]
         switch self {
-            
         default: return parameters
         }
-        
     }
-
 }

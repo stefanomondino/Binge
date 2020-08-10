@@ -26,8 +26,8 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
             login()
 
         ],
-                              layout: SceneIdentifier.tab,
-                              styleFactory: container.styleFactory)
+        layout: SceneIdentifier.tab,
+        styleFactory: container.styleFactory)
     }
 
     func splashViewModel() -> SplashViewModel {

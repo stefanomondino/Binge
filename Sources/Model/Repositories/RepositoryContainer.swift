@@ -26,7 +26,7 @@ class DefaultRepositoryContainer: RepositoryContainer, DependencyContainer {
 
     var configuration: ConfigurationRepository { self[.configuration] }
     var authorization: AuthorizationRepository { self[.authorization] }
-    var shows: ShowsRepository { self[.shows]}
+    var shows: ShowsRepository { self[.shows] }
     // MURRAY VAR
 
     var container = Container<Keys>()
@@ -39,8 +39,8 @@ class DefaultRepositoryContainer: RepositoryContainer, DependencyContainer {
             ConfigurationAPIRepository(rest: container.dataSources.rest)
         }
         register(for: .shows, scope: .singleton) {
-               ShowsRepositoryImplementation(rest: container.dataSources.rest)
-           }
+            ShowsRepositoryImplementation(rest: container.dataSources.rest)
+        }
         // MURRAY REGISTER
     }
 }

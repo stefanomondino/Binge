@@ -58,9 +58,10 @@ class ShowsContainerImplementation: DependencyContainer {
     enum Keys {
         case trending
     }
+
     var container = Container<Keys>()
-    
+
     init(container: ModelDependencyContainer) {
-        register(for: .trending, scope: .singleton) { TrendingShowsUseCase(repository: container.repositories.shows)}
+        register(for: .trending, scope: .singleton) { TrendingShowsUseCase(repository: container.repositories.shows) }
     }
 }

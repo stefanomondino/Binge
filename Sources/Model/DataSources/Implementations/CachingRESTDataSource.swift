@@ -20,7 +20,8 @@ class CachingRESTDataSource: DefaultRESTDataSource {
 
     private func cachedValue<Endpoint: TargetType>(for endpoint: Endpoint) -> Response? {
         guard let url = self.url(for: endpoint),
-            let data = try? Data(contentsOf: url) else {
+            let data = try? Data(contentsOf: url)
+        else {
             return nil
         }
         return Response(statusCode: 200, data: data)

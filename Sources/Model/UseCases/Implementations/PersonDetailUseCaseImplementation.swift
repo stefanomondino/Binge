@@ -9,10 +9,9 @@ import Foundation
 import RxSwift
 
 struct PersonDetailUseCaseImplementation: PersonDetailUseCase {
-
     let shows: ShowsRepository
-    
-     func personDetail(for person: Person) -> Observable<PersonInfo> {
+
+    func personDetail(for person: Person) -> Observable<PersonInfo> {
         return shows.info(forPerson: person)
     }
 }

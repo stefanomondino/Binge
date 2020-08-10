@@ -14,37 +14,35 @@ enum FanartAPI {
 }
 
 extension FanartAPI: TargetType {
-
     var baseURL: URL {
         return Model.Configuration.environment.fanartBaseURL
     }
-    
+
     var path: String {
         switch self {
-        case .show( let show ): return "tv/\(show.ids.tvdb ?? -1)"
+        case let .show(show): return "tv/\(show.ids.tvdb ?? -1)"
         }
     }
-    
+
     var method: Moya.Method {
         switch self {
         default: return .get
         }
     }
-    
+
     var sampleData: Data {
         return Data()
     }
-    
+
     var task: Task {
         return Task.requestParameters(parameters: parameters, encoding: URLEncoding.default)
     }
-    
-    var headers: [String : String]? {
+
+    var headers: [String: String]? {
         return ["api-key": Model.Configuration.environment.fanartAPIKey]
     }
-    
-     var parameters: [String: Any] {
+
+    var parameters: [String: Any] {
         return [:]
     }
-
 }
