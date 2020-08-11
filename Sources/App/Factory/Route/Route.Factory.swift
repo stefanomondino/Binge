@@ -55,7 +55,7 @@ class MainRouteFactory: RouteFactory {
         case let viewModel as PagerViewModel:
             return EmptyRoute {
                 return self.container.views.scenes.pager(viewModel: viewModel)
-                    .inContainer(styleFactory: self.container.styleFactory)
+                    .inContainer()
             }
         case let viewModel as ShowListViewModel:
             return EmptyRoute {
@@ -63,7 +63,7 @@ class MainRouteFactory: RouteFactory {
                     .views
                     .scenes
                     .showList(viewModel: viewModel)
-                    .inContainer(styleFactory: self.container.styleFactory)
+                    .inContainer()
             }
         case let viewModel as LoginViewModel:
             return EmptyRoute {
@@ -82,7 +82,7 @@ class MainRouteFactory: RouteFactory {
             let viewModel = self.container.viewModels.scenes.showDetail(for: show)
             return self.container.views.scenes
                 .showDetail(viewModel: viewModel)
-                .inContainer(styleFactory: self.container.styleFactory)
+                .inContainer(extendUnderNavbar: true)
         }
     }
 

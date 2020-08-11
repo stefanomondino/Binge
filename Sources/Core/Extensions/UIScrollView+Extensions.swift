@@ -12,7 +12,9 @@ import RxSwift
 
 public extension Reactive where Base: UICollectionView {
     func topWindow(of height: CGFloat) -> Observable<CGFloat> {
-        return contentOffset.map { $0.y / height }
+        return contentOffset
+            .map { $0.y / height }
+            .observeOn(MainScheduler.asyncInstance)
     }
 
     func overscroll() -> Observable<CGFloat> {

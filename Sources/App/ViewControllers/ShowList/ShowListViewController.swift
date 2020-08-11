@@ -99,10 +99,10 @@ class ShowListViewController: UIViewController {
         collectionView.setCollectionViewLayout(layout, animated: false)
 
         viewModel.reload()
-
-        let button = UIButton(type: .system)
-        button.setImage(Asset.heart.image, for: .normal)
-        button.rx.tap.bind { print("!!!") }.disposed(by: disposeBag)
-        addRightNavigationView(button)
+//
+//        let button = UIButton(type: .system)
+//        button.setImage(Asset.heart.image, for: .normal)
+//        button.rx.tap.bind { print("!!!") }.disposed(by: disposeBag)
+//        addRightNavigationView(button)
     }
 }

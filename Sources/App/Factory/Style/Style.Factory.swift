@@ -34,29 +34,39 @@ class DefaultStyleFactory: DependencyContainer {
     var container: Container<String> = Container()
 
     init(container _: RootContainer) {
-        register(for: Styles.Generic.container) { ContainerStyle() }
-        register(for: Styles.Generic.title) { TextStyle(size: 18) }
-        register(for: Styles.Generic.subtitle) { TextStyle(size: 14) }
-        register(for: Styles.Generic.card) { CardStyle() }
-        register(for: Styles.Generic.navigationBar) { ContainerStyle(backgroundColor: .orange) }
+        register(for: Styles.Generic.container) { DefaultContainerStyle() }
+        register(for: Styles.Generic.title) { DefaultTextStyle(size: 18) }
+        register(for: Styles.Generic.subtitle) { DefaultTextStyle(size: 14) }
+        register(for: Styles.Generic.card) { DefaultContainerStyle.card }
+        register(for: Styles.Generic.navigationBar) { [DefaultContainerStyle(backgroundColor: .orange),
+                                                       DefaultTextStyle(size: 22, color: .navbarText, font: .mainBold)] }
     }
 }
 
 extension DefaultStyleFactory: StyleFactory {
+    private func getStyle<StyleType>(_ style: Style) -> StyleType? {
+        if let style: StyleType = resolve(style.identifier) { return style }
+        if let styles: [Any] = resolve(style.identifier) {
+            return styles.compactMap { $0 as? StyleType }.first
+        }
+        return nil
+    }
+
     func apply(_: Style, to _: UIImageView) {}
 
     func apply(_: Style, to _: UIButton) {}
 
     func apply(_ style: Style, to label: UILabel) {
-        let concrete: GenericStyle = self[style]
-        label.style = concrete.style
+        guard let implementation: TextStyle = getStyle(style) else { return }
+        label.style = implementation.style
         label.numberOfLines = 0
+        apply(style, to: label as UIView)
     }
 
     func apply(_ style: Style, to view: UIView) {
-        let concrete: GenericStyle = self[style]
-        view.backgroundColor = concrete.backgroundColor
-        view.layer.cornerRadius = concrete.cornerRadius
+        guard let implementation: ContainerStyle = getStyle(style) else { return }
+        view.backgroundColor = implementation.backgroundColor
+        view.layer.cornerRadius = implementation.cornerRadius
         view.layer.masksToBounds = true
     }
 
@@ -69,8 +79,8 @@ extension DefaultStyleFactory: StyleFactory {
     }
 
     func apply(_ style: Style, to navigationController: NavigationContainer) {
-        let concrete: GenericStyle = self[style]
-        navigationController.navigationBarColor = concrete.backgroundColor
+        guard let implementation: ContainerStyle = getStyle(style) else { return }
+        navigationController.navigationBarColor = implementation.backgroundColor
     }
 }
 

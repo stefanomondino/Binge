@@ -9,8 +9,11 @@
 import Foundation
 import SwiftRichString
 
-protocol GenericStyle {
+protocol ContainerStyle {
     var backgroundColor: UIColor { get }
     var cornerRadius: CGFloat { get }
-    var style: StyleProtocol? { get }
+}
+
+protocol TextStyle {
+    var style: StyleProtocol { get }
 }

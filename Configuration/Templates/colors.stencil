@@ -1,24 +1,11 @@
 // swiftlint:disable all
 // Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
-
+import SwiftRichString
 {% if palettes %}
-{% set enumName %}{{param.enumName|default:"ColorName"}}{% endset %}
-{% set accessModifier %}{% if param.publicAccess %}public{% else %}internal{% endif %}{% endset %}
-#if os(OSX)
-  import AppKit
-  {% if enumName != 'NSColor' %}{{accessModifier}} enum {{enumName}} { }{% endif %}
-#elseif os(iOS) || os(tvOS) || os(watchOS)
-  import UIKit
-  {% if enumName != 'UIColor' %}{{accessModifier}} enum {{enumName}} { }{% endif %}
-#endif
 
-// swiftlint:disable superfluous_disable_command
-// swiftlint:disable file_length
-
-// MARK: - Colors
 
 // swiftlint:disable identifier_name line_length type_body_length
-{{accessModifier}} extension {{enumName}} {
+{{accessModifier}} extension Color {
 {% macro h2f hex %}{{hex|hexToInt|int255toFloat}}{% endmacro %}
 {% macro enumBlock colors %}
   {% for color in colors %}

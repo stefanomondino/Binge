@@ -19,4 +19,4 @@ colors:
     output: "../Sources/App/Supporting Files/Generated/Colors.swift"
     params:
       publicAccess: true
-      enumName: Colors
+#      enumName: Colors

@@ -8,10 +8,11 @@
 
 import UIKit
 
-struct ContainerStyle: GenericStyle {
-    let cornerRadius: CGFloat = 0
+struct DefaultContainerStyle: ContainerStyle {
+    static var card: ContainerStyle {
+        DefaultContainerStyle(cornerRadius: 4, backgroundColor: Color.white)
+    }
 
-    var style: StyleProtocol?
-
+    var cornerRadius: CGFloat = 0
     var backgroundColor: UIColor = .white
 }

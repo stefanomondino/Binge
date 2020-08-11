@@ -62,13 +62,16 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
     private func map(_ show: ShowDetail, fanart: FanartResponse) -> [Section] {
         let routes = self.routes
         let routeFactory = self.routeFactory
-        let fanarts = Fanart.Format
-            .allCases
-            .compactMap { fanart.image(for: $0) }
-            .map { itemViewModelFactory.fanart($0) }
-
+        var topSection = Section(id: UUID().stringValue,
+                                 items: [itemViewModelFactory.show(show, layout: .posterOnly)])
+        if let fanart = [Fanart.Format.background]
+            .compactMap({ fanart.image(for: $0) })
+            .first?
+            .map({ itemViewModelFactory.fanart($0) }) {
+            topSection.supplementary.set(fanart, withKind: "parallax", atIndex: 0)
+        }
         return [
-            Section(id: "test", items: fanarts),
+            topSection,
             Section(id: "misc", items: [
                 itemViewModelFactory.castCarousel(for: show) {
                     routes.accept(routeFactory.personDetail(for: $0))

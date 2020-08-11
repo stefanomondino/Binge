@@ -1,3 +1,5 @@
 {
-    "backgroundColor": "#FFFFFFFF"
+    "background": "#FFFFFFFF",
+    "navbarText": "#FFFFFFFF",
+    "mainText": "#111111FF"
 }

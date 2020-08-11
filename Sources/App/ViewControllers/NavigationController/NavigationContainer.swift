@@ -25,6 +25,11 @@ class NavigationContainer: UIViewController {
     let rightContainer = UIStackView()
     weak var currentTitleView: UIView?
     weak var heightConstraint: NSLayoutConstraint?
+    var extendUnderNavbar: Bool {
+        didSet {
+            adjustInnerSafeAreaInsets()
+        }
+    }
 
     var navigationBarMinHeight: CGFloat = 64 {
         didSet {
@@ -45,7 +50,9 @@ class NavigationContainer: UIViewController {
         navbarContainer.backgroundColor = color
     }
 
-    init(rootViewController: UIViewController) {
+    init(rootViewController: UIViewController,
+         extendUnderNavbar: Bool) {
+        self.extendUnderNavbar = extendUnderNavbar
         self.rootViewController = rootViewController
         super.init(nibName: nil, bundle: nil)
     }
@@ -94,14 +101,13 @@ class NavigationContainer: UIViewController {
             addButton(button, position: .left)
         }
 
-        //        stackView.addArrangedSubview(navbar)
         addChild(rootViewController)
         view.insertSubview(rootViewController.view, at: 0)
         rootViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         applyContainerStyle(Styles.Generic.navigationBar)
-        updateCurrentNavbarAlpha(1)
+//        updateCurrentNavbarAlpha(1)
         view.layoutIfNeeded()
 
         Observable.merge(
@@ -154,6 +160,7 @@ class NavigationContainer: UIViewController {
         let title = UILabel()
         titleContainer.addSubview(title)
         currentTitleView = title
+        title.applyStyle(Styles.Generic.navigationBar)
         title.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.left.greaterThanOrEqualToSuperview()
@@ -173,6 +180,7 @@ class NavigationContainer: UIViewController {
 
     private func adjustInnerSafeAreaInsets() {
         rootViewController.additionalSafeAreaInsets.top = [titleContainer, leftContainer, rightContainer]
+            .filter { _ in self.extendUnderNavbar == false }
             .map { $0.bounds.height }
             .sorted(by: >)
             .first ?? 0
@@ -192,6 +200,10 @@ class NavigationContainer: UIViewController {
         let value = max(0, value)
         navigationBarMinHeight = 64 + value
     }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        rootViewController.preferredStatusBarStyle
+    }
 }
 
 extension Reactive where Base: NavigationContainer {
@@ -209,8 +221,9 @@ extension UIViewController {
         return (self as? NavigationContainer) ?? parent?.container
     }
 
-    func inContainer(styleFactory _: StyleFactory) -> NavigationContainer {
-        return NavigationContainer(rootViewController: self)
+    func inContainer(extendUnderNavbar: Bool = false) -> NavigationContainer {
+        return NavigationContainer(rootViewController: self,
+                                   extendUnderNavbar: extendUnderNavbar)
     }
 
     func setNavigationTitle(_ title: String) {
