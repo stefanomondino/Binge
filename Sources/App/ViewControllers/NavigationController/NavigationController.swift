@@ -19,3 +19,9 @@ class NavigationController: UINavigationController, UIGestureRecognizerDelegate 
         interactivePopGestureRecognizer?.delegate = self
     }
 }
+
+extension UIViewController {
+    func inNavigationController() -> NavigationController {
+        return NavigationController(rootViewController: self)
+    }
+}

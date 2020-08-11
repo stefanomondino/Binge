@@ -13,9 +13,9 @@ import UIKit
 class ShowDetailViewController: UIViewController {
     class SizeCalculator: AutomaticCollectionViewSizeCalculator {
         override func sizeForItem(at indexPath: IndexPath, in collectionView: UICollectionView, direction: Direction? = nil, type: String? = nil) -> CGSize {
-            guard let vm = viewModel(at: indexPath, for: type) else { return .zero }
+            guard let viewModel = viewModel(at: indexPath, for: type) else { return .zero }
             let width = calculateFixedDimension(for: .vertical, collectionView: collectionView, at: indexPath, itemsPerLine: 1)
-            switch vm {
+            switch viewModel {
             case is CarouselItemViewModel: return CGSize(width: width, height: 200)
             default: return super.sizeForItem(at: indexPath, in: collectionView, direction: direction, type: type)
             }
@@ -67,7 +67,7 @@ class ShowDetailViewController: UIViewController {
 
         view.applyContainerStyle(Styles.Generic.container)
 
-        let spacing: CGFloat = 10
+//        let spacing: CGFloat = 10
         let sizeCalculator = SizeCalculator(viewModel: viewModel,
                                             factory: collectionViewCellFactory, itemsPerLine: 1)
 
@@ -91,8 +91,8 @@ class ShowDetailViewController: UIViewController {
 
         if let container = self.container {
             collectionView.rx
-                .topWindow(of: 400)
-                .bind(to: container.rx.updateCurrentScroll())
+                .topWindow(of: 40)
+                .bind(to: container.rx.updateCurrentNavbarAlpha())
                 .disposed(by: disposeBag)
         }
     }

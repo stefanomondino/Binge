@@ -14,4 +14,8 @@ public extension Reactive where Base: UICollectionView {
     func topWindow(of height: CGFloat) -> Observable<CGFloat> {
         return contentOffset.map { $0.y / height }
     }
+
+    func overscroll() -> Observable<CGFloat> {
+        return contentOffset.map { max(0, -$0.y) }
+    }
 }

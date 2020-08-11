@@ -45,4 +45,8 @@ extension FanartAPI: TargetType {
     var parameters: [String: Any] {
         return [:]
     }
+
+    var cacheTime: TimeInterval {
+        return 60.minutes
+    }
 }

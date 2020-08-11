@@ -6,18 +6,33 @@
 //  Copyright © 2019 Synesthesia. All rights reserved.
 //
 
-import Boomerang
 import RxCocoa
-import RxRelay
 import RxSwift
 import UIKit
 
 class NavigationContainer: UIViewController {
+    enum Position {
+        case left
+        case center
+        case right
+    }
+
     let disposeBag = DisposeBag()
-    var styleFactory: StyleFactory
     let rootViewController: UIViewController
     let navbarContainer: UIView = UIView()
-    let navbar: UIView
+    let titleContainer = UIView()
+    let leftContainer = UIStackView()
+    let rightContainer = UIStackView()
+    weak var currentTitleView: UIView?
+    weak var heightConstraint: NSLayoutConstraint?
+
+    var navigationBarMinHeight: CGFloat = 64 {
+        didSet {
+            heightConstraint?.constant = navigationBarMinHeight
+            view.layoutIfNeeded()
+        }
+    }
+
     var navigationBarColor: UIColor = .clear {
         didSet {
             updateNavbarAlpha(1)
@@ -30,17 +45,27 @@ class NavigationContainer: UIViewController {
         navbarContainer.backgroundColor = color
     }
 
-    init(rootViewController: UIViewController,
-         styleFactory: StyleFactory,
-         navbar: UIView = UIView()) {
-        self.styleFactory = styleFactory
-        self.navbar = navbar
+    init(rootViewController: UIViewController) {
         self.rootViewController = rootViewController
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func addButton(_ view: UIView, position: Position) {
+        view.snp.makeConstraints { make in
+            make.size.equalTo(30)
+        }
+        if let button = view as? UIButton {
+            button.imageView?.contentMode = .scaleAspectFit
+        }
+        switch position {
+        case .left: leftContainer.addArrangedSubview(view)
+        case .right: rightContainer.addArrangedSubview(view)
+        default: break
+        }
     }
 
     override func viewDidLoad() {
@@ -51,51 +76,131 @@ class NavigationContainer: UIViewController {
             make.top.left.right.equalToSuperview()
         }
 
-        let stackView = UIStackView()
+        navbarContainer.tintColor = .white
 
-        navbarContainer.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview()
-            make.top.equalTo(navbarContainer.safeAreaLayoutGuide.snp.top)
-            make.height.greaterThanOrEqualTo(44)
-        }
+        navbarContainer.addSubview(leftContainer)
+        navbarContainer.addSubview(rightContainer)
+        navbarContainer.addSubview(titleContainer)
+
+        setupContainers()
 
         if let navigation = navigationController,
             navigation.viewControllers.count > 1 {
             let button = UIButton(type: .system)
-            button.setTitle("BACK", for: .normal)
-            stackView.addArrangedSubview(button)
+            button.setImage(Asset.arrowLeft.image, for: .normal)
             button.rx.tap
                 .bind { navigation.popViewController(animated: true) }
                 .disposed(by: disposeBag)
+            addButton(button, position: .left)
         }
 
-        stackView.addArrangedSubview(navbar)
+        //        stackView.addArrangedSubview(navbar)
         addChild(rootViewController)
         view.insertSubview(rootViewController.view, at: 0)
         rootViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        applyContainerStyle(Styles.Generic.navigationBar)
+        updateCurrentNavbarAlpha(1)
+        view.layoutIfNeeded()
 
-        styleFactory.apply(Styles.Generic.navigationBar, to: self)
-        updateCurrentScroll(0)
+        Observable.merge(
+            rootViewController.navigationItem.rx.observeWeakly(String.self, "title"),
+            rootViewController.rx.observeWeakly(String.self, "title")
+        )
+        .debug()
+        .distinctUntilChanged()
+        .asDriver(onErrorJustReturn: nil)
+        .drive(onNext: { [weak self] title in
+            self?.setTitle(title ?? "")
+        })
+        .disposed(by: disposeBag)
+    }
+
+    private func setupContainers() {
+        titleContainer.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.top.equalTo(navbarContainer.safeAreaLayoutGuide.snp.top)
+            self.heightConstraint = make.height
+                .greaterThanOrEqualTo(navigationBarMinHeight)
+                .constraint
+                .layoutConstraints
+                .first
+        }
+        titleContainer.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        leftContainer.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        rightContainer.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        leftContainer.snp.makeConstraints { make in
+            make.centerY.equalTo(titleContainer.snp.centerY)
+            make.right.equalTo(titleContainer.snp.left).offset(8)
+            make.left.equalToSuperview().offset(8)
+            make.bottom.equalToSuperview()
+        }
+        rightContainer.snp.makeConstraints { make in
+            make.centerY.equalTo(titleContainer.snp.centerY)
+            make.left.equalTo(titleContainer.snp.right).offset(8)
+            make.right.equalToSuperview().inset(8)
+            make.bottom.equalToSuperview()
+        }
+    }
+
+    private func clearTitleContainer() {
+        titleContainer.subviews.forEach { $0.removeFromSuperview() }
+    }
+
+    private func createTitleLabel() {
+        clearTitleContainer()
+        let title = UILabel()
+        titleContainer.addSubview(title)
+        currentTitleView = title
+        title.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.left.greaterThanOrEqualToSuperview()
+            make.right.lessThanOrEqualToSuperview()
+            make.centerX.equalToSuperview()
+        }
+    }
+
+    public func setTitle(_ title: String) {
+        guard let label = currentTitleView as? UILabel else {
+            createTitleLabel()
+            setTitle(title)
+            return
+        }
+        label.styledText = title
+    }
+
+    private func adjustInnerSafeAreaInsets() {
+        rootViewController.additionalSafeAreaInsets.top = [titleContainer, leftContainer, rightContainer]
+            .map { $0.bounds.height }
+            .sorted(by: >)
+            .first ?? 0
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        rootViewController.additionalSafeAreaInsets.top = navbar.bounds.height
+        adjustInnerSafeAreaInsets()
     }
 
-    func updateCurrentScroll(_ value: CGFloat) {
+    func updateCurrentNavbarAlpha(_ value: CGFloat) {
         let value = max(0, min(1, value))
-        updateNavbarAlpha(1 - value)
+        updateNavbarAlpha(value)
+    }
+
+    func updateCurrentNavbarHeight(_ value: CGFloat) {
+        let value = max(0, value)
+        navigationBarMinHeight = 64 + value
     }
 }
 
 extension Reactive where Base: NavigationContainer {
-    func updateCurrentScroll() -> Binder<CGFloat> {
-        return Binder(base) { $0.updateCurrentScroll($1) }
+    func updateCurrentNavbarAlpha() -> Binder<CGFloat> {
+        return Binder(base) { $0.updateCurrentNavbarAlpha($1) }
+    }
+
+    func updateCurrentNavbarHeight() -> Binder<CGFloat> {
+        return Binder(base) { $0.updateCurrentNavbarHeight($1) }
     }
 }
 
@@ -104,7 +209,19 @@ extension UIViewController {
         return (self as? NavigationContainer) ?? parent?.container
     }
 
-    func inContainer(styleFactory: StyleFactory) -> NavigationContainer {
-        return NavigationContainer(rootViewController: self, styleFactory: styleFactory)
+    func inContainer(styleFactory _: StyleFactory) -> NavigationContainer {
+        return NavigationContainer(rootViewController: self)
+    }
+
+    func setNavigationTitle(_ title: String) {
+        container?.setTitle(title)
+    }
+
+    func addLeftNavigationView(_ view: UIView) {
+        container?.addButton(view, position: .left)
+    }
+
+    func addRightNavigationView(_ view: UIView) {
+        container?.addButton(view, position: .right)
     }
 }

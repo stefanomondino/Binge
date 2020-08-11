@@ -38,7 +38,9 @@ class MainRouteFactory: RouteFactory {
 
     func home() -> Route {
         return RestartRoute {
-            NavigationController(rootViewController: self.container.views.scenes.mainTabBar())
+            self.container.views.scenes.mainTabBar()
+                .inNavigationController()
+//            NavigationController(rootViewController: self.container.views.scenes.mainTabBar())
         }
     }
 
@@ -61,6 +63,7 @@ class MainRouteFactory: RouteFactory {
                     .views
                     .scenes
                     .showList(viewModel: viewModel)
+                    .inContainer(styleFactory: self.container.styleFactory)
             }
         case let viewModel as LoginViewModel:
             return EmptyRoute {

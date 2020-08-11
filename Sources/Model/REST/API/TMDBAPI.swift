@@ -85,4 +85,8 @@ extension TMDBAPI: TargetType {
         default: return parameters
         }
     }
+
+    var cacheTime: TimeInterval {
+        return 15.minutes
+    }
 }

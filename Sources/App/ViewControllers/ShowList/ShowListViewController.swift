@@ -72,7 +72,7 @@ class ShowListViewController: UIViewController {
         let collectionViewDataSource = CollectionViewDataSource(viewModel: viewModel,
                                                                 factory: collectionViewCellFactory)
         view.applyContainerStyle(Styles.Generic.container)
-
+        title = viewModel.pageTitle
         let spacing: CGFloat = 4
         let sizeCalculator = AutomaticCollectionViewSizeCalculator(viewModel: viewModel,
                                                                    factory: collectionViewCellFactory, itemsPerLine: 3)
@@ -99,5 +99,10 @@ class ShowListViewController: UIViewController {
         collectionView.setCollectionViewLayout(layout, animated: false)
 
         viewModel.reload()
+
+        let button = UIButton(type: .system)
+        button.setImage(Asset.heart.image, for: .normal)
+        button.rx.tap.bind { print("!!!") }.disposed(by: disposeBag)
+        addRightNavigationView(button)
     }
 }

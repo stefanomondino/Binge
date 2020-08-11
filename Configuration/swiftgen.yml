@@ -1,7 +1,7 @@
 xcassets:
   inputs: "../Sources/App/Supporting Files/Assets.xcassets"
   outputs:
-    templateName: swift5
+    templatePath: "Templates/assets.stencil"
     output: "../Sources/App/Supporting Files/Generated/Assets.swift"
 json:
   inputs:

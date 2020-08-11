@@ -74,6 +74,12 @@ extension DefaultStyleFactory: StyleFactory {
     }
 }
 
+extension NavigationContainer {
+    func applyContainerStyle(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
+        factory.apply(style, to: self)
+    }
+}
+
 extension UIView {
     func applyContainerStyle(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
         factory.apply(style, to: self)

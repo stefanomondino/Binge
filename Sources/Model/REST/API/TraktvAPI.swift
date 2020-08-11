@@ -116,4 +116,8 @@ extension TraktvAPI: TargetType {
         default: return parameters
         }
     }
+
+    var cacheTime: TimeInterval {
+        return 5.minutes
+    }
 }

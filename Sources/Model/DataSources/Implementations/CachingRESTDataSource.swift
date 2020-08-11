@@ -18,8 +18,20 @@ class CachingRESTDataSource: DefaultRESTDataSource {
         return url
     }
 
+    private func checkAndDeleteExpired<Endpoint: TargetType>(for endpoint: Endpoint) -> URL? {
+        guard let url = url(for: endpoint) else { return nil }
+        guard let attributes = try? FileManager.default.attributesOfItem(atPath: url.path),
+            let creationDate = attributes[.creationDate] as? Date,
+            Date().timeIntervalSince1970 - creationDate.timeIntervalSince1970 < 60
+        else {
+            try? FileManager.default.removeItem(at: url)
+            return nil
+        }
+        return url
+    }
+
     private func cachedValue<Endpoint: TargetType>(for endpoint: Endpoint) -> Response? {
-        guard let url = self.url(for: endpoint),
+        guard let url = checkAndDeleteExpired(for: endpoint),
             let data = try? Data(contentsOf: url)
         else {
             return nil

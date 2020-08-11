@@ -14,8 +14,23 @@ class TestContainer: ModelContainer {
     var useCases: UseCaseContainer { container.useCases }
 
     private struct Environment: Model.Environment {
-        let baseURL: URL = URL(string: "https://google.com")!
-        let debugEnabled: Bool = true
+        var traktBaseURL: URL = URL(string: "https://google.com")!
+
+        var traktWebURL: URL = URL(string: "https://google.com")!
+
+        var traktRedirectURI: String = ""
+
+        var traktClientID: String = ""
+
+        var traktClientSecret: String = ""
+
+        var fanartAPIKey: String = ""
+
+        var fanartBaseURL: URL = URL(string: "https://google.com")!
+
+        var tmdbBaseURL: URL = URL(string: "https://google.com")!
+
+        var tmdbAPIKey: String = ""
     }
 
     let container: ModelDependencyContainer = DefaultModelDependencyContainer(environment: Environment())
@@ -25,7 +40,7 @@ class TestContainer: ModelContainer {
         container.dataSources.register(for: .rest, scope: .eagerSingleton, handler: { self.dataSource })
     }
 
-    func mockJSONFile(_ name: String, statusCode: Int = 200, at target: APIProvider) {
+    func mockJSONFile(_ name: String, statusCode: Int = 200, at target: TraktvAPI) {
         dataSource.mockJSONFile(name, bundle: Bundle(for: TestContainer.self), statusCode: statusCode, for: target)
     }
 }

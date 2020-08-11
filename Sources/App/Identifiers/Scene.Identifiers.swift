@@ -15,7 +15,7 @@ enum SceneIdentifier: String, LayoutIdentifier {
     case login
     case showList
     case showDetail
-    case personDetail
+    case person
     // MURRAY ENUM PLACEHOLDER
 
     var identifierString: String {

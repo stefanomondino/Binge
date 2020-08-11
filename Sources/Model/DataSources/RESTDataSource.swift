@@ -19,7 +19,7 @@ protocol RESTDataSource {
 extension TargetType {
     var cacheKey: String {
         return [baseURL.absoluteString, path, method.rawValue, parameters
-            .map { $0.key }
+            .map { [$0.key, ($0.value as? CustomStringConvertible)?.description].compactMap { $0 }.joined(separator: "_") }
             .sorted()
             .joined()].joined()
     }

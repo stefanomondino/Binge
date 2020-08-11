@@ -17,6 +17,7 @@ public typealias Response = Moya.Response
 protocol JSONDecodable: Gloss.JSONDecodable {}
 protocol TargetType: Moya.TargetType {
     var cacheKey: String { get }
+    var cacheTime: TimeInterval { get }
     var parameters: [String: Any] { get }
 }
 

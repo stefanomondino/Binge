@@ -10,7 +10,7 @@ import Boomerang
 import Nimble
 import Quick
 import RxBlocking
-@testable import Skeleton
+
 // import ViewModel
 //
 // class ScenesSpec: QuickSpec {

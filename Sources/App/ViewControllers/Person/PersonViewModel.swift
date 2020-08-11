@@ -15,7 +15,7 @@ class PersonViewModel: RxListViewModel, RxNavigationViewModel {
     var routes: PublishRelay<Route> = PublishRelay()
     var disposeBag: DisposeBag = DisposeBag()
 
-    var layoutIdentifier: LayoutIdentifier = SceneIdentifier.personDetail
+    var layoutIdentifier: LayoutIdentifier = SceneIdentifier.person
 
     let itemViewModelFactory: ItemViewModelFactory
 

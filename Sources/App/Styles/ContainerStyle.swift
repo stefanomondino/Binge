@@ -13,5 +13,5 @@ struct ContainerStyle: GenericStyle {
 
     var style: StyleProtocol?
 
-    var backgroundColor: UIColor = .clear
+    var backgroundColor: UIColor = .white
 }
