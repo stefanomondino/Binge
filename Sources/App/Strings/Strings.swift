@@ -18,9 +18,9 @@ extension Translation where Self: RawRepresentable, RawValue == String {
 }
 
 enum Strings {
-//    enum Shows: String, Translation {
-//        case watched = "shows.watched"
-//        case popular = "shows.popular"
-//        case trending = "shows.trending"
-//    }
+    enum Shows: String, Translation {
+        case watched = "shows.watched"
+        case popular = "shows.popular"
+        case trending = "shows.trending"
+    }
 }

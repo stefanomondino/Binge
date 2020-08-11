@@ -74,20 +74,26 @@ extension DefaultStyleFactory: StyleFactory {
     }
 }
 
+extension UIView {
+    func applyContainerStyle(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
+        factory.apply(style, to: self)
+    }
+}
+
 extension UIButton {
-    func apply(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
+    func applyStyle(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
         factory.apply(style, to: self)
     }
 }
 
 extension UILabel {
-    func apply(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
+    func applyStyle(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
         factory.apply(style, to: self)
     }
 }
 
 extension UIImageView {
-    func apply(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
+    func applyStyle(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
         factory.apply(style, to: self)
     }
 }

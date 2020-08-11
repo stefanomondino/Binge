@@ -26,6 +26,7 @@ def app_pods
   pod 'SwiftRichString'
   pod 'RxCocoa'
   pod 'RxGesture'
+  pod 'PluginLayout', :git => "https://github.com/stefanomondino/PluginLayout.git", :branch => "master"
 end
 
 def test_pods

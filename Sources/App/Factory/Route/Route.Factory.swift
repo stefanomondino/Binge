@@ -17,6 +17,8 @@ protocol RouteFactory {
     func home() -> Route
     func url(for url: URL) -> Route
     func exit() -> CompletableRoute
+    func showDetail(for show: WithShow) -> Route
+    func personDetail(for person: Person) -> Route
 }
 
 class MainRouteFactory: RouteFactory {
@@ -53,7 +55,13 @@ class MainRouteFactory: RouteFactory {
                 return self.container.views.scenes.pager(viewModel: viewModel)
                     .inContainer(styleFactory: self.container.styleFactory)
             }
-
+        case let viewModel as ShowListViewModel:
+            return EmptyRoute {
+                self.container
+                    .views
+                    .scenes
+                    .showList(viewModel: viewModel)
+            }
         case let viewModel as LoginViewModel:
             return EmptyRoute {
                 self.container.views.scenes
@@ -63,6 +71,22 @@ class MainRouteFactory: RouteFactory {
             return EmptyRoute {
                 UIViewController()
             }
+        }
+    }
+
+    func showDetail(for show: WithShow) -> Route {
+        return NavigationRoute {
+            let viewModel = self.container.viewModels.scenes.showDetail(for: show)
+            return self.container.views.scenes
+                .showDetail(viewModel: viewModel)
+                .inContainer(styleFactory: self.container.styleFactory)
+        }
+    }
+
+    func personDetail(for person: Person) -> Route {
+        return NavigationRoute {
+            let viewModel = self.container.viewModels.scenes.personDetail(for: person)
+            return self.container.views.scenes.person(viewModel: viewModel)
         }
     }
 }

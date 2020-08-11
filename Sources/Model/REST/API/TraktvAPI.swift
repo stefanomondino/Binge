@@ -92,12 +92,12 @@ extension TraktvAPI: TargetType {
              let .played(page),
              let .watched(page),
              let .collected(page): return ["page": page.page, "limit": page.limit]
-        @unknown default: return [:]
+        default: return [:]
         }
     }
 
     var parameters: [String: Any] {
-        var parameters = pagination
+        let parameters = pagination
         switch self {
         case let .token(code):
             return ["code": code,

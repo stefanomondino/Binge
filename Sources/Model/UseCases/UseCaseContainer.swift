@@ -13,6 +13,7 @@ public protocol UseCaseContainer {
     var splash: SplashUseCase { get }
     var login: LoginUseCase { get }
     var shows: ShowsContainer { get }
+    var images: ImagesUseCase { get }
     // MURRAY PROTOCOL
 }
 
@@ -52,16 +53,34 @@ class DefaultUseCaseContainer: UseCaseContainer, DependencyContainer {
 
 public protocol ShowsContainer {
     var trending: ShowListUseCase { get }
+    var popular: ShowListUseCase { get }
+    var watched: ShowListUseCase { get }
+    var detail: ShowDetailUseCase { get }
+    var person: PersonDetailUseCase { get }
 }
 
-class ShowsContainerImplementation: DependencyContainer {
+class ShowsContainerImplementation: ShowsContainer, DependencyContainer {
     enum Keys {
         case trending
+        case popular
+        case watched
+        case detail
+        case person
     }
 
     var container = Container<Keys>()
 
+    var trending: ShowListUseCase { self[.trending] }
+    var popular: ShowListUseCase { self[.popular] }
+    var watched: ShowListUseCase { self[.watched] }
+    var detail: ShowDetailUseCase { self[.detail] }
+    var person: PersonDetailUseCase { self[.person] }
+
     init(container: ModelDependencyContainer) {
         register(for: .trending, scope: .singleton) { TrendingShowsUseCase(repository: container.repositories.shows) }
+        register(for: .popular, scope: .singleton) { PopularShowsUseCase(repository: container.repositories.shows) }
+        register(for: .watched, scope: .singleton) { WatchedShowsUseCase(repository: container.repositories.shows) }
+        register(for: .detail, scope: .singleton) { ShowDetailUseCaseImplementation(shows: container.repositories.shows) }
+        register(for: .person, scope: .singleton) { PersonDetailUseCaseImplementation(shows: container.repositories.shows) }
     }
 }

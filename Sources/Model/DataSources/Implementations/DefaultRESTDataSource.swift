@@ -28,7 +28,7 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
                   scheduler: SchedulerType = SerialDispatchQueueScheduler(qos: .utility)) {
         self.jsonDecoder = jsonDecoder
         self.scheduler = scheduler
-//        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
 //
 //        let cacheSize = 1024 * 1024 * 200
 //        URLCache.shared = URLCache(memoryCapacity: cacheSize, diskCapacity: cacheSize, diskPath: nil)

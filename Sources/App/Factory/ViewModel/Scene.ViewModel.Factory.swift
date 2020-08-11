@@ -15,6 +15,12 @@ protocol SceneViewModelFactory {
     func splashViewModel() -> SplashViewModel
     func homePager() -> PagerViewModel
     func login() -> LoginViewModel
+    func showDetail(for show: WithShow) -> ShowDetailViewModel
+    func personDetail(for person: Person) -> PersonViewModel
+    func popularShows() -> ShowListViewModel
+    func trendingShows() -> ShowListViewModel
+    func watchedShows() -> ShowListViewModel
+    func showsPager() -> PagerViewModel
     // MURRAY DECLARATION PLACEHOLDER
 }
 
@@ -22,12 +28,13 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
     let container: RootContainer
 
     func homePager() -> PagerViewModel {
-        return PagerViewModel(pages: [
-            login()
-
-        ],
-        layout: SceneIdentifier.tab,
-        styleFactory: container.styleFactory)
+        showsPager()
+//        return PagerViewModel(pages: [
+//            login()
+//
+//        ],
+//        layout: SceneIdentifier.tab,
+//        styleFactory: container.styleFactory)
     }
 
     func splashViewModel() -> SplashViewModel {
@@ -38,6 +45,48 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
         return LoginViewModel(itemFactory: container.viewModels.pickers,
                               routeFactory: container.routeFactory,
                               styleFactory: container.styleFactory)
+    }
+
+    func showsPager() -> PagerViewModel {
+        return PagerViewModel(pages: [
+            popularShows(),
+            trendingShows(),
+            watchedShows(),
+            login()
+        ], styleFactory: container.styleFactory)
+            .with(\.pageTitle, to: Strings.Shows.popular.translation)
+    }
+
+    func popularShows() -> ShowListViewModel {
+        ShowListViewModel(itemViewModelFactory: container.viewModels.items,
+                          useCase: container.model.useCases.shows.popular,
+                          routeFactory: container.routeFactory)
+    }
+
+    func trendingShows() -> ShowListViewModel {
+        ShowListViewModel(itemViewModelFactory: container.viewModels.items,
+                          useCase: container.model.useCases.shows.trending,
+                          routeFactory: container.routeFactory)
+    }
+
+    func watchedShows() -> ShowListViewModel {
+        ShowListViewModel(itemViewModelFactory: container.viewModels.items,
+                          useCase: container.model.useCases.shows.watched,
+                          routeFactory: container.routeFactory)
+    }
+
+    func showDetail(for show: WithShow) -> ShowDetailViewModel {
+        ShowDetailViewModel(show: show,
+                            routeFactory: container.routeFactory,
+                            itemViewModelFactory: container.viewModels.items,
+                            useCase: container.model.useCases.shows.detail)
+    }
+
+    func personDetail(for person: Person) -> PersonViewModel {
+        PersonViewModel(person: person,
+                        itemViewModelFactory: container.viewModels.items,
+                        useCase: container.model.useCases.shows.person,
+                        styleFactory: container.styleFactory)
     }
 
     // MURRAY IMPLEMENTATION PLACEHOLDER

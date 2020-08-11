@@ -24,6 +24,7 @@ public struct FanartResponse: Codable {
     let tvposter: [FanartImage]?
     let seasonbanner: [FanartImage]?
 
+    // swiftlint:disable cyclomatic_complexity
     public func image(for format: Fanart.Format, language: String = "en") -> Fanart? {
         let array: [FanartImage]?
         switch format {
@@ -67,7 +68,7 @@ public struct Fanart {
         case tvPoster
         case thumb
         case seasonBanner
-        var ratio: Double {
+        public var ratio: Double {
             return size.width / size.height
         }
 

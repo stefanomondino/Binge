@@ -25,7 +25,6 @@ class CarouselItemViewModel: RxListViewModel {
     let layoutIdentifier: LayoutIdentifier
     var uniqueIdentifier: UniqueIdentifier = UUID()
 
-    let styleFactory: StyleFactory
     let cellFactory: CollectionViewCellFactory
 
     private let onSelection: (ViewModel) -> Void
@@ -34,12 +33,10 @@ class CarouselItemViewModel: RxListViewModel {
     init(sections: Observable<[Section]>,
          layoutIdentifier: LayoutIdentifier = ViewIdentifier.carousel,
          cellFactory: CollectionViewCellFactory,
-         styleFactory: StyleFactory,
          onSelection: @escaping (ViewModel) -> Void = { _ in }) {
         observable = sections
         self.cellFactory = cellFactory
         self.layoutIdentifier = layoutIdentifier
-        self.styleFactory = styleFactory
         self.onSelection = onSelection
         reload()
     }

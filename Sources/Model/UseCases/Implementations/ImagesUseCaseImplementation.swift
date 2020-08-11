@@ -17,7 +17,7 @@ class ImagesUseCaseImplementation: ImagesUseCase {
         self.shows = shows
     }
 
-    func image<T: Codable>(from info: T, with keyPath: KeyPath<T, String?>, sizes: KeyPath<TMDBAPI.Configuration.Image, [String]>) -> Observable<WithImage> {
+    func image<T: Codable>(from info: T, with keyPath: KeyPath<T, String?>, sizes: KeyPath<TMDBAPI.Image, [String]>) -> Observable<WithImage> {
         return configuration.tmdbConfiguration().map { configuration in
 
             let url = configuration.images.secureBaseUrl

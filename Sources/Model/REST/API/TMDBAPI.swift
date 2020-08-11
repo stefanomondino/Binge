@@ -30,16 +30,17 @@ struct API {
 }
 
 enum TMDBAPI {
+    struct Image: Codable {
+        let baseUrl: URL
+        let secureBaseUrl: URL
+        let backdropSizes: [String]
+        let posterSizes: [String]
+        let profileSizes: [String]
+        let stillSizes: [String]
+    }
+
     struct Configuration: Codable {
         let images: Image
-        struct Image: Codable {
-            let baseUrl: URL
-            let secureBaseUrl: URL
-            let backdropSizes: [String]
-            let posterSizes: [String]
-            let profileSizes: [String]
-            let stillSizes: [String]
-        }
     }
 
     case configuration
