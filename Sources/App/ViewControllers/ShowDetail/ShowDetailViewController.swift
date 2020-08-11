@@ -11,11 +11,15 @@ import SnapKit
 import UIKit
 
 extension RxCollectionViewDelegateProxy: PluginLayoutDelegate {
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, pluginForSectionAt section: Int) -> PluginType? {
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: PluginLayout,
+                               pluginForSectionAt section: Int) -> PluginType? {
         return (forwardToDelegate() as? PluginLayoutDelegate)?.collectionView(collectionView, layout: collectionViewLayout, pluginForSectionAt: section)
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForItemAt indexPath: IndexPath, kind: String?) -> [PluginEffect] {
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: PluginLayout,
+                               effectsForItemAt indexPath: IndexPath, kind: String?) -> [PluginEffect] {
         return (forwardToDelegate() as? PluginLayoutDelegate)?.collectionView(collectionView, layout: collectionViewLayout, effectsForItemAt: indexPath, kind: kind) ?? []
     }
 }
