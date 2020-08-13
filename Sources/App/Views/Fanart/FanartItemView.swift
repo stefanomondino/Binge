@@ -24,11 +24,15 @@ class FanartItemView: UIView, WithViewModel {
         else { return }
         removeConstraints([constraint].compactMap { $0 })
         snp.makeConstraints { make in
-            self.constraint = make.width.equalTo(self.image.snp.height).multipliedBy(viewModel.ratio).constraint.layoutConstraints.first
+            self.constraint = make.width
+                .lessThanOrEqualTo(self.image.snp.height)
+                .multipliedBy(viewModel.ratio)
+                .constraint.layoutConstraints
+                .first
         }
 
         if isPlaceholderForAutosize { return }
-
+        backgroundColor = .clear
         if let image = self.image {
             viewModel.image
                 .asDriver(onErrorJustReturn: UIImage())

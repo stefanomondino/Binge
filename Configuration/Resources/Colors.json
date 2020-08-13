@@ -1,5 +1,7 @@
 {
-    "background": "#FFFFFFFF",
+    "background": "#1b1b1bFF",
+    "navbarBackground": "#0b0b0bFF",
     "navbarText": "#FFFFFFFF",
-    "mainText": "#111111FF"
+    "mainText": "#111111FF",
+    "mainDescription": "#FFCC00FF"
 }

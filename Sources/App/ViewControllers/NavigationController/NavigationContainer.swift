@@ -48,6 +48,7 @@ class NavigationContainer: UIViewController {
         let alpha = max(0, min(alpha, 0.99))
         let color = navigationBarColor.withAlphaComponent(alpha)
         navbarContainer.backgroundColor = color
+        titleContainer.alpha = alpha
     }
 
     init(rootViewController: UIViewController,
@@ -178,6 +179,21 @@ class NavigationContainer: UIViewController {
         label.styledText = title
     }
 
+    public func setTitleView(_ view: UIView?) {
+        clearTitleContainer()
+        if let view = view {
+            currentTitleView = view
+            titleContainer.addSubview(view)
+            view.snp.makeConstraints { make in
+                make.top.equalToSuperview().offset(8)
+                make.bottom.equalToSuperview().inset(8)
+                make.left.greaterThanOrEqualToSuperview()
+                make.right.lessThanOrEqualToSuperview()
+                make.centerX.equalToSuperview()
+            }
+        }
+    }
+
     private func adjustInnerSafeAreaInsets() {
         rootViewController.additionalSafeAreaInsets.top = [titleContainer, leftContainer, rightContainer]
             .filter { _ in self.extendUnderNavbar == false }
@@ -228,6 +244,10 @@ extension UIViewController {
 
     func setNavigationTitle(_ title: String) {
         container?.setTitle(title)
+    }
+
+    func setNavigationView(_ view: UIView) {
+        container?.setTitleView(view)
     }
 
     func addLeftNavigationView(_ view: UIView) {

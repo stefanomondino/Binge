@@ -5,6 +5,8 @@ inhibit_all_warnings!
 use_frameworks!
 platform :ios, '12.0'
 
+ENV["APP_NAME"] = ENV["APP_NAME"] || "Binge"
+
 def boomerang
   pod "Boomerang/RxSwift"
 end
@@ -26,7 +28,9 @@ def app_pods
   pod 'SwiftRichString'
   pod 'RxCocoa'
   pod 'RxGesture'
-  pod 'PluginLayout', :git => "https://github.com/stefanomondino/PluginLayout.git", :branch => "master"
+  #pod 'PluginLayout', :git => "https://github.com/stefanomondino/PluginLayout.git", :branch => "master"
+  #pod 'PluginLayout', :path => "../OpenSource/PluginLayout"
+  pod 'PluginLayout'
 end
 
 def test_pods

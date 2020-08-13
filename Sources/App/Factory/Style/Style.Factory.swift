@@ -38,8 +38,14 @@ class DefaultStyleFactory: DependencyContainer {
         register(for: Styles.Generic.title) { DefaultTextStyle(size: 18) }
         register(for: Styles.Generic.subtitle) { DefaultTextStyle(size: 14) }
         register(for: Styles.Generic.card) { DefaultContainerStyle.card }
-        register(for: Styles.Generic.navigationBar) { [DefaultContainerStyle(backgroundColor: .orange),
+        register(for: Styles.Generic.navigationBar) { [DefaultContainerStyle(backgroundColor: .navbarBackground),
                                                        DefaultTextStyle(size: 22, color: .navbarText, font: .mainBold)] }
+        setupShows()
+    }
+
+    private func setupShows() {
+        register(for: Styles.Show.titleCard) { [DefaultContainerStyle(cornerRadius: 4, backgroundColor: .clear),
+                                                DefaultTextStyle(size: 22, color: .navbarText, font: Fonts.mainBold, alignment: .left)] }
     }
 }
 
@@ -70,12 +76,15 @@ extension DefaultStyleFactory: StyleFactory {
         view.layer.masksToBounds = true
     }
 
-    func apply(_: Style, to view: PagerButton) {
+    func apply(_ style: Style, to view: PagerButton) {
+        guard let implementation: TextStyle = getStyle(style) else { return }
         view.contentInset = UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 0)
-        view.tintColor = .darkGray
+        let color = implementation.style.attributes[.foregroundColor] as? UIColor
+        view.tintColor = color?.withAlphaComponent(0.75)
+        view.font = implementation.style.attributes[.font] as? UIFont ?? view.font
         //            button.font = Fonts.special(.regular).font(size: 20)
         //            button.font = Fonts.main(.bold).font(size: 16)
-        view.selectedTintColor = .black
+        view.selectedTintColor = color
     }
 
     func apply(_ style: Style, to navigationController: NavigationContainer) {

@@ -24,37 +24,6 @@ extension RxCollectionViewDelegateProxy: PluginLayoutDelegate {
     }
 }
 
-class ShowHeaderPlugin: Plugin {
-    required init(delegate: FlowLayoutDelegate) {
-        self.delegate = delegate
-    }
-
-    var sectionHeadersPinToVisibleBounds: Bool = false
-
-    var sectionFootersPinToVisibleBounds: Bool = false
-
-    public typealias Delegate = FlowLayoutDelegate
-    public typealias Parameters = FlowSectionParameters
-
-    weak var delegate: Delegate?
-
-    func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes] {
-        guard let collectionView = layout.collectionView else { return [] }
-        let params = sectionParameters(inSection: section, layout: layout)
-        offset.x = params.insets.left
-        offset.y += 100
-        let poster = PluginLayoutAttributes(forCellWith: IndexPath(item: 0, section: 0))
-        let size = delegate?.collectionView?(collectionView, layout: layout, sizeForItemAt: poster.indexPath) ?? .zero
-        poster.frame = CGRect(x: offset.x + 20, y: offset.y, width: size.width / 3, height: size.height / 3)
-        poster.zIndex = 1
-        offset.y += poster.frame.height + 20
-        let parallax = PluginLayoutAttributes(forSupplementaryViewOfKind: "parallax", with: IndexPath(item: 0, section: 0))
-        parallax.frame = CGRect(x: 0, y: 0, width: params.contentBounds.width, height: 200)
-        parallax.zIndex = 0
-        return [poster, parallax]
-    }
-}
-
 class ShowDetailDelegate: CollectionViewDelegate, PluginLayoutDelegate {
     func collectionView(_: UICollectionView, layout _: PluginLayout, pluginForSectionAt section: Int) -> PluginType? {
         switch section {
@@ -64,8 +33,17 @@ class ShowDetailDelegate: CollectionViewDelegate, PluginLayoutDelegate {
     }
 
     func collectionView(_: UICollectionView, layout _: PluginLayout, effectsForItemAt _: IndexPath, kind: String?) -> [PluginEffect] {
-        guard kind == "parallax" else { return [] }
-        return [StickyEffect(position: .start)]
+        guard kind == ViewIdentifier.Supplementary.parallax.identifierString else { return [] }
+        return [ZoomEffect(parallax: 0.7)]
+    }
+}
+
+extension ViewIdentifier.CarouselType {
+    func height(for _: CGFloat) -> CGFloat {
+        switch self {
+        case .cast: return 100
+        case .relatedShows: return 200
+        }
     }
 }
 
@@ -75,7 +53,8 @@ class ShowDetailViewController: UIViewController {
             guard let viewModel = viewModel(at: indexPath, for: type) else { return .zero }
             let width = calculateFixedDimension(for: .vertical, collectionView: collectionView, at: indexPath, itemsPerLine: 1)
             switch viewModel {
-            case is CarouselItemViewModel: return CGSize(width: width, height: 200)
+            case let carousel as CarouselItemViewModel: return CGSize(width: width, height: carousel.carouselType.height(for: width))
+
             default: return super.sizeForItem(at: indexPath, in: collectionView, direction: direction, type: type)
             }
         }
@@ -131,7 +110,7 @@ class ShowDetailViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
         view.applyContainerStyle(Styles.Generic.container)
 
-//        let spacing: CGFloat = 10
+        //        let spacing: CGFloat = 10
         let sizeCalculator = SizeCalculator(viewModel: viewModel,
                                             factory: collectionViewCellFactory, itemsPerLine: 1)
 
@@ -156,9 +135,20 @@ class ShowDetailViewController: UIViewController {
 
         viewModel.reload()
 
+        viewModel.navbarTitleViewModel
+            .asDriver(onErrorJustReturn: nil)
+            .drive(onNext: { [weak self] in
+                if let viewModel = $0,
+                    let view = self?.collectionViewCellFactory.view(from: viewModel.layoutIdentifier) {
+                    self?.setNavigationView(view)
+                    (view as? WithViewModel)?.configure(with: viewModel)
+                }
+            })
+            .disposed(by: disposeBag)
+
         if let container = self.container {
             collectionView.rx
-                .topWindow(of: 100)
+                .topWindow(of: 200)
                 .bind(to: container.rx.updateCurrentNavbarAlpha())
                 .disposed(by: disposeBag)
         }

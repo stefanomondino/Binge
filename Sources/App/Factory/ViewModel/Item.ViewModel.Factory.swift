@@ -45,7 +45,8 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
 
         return CarouselItemViewModel(sections: observable,
                                      layoutIdentifier: ViewIdentifier.carousel,
-                                     cellFactory: container.views.collectionCells) { itemViewModel in
+                                     cellFactory: container.views.collectionCells,
+                                     type: .cast) { itemViewModel in
             if let person = (itemViewModel as? PersonItemViewModel)?.person {
                 onSelection(person)
             }
@@ -61,7 +62,8 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
 
         return CarouselItemViewModel(sections: observable,
                                      layoutIdentifier: ViewIdentifier.carousel,
-                                     cellFactory: container.views.collectionCells) { itemViewModel in
+                                     cellFactory: container.views.collectionCells,
+                                     type: .relatedShows) { itemViewModel in
             if let show = (itemViewModel as? ShowItemViewModel)?.show {
                 onSelection(show.show)
             }

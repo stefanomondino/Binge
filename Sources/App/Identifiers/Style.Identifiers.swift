@@ -27,4 +27,8 @@ enum Styles {
         case card
         case navigationBar
     }
+
+    enum Show: String, Style, CaseIterable {
+        case titleCard
+    }
 }

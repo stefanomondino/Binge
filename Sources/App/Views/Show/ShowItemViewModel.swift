@@ -19,7 +19,14 @@ enum ShowIdentifier: String, LayoutIdentifier, CaseIterable {
         switch self {
         case .posterOnly: return "PosterShow"
         case .full: return "CompleteShow"
-        default: return "Show"
+        case .title: return "TitleShow"
+        }
+    }
+
+    var style: Style {
+        switch self {
+        case .title: return Styles.Show.titleCard
+        default: return Styles.Generic.card
         }
     }
 }
@@ -34,6 +41,7 @@ class ShowItemViewModel: ViewModel {
         return show.title
     }
 
+    let mainStyle: Style
 //    static func preview(_ layout: ShowIdentifier) -> ViewModel {
 //        ShowItemViewModel(show: TrendingShow.demo.show, layoutIdentifier: layout, imageUseCase: StaticImageUseCase(), styleFactory: DefaultAppDependencyContainer().styleFactory)
 //    }
@@ -42,6 +50,7 @@ class ShowItemViewModel: ViewModel {
          imageUseCase: ImagesUseCase) {
         self.layoutIdentifier = layoutIdentifier
         self.show = show
+        mainStyle = layoutIdentifier.style
         if let year = show.year { counter = "\(year)" } else { counter = "" }
         image = imageUseCase
             .poster(forShow: show)

@@ -36,7 +36,7 @@ class PagerViewController: TabmanViewController {
         super.viewDidLoad()
 
         styleFactory.apply(Styles.Generic.container, to: view)
-
+        title = (viewModel as? PagerViewModel)?.pageTitle
         dataSource = internalDataSource
         setupBar()
         if let viewModel = viewModel as? RxListViewModel {
@@ -62,9 +62,9 @@ class PagerViewController: TabmanViewController {
     private func setupBar() {
         let styleFactory = self.styleFactory
         let bar = TMBarView<TMConstrainedHorizontalBarLayout, TMLabelBarButton, TMLineBarIndicator>()
-        bar.backgroundView.style = .flat(color: .clear)
+        bar.backgroundView.style = .flat(color: .navbarBackground)
         bar.buttons.customize { button in
-            styleFactory.apply(Styles.Generic.title, to: button)
+            styleFactory.apply(Styles.Generic.navigationBar, to: button)
         }
 
         bar.layout.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)

@@ -31,10 +31,10 @@ class ShowItemView: UIView, WithViewModel {
         //        self.title.style = Identifiers.Styles.mainRegularStyle.style
 
         counter?.text = viewModel.counter
-        applyContainerStyle(Styles.Generic.card)
+        applyContainerStyle(viewModel.mainStyle)
 
         if let title = title {
-            title.applyStyle(Styles.Generic.title)
+            title.applyStyle(viewModel.mainStyle)
             title.text = viewModel.title
         }
         if let counter = counter {

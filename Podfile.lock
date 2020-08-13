@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.2.1)
+  - Alamofire (5.2.2)
   - Boomerang/Core (6.0)
   - Boomerang/RxSwift (6.0):
     - Boomerang/UIKit
@@ -21,7 +21,7 @@ PODS:
     - RxSwift (~> 5.0)
   - Nimble (8.1.1)
   - Pageboy (3.6.1)
-  - PluginLayout (0.0.1)
+  - PluginLayout (0.1)
   - Quick (3.0.0)
   - RxBlocking (5.1.1):
     - RxSwift (~> 5)
@@ -48,7 +48,7 @@ PODS:
   - RxSwift (5.1.1)
   - SnapKit (5.0.1)
   - SwiftRichString (3.7.2)
-  - Tabman (2.9.0):
+  - Tabman (2.9.1):
     - Pageboy (~> 3.6.0)
 
 DEPENDENCIES:
@@ -59,7 +59,7 @@ DEPENDENCIES:
   - Kingfisher
   - Moya/RxSwift
   - Nimble
-  - PluginLayout (from `https://github.com/stefanomondino/PluginLayout.git`, branch `master`)
+  - PluginLayout
   - Quick
   - RxBlocking
   - RxCocoa
@@ -81,6 +81,7 @@ SPEC REPOS:
     - Moya
     - Nimble
     - Pageboy
+    - PluginLayout
     - Quick
     - RxBlocking
     - RxCocoa
@@ -93,18 +94,8 @@ SPEC REPOS:
     - SwiftRichString
     - Tabman
 
-EXTERNAL SOURCES:
-  PluginLayout:
-    :branch: master
-    :git: https://github.com/stefanomondino/PluginLayout.git
-
-CHECKOUT OPTIONS:
-  PluginLayout:
-    :commit: 032251ef0d3d12cc66f459a5c4cfa1e5eeb5e77f
-    :git: https://github.com/stefanomondino/PluginLayout.git
-
 SPEC CHECKSUMS:
-  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
+  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   Boomerang: 34e5429c283a7de78137a33f8ae2f6d5d838d112
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   Gloss: 2dbf87af0e4dd24753f7de933356ff6c5c012426
@@ -113,7 +104,7 @@ SPEC CHECKSUMS:
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   Nimble: 5f8a2fb6fa343a7242dfdd9d42f7267419d464b2
   Pageboy: 29a2d474ad99404b4d77f325e0ab6d705930a4fb
-  PluginLayout: 9018e1c08cec1efe49ad659a9f3887b65b360f05
+  PluginLayout: 175918c2aac2e947740a46c5ffab220e47e83a29
   Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
   RxBlocking: 5f700a78cad61ce253ebd37c9a39b5ccc76477b4
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
@@ -124,8 +115,8 @@ SPEC CHECKSUMS:
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftRichString: d61b807db1f8834c26fee92b6dd3e1be2dc5af03
-  Tabman: 55d3d18f393ce5119515cd0349c841a07774c895
+  Tabman: 085d89c65be9e883629bdaf5b1453a6397e57846
 
-PODFILE CHECKSUM: 47658e0e6aa07b54feb973be354a5de8f872c0c4
+PODFILE CHECKSUM: d383bc7a26dd1dd3998e9051d65872fd5bd1e308
 
 COCOAPODS: 1.9.3

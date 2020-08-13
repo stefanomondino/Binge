@@ -28,13 +28,12 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
     let container: RootContainer
 
     func homePager() -> PagerViewModel {
-        showsPager()
-//        return PagerViewModel(pages: [
-//            login()
-//
-//        ],
-//        layout: SceneIdentifier.tab,
-//        styleFactory: container.styleFactory)
+        return PagerViewModel(pages: [
+            showsPager(),
+            login()
+        ],
+        layout: SceneIdentifier.tab,
+        styleFactory: container.styleFactory)
     }
 
     func splashViewModel() -> SplashViewModel {
@@ -51,10 +50,10 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
         return PagerViewModel(pages: [
             popularShows(),
             trendingShows(),
-            watchedShows(),
-            login()
+            watchedShows()
+
         ], styleFactory: container.styleFactory)
-            .with(\.pageTitle, to: Strings.Shows.popular.translation)
+            .with(\.pageTitle, to: Strings.Shows.shows.translation)
     }
 
     func popularShows() -> ShowListViewModel {

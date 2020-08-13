@@ -28,6 +28,8 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
 
     private let routeFactory: RouteFactory
 
+    private let navbarTitleViewModelRelay: BehaviorRelay<ViewModel?> = BehaviorRelay(value: nil)
+    var navbarTitleViewModel: Observable<ViewModel?> { navbarTitleViewModelRelay.asObservable() }
     let backgroundImage: ObservableImage
 
     init(
@@ -62,13 +64,19 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
     private func map(_ show: ShowDetail, fanart: FanartResponse) -> [Section] {
         let routes = self.routes
         let routeFactory = self.routeFactory
-        var topSection = Section(id: UUID().stringValue,
-                                 items: [itemViewModelFactory.show(show, layout: .posterOnly)])
+        var topSection = Section(id: "topSection",
+                                 items: [itemViewModelFactory.show(show, layout: .title)])
         if let fanart = [Fanart.Format.background]
             .compactMap({ fanart.image(for: $0) })
             .first?
             .map({ itemViewModelFactory.fanart($0) }) {
-            topSection.supplementary.set(fanart, withKind: "parallax", atIndex: 0)
+            topSection.supplementary.set(fanart, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
+        }
+        if let navbar = [Fanart.Format.hdtvLogo]
+            .compactMap({ fanart.image(for: $0) })
+            .first?
+            .map({ itemViewModelFactory.fanart($0) }) {
+            navbarTitleViewModelRelay.accept(navbar)
         }
         return [
             topSection,
@@ -78,7 +86,20 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
                 },
                 itemViewModelFactory.relatedShowsCarousel(for: show) {
                     routes.accept(routeFactory.showDetail(for: $0))
+                },
+                itemViewModelFactory.castCarousel(for: show) {
+                    routes.accept(routeFactory.personDetail(for: $0))
+                },
+                itemViewModelFactory.relatedShowsCarousel(for: show) {
+                    routes.accept(routeFactory.showDetail(for: $0))
+                },
+                itemViewModelFactory.castCarousel(for: show) {
+                    routes.accept(routeFactory.personDetail(for: $0))
+                },
+                itemViewModelFactory.relatedShowsCarousel(for: show) {
+                    routes.accept(routeFactory.showDetail(for: $0))
                 }
+
             ])
         ]
     }

@@ -9,6 +9,17 @@ import Boomerang
 import Foundation
 
 enum ViewIdentifier: String, LayoutIdentifier {
+    enum Supplementary: String {
+        case parallax
+
+        var identifierString: String { rawValue }
+    }
+
+    enum CarouselType: String {
+        case cast
+        case relatedShows
+    }
+
     case show
     case header
     case loadMore

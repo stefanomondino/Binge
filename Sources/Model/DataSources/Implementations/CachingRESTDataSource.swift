@@ -22,7 +22,7 @@ class CachingRESTDataSource: DefaultRESTDataSource {
         guard let url = url(for: endpoint) else { return nil }
         guard let attributes = try? FileManager.default.attributesOfItem(atPath: url.path),
             let creationDate = attributes[.creationDate] as? Date,
-            Date().timeIntervalSince1970 - creationDate.timeIntervalSince1970 < 60
+            Date().timeIntervalSince1970 - creationDate.timeIntervalSince1970 < endpoint.cacheTime
         else {
             try? FileManager.default.removeItem(at: url)
             return nil

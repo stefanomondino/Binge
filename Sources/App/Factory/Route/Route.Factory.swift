@@ -63,7 +63,7 @@ class MainRouteFactory: RouteFactory {
                     .views
                     .scenes
                     .showList(viewModel: viewModel)
-                    .inContainer()
+//                    .inContainer()
             }
         case let viewModel as LoginViewModel:
             return EmptyRoute {

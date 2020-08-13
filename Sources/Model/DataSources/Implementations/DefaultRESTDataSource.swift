@@ -25,14 +25,17 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
     let container = Container<ObjectIdentifier>()
     let jsonDecoder: JSONDecoder
     let scheduler: SchedulerType
+
+    private var urlRequestCache: [URLRequest: Observable<Response>] = [:]
+
     required init(jsonDecoder: JSONDecoder = JSONDecoder(),
                   scheduler: SchedulerType = SerialDispatchQueueScheduler(qos: .utility)) {
         self.jsonDecoder = jsonDecoder
         self.scheduler = scheduler
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-//
-//        let cacheSize = 1024 * 1024 * 200
-//        URLCache.shared = URLCache(memoryCapacity: cacheSize, diskCapacity: cacheSize, diskPath: nil)
+        //
+        //        let cacheSize = 1024 * 1024 * 200
+        //        URLCache.shared = URLCache(memoryCapacity: cacheSize, diskCapacity: cacheSize, diskPath: nil)
 
         let networkLoggerPlugin = NetworkLoggerPlugin(configuration: .init(logOptions: [.formatRequestAscURL, .verbose]))
 
@@ -75,11 +78,26 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
     }
 
     func response<Endpoint: TargetType>(at endpoint: Endpoint) -> Observable<Response> {
-        return provider(for: Endpoint.self)
-            .rx
-            .request(endpoint)
-            .asObservable()
-            .withErrors()
+//        Logger.log(urlRequestCache, tag: .lifecycle)
+        return .deferred {
+            let provider = self.provider(for: Endpoint.self)
+            let request = try provider.endpoint(endpoint).urlRequest()
+            if
+                let running = self.urlRequestCache[request]
+            {
+                return running
+            }
+
+            let observable = provider
+                .rx
+                .request(endpoint)
+                .asObservable()
+                .withErrors()
+                .do(onDispose: { [weak self] in self?.urlRequestCache[request] = nil })
+                .share()
+            self.urlRequestCache[request] = observable
+            return observable
+        }
     }
 }
 
