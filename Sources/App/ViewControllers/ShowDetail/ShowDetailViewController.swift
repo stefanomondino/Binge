@@ -24,20 +24,6 @@ extension RxCollectionViewDelegateProxy: PluginLayoutDelegate {
     }
 }
 
-class ShowDetailDelegate: CollectionViewDelegate, PluginLayoutDelegate {
-    func collectionView(_: UICollectionView, layout _: PluginLayout, pluginForSectionAt section: Int) -> PluginType? {
-        switch section {
-        case 0: return ShowHeaderPlugin(delegate: self)
-        default: return FlowLayoutPlugin(delegate: self)
-        }
-    }
-
-    func collectionView(_: UICollectionView, layout _: PluginLayout, effectsForItemAt _: IndexPath, kind: String?) -> [PluginEffect] {
-        guard kind == ViewIdentifier.Supplementary.parallax.identifierString else { return [] }
-        return [ZoomEffect(parallax: 0.7)]
-    }
-}
-
 extension ViewIdentifier.CarouselType {
     func height(for _: CGFloat) -> CGFloat {
         switch self {
@@ -57,6 +43,20 @@ extension ViewIdentifier.CarouselType {
 }
 
 class ShowDetailViewController: UIViewController {
+    class Delegate: CollectionViewDelegate, PluginLayoutDelegate {
+        func collectionView(_: UICollectionView, layout _: PluginLayout, pluginForSectionAt section: Int) -> PluginType? {
+            switch section {
+            case 0: return ShowHeaderPlugin(delegate: self)
+            default: return FlowLayoutPlugin(delegate: self)
+            }
+        }
+
+        func collectionView(_: UICollectionView, layout _: PluginLayout, effectsForItemAt _: IndexPath, kind: String?) -> [PluginEffect] {
+            guard kind == ViewIdentifier.Supplementary.parallax.identifierString else { return [] }
+            return [ZoomEffect(parallax: 0.7)]
+        }
+    }
+
     class SizeCalculator: AutomaticCollectionViewSizeCalculator {
         override func lineSpacing(for _: UICollectionView, in _: Int) -> CGFloat {
             return Constants.detailLineSpacing
@@ -136,7 +136,7 @@ class ShowDetailViewController: UIViewController {
         let sizeCalculator = SizeCalculator(viewModel: viewModel,
                                             factory: collectionViewCellFactory, itemsPerLine: 1)
 
-        let collectionViewDelegate = ShowDetailDelegate(sizeCalculator: sizeCalculator)
+        let collectionViewDelegate = Delegate(sizeCalculator: sizeCalculator)
             .withSelect { viewModel.selectItem(at: $0) }
 
         let layout = PluginLayout()
