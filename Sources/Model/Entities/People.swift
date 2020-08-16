@@ -20,7 +20,7 @@ public struct Person: Codable {
 public struct CastMember: Codable {
     public let person: Person
     public let characters: [String]
-    let episodeCount: Int
+    let episodeCount: Int?
 }
 
 public extension Person {

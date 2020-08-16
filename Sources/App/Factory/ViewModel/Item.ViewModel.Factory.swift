@@ -16,8 +16,8 @@ protocol ItemViewModelFactory {
     func loadMore(_ closure: @escaping () -> Disposable) -> ViewModel
     func item(_ show: ItemContainer, layout: ShowIdentifier) -> ViewModel
     func seasonsCarousel(for show: ItemContainer, onSelection: @escaping (Season.Info) -> Void) -> ViewModel
-    func castCarousel(for show: ItemContainer, onSelection: @escaping (Person) -> Void) -> ViewModel
-    func relatedShowsCarousel(for show: ItemContainer, onSelection: @escaping (Item) -> Void) -> ViewModel
+    func castCarousel(for item: ItemContainer, onSelection: @escaping (Person) -> Void) -> ViewModel?
+    func relatedCarousel(for show: ItemContainer, onSelection: @escaping (Item) -> Void) -> ViewModel?
     func person(_ person: Person) -> ViewModel
     func castMember(_ castMember: CastMember) -> ViewModel
     func showDescription(_ show: ItemDetail) -> ViewModel
@@ -46,8 +46,33 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         }
     }
 
-    func castCarousel(for show: ItemContainer, onSelection: @escaping (Person) -> Void) -> ViewModel {
+    func castCarousel(for item: ItemContainer, onSelection: @escaping (Person) -> Void) -> ViewModel? {
+        switch item {
+        case let show as ShowItem: return showsCastCarousel(for: show, onSelection: onSelection)
+        case let movie as MovieItem: return moviesCastCarousel(for: movie, onSelection: onSelection)
+        default: return nil
+        }
+    }
+
+    func showsCastCarousel(for show: ItemContainer, onSelection: @escaping (Person) -> Void) -> ViewModel {
         let observable = container.model.useCases.shows.detail
+            .cast(for: show.item)
+            .map { $0.map { self.castMember($0) } }
+            .map { [Section(id: UUID().uuidString, items: $0)] }
+            .share(replay: 1, scope: .forever)
+
+        return CarouselItemViewModel(sections: observable,
+                                     layoutIdentifier: ViewIdentifier.carousel,
+                                     cellFactory: container.views.collectionCells,
+                                     type: .cast) { itemViewModel in
+            if let person = (itemViewModel as? PersonItemViewModel)?.person {
+                onSelection(person)
+            }
+        }
+    }
+
+    func moviesCastCarousel(for show: ItemContainer, onSelection: @escaping (Person) -> Void) -> ViewModel {
+        let observable = container.model.useCases.movies.detail
             .cast(for: show.item)
             .map { $0.map { self.castMember($0) } }
             .map { [Section(id: UUID().uuidString, items: $0)] }
@@ -82,8 +107,33 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         }
     }
 
+    func relatedCarousel(for item: ItemContainer, onSelection: @escaping (Item) -> Void) -> ViewModel? {
+        switch item {
+        case let show as ShowItem: return relatedShowsCarousel(for: show, onSelection: onSelection)
+        case let movie as MovieItem: return relatedMoviesCarousel(for: movie, onSelection: onSelection)
+        default: return nil
+        }
+    }
+
     func relatedShowsCarousel(for show: ItemContainer, onSelection: @escaping (Item) -> Void) -> ViewModel {
         let observable = container.model.useCases.shows.detail
+            .related(for: show.item)
+            .map { $0.map { self.item($0, layout: .posterOnly) } }
+            .map { [Section(id: UUID().uuidString, items: $0)] }
+            .share(replay: 1, scope: .forever)
+
+        return CarouselItemViewModel(sections: observable,
+                                     layoutIdentifier: ViewIdentifier.carousel,
+                                     cellFactory: container.views.collectionCells,
+                                     type: .relatedShows) { itemViewModel in
+            if let show = (itemViewModel as? ShowItemViewModel)?.item {
+                onSelection(show.item)
+            }
+        }
+    }
+
+    func relatedMoviesCarousel(for show: ItemContainer, onSelection: @escaping (Item) -> Void) -> ViewModel {
+        let observable = container.model.useCases.movies.detail
             .related(for: show.item)
             .map { $0.map { self.item($0, layout: .posterOnly) } }
             .map { [Section(id: UUID().uuidString, items: $0)] }

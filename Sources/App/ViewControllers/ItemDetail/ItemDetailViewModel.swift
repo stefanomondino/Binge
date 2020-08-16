@@ -94,11 +94,12 @@ class ShowDetailViewModel: ItemDetailViewModel {
         carousels += [
             itemViewModelFactory.castCarousel(for: show) {
                 routes.accept(routeFactory.personDetail(for: $0))
+            },
+            itemViewModelFactory.relatedCarousel(for: show) {
+                routes.accept(routeFactory.showDetail(for: $0))
             }
-        ]
-        carousels += [itemViewModelFactory.relatedShowsCarousel(for: show) {
-            routes.accept(routeFactory.showDetail(for: $0))
-        }]
+        ].compactMap { $0 }
+
         return [
             topSection,
             Section(id: UUID().stringValue, items: carousels)
@@ -183,11 +184,11 @@ class MovieDetailViewModel: RxListViewModel, ItemDetailViewModel {
         carousels += [
             itemViewModelFactory.castCarousel(for: show) {
                 routes.accept(routeFactory.personDetail(for: $0))
+            },
+            itemViewModelFactory.relatedCarousel(for: show) {
+                routes.accept(routeFactory.showDetail(for: $0))
             }
-        ]
-        carousels += [itemViewModelFactory.relatedShowsCarousel(for: show) {
-            routes.accept(routeFactory.showDetail(for: $0))
-        }]
+        ].compactMap { $0 }
         return [
             topSection,
             Section(id: UUID().stringValue, items: carousels)
