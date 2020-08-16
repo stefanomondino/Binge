@@ -53,6 +53,7 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
         disposeBag = DisposeBag()
         Observable.combineLatest(useCase.showDetail(for: show.show), useCase.fanart(for: show.show))
             .map { [weak self] in self?.map($0.0, fanart: $0.1) ?? [] }
+            .catchErrorJustReturn([])
             .bind(to: sectionsRelay)
             .disposed(by: disposeBag)
     }
@@ -64,8 +65,9 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
     private func map(_ show: ShowDetail, fanart: FanartResponse) -> [Section] {
         let routes = self.routes
         let routeFactory = self.routeFactory
-        var topSection = Section(id: "topSection",
-                                 items: [itemViewModelFactory.show(show, layout: .title)])
+        var topSection = Section(id: UUID().stringValue,
+                                 items: [itemViewModelFactory.show(show, layout: .title),
+                                         itemViewModelFactory.showDescription(show)])
         if let fanart = [Fanart.Format.background]
             .compactMap({ fanart.image(for: $0) })
             .first?
@@ -78,29 +80,21 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
             .map({ itemViewModelFactory.fanart($0) }) {
             navbarTitleViewModelRelay.accept(navbar)
         }
+        var carousels: [ViewModel] = []
+        if show.info?.seasons != nil {
+            carousels += [itemViewModelFactory.seasonsCarousel(for: show, onSelection: { _ in })]
+        }
+        carousels += [
+            itemViewModelFactory.castCarousel(for: show) {
+                routes.accept(routeFactory.personDetail(for: $0))
+            }
+        ]
+        carousels += [itemViewModelFactory.relatedShowsCarousel(for: show) {
+            routes.accept(routeFactory.showDetail(for: $0))
+        }]
         return [
             topSection,
-            Section(id: "misc", items: [
-                itemViewModelFactory.castCarousel(for: show) {
-                    routes.accept(routeFactory.personDetail(for: $0))
-                },
-                itemViewModelFactory.relatedShowsCarousel(for: show) {
-                    routes.accept(routeFactory.showDetail(for: $0))
-                },
-                itemViewModelFactory.castCarousel(for: show) {
-                    routes.accept(routeFactory.personDetail(for: $0))
-                },
-                itemViewModelFactory.relatedShowsCarousel(for: show) {
-                    routes.accept(routeFactory.showDetail(for: $0))
-                },
-                itemViewModelFactory.castCarousel(for: show) {
-                    routes.accept(routeFactory.personDetail(for: $0))
-                },
-                itemViewModelFactory.relatedShowsCarousel(for: show) {
-                    routes.accept(routeFactory.showDetail(for: $0))
-                }
-
-            ])
+            Section(id: UUID().stringValue, items: carousels)
         ]
     }
 }

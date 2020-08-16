@@ -61,15 +61,15 @@ class PagerViewController: TabmanViewController {
 
     private func setupBar() {
         let styleFactory = self.styleFactory
-        let bar = TMBarView<TMConstrainedHorizontalBarLayout, TMLabelBarButton, TMLineBarIndicator>()
+        let bar = TMBarView<TMHorizontalBarLayout, TMLabelBarButton, TMLineBarIndicator>()
         bar.backgroundView.style = .flat(color: .navbarBackground)
         bar.buttons.customize { button in
             styleFactory.apply(Styles.Generic.navigationBar, to: button)
         }
 
-        bar.layout.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
+        bar.layout.contentInset = UIEdgeInsets(top: 0, left: Constants.sidePadding, bottom: 0, right: Constants.sidePadding)
         bar.indicator.tintColor = .darkGray
-        bar.indicator.weight = .custom(value: 2)
+        bar.indicator.weight = .custom(value: 4)
 
         addBar(bar, dataSource: internalDataSource, at: .top)
     }

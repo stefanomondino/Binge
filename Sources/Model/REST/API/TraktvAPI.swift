@@ -22,8 +22,10 @@ enum TraktvAPI {
     case played(Page)
     case watched(Page)
     case collected(Page)
+    case anticipated(Page)
 
     case people(Show)
+    case seasons(Show)
     case summary(Show)
     case relatedShows(Show)
 }
@@ -45,6 +47,8 @@ extension TraktvAPI: TargetType {
         case .played: return "shows/played"
         case .watched: return "shows/watched"
         case .collected: return "shows/collected"
+        case .anticipated: return "shows/anticipated"
+        case let .seasons(show): return "shows/\(show.ids.trakt)/seasons"
         case let .summary(show): return "shows/\(show.ids.trakt)"
         case let .people(show): return "shows/\(show.ids.trakt)/people"
         case let .relatedShows(show): return "shows/\(show.ids.trakt)/related"
@@ -91,6 +95,7 @@ extension TraktvAPI: TargetType {
              let .popular(page),
              let .played(page),
              let .watched(page),
+             let .anticipated(page),
              let .collected(page): return ["page": page.page, "limit": page.limit]
         default: return [:]
         }

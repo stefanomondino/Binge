@@ -43,7 +43,7 @@ class CarouselItemView: UIView, WithViewModel {
                                                                 factory: viewModel.cellFactory)
 
         if let collectionView = self.collectionView {
-            let sizeCalculator = CarouselSizeCalculator(ratio: 9 / 16)
+            let sizeCalculator = CarouselSizeCalculator(ratio: viewModel.carouselType.ratio())
 
             let collectionViewDelegate = CollectionViewDelegate(sizeCalculator: sizeCalculator)
                 .withSelect { viewModel.selectItem(at: $0) }
@@ -51,11 +51,20 @@ class CarouselItemView: UIView, WithViewModel {
             collectionView.backgroundColor = .clear
 
             collectionView.rx
-                .animated(by: viewModel, dataSource: collectionViewDataSource)
+                .reloaded(by: viewModel, dataSource: collectionViewDataSource)
                 .disposed(by: disposeBag)
 
             self.collectionViewDelegate = collectionViewDelegate
+            collectionView.reloadData()
             viewModel.reload()
+        }
+        if let title = self.title {
+            title.applyStyle(Styles.Generic.carouselTitle)
+            title.styledText = viewModel.title
+            title.snp.remakeConstraints { make in
+                make.left.equalToSuperview().offset(Constants.sidePadding)
+                make.right.equalToSuperview().inset(Constants.sidePadding)
+            }
         }
     }
 }
@@ -67,15 +76,15 @@ class CarouselSizeCalculator: CollectionViewSizeCalculator {
     }
 
     func insets(for _: UICollectionView, in _: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        return UIEdgeInsets(top: 0, left: Constants.sidePadding, bottom: 0, right: Constants.sidePadding)
     }
 
     func itemSpacing(for _: UICollectionView, in _: Int) -> CGFloat {
-        return 4
+        return 10
     }
 
     func lineSpacing(for _: UICollectionView, in _: Int) -> CGFloat {
-        return 4
+        return 10
     }
 
     func sizeForItem(at indexPath: IndexPath, in collectionView: UICollectionView, direction _: Direction?, type: String?) -> CGSize {

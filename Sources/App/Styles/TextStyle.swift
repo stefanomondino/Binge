@@ -25,6 +25,7 @@ struct DefaultTextStyle: TextStyle {
         style = SwiftRichString.Style {
             $0.font = UIFont(name: font.fontName, size: size)
             $0.color = color
+            $0.lineBreakMode = .byTruncatingTail
             $0.alignment = alignment
         }
     }

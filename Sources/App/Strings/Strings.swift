@@ -18,10 +18,18 @@ extension Translation where Self: RawRepresentable, RawValue == String {
 }
 
 enum Strings {
+    enum Generic: String, Translation {
+        case cast = "generic.cast"
+    }
+
     enum Shows: String, Translation {
         case shows = "shows.title"
+        case related = "shows.related"
         case watched = "shows.watched"
         case popular = "shows.popular"
+        case collected = "shows.collected"
+        case anticipated = "shows.anticipated"
         case trending = "shows.trending"
+        case seasons = "shows.seasons"
     }
 }

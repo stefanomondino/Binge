@@ -16,6 +16,7 @@ class FanartItemView: UIView, WithViewModel {
     var constraint: NSLayoutConstraint?
     override func awakeFromNib() {
         super.awakeFromNib()
+        clipsToBounds = true
     }
 
     func configure(with viewModel: ViewModel) {

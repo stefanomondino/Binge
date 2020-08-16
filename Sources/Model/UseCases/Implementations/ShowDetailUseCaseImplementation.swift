@@ -13,9 +13,14 @@ public struct ShowDetailUseCaseImplementation: ShowDetailUseCase {
 
     public func showDetail(for show: Show) -> Observable<ShowDetail> {
         return
-            shows
-                .detail(forShow: show)
-                .map { $0 }
+            Observable.combineLatest(shows.detail(forShow: show),
+                                     shows.info(forShow: show)) { detail, info in
+                var detail = detail
+                detail.info = info
+                return detail
+            }
+
+//                .map { $0 }
     }
 
     public func cast(for show: Show) -> Observable<[CastMember]> {

@@ -26,9 +26,12 @@ enum Styles {
         case subtitle
         case card
         case navigationBar
+        case carouselTitle
     }
 
     enum Show: String, Style, CaseIterable {
         case titleCard
+        case itemTitle
+        case itemSubtitle
     }
 }

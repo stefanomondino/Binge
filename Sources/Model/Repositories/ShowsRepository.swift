@@ -8,6 +8,7 @@ protocol ShowsRepository {
     func played(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]>
     func watched(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]>
     func collected(currentPage: Int, pageSize: Int) -> Observable<[PlayedShow]>
+    func anticipated(currentPage: Int, pageSize: Int) -> Observable<[AnticipatedShow]>
 
     func info(forShow show: Show) -> Observable<ShowInfo>
     func info(forPerson person: Person) -> Observable<PersonInfo>
@@ -57,6 +58,12 @@ struct ShowsRepositoryImplementation: ShowsRepository {
         return rest
             .get([PlayedShow].self, at:
                 TraktvAPI.collected(TraktvAPI.Page(page: currentPage, limit: pageSize)))
+    }
+
+    func anticipated(currentPage: Int, pageSize: Int) -> Observable<[AnticipatedShow]> {
+        return rest
+            .get([AnticipatedShow].self, at:
+                TraktvAPI.anticipated(TraktvAPI.Page(page: currentPage, limit: pageSize)))
     }
 
     func people(forShow show: Show) -> Observable<PeopleResult> {

@@ -14,19 +14,20 @@ class StringsFactory {
         StringsFactory.current = { container.translations }
     }
 
-    lazy var vocabulary: [String: String] = {
+    lazy var vocabulary: [String: Any] = {
         do {
             let bundle = Bundle(for: StringsFactory.self)
             guard let json = bundle.url(forResource: "Translations", withExtension: "json") else { return [:] }
             let data = try Data(contentsOf: json)
-            return try JSONSerialization.jsonObject(with: data, options: []) as? [String: String] ?? [:]
+            return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] ?? [:]
         } catch {
+            Logger.log(error, level: .error)
             return [:]
         }
     }()
 
     func translation(for string: Translation) -> String {
-        return vocabulary[string.key] ?? string.key
+        return vocabulary.valueForKeyPath(keyPath: string.key) as? String ?? string.key
     }
 }
 

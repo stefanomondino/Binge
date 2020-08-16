@@ -18,6 +18,8 @@ extension PageInfo {
         case .popular: return Strings.Shows.popular
         case .trending: return Strings.Shows.trending
         case .watched: return Strings.Shows.watched
+        case .collected: return Strings.Shows.collected
+        case .anticipated: return Strings.Shows.anticipated
         }
     }
 }

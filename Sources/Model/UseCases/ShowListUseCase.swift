@@ -5,6 +5,8 @@ public enum PageInfo {
     case popular
     case trending
     case watched
+    case collected
+    case anticipated
 }
 
 public protocol ShowListUseCase {

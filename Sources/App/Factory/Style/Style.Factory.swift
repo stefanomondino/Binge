@@ -36,8 +36,9 @@ class DefaultStyleFactory: DependencyContainer {
     init(container _: RootContainer) {
         register(for: Styles.Generic.container) { DefaultContainerStyle() }
         register(for: Styles.Generic.title) { DefaultTextStyle(size: 18) }
-        register(for: Styles.Generic.subtitle) { DefaultTextStyle(size: 14) }
+        register(for: Styles.Generic.subtitle) { DefaultTextStyle(size: 14, alignment: .left) }
         register(for: Styles.Generic.card) { DefaultContainerStyle.card }
+        register(for: Styles.Generic.carouselTitle) { DefaultTextStyle(size: 14, font: .mainBold, alignment: .left) }
         register(for: Styles.Generic.navigationBar) { [DefaultContainerStyle(backgroundColor: .navbarBackground),
                                                        DefaultTextStyle(size: 22, color: .navbarText, font: .mainBold)] }
         setupShows()
@@ -46,6 +47,10 @@ class DefaultStyleFactory: DependencyContainer {
     private func setupShows() {
         register(for: Styles.Show.titleCard) { [DefaultContainerStyle(cornerRadius: 4, backgroundColor: .clear),
                                                 DefaultTextStyle(size: 22, color: .navbarText, font: Fonts.mainBold, alignment: .left)] }
+
+        register(for: Styles.Show.itemTitle) { DefaultTextStyle(size: 10, color: .mainText, font: Fonts.mainBold, alignment: .center) }
+
+        register(for: Styles.Show.itemSubtitle) { DefaultTextStyle(size: 10, color: .mainText, font: Fonts.mainRegular, alignment: .center) }
     }
 }
 

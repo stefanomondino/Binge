@@ -1,6 +1,16 @@
 {
-    "shows.title": "Shows",
-    "shows.watched": "Watched",
-    "shows.popular": "Popular",
-    "shows.trending": "Trending"
+    "generic": {
+        "cast": "Cast"
+    },
+    "shows": {
+        "title": "Shows",
+        "watched": "Watched",
+        "popular": "Popular",
+        "trending": "Trending",
+        "collected": "Collected",
+        "anticipated": "Anticipated",
+        "related": "Related",
+        "seasons": "Seasons"
+        
+    }
 }

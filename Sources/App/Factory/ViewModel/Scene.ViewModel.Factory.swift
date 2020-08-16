@@ -50,7 +50,9 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
         return PagerViewModel(pages: [
             popularShows(),
             trendingShows(),
-            watchedShows()
+            watchedShows(),
+            collectedShows(),
+            anticipatedShows()
 
         ], styleFactory: container.styleFactory)
             .with(\.pageTitle, to: Strings.Shows.shows.translation)
@@ -65,6 +67,18 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
     func trendingShows() -> ShowListViewModel {
         ShowListViewModel(itemViewModelFactory: container.viewModels.items,
                           useCase: container.model.useCases.shows.trending,
+                          routeFactory: container.routeFactory)
+    }
+
+    func collectedShows() -> ShowListViewModel {
+        ShowListViewModel(itemViewModelFactory: container.viewModels.items,
+                          useCase: container.model.useCases.shows.collected,
+                          routeFactory: container.routeFactory)
+    }
+
+    func anticipatedShows() -> ShowListViewModel {
+        ShowListViewModel(itemViewModelFactory: container.viewModels.items,
+                          useCase: container.model.useCases.shows.anticipated,
                           routeFactory: container.routeFactory)
     }
 

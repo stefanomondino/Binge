@@ -18,6 +18,15 @@ enum ViewIdentifier: String, LayoutIdentifier {
     enum CarouselType: String {
         case cast
         case relatedShows
+        case seasons
+
+        var title: Translation {
+            switch self {
+            case .cast: return Strings.Generic.cast
+            case .relatedShows: return Strings.Shows.related
+            case .seasons: return Strings.Shows.seasons
+            }
+        }
     }
 
     case show
@@ -26,7 +35,9 @@ enum ViewIdentifier: String, LayoutIdentifier {
     case stringPicker
     case carousel
     case person
+    case season
     case fanart
+    case description
     // MURRAY PLACEHOLDER
 
     var identifierString: String {

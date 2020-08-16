@@ -45,6 +45,17 @@ public struct PlayedShow: WithShow, Codable {
     public var show: Show { return showItem }
 }
 
+public struct AnticipatedShow: WithShow, Codable {
+    private enum CodingKeys: String, CodingKey {
+        case showItem = "show"
+        case listCount
+    }
+
+    private let showItem: ShowItem
+    public let listCount: Int
+    public var show: Show { showItem }
+}
+
 public struct SearchedShow: WithShow {
     public let score: Double
     public let show: Show
@@ -60,6 +71,7 @@ public protocol Show: Codable, WithShow {
 public protocol ShowDetail: Show {
     var overview: String { get }
     var runtime: Int { get }
+    var info: ShowInfo? { get }
 }
 
 public struct Ids: Codable {
@@ -86,6 +98,20 @@ public extension Show {
     }
 }
 
+public struct ShowSeason: Codable {
+    let ids: Ids
+    let number: Int
+}
+
+public struct SeasonInfo: Codable {
+    public let id: Int
+    public let name: String
+    public let episodeCount: Int
+    public let overview: String
+    public let seasonNumber: Int
+    public let posterPath: String?
+}
+
 internal struct ShowItem: Show {
     public let title: String
     let ids: Ids
@@ -99,11 +125,19 @@ internal struct ShowDetailItem: ShowDetail {
     var title: String
     var year: Int?
     var ids: Ids
+    var info: ShowInfo?
     var show: Show { return self }
 }
 
 public struct ShowInfo: Codable {
-    let name: String
-    let backdropPath: String?
-    let posterPath: String?
+    public let name: String
+    public let backdropPath: String?
+    public let posterPath: String?
+    public let seasons: [SeasonInfo]?
+}
+
+public extension SeasonInfo {
+    var uniqueIdentifier: String {
+        "\(id)"
+    }
 }

@@ -15,12 +15,14 @@ class ShadowView: UICollectionReusableView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         isOpaque = false
+        insetsLayoutMarginsFromSafeArea = false
         backgroundColor = .clear
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         isOpaque = false
+        insetsLayoutMarginsFromSafeArea = false
         backgroundColor = .clear
     }
 
@@ -47,38 +49,27 @@ class ShadowView: UICollectionReusableView {
     }
 }
 
-class ShowHeaderPlugin: Plugin {
-    required init(delegate: FlowLayoutDelegate) {
-        self.delegate = delegate
-    }
-
-    var sectionHeadersPinToVisibleBounds: Bool = false
-
-    var sectionFootersPinToVisibleBounds: Bool = false
-
-    public typealias Delegate = FlowLayoutDelegate
-    public typealias Parameters = FlowSectionParameters
-
-    weak var delegate: Delegate?
-
-    func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes] {
+class ShowHeaderPlugin: FlowLayoutPlugin {
+    override func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes] {
         guard let collectionView = layout.collectionView else { return [] }
         layout.register(ShadowView.self, forDecorationViewOfKind: ShadowView.identifier)
         let params = sectionParameters(inSection: section, layout: layout)
         let indexPath = IndexPath(item: 0, section: 0)
         let size = delegate?.collectionView?(collectionView, layout: layout, sizeForItemAt: indexPath) ?? .zero
         guard size.width > 0, size.height > 0 else { return [] }
-        let poster = PluginLayoutAttributes(forCellWith: indexPath)
-        offset.x = params.insets.left
-        let width = size.width
+
         let height = size.height
-        let backdropHeight = (delegate as? CollectionViewDelegate)?.sizeCalculator
-            .sizeForItem(at: indexPath, in: collectionView, direction: .vertical, type: ViewIdentifier.Supplementary.parallax.identifierString).height ?? 100
+        let minHeight = params.contentBounds.width / (16 / 9)
+        let expectedSize = (delegate as? CollectionViewDelegate)?.sizeCalculator
+            .sizeForItem(at: indexPath, in: collectionView, direction: .vertical, type: ViewIdentifier.Supplementary.parallax.identifierString)
+            ?? CGSize(width: params.contentBounds.width, height: minHeight)
+        var backdropHeight = params.contentBounds.width / (expectedSize.width / expectedSize.height)
+        if backdropHeight.isNaN || backdropHeight < minHeight { backdropHeight = minHeight }
         offset.y += backdropHeight - height + height / 3.0
 
-        poster.frame = CGRect(x: offset.x + 20, y: offset.y, width: width - 40, height: height)
-        poster.zIndex = 2
-        offset.y += poster.frame.height + 20
+        let attributes = super.layoutAttributes(in: section, offset: &offset, layout: layout)
+        attributes.forEach { $0.zIndex = 2 }
+
         let parallax = PluginLayoutAttributes(forSupplementaryViewOfKind: ViewIdentifier.Supplementary.parallax.identifierString, with: IndexPath(item: 0, section: 0))
         parallax.frame = CGRect(x: 0, y: 0, width: params.contentBounds.width, height: backdropHeight)
         parallax.zIndex = 0
@@ -87,7 +78,7 @@ class ShowHeaderPlugin: Plugin {
         shadow.zIndex = 1
         shadow.frame = parallax.frame
 
-        return [poster, parallax, shadow]
+        return [parallax, shadow] + attributes
     }
 }
 

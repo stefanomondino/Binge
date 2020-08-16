@@ -55,6 +55,8 @@ public protocol ShowsContainer {
     var trending: ShowListUseCase { get }
     var popular: ShowListUseCase { get }
     var watched: ShowListUseCase { get }
+    var collected: ShowListUseCase { get }
+    var anticipated: ShowListUseCase { get }
     var detail: ShowDetailUseCase { get }
     var person: PersonDetailUseCase { get }
 }
@@ -64,6 +66,8 @@ class ShowsContainerImplementation: ShowsContainer, DependencyContainer {
         case trending
         case popular
         case watched
+        case collected
+        case anticipated
         case detail
         case person
     }
@@ -73,6 +77,8 @@ class ShowsContainerImplementation: ShowsContainer, DependencyContainer {
     var trending: ShowListUseCase { self[.trending] }
     var popular: ShowListUseCase { self[.popular] }
     var watched: ShowListUseCase { self[.watched] }
+    var collected: ShowListUseCase { self[.collected] }
+    var anticipated: ShowListUseCase { self[.anticipated] }
     var detail: ShowDetailUseCase { self[.detail] }
     var person: PersonDetailUseCase { self[.person] }
 
@@ -80,6 +86,8 @@ class ShowsContainerImplementation: ShowsContainer, DependencyContainer {
         register(for: .trending, scope: .singleton) { TrendingShowsUseCase(repository: container.repositories.shows) }
         register(for: .popular, scope: .singleton) { PopularShowsUseCase(repository: container.repositories.shows) }
         register(for: .watched, scope: .singleton) { WatchedShowsUseCase(repository: container.repositories.shows) }
+        register(for: .collected, scope: .singleton) { CollectedShowsUseCase(repository: container.repositories.shows) }
+        register(for: .anticipated, scope: .singleton) { AnticipatedShowsUseCase(repository: container.repositories.shows) }
         register(for: .detail, scope: .singleton) { ShowDetailUseCaseImplementation(shows: container.repositories.shows) }
         register(for: .person, scope: .singleton) { PersonDetailUseCaseImplementation(shows: container.repositories.shows) }
     }

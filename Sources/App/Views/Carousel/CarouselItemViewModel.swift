@@ -26,7 +26,7 @@ class CarouselItemViewModel: RxListViewModel {
     var uniqueIdentifier: UniqueIdentifier = UUID()
     let carouselType: ViewIdentifier.CarouselType
     let cellFactory: CollectionViewCellFactory
-
+    let title: String
     private let onSelection: (ViewModel) -> Void
 
     private let observable: Observable<[Section]>
@@ -40,6 +40,7 @@ class CarouselItemViewModel: RxListViewModel {
         self.layoutIdentifier = layoutIdentifier
         self.onSelection = onSelection
         carouselType = type
+        title = type.title.translation
         reload()
     }
 

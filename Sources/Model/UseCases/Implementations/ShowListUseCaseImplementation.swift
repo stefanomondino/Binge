@@ -55,3 +55,35 @@ public class WatchedShowsUseCase: ShowListUseCase {
             .map { $0 }
     }
 }
+
+public class CollectedShowsUseCase: ShowListUseCase {
+    public var page: PageInfo { .collected }
+
+    let repository: ShowsRepository
+
+    init(repository: ShowsRepository) {
+        self.repository = repository
+    }
+
+    public func shows(currentPage: Int, pageSize: Int) -> Observable<[WithShow]> {
+        return repository
+            .collected(currentPage: currentPage, pageSize: pageSize)
+            .map { $0 }
+    }
+}
+
+public class AnticipatedShowsUseCase: ShowListUseCase {
+    public var page: PageInfo { .anticipated }
+
+    let repository: ShowsRepository
+
+    init(repository: ShowsRepository) {
+        self.repository = repository
+    }
+
+    public func shows(currentPage: Int, pageSize: Int) -> Observable<[WithShow]> {
+        return repository
+            .anticipated(currentPage: currentPage, pageSize: pageSize)
+            .map { $0 }
+    }
+}

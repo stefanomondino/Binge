@@ -246,7 +246,7 @@ extension UIViewController {
         container?.setTitle(title)
     }
 
-    func setNavigationView(_ view: UIView) {
+    func setNavigationView(_ view: UIView?) {
         container?.setTitleView(view)
     }
 

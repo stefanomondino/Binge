@@ -19,6 +19,8 @@ class PersonItemViewModel: ViewModel {
         return person.name
     }
 
+    var subtitle: String = ""
+
     init(person: Person,
          layoutIdentifier: LayoutIdentifier = ViewIdentifier.person,
          imagesUseCase: ImagesUseCase) {
@@ -26,6 +28,19 @@ class PersonItemViewModel: ViewModel {
 
         self.person = person
 
+        image = imagesUseCase
+            .image(forPerson: person)
+            .flatMapLatest { $0.getImage() }
+            .share(replay: 1, scope: .forever)
+    }
+
+    init(castMember: CastMember,
+         layoutIdentifier: LayoutIdentifier = ViewIdentifier.person,
+         imagesUseCase: ImagesUseCase) {
+        self.layoutIdentifier = layoutIdentifier
+
+        person = castMember.person
+        subtitle = castMember.characters.joined(separator: ", ")
         image = imagesUseCase
             .image(forPerson: person)
             .flatMapLatest { $0.getImage() }

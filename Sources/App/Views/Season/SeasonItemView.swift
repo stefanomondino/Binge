@@ -8,7 +8,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-class PersonItemView: UIView, WithViewModel {
+class SeasonItemView: UIView, WithViewModel {
     @IBOutlet var title: UILabel?
     @IBOutlet var subtitle: UILabel?
     @IBOutlet var image: UIImageView?
@@ -21,12 +21,11 @@ class PersonItemView: UIView, WithViewModel {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        image?.layer.cornerRadius = bounds.width / 2.0
     }
 
     func configure(with viewModel: ViewModel) {
         disposeBag = DisposeBag()
-        guard let viewModel = viewModel as? PersonItemViewModel
+        guard let viewModel = viewModel as? SeasonItemViewModel
         else { return }
         if let title = self.title {
             title.applyStyle(Styles.Show.itemTitle)
