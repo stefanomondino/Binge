@@ -17,7 +17,7 @@ protocol RouteFactory {
     func home() -> Route
     func url(for url: URL) -> Route
     func exit() -> CompletableRoute
-    func showDetail(for show: WithShow) -> Route
+    func showDetail(for show: ItemContainer) -> Route
     func personDetail(for person: Person) -> Route
 }
 
@@ -57,7 +57,7 @@ class MainRouteFactory: RouteFactory {
                 return self.container.views.scenes.pager(viewModel: viewModel)
                     .inContainer()
             }
-        case let viewModel as ShowListViewModel:
+        case let viewModel as ItemListViewModel:
             return EmptyRoute {
                 self.container
                     .views
@@ -77,7 +77,7 @@ class MainRouteFactory: RouteFactory {
         }
     }
 
-    func showDetail(for show: WithShow) -> Route {
+    func showDetail(for show: ItemContainer) -> Route {
         return NavigationRoute {
             let viewModel = self.container.viewModels.scenes.showDetail(for: show)
             return self.container.views.scenes

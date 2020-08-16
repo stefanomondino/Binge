@@ -32,4 +32,14 @@ enum Strings {
         case trending = "shows.trending"
         case seasons = "shows.seasons"
     }
+
+    enum Movies: String, Translation {
+        case movies = "movies.title"
+        case related = "movies.related"
+        case watched = "movies.watched"
+        case popular = "movies.popular"
+        case collected = "movies.collected"
+        case anticipated = "movies.anticipated"
+        case trending = "movies.trending"
+    }
 }

@@ -24,7 +24,7 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
 
     private let useCase: ShowDetailUseCase
 
-    private let show: WithShow
+    private let show: ItemContainer
 
     private let routeFactory: RouteFactory
 
@@ -33,11 +33,11 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
     let backgroundImage: ObservableImage
 
     init(
-        show: WithShow,
+        show: ItemContainer,
         routeFactory: RouteFactory,
         itemViewModelFactory: ItemViewModelFactory,
         useCase: ShowDetailUseCase,
-        layout: SceneIdentifier = .showDetail
+        layout: SceneIdentifier = .itemList
     ) {
         self.show = show
         self.routeFactory = routeFactory
@@ -45,13 +45,13 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
         layoutIdentifier = layout
         self.itemViewModelFactory = itemViewModelFactory
         backgroundImage = useCase
-            .fanart(for: show.show)
+            .fanart(for: show.item)
             .flatMap { $0.image(for: .background)?.getImage() ?? .empty() }
     }
 
     func reload() {
         disposeBag = DisposeBag()
-        Observable.combineLatest(useCase.showDetail(for: show.show), useCase.fanart(for: show.show))
+        Observable.combineLatest(useCase.showDetail(for: show.item), useCase.fanart(for: show.item))
             .map { [weak self] in self?.map($0.0, fanart: $0.1) ?? [] }
             .catchErrorJustReturn([])
             .bind(to: sectionsRelay)
@@ -66,7 +66,7 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
         let routes = self.routes
         let routeFactory = self.routeFactory
         var topSection = Section(id: UUID().stringValue,
-                                 items: [itemViewModelFactory.show(show, layout: .title),
+                                 items: [itemViewModelFactory.item(show, layout: .title),
                                          itemViewModelFactory.showDescription(show)])
         if let fanart = [Fanart.Format.background]
             .compactMap({ fanart.image(for: $0) })

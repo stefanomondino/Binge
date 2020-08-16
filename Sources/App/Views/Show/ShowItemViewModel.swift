@@ -33,29 +33,53 @@ enum ShowIdentifier: String, LayoutIdentifier, CaseIterable {
 
 class ShowItemViewModel: ViewModel {
     let layoutIdentifier: LayoutIdentifier
-    var uniqueIdentifier: UniqueIdentifier { show.uniqueIdentifier }
-    let show: Show
+    var uniqueIdentifier: UniqueIdentifier { item.uniqueIdentifier }
+    let item: Item
     let image: ObservableImage
     let counter: String
     var title: String {
-        return show.title
+        return item.title
     }
 
     let mainStyle: Style
 //    static func preview(_ layout: ShowIdentifier) -> ViewModel {
 //        ShowItemViewModel(show: TrendingShow.demo.show, layoutIdentifier: layout, imageUseCase: StaticImageUseCase(), styleFactory: DefaultAppDependencyContainer().styleFactory)
 //    }
-    init(show: Show,
+    init(show: ShowItem,
          layoutIdentifier: ShowIdentifier,
          imageUseCase: ImagesUseCase) {
         self.layoutIdentifier = layoutIdentifier
-        self.show = show
+        item = show.item
         mainStyle = layoutIdentifier.style
-        if let year = show.year { counter = "\(year)" } else { counter = "" }
+        if let year = show.item.year { counter = "\(year)" } else { counter = "" }
         image = imageUseCase
-            .poster(forShow: show)
+            .poster(for: show)
             .flatMapLatest { $0.getImage() }
 //            .share(replay: 1, scope: .forever)
             .startWith(UIImage())
+    }
+
+    init(movie: MovieItem,
+         layoutIdentifier: ShowIdentifier,
+         imageUseCase: ImagesUseCase) {
+        self.layoutIdentifier = layoutIdentifier
+        item = movie.item
+        mainStyle = layoutIdentifier.style
+        if let year = movie.item.year { counter = "\(year)" } else { counter = "" }
+        image = imageUseCase
+            .poster(for: movie)
+            .flatMapLatest { $0.getImage() }
+            //            .share(replay: 1, scope: .forever)
+            .startWith(UIImage())
+    }
+
+    init(item: Item,
+         layoutIdentifier: ShowIdentifier,
+         imageUseCase _: ImagesUseCase) {
+        self.layoutIdentifier = layoutIdentifier
+        self.item = item
+        mainStyle = layoutIdentifier.style
+        if let year = item.year { counter = "\(year)" } else { counter = "" }
+        image = .just(UIImage())
     }
 }

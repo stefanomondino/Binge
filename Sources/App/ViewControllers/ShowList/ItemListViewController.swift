@@ -10,27 +10,10 @@ import RxSwift
 import SnapKit
 import UIKit
 
-class ShowListDelegate: CollectionViewDelegate, StaggeredLayoutDelegate, PluginLayoutDelegate {
-    func collectionView(_: UICollectionView, layout _: PluginLayout, lineCountForSectionAt _: Int) -> Int {
-        return 3
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout _: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat {
-        let size = sizeCalculator
-            .sizeForItem(at: indexPath, in: collectionView, direction: nil, type: nil)
-        return size.width / size.height
-    }
-
-    func collectionView(_: UICollectionView, layout _: PluginLayout, effectsForItemAt _: IndexPath, kind: String?) -> [PluginEffect] {
-        guard kind == nil else { return [] }
-        return [ElasticEffect(spacing: 100, span: 100)]
-    }
-}
-
-class ShowListViewController: UIViewController {
+class ItemListViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView!
 
-    var viewModel: ShowListViewModel
+    var viewModel: ItemListViewModel
 
     var collectionViewDataSource: CollectionViewDataSource? {
         didSet {
@@ -51,7 +34,7 @@ class ShowListViewController: UIViewController {
 
     init(nibName: String?,
          bundle: Bundle? = nil,
-         viewModel: ShowListViewModel,
+         viewModel: ItemListViewModel,
          collectionViewCellFactory: CollectionViewCellFactory) {
         self.viewModel = viewModel
         self.collectionViewCellFactory = collectionViewCellFactory
@@ -80,7 +63,7 @@ class ShowListViewController: UIViewController {
             .withLineSpacing { _, _ in spacing }
             .withInsets { _, _ in UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing) }
 
-        let collectionViewDelegate = ShowListDelegate(sizeCalculator: sizeCalculator)
+        let collectionViewDelegate = Delegate(sizeCalculator: sizeCalculator)
             .withSelect { viewModel.selectItem(at: $0) }
 
         let layout = StaggeredLayout()
@@ -104,5 +87,24 @@ class ShowListViewController: UIViewController {
 //        button.setImage(Asset.heart.image, for: .normal)
 //        button.rx.tap.bind { print("!!!") }.disposed(by: disposeBag)
 //        addRightNavigationView(button)
+    }
+}
+
+extension ItemListViewController {
+    class Delegate: CollectionViewDelegate, StaggeredLayoutDelegate, PluginLayoutDelegate {
+        func collectionView(_: UICollectionView, layout _: PluginLayout, lineCountForSectionAt _: Int) -> Int {
+            return 3
+        }
+
+        func collectionView(_ collectionView: UICollectionView, layout _: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat {
+            let size = sizeCalculator
+                .sizeForItem(at: indexPath, in: collectionView, direction: nil, type: nil)
+            return size.width / size.height
+        }
+
+        func collectionView(_: UICollectionView, layout _: PluginLayout, effectsForItemAt _: IndexPath, kind: String?) -> [PluginEffect] {
+            guard kind == nil else { return [] }
+            return [ElasticEffect(spacing: 100, span: 100)]
+        }
     }
 }

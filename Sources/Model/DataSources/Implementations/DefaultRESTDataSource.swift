@@ -79,7 +79,7 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
 
     func response<Endpoint: TargetType>(at endpoint: Endpoint) -> Observable<Response> {
 //        Logger.log(urlRequestCache, tag: .lifecycle)
-        return .deferred {
+        return Observable.deferred {
             let provider = self.provider(for: Endpoint.self)
             let request = try provider.endpoint(endpoint).urlRequest()
             if
@@ -93,11 +93,12 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
                 .request(endpoint)
                 .asObservable()
                 .withErrors()
+                .observeOn(Scheduler.background)
                 .do(onDispose: { [weak self] in self?.urlRequestCache[request] = nil })
                 .share()
             self.urlRequestCache[request] = observable
             return observable
-        }
+        }.subscribeOn(Scheduler.background)
     }
 }
 

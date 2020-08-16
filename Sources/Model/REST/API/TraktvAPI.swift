@@ -17,17 +17,27 @@ enum TraktvAPI {
 
     case authorize
     case token(code: String)
-    case trending(Page)
-    case popular(Page)
-    case played(Page)
-    case watched(Page)
-    case collected(Page)
-    case anticipated(Page)
 
-    case people(Show)
-    case seasons(Show)
-    case summary(Show)
-    case relatedShows(Show)
+    case trendingShows(Page)
+    case popularShows(Page)
+    case playedShows(Page)
+    case watchedShows(Page)
+    case collectedShows(Page)
+    case anticipatedShows(Page)
+    case showPeople(Item)
+    case seasons(Item)
+    case showSummary(Item)
+    case relatedShows(Item)
+
+    case trendingMovies(Page)
+    case popularMovies(Page)
+    case playedMovies(Page)
+    case watchedMovies(Page)
+    case collectedMovies(Page)
+    case anticipatedMovies(Page)
+    case moviePeople(Item)
+    case movieSummary(Item)
+    case relatedMovies(Item)
 }
 
 extension TraktvAPI: TargetType {
@@ -42,16 +52,25 @@ extension TraktvAPI: TargetType {
         switch self {
         case .authorize: return "oauth/authorize"
         case .token: return "oauth/token"
-        case .trending: return "shows/trending"
-        case .popular: return "shows/popular"
-        case .played: return "shows/played"
-        case .watched: return "shows/watched"
-        case .collected: return "shows/collected"
-        case .anticipated: return "shows/anticipated"
+        case .trendingShows: return "shows/trending"
+        case .popularShows: return "shows/popular"
+        case .playedShows: return "shows/played"
+        case .watchedShows: return "shows/watched"
+        case .collectedShows: return "shows/collected"
+        case .anticipatedShows: return "shows/anticipated"
+        case .trendingMovies: return "movies/trending"
+        case .popularMovies: return "movies/popular"
+        case .playedMovies: return "movies/played"
+        case .watchedMovies: return "movies/watched"
+        case .collectedMovies: return "movies/collected"
+        case .anticipatedMovies: return "movies/anticipated"
         case let .seasons(show): return "shows/\(show.ids.trakt)/seasons"
-        case let .summary(show): return "shows/\(show.ids.trakt)"
-        case let .people(show): return "shows/\(show.ids.trakt)/people"
+        case let .showSummary(show): return "shows/\(show.ids.trakt)"
+        case let .movieSummary(movie): return "movies/\(movie.ids.trakt)"
+        case let .showPeople(show): return "shows/\(show.ids.trakt)/people"
+        case let .moviePeople(movie): return "movies/\(movie.ids.trakt)/people"
         case let .relatedShows(show): return "shows/\(show.ids.trakt)/related"
+        case let .relatedMovies(movie): return "movies/\(movie.ids.trakt)/related"
         }
     }
 
@@ -91,12 +110,18 @@ extension TraktvAPI: TargetType {
     private var pagination: [String: Any] {
         switch self {
         // case .played(_, let page), .trending(let page), .search(_, let page): return ["page": page.page, "limit": page.limit]
-        case let .trending(page),
-             let .popular(page),
-             let .played(page),
-             let .watched(page),
-             let .anticipated(page),
-             let .collected(page): return ["page": page.page, "limit": page.limit]
+        case let .trendingShows(page),
+             let .popularShows(page),
+             let .playedShows(page),
+             let .watchedShows(page),
+             let .anticipatedShows(page),
+             let .collectedShows(page),
+             let .trendingMovies(page),
+             let .popularMovies(page),
+             let .playedMovies(page),
+             let .watchedMovies(page),
+             let .anticipatedMovies(page),
+             let .collectedMovies(page): return ["page": page.page, "limit": page.limit]
         default: return [:]
         }
     }
@@ -113,11 +138,11 @@ extension TraktvAPI: TargetType {
         case .authorize: return ["response_type": "code",
                                  "client_id": Configuration.environment.traktClientID,
                                  "redirect_uri": Configuration.environment.traktRedirectURI]
-        case .summary: return ["extended": "full"]
-//        case .search(let q, _):
-//            parameters["query"] = q
-//            return parameters
-//        case .myProfile: return ["extended":"full"]
+        case .showSummary, .movieSummary: return ["extended": "full"]
+        //        case .search(let q, _):
+        //            parameters["query"] = q
+        //            return parameters
+        //        case .myProfile: return ["extended":"full"]
         default: return parameters
         }
     }

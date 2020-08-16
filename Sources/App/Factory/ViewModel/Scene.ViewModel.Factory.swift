@@ -15,11 +15,8 @@ protocol SceneViewModelFactory {
     func splashViewModel() -> SplashViewModel
     func homePager() -> PagerViewModel
     func login() -> LoginViewModel
-    func showDetail(for show: WithShow) -> ShowDetailViewModel
+    func showDetail(for show: ItemContainer) -> ShowDetailViewModel
     func personDetail(for person: Person) -> PersonViewModel
-    func popularShows() -> ShowListViewModel
-    func trendingShows() -> ShowListViewModel
-    func watchedShows() -> ShowListViewModel
     func showsPager() -> PagerViewModel
     // MURRAY DECLARATION PLACEHOLDER
 }
@@ -30,6 +27,7 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
     func homePager() -> PagerViewModel {
         return PagerViewModel(pages: [
             showsPager(),
+            moviesPager(),
             login()
         ],
         layout: SceneIdentifier.tab,
@@ -58,37 +56,79 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
             .with(\.pageTitle, to: Strings.Shows.shows.translation)
     }
 
-    func popularShows() -> ShowListViewModel {
-        ShowListViewModel(itemViewModelFactory: container.viewModels.items,
+    func moviesPager() -> PagerViewModel {
+        return PagerViewModel(pages: [
+            popularMovies(),
+            trendingMovies(),
+            watchedMovies(),
+            collectedMovies(),
+            anticipatedShows()
+
+        ], styleFactory: container.styleFactory)
+            .with(\.pageTitle, to: Strings.Movies.movies.translation)
+    }
+
+    func popularShows() -> ItemListViewModel {
+        ItemListViewModel(itemViewModelFactory: container.viewModels.items,
                           useCase: container.model.useCases.shows.popular,
                           routeFactory: container.routeFactory)
     }
 
-    func trendingShows() -> ShowListViewModel {
-        ShowListViewModel(itemViewModelFactory: container.viewModels.items,
+    func trendingShows() -> ItemListViewModel {
+        ItemListViewModel(itemViewModelFactory: container.viewModels.items,
                           useCase: container.model.useCases.shows.trending,
                           routeFactory: container.routeFactory)
     }
 
-    func collectedShows() -> ShowListViewModel {
-        ShowListViewModel(itemViewModelFactory: container.viewModels.items,
+    func collectedShows() -> ItemListViewModel {
+        ItemListViewModel(itemViewModelFactory: container.viewModels.items,
                           useCase: container.model.useCases.shows.collected,
                           routeFactory: container.routeFactory)
     }
 
-    func anticipatedShows() -> ShowListViewModel {
-        ShowListViewModel(itemViewModelFactory: container.viewModels.items,
+    func anticipatedShows() -> ItemListViewModel {
+        ItemListViewModel(itemViewModelFactory: container.viewModels.items,
                           useCase: container.model.useCases.shows.anticipated,
                           routeFactory: container.routeFactory)
     }
 
-    func watchedShows() -> ShowListViewModel {
-        ShowListViewModel(itemViewModelFactory: container.viewModels.items,
+    func watchedShows() -> ItemListViewModel {
+        ItemListViewModel(itemViewModelFactory: container.viewModels.items,
                           useCase: container.model.useCases.shows.watched,
                           routeFactory: container.routeFactory)
     }
 
-    func showDetail(for show: WithShow) -> ShowDetailViewModel {
+    func popularMovies() -> ItemListViewModel {
+        ItemListViewModel(itemViewModelFactory: container.viewModels.items,
+                          useCase: container.model.useCases.movies.popular,
+                          routeFactory: container.routeFactory)
+    }
+
+    func trendingMovies() -> ItemListViewModel {
+        ItemListViewModel(itemViewModelFactory: container.viewModels.items,
+                          useCase: container.model.useCases.movies.trending,
+                          routeFactory: container.routeFactory)
+    }
+
+    func collectedMovies() -> ItemListViewModel {
+        ItemListViewModel(itemViewModelFactory: container.viewModels.items,
+                          useCase: container.model.useCases.movies.collected,
+                          routeFactory: container.routeFactory)
+    }
+
+    func anticipatedMovies() -> ItemListViewModel {
+        ItemListViewModel(itemViewModelFactory: container.viewModels.items,
+                          useCase: container.model.useCases.movies.anticipated,
+                          routeFactory: container.routeFactory)
+    }
+
+    func watchedMovies() -> ItemListViewModel {
+        ItemListViewModel(itemViewModelFactory: container.viewModels.items,
+                          useCase: container.model.useCases.movies.watched,
+                          routeFactory: container.routeFactory)
+    }
+
+    func showDetail(for show: ItemContainer) -> ShowDetailViewModel {
         ShowDetailViewModel(show: show,
                             routeFactory: container.routeFactory,
                             itemViewModelFactory: container.viewModels.items,

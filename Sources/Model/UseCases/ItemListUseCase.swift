@@ -9,7 +9,7 @@ public enum PageInfo {
     case anticipated
 }
 
-public protocol ShowListUseCase {
+public protocol ItemListUseCase {
     var page: PageInfo { get }
-    func shows(currentPage: Int, pageSize: Int) -> Observable<[WithShow]>
+    func items(currentPage: Int, pageSize: Int) -> Observable<[ItemContainer]>
 }

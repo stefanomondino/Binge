@@ -10,7 +10,8 @@ import Foundation
 import Moya
 
 enum FanartAPI {
-    case show(Show)
+    case show(Item)
+    case movie(Item)
 }
 
 extension FanartAPI: TargetType {
@@ -21,6 +22,7 @@ extension FanartAPI: TargetType {
     var path: String {
         switch self {
         case let .show(show): return "tv/\(show.ids.tvdb ?? -1)"
+        case let .movie(movie): return "movies/\(movie.ids.tvdb ?? -1)"
         }
     }
 

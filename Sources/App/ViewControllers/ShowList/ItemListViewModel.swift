@@ -24,12 +24,12 @@ extension PageInfo {
     }
 }
 
-class ShowListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
+class ItemListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
     let uniqueIdentifier: UniqueIdentifier = UUID()
 
     var routes: PublishRelay<Route> = PublishRelay()
 
-    typealias ShowListDownloadClosure = (_ current: Int, _ total: Int) -> Observable<[WithShow]>
+    typealias ShowListDownloadClosure = (_ current: Int, _ total: Int) -> Observable<[ItemContainer]>
 
     var sectionsRelay: BehaviorRelay<[Section]> = BehaviorRelay(value: [])
 
@@ -51,14 +51,14 @@ class ShowListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
 //        self.downloadClosure = downloadClosure
 //        self.itemViewModelFactory = itemViewModelFactory
 //    }
-    private let useCase: ShowListUseCase
+    private let useCase: ItemListUseCase
 
     let routeFactory: RouteFactory
 
     init(itemViewModelFactory: ItemViewModelFactory,
-         useCase: ShowListUseCase,
+         useCase: ItemListUseCase,
          routeFactory: RouteFactory,
-         layout: SceneIdentifier = SceneIdentifier.showList) {
+         layout: SceneIdentifier = SceneIdentifier.itemList) {
         self.useCase = useCase
         self.routeFactory = routeFactory
         layoutIdentifier = layout
@@ -71,17 +71,17 @@ class ShowListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
     }
 
     func selectItem(at indexPath: IndexPath) {
-        guard let show = (self[indexPath] as? ShowItemViewModel)?.show else { return }
+        guard let show = (self[indexPath] as? ShowItemViewModel)?.item else { return }
         let route = routeFactory.showDetail(for: show)
         routes.accept(route)
     }
 
-    private func items(from shows: [WithShow]) -> [ViewModel] {
+    private func items(from items: [ItemContainer]) -> [ViewModel] {
         let factory = itemViewModelFactory
-        return shows.map { factory.show($0, layout: .posterOnly) }
+        return items.map { factory.item($0, layout: .posterOnly) }
     }
 
-    private func addItems(from shows: [WithShow]) {
+    private func addItems(from shows: [ItemContainer]) {
         guard var section = sections.first else { return }
         let newItems = items(from: shows)
         section.items = section.items.dropLast()
@@ -97,7 +97,7 @@ class ShowListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
 
             let currentPage = section.items.count / 20
             return self.useCase
-                .shows(currentPage: currentPage + 1, pageSize: 20)
+                .items(currentPage: currentPage + 1, pageSize: 20)
 //                .downloadClosure(currentPage + 1, 20)
                 .share()
                 .debug()
@@ -106,7 +106,7 @@ class ShowListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
         }
     }
 
-    private func createSections(from shows: [Show]) -> [Section] {
+    private func createSections(from shows: [Item]) -> [Section] {
         let items = self.items(from: shows) + [loadMore()]
         return [Section(items: items)]
     }

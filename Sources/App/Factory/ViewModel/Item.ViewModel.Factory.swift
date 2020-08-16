@@ -14,14 +14,13 @@ import RxSwift
 
 protocol ItemViewModelFactory {
     func loadMore(_ closure: @escaping () -> Disposable) -> ViewModel
-
-    func show(_ show: WithShow, layout: ShowIdentifier) -> ViewModel
-    func seasonsCarousel(for show: WithShow, onSelection: @escaping (SeasonInfo) -> Void) -> ViewModel
-    func castCarousel(for show: WithShow, onSelection: @escaping (Person) -> Void) -> ViewModel
-    func relatedShowsCarousel(for show: WithShow, onSelection: @escaping (Show) -> Void) -> ViewModel
+    func item(_ show: ItemContainer, layout: ShowIdentifier) -> ViewModel
+    func seasonsCarousel(for show: ItemContainer, onSelection: @escaping (Season.Info) -> Void) -> ViewModel
+    func castCarousel(for show: ItemContainer, onSelection: @escaping (Person) -> Void) -> ViewModel
+    func relatedShowsCarousel(for show: ItemContainer, onSelection: @escaping (Item) -> Void) -> ViewModel
     func person(_ person: Person) -> ViewModel
     func castMember(_ castMember: CastMember) -> ViewModel
-    func showDescription(_ show: ShowDetail) -> ViewModel
+    func showDescription(_ show: ItemDetail) -> ViewModel
     func fanart(_ fanart: Fanart) -> ViewModel
     // MURRAY DECLARATION PLACEHOLDER
 }
@@ -33,15 +32,23 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         LoadMoreItemViewModel(closure)
     }
 
-    func show(_ show: WithShow, layout: ShowIdentifier) -> ViewModel {
-        ShowItemViewModel(show: show.show,
-                          layoutIdentifier: layout,
-                          imageUseCase: container.model.useCases.images)
+    func item(_ item: ItemContainer, layout: ShowIdentifier) -> ViewModel {
+        switch item {
+        case let show as ShowItem: return ShowItemViewModel(show: show,
+                                                            layoutIdentifier: layout,
+                                                            imageUseCase: container.model.useCases.images)
+        case let movie as MovieItem: return ShowItemViewModel(movie: movie,
+                                                              layoutIdentifier: layout,
+                                                              imageUseCase: container.model.useCases.images)
+        default: return ShowItemViewModel(item: item.item,
+                                          layoutIdentifier: layout,
+                                          imageUseCase: container.model.useCases.images)
+        }
     }
 
-    func castCarousel(for show: WithShow, onSelection: @escaping (Person) -> Void) -> ViewModel {
+    func castCarousel(for show: ItemContainer, onSelection: @escaping (Person) -> Void) -> ViewModel {
         let observable = container.model.useCases.shows.detail
-            .cast(for: show.show)
+            .cast(for: show.item)
             .map { $0.map { self.castMember($0) } }
             .map { [Section(id: UUID().uuidString, items: $0)] }
             .share(replay: 1, scope: .forever)
@@ -56,12 +63,12 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         }
     }
 
-    func seasonsCarousel(for show: WithShow, onSelection: @escaping (SeasonInfo) -> Void) -> ViewModel {
+    func seasonsCarousel(for show: ItemContainer, onSelection: @escaping (Season.Info) -> Void) -> ViewModel {
         let observable = container.model
             .useCases
             .shows
             .detail
-            .showDetail(for: show.show)
+            .showDetail(for: show.item)
             .map { $0.info?.seasons ?? [] }
             .map { [Section(id: UUID().uuidString, items: $0.map { self.season($0) })] }
 
@@ -75,10 +82,10 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         }
     }
 
-    func relatedShowsCarousel(for show: WithShow, onSelection: @escaping (Show) -> Void) -> ViewModel {
+    func relatedShowsCarousel(for show: ItemContainer, onSelection: @escaping (Item) -> Void) -> ViewModel {
         let observable = container.model.useCases.shows.detail
-            .related(for: show.show)
-            .map { $0.map { self.show($0, layout: .posterOnly) } }
+            .related(for: show.item)
+            .map { $0.map { self.item($0, layout: .posterOnly) } }
             .map { [Section(id: UUID().uuidString, items: $0)] }
             .share(replay: 1, scope: .forever)
 
@@ -86,8 +93,8 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .relatedShows) { itemViewModel in
-            if let show = (itemViewModel as? ShowItemViewModel)?.show {
-                onSelection(show.show)
+            if let show = (itemViewModel as? ShowItemViewModel)?.item {
+                onSelection(show.item)
             }
         }
     }
@@ -98,7 +105,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                             imagesUseCase: container.model.useCases.images)
     }
 
-    func season(_ season: SeasonInfo) -> ViewModel {
+    func season(_ season: Season.Info) -> ViewModel {
         SeasonItemViewModel(season: season,
                             layoutIdentifier: ViewIdentifier.season,
                             imagesUseCase: container.model.useCases.images)
@@ -116,7 +123,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                             styleFactory: container.styleFactory)
     }
 
-    func showDescription(_ show: ShowDetail) -> ViewModel {
+    func showDescription(_ show: ItemDetail) -> ViewModel {
         DescriptionItemViewModel(description: show.overview)
     }
 

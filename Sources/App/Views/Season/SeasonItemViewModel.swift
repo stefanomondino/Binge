@@ -12,7 +12,7 @@ import RxSwift
 class SeasonItemViewModel: ViewModel {
     let layoutIdentifier: LayoutIdentifier
     var uniqueIdentifier: UniqueIdentifier { season.uniqueIdentifier }
-    let season: SeasonInfo
+    let season: Season.Info
     let image: ObservableImage
 
     var title: String {
@@ -21,7 +21,7 @@ class SeasonItemViewModel: ViewModel {
 
     var subtitle: String = ""
 
-    init(season: SeasonInfo,
+    init(season: Season.Info,
          layoutIdentifier: LayoutIdentifier = ViewIdentifier.season,
          imagesUseCase: ImagesUseCase) {
         self.layoutIdentifier = layoutIdentifier

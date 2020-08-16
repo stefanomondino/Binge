@@ -44,7 +44,8 @@ enum TMDBAPI {
     }
 
     case configuration
-    case show(Show)
+    case show(Item)
+    case movie(Item)
     case person(Person)
 }
 
@@ -57,6 +58,7 @@ extension TMDBAPI: TargetType {
         switch self {
         case .configuration: return "configuration"
         case let .show(show): return "tv/\(show.ids.tmdb ?? -1)"
+        case let .movie(movie): return "movie/\(movie.ids.tmdb ?? -1)"
         case let .person(person): return "person/\(person.ids.tmdb ?? -1)"
         }
     }

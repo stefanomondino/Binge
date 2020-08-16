@@ -11,7 +11,7 @@ import RxSwift
 public struct ShowDetailUseCaseImplementation: ShowDetailUseCase {
     let shows: ShowsRepository
 
-    public func showDetail(for show: Show) -> Observable<ShowDetail> {
+    public func showDetail(for show: Item) -> Observable<ShowDetail> {
         return
             Observable.combineLatest(shows.detail(forShow: show),
                                      shows.info(forShow: show)) { detail, info in
@@ -19,21 +19,19 @@ public struct ShowDetailUseCaseImplementation: ShowDetailUseCase {
                 detail.info = info
                 return detail
             }
-
-//                .map { $0 }
     }
 
-    public func cast(for show: Show) -> Observable<[CastMember]> {
+    public func cast(for show: Item) -> Observable<[CastMember]> {
         return shows.people(forShow: show)
             .map { $0.cast }
     }
 
-    public func related(for show: Show) -> Observable<[WithShow]> {
+    public func related(for show: Item) -> Observable<[ItemContainer]> {
         return shows.related(of: show)
             .map { $0 }
     }
 
-    public func fanart(for show: Show) -> Observable<FanartResponse> {
+    public func fanart(for show: Item) -> Observable<FanartResponse> {
         return shows.fanart(for: show)
     }
 }

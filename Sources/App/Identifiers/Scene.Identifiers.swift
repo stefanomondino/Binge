@@ -13,8 +13,8 @@ enum SceneIdentifier: String, LayoutIdentifier {
     case pager
     case tab
     case login
-    case showList
-    case showDetail
+    case itemList
+    case itemDetail
     case person
     // MURRAY ENUM PLACEHOLDER
 

@@ -16,7 +16,7 @@ protocol ViewControllerFactory {
     func mainTabBar() -> UIViewController
     func login(viewModel: LoginViewModel) -> UIViewController
     func showPager() -> UIViewController
-    func showList(viewModel: ShowListViewModel) -> UIViewController
+    func showList(viewModel: ItemListViewModel) -> UIViewController
     func showDetail(viewModel: ShowDetailViewModel) -> UIViewController
     func person(viewModel: PersonViewModel) -> UIViewController
     // MURRAY DECLARATION PLACEHOLDER
@@ -58,8 +58,8 @@ class DefaultViewControllerFactory: ViewControllerFactory {
                                    collectionViewCellFactory: container.views.collectionCells)
     }
 
-    func showList(viewModel: ShowListViewModel) -> UIViewController {
-        return ShowListViewController(nibName: name(from: viewModel.layoutIdentifier),
+    func showList(viewModel: ItemListViewModel) -> UIViewController {
+        return ItemListViewController(nibName: name(from: viewModel.layoutIdentifier),
                                       viewModel: viewModel,
                                       collectionViewCellFactory: container.views.collectionCells)
     }

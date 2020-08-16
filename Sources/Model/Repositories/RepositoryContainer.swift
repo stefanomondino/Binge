@@ -13,6 +13,7 @@ protocol RepositoryContainer {
     var authorization: AuthorizationRepository { get }
     var configuration: ConfigurationRepository { get }
     var shows: ShowsRepository { get }
+    var movies: MoviesRepository { get }
     // MURRAY PROTOCOL
 }
 
@@ -21,12 +22,14 @@ class DefaultRepositoryContainer: RepositoryContainer, DependencyContainer {
         case authorization
         case configuration
         case shows
+        case movies
         // MURRAY KEY
     }
 
     var configuration: ConfigurationRepository { self[.configuration] }
     var authorization: AuthorizationRepository { self[.authorization] }
     var shows: ShowsRepository { self[.shows] }
+    var movies: MoviesRepository { self[.movies] }
     // MURRAY VAR
 
     var container = Container<Keys>()
@@ -40,6 +43,9 @@ class DefaultRepositoryContainer: RepositoryContainer, DependencyContainer {
         }
         register(for: .shows, scope: .singleton) {
             ShowsRepositoryImplementation(rest: container.dataSources.rest)
+        }
+        register(for: .movies, scope: .singleton) {
+            MoviesRepositoryImplementation(rest: container.dataSources.rest)
         }
         // MURRAY REGISTER
     }

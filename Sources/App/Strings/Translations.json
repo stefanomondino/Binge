@@ -12,5 +12,16 @@
         "related": "Related",
         "seasons": "Seasons"
         
+    },
+    "movies": {
+        "title": "Movies",
+        "watched": "Watched",
+        "popular": "Popular",
+        "trending": "Trending",
+        "collected": "Collected",
+        "anticipated": "Anticipated",
+        "related": "Related",
+        "seasons": "Seasons"
+        
     }
 }

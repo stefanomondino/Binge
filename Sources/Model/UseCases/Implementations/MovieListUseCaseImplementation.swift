@@ -1,5 +1,5 @@
 //
-//  ShowListUseCaseImplementation.swift
+//  MovieListUseCaseImplementation.swift
 //  Model
 //
 //  Created by Stefano Mondino on 10/08/2020.
@@ -8,12 +8,12 @@
 import Foundation
 import RxSwift
 
-public class PopularShowsUseCase: ItemListUseCase {
+public class PopularMoviesUseCase: ItemListUseCase {
     public var page: PageInfo { .popular }
 
-    let repository: ShowsRepository
+    let repository: MoviesRepository
 
-    init(repository: ShowsRepository) {
+    init(repository: MoviesRepository) {
         self.repository = repository
     }
 
@@ -24,12 +24,12 @@ public class PopularShowsUseCase: ItemListUseCase {
     }
 }
 
-public class TrendingShowsUseCase: ItemListUseCase {
+public class TrendingMoviesUseCase: ItemListUseCase {
     public var page: PageInfo { .trending }
 
-    let repository: ShowsRepository
+    let repository: MoviesRepository
 
-    init(repository: ShowsRepository) {
+    init(repository: MoviesRepository) {
         self.repository = repository
     }
 
@@ -40,12 +40,12 @@ public class TrendingShowsUseCase: ItemListUseCase {
     }
 }
 
-public class WatchedShowsUseCase: ItemListUseCase {
+public class WatchedMoviesUseCase: ItemListUseCase {
     public var page: PageInfo { .watched }
 
-    let repository: ShowsRepository
+    let repository: MoviesRepository
 
-    init(repository: ShowsRepository) {
+    init(repository: MoviesRepository) {
         self.repository = repository
     }
 
@@ -56,12 +56,12 @@ public class WatchedShowsUseCase: ItemListUseCase {
     }
 }
 
-public class CollectedShowsUseCase: ItemListUseCase {
+public class CollectedMoviesUseCase: ItemListUseCase {
     public var page: PageInfo { .collected }
 
-    let repository: ShowsRepository
+    let repository: MoviesRepository
 
-    init(repository: ShowsRepository) {
+    init(repository: MoviesRepository) {
         self.repository = repository
     }
 
@@ -72,12 +72,12 @@ public class CollectedShowsUseCase: ItemListUseCase {
     }
 }
 
-public class AnticipatedShowsUseCase: ItemListUseCase {
+public class AnticipatedMoviesUseCase: ItemListUseCase {
     public var page: PageInfo { .anticipated }
 
-    let repository: ShowsRepository
+    let repository: MoviesRepository
 
-    init(repository: ShowsRepository) {
+    init(repository: MoviesRepository) {
         self.repository = repository
     }
 
