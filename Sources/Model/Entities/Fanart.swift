@@ -10,7 +10,9 @@ import Foundation
 
 public struct FanartResponse: Codable {
     let name: String
-    let thetvdbId: String
+    let thetvdbId: String?
+    let tmdbId: String?
+    let imdbId: String?
     let clearlogo: [FanartImage]?
     let hdtvlogo: [FanartImage]?
     let clearart: [FanartImage]?
@@ -24,8 +26,17 @@ public struct FanartResponse: Codable {
     let tvposter: [FanartImage]?
     let seasonbanner: [FanartImage]?
 
+    let hdmovielogo: [FanartImage]?
+    let moviedisc: [FanartImage]?
+    let movielogo: [FanartImage]?
+    let movieposter: [FanartImage]?
+    let hdmovieclearart: [FanartImage]?
+    let movieart: [FanartImage]?
+    let moviebackground: [FanartImage]?
+    let moviebanner: [FanartImage]?
+    let moviethumb: [FanartImage]?
     // swiftlint:disable cyclomatic_complexity
-    public func image(for format: Fanart.Format, language: String = "en") -> Fanart? {
+    public func showImage(for format: Fanart.Format, language: String = "en") -> Fanart? {
         let array: [FanartImage]?
         switch format {
         case .clearLogo: array = clearlogo
@@ -39,6 +50,29 @@ public struct FanartResponse: Codable {
         case .tvBanner: array = tvbanner
         case .characterArt: array = characterart
         case .tvPoster: array = tvposter
+        case .seasonBanner: array = seasonbanner
+        }
+        if let image = array?.first(where: { $0.lang == language }) ?? array?.first {
+            return Fanart(format: format, image: image)
+        } else {
+            return nil
+        }
+    }
+
+    public func movieImage(for format: Fanart.Format, language: String = "en") -> Fanart? {
+        let array: [FanartImage]?
+        switch format {
+        case .clearLogo: array = hdmovielogo
+        case .thumb: array = moviethumb
+        case .hdtvLogo: array = hdmovielogo
+        case .clearArt: array = hdmovieclearart
+        case .background: array = moviebackground
+        case .seasonPoster: array = movieposter
+        case .seasonThumb: array = moviethumb
+        case .hdClearArt: array = hdmovieclearart
+        case .tvBanner: array = moviebanner
+        case .characterArt: array = characterart
+        case .tvPoster: array = movieposter
         case .seasonBanner: array = seasonbanner
         }
         if let image = array?.first(where: { $0.lang == language }) ?? array?.first {

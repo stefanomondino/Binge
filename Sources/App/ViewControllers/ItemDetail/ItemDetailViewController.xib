@@ -8,9 +8,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShowDetailViewController" customModule="Binge" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ItemDetailViewController" customModule="Binge" customModuleProvider="target">
             <connections>
-                <outlet property="collectionView" destination="2ll-Pr-7vE" id="Z2T-MT-8xt"/>
+                <outlet property="collectionView" destination="H15-5Y-RGD" id="raM-GX-Mzt"/>
                 <outlet property="view" destination="bDM-5O-YBy" id="1cQ-BP-As1"/>
             </connections>
         </placeholder>
@@ -19,11 +19,11 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="2ll-Pr-7vE">
-                    <rect key="frame" x="0.0" y="1" width="375" height="811"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="38E-3L-XqY">
-                        <size key="itemSize" width="50" height="50"/>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="H15-5Y-RGD">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0nD-Af-dTt">
+                        <size key="itemSize" width="128" height="128"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -32,10 +32,10 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="2ll-Pr-7vE" secondAttribute="bottom" id="0Ii-zm-2l2"/>
-                <constraint firstItem="2ll-Pr-7vE" firstAttribute="top" secondItem="bDM-5O-YBy" secondAttribute="top" constant="1" id="1LM-rq-LhH"/>
-                <constraint firstAttribute="trailing" secondItem="2ll-Pr-7vE" secondAttribute="trailing" id="1kg-uz-URn"/>
-                <constraint firstItem="2ll-Pr-7vE" firstAttribute="leading" secondItem="bDM-5O-YBy" secondAttribute="leading" id="gEW-ld-f2Q"/>
+                <constraint firstItem="H15-5Y-RGD" firstAttribute="top" secondItem="bDM-5O-YBy" secondAttribute="top" id="EYP-ix-cs4"/>
+                <constraint firstAttribute="trailing" secondItem="H15-5Y-RGD" secondAttribute="trailing" id="adZ-oM-hKX"/>
+                <constraint firstAttribute="bottom" secondItem="H15-5Y-RGD" secondAttribute="bottom" id="eFX-tw-0GX"/>
+                <constraint firstItem="H15-5Y-RGD" firstAttribute="leading" secondItem="bDM-5O-YBy" secondAttribute="leading" id="j7T-sW-4zl"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ulr-uJ-a7D"/>
             <point key="canvasLocation" x="140" y="125.4872563718141"/>

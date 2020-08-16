@@ -45,11 +45,9 @@ class ImagesUseCaseImplementation: ImagesUseCase {
 
     func poster(for movie: MovieItem) -> Observable<WithImage> {
         return movies.info(forMovie: movie.item)
-            .debug("HELP", trimOutput: false)
             .flatMapLatest {
                 self.image(from: $0, with: \.posterPath, sizes: \.posterSizes)
             }
-        //        return
     }
 
     func image(forPerson person: Person) -> Observable<WithImage> {

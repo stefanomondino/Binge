@@ -78,10 +78,12 @@ class MainRouteFactory: RouteFactory {
     }
 
     func showDetail(for show: ItemContainer) -> Route {
+        guard let viewModel = container.viewModels.scenes.itemDetail(for: show) else {
+            return EmptyRoute { nil }
+        }
         return NavigationRoute {
-            let viewModel = self.container.viewModels.scenes.showDetail(for: show)
             return self.container.views.scenes
-                .showDetail(viewModel: viewModel)
+                .itemDetail(viewModel: viewModel)
                 .inContainer(extendUnderNavbar: true)
         }
     }

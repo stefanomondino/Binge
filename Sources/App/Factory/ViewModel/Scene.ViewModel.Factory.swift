@@ -15,7 +15,7 @@ protocol SceneViewModelFactory {
     func splashViewModel() -> SplashViewModel
     func homePager() -> PagerViewModel
     func login() -> LoginViewModel
-    func showDetail(for show: ItemContainer) -> ShowDetailViewModel
+    func itemDetail(for item: ItemContainer) -> ItemDetailViewModel?
     func personDetail(for person: Person) -> PersonViewModel
     func showsPager() -> PagerViewModel
     // MURRAY DECLARATION PLACEHOLDER
@@ -128,11 +128,26 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
                           routeFactory: container.routeFactory)
     }
 
-    func showDetail(for show: ItemContainer) -> ShowDetailViewModel {
+    func itemDetail(for item: ItemContainer) -> ItemDetailViewModel? {
+        switch item {
+        case let show as ShowItem: return showDetail(for: show)
+        case let movie as MovieItem: return movieDetail(for: movie)
+        default: return nil
+        }
+    }
+
+    func showDetail(for show: ShowItem) -> ItemDetailViewModel {
         ShowDetailViewModel(show: show,
                             routeFactory: container.routeFactory,
                             itemViewModelFactory: container.viewModels.items,
                             useCase: container.model.useCases.shows.detail)
+    }
+
+    func movieDetail(for movie: MovieItem) -> ItemDetailViewModel {
+        MovieDetailViewModel(movie: movie,
+                             routeFactory: container.routeFactory,
+                             itemViewModelFactory: container.viewModels.items,
+                             useCase: container.model.useCases.movies.detail)
     }
 
     func personDetail(for person: Person) -> PersonViewModel {

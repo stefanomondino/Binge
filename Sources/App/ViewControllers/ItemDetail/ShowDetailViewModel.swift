@@ -9,7 +9,7 @@ import Model
 import RxRelay
 import RxSwift
 
-class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
+class ItemDetailViewModel: RxListViewModel, RxNavigationViewModel {
     let uniqueIdentifier: UniqueIdentifier = UUID()
 
     let sectionsRelay: BehaviorRelay<[Section]> = BehaviorRelay(value: [])
@@ -37,7 +37,7 @@ class ShowDetailViewModel: RxListViewModel, RxNavigationViewModel {
         routeFactory: RouteFactory,
         itemViewModelFactory: ItemViewModelFactory,
         useCase: ShowDetailUseCase,
-        layout: SceneIdentifier = .itemList
+        layout: SceneIdentifier = .itemDetail
     ) {
         self.show = show
         self.routeFactory = routeFactory

@@ -42,7 +42,7 @@ extension ViewIdentifier.CarouselType {
     }
 }
 
-class ShowDetailViewController: UIViewController {
+class ItemDetailViewController: UIViewController {
     class Delegate: CollectionViewDelegate, PluginLayoutDelegate {
         func collectionView(_: UICollectionView, layout _: PluginLayout, pluginForSectionAt section: Int) -> PluginType? {
             switch section {
@@ -85,7 +85,7 @@ class ShowDetailViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var backgroundImage: UIImageView!
 
-    var viewModel: ShowDetailViewModel
+    var viewModel: ItemDetailViewModel
 
     var collectionViewDataSource: CollectionViewDataSource? {
         didSet {
@@ -106,7 +106,7 @@ class ShowDetailViewController: UIViewController {
 
     init(nibName: String?,
          bundle: Bundle? = nil,
-         viewModel: ShowDetailViewModel,
+         viewModel: ItemDetailViewModel,
          collectionViewCellFactory: CollectionViewCellFactory) {
         self.viewModel = viewModel
         self.collectionViewCellFactory = collectionViewCellFactory
@@ -123,8 +123,9 @@ class ShowDetailViewController: UIViewController {
     }
 
     override func viewDidLoad() {
+        collectionView.backgroundColor = .clear
         super.viewDidLoad()
-
+        let layout = PluginLayout()
         let viewModel = self.viewModel
         let collectionViewDataSource = CollectionViewDataSource(viewModel: viewModel,
                                                                 factory: collectionViewCellFactory)
@@ -132,14 +133,12 @@ class ShowDetailViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
         view.applyContainerStyle(Styles.Generic.container)
 
-        //        let spacing: CGFloat = 10
         let sizeCalculator = SizeCalculator(viewModel: viewModel,
                                             factory: collectionViewCellFactory, itemsPerLine: 1)
 
         let collectionViewDelegate = Delegate(sizeCalculator: sizeCalculator)
             .withSelect { viewModel.selectItem(at: $0) }
 
-        let layout = PluginLayout()
         collectionView.collectionViewLayout = layout
 
         collectionView.backgroundColor = .clear

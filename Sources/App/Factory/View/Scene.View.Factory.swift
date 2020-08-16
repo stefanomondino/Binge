@@ -17,7 +17,7 @@ protocol ViewControllerFactory {
     func login(viewModel: LoginViewModel) -> UIViewController
     func showPager() -> UIViewController
     func showList(viewModel: ItemListViewModel) -> UIViewController
-    func showDetail(viewModel: ShowDetailViewModel) -> UIViewController
+    func itemDetail(viewModel: ItemDetailViewModel) -> UIViewController
     func person(viewModel: PersonViewModel) -> UIViewController
     // MURRAY DECLARATION PLACEHOLDER
 }
@@ -64,8 +64,8 @@ class DefaultViewControllerFactory: ViewControllerFactory {
                                       collectionViewCellFactory: container.views.collectionCells)
     }
 
-    func showDetail(viewModel: ShowDetailViewModel) -> UIViewController {
-        return ShowDetailViewController(nibName: name(from: viewModel.layoutIdentifier),
+    func itemDetail(viewModel: ItemDetailViewModel) -> UIViewController {
+        return ItemDetailViewController(nibName: name(from: viewModel.layoutIdentifier),
                                         viewModel: viewModel,
                                         collectionViewCellFactory: container.views.collectionCells)
     }

@@ -107,7 +107,7 @@ public protocol MoviesContainer {
     var watched: ItemListUseCase { get }
     var collected: ItemListUseCase { get }
     var anticipated: ItemListUseCase { get }
-    var detail: ShowDetailUseCase { get }
+    var detail: MovieDetailUseCase { get }
     var person: PersonDetailUseCase { get }
 }
 
@@ -129,7 +129,7 @@ class MoviesContainerImplementation: MoviesContainer, DependencyContainer {
     var watched: ItemListUseCase { self[.watched] }
     var collected: ItemListUseCase { self[.collected] }
     var anticipated: ItemListUseCase { self[.anticipated] }
-    var detail: ShowDetailUseCase { self[.detail] }
+    var detail: MovieDetailUseCase { self[.detail] }
     var person: PersonDetailUseCase { self[.person] }
 
     init(container: ModelDependencyContainer) {
