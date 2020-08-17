@@ -8,6 +8,10 @@
 import Foundation
 
 enum Style: String, CaseIterable {
+    enum Tag: String {
+        case bold = "b"
+    }
+
     case title
     case container
     case subtitle
@@ -17,5 +21,12 @@ enum Style: String, CaseIterable {
     case titleCard
     case itemTitle
     case itemSubtitle
+    case episodeTitle
     var identifier: String { rawValue }
+}
+
+extension CustomStringConvertible {
+    func inTag(_ tag: Style.Tag) -> String {
+        return "<\(tag.rawValue)>\(self)</\(tag.rawValue)>"
+    }
 }

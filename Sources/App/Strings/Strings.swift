@@ -27,6 +27,9 @@ extension Translation where Self: RawRepresentable, RawValue == String {
 enum Strings {
     enum Generic: String, Translation {
         case cast = "generic.cast"
+        case year = "generic.year"
+        case born = "generic.born"
+        case death = "generic.death"
     }
 
     enum Shows: String, Translation {

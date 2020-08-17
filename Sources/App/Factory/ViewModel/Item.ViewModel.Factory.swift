@@ -28,6 +28,7 @@ protocol ItemViewModelFactory {
     func image(_ personImage: Person.Image) -> ViewModel
     func castMoviesCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel
     func castShowsCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel
+    func titledDescription(title: CustomStringConvertible, description: String?) -> ViewModel?
     // MURRAY DECLARATION PLACEHOLDER
 }
 
@@ -49,6 +50,10 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         case let season as Season.Info: return ShowItemViewModel(season: season,
                                                                  layoutIdentifier: layout,
                                                                  imagesUseCase: container.model.useCases.images)
+
+        case let episode as Season.Episode: return ShowItemViewModel(episode: episode,
+                                                                     layoutIdentifier: layout,
+                                                                     imagesUseCase: container.model.useCases.images)
 
         case let person as Person: return ShowItemViewModel(person: person,
                                                             layoutIdentifier: layout,
@@ -183,7 +188,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         return CarouselItemViewModel(sections: observable,
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
-                                     type: .castMember) { itemViewModel in
+                                     type: .castInMovie) { itemViewModel in
             if let show = itemViewModel.as(ShowItemViewModel.self)?.item {
                 onSelection(show.item)
             }
@@ -200,7 +205,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         return CarouselItemViewModel(sections: observable,
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
-                                     type: .castMember) { itemViewModel in
+                                     type: .castInShow) { itemViewModel in
             if let show = itemViewModel.as(ShowItemViewModel.self)?.item {
                 onSelection(show.item)
             }
@@ -251,6 +256,11 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
 
     func personDescription(_ person: PersonInfo) -> ViewModel {
         DescriptionItemViewModel(description: person.biography)
+    }
+
+    func titledDescription(title: CustomStringConvertible, description: String?) -> ViewModel? {
+        guard let description = description else { return nil }
+        return DescriptionItemViewModel(description: "\(title.inTag(.bold)): \(description)")
     }
 
     // MURRAY IMPLEMENTATION PLACEHOLDER

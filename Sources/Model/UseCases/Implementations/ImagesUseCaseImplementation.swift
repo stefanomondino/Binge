@@ -28,7 +28,7 @@ class ImagesUseCaseImplementation: ImagesUseCase {
             let sizes = configuration.images[keyPath: sizes]
             let prefix = sizes.first(where: { $0 == "w500" }) ?? sizes.last ?? ""
             guard let path = info[keyPath: keyPath] else {
-                return ""
+                throw Errors.generic
             }
             return url
                 .appendingPathComponent(prefix)
@@ -65,6 +65,12 @@ class ImagesUseCaseImplementation: ImagesUseCase {
     func image(forSeason season: Season.Info) -> Observable<WithImage> {
         return Observable.just(season).flatMapLatest {
             self.image(from: $0, with: \.posterPath, sizes: \.posterSizes)
+        }
+    }
+
+    func image(for episode: Season.Episode) -> Observable<WithImage> {
+        return Observable.just(episode).flatMapLatest {
+            self.image(from: $0, with: \.stillPath, sizes: \.stillSizes)
         }
     }
 }

@@ -34,3 +34,15 @@ struct DefaultTextStyle: TextStyle {
         self.style = style
     }
 }
+
+struct ComposedTextStyle: TextStyle {
+    var backgroundColor: UIColor { .clear }
+    private(set) var style: StyleProtocol
+    init(base: TextStyle, tags: (tag: Style.Tag, style: TextStyle)...) {
+        style = SwiftRichString.StyleGroup(base: base.style, tags.reduce([:]) { accumulator, item in
+            var accumulator = accumulator
+            accumulator[item.tag.rawValue] = item.style.style
+            return accumulator
+        })
+    }
+}

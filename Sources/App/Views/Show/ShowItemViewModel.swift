@@ -16,6 +16,7 @@ enum ShowIdentifier: String, LayoutIdentifier, CaseIterable {
     case full
     case person
     case season
+    case episode
 
     var identifierString: String {
         switch self {
@@ -24,6 +25,7 @@ enum ShowIdentifier: String, LayoutIdentifier, CaseIterable {
         case .title: return "TitleShow"
         case .person: return "Person"
         case .season: return "Season"
+        case .episode: return "Episode"
         }
     }
 
@@ -33,10 +35,19 @@ enum ShowIdentifier: String, LayoutIdentifier, CaseIterable {
         default: return .card
         }
     }
+
+    var gridCount: Int {
+        switch self {
+        case .title: return 1
+        case .episode: return 2
+        default: return 3
+        }
+    }
 }
 
 class ShowItemViewModel: ViewModel {
-    let layoutIdentifier: LayoutIdentifier
+    var layoutIdentifier: LayoutIdentifier { showIdentifier }
+    let showIdentifier: ShowIdentifier
     var uniqueIdentifier: UniqueIdentifier { item.uniqueIdentifier }
     let item: Item
     let image: ObservableImage
@@ -54,7 +65,7 @@ class ShowItemViewModel: ViewModel {
     init(show: ShowItem,
          layoutIdentifier: ShowIdentifier,
          imageUseCase: ImagesUseCase) {
-        self.layoutIdentifier = layoutIdentifier
+        showIdentifier = layoutIdentifier
         item = show.item
         mainStyle = layoutIdentifier.style
         subtitle = show.year?.stringValue ?? ""
@@ -68,7 +79,7 @@ class ShowItemViewModel: ViewModel {
     init(showCast show: Show.Cast,
          layoutIdentifier: ShowIdentifier,
          imageUseCase: ImagesUseCase) {
-        self.layoutIdentifier = layoutIdentifier
+        showIdentifier = layoutIdentifier
         item = show.item
         mainStyle = layoutIdentifier.style
         subtitle = show.characters.joined(separator: ", ")
@@ -82,7 +93,7 @@ class ShowItemViewModel: ViewModel {
     init(movieCast movie: Movie.Cast,
          layoutIdentifier: ShowIdentifier,
          imageUseCase: ImagesUseCase) {
-        self.layoutIdentifier = layoutIdentifier
+        showIdentifier = layoutIdentifier
         item = movie.item
         mainStyle = layoutIdentifier.style
         subtitle = movie.characters.joined(separator: ", ")
@@ -96,7 +107,7 @@ class ShowItemViewModel: ViewModel {
     init(movie: MovieItem,
          layoutIdentifier: ShowIdentifier,
          imageUseCase: ImagesUseCase) {
-        self.layoutIdentifier = layoutIdentifier
+        showIdentifier = layoutIdentifier
         item = movie.item
         mainStyle = layoutIdentifier.style
         subtitle = ""
@@ -111,7 +122,7 @@ class ShowItemViewModel: ViewModel {
     init(person: Person,
          layoutIdentifier: ShowIdentifier = ShowIdentifier.person,
          imagesUseCase: ImagesUseCase) {
-        self.layoutIdentifier = layoutIdentifier
+        showIdentifier = layoutIdentifier
         mainStyle = layoutIdentifier.style
         subtitle = ""
         item = person
@@ -124,7 +135,7 @@ class ShowItemViewModel: ViewModel {
     init(castMember: CastMember,
          layoutIdentifier: ShowIdentifier = ShowIdentifier.person,
          imagesUseCase: ImagesUseCase) {
-        self.layoutIdentifier = layoutIdentifier
+        showIdentifier = layoutIdentifier
         mainStyle = layoutIdentifier.style
         item = castMember.person
         subtitle = castMember.characters.joined(separator: ", ")
@@ -137,7 +148,7 @@ class ShowItemViewModel: ViewModel {
     init(season: Season.Info,
          layoutIdentifier: ShowIdentifier = ShowIdentifier.season,
          imagesUseCase: ImagesUseCase) {
-        self.layoutIdentifier = layoutIdentifier
+        showIdentifier = layoutIdentifier
         mainStyle = layoutIdentifier.style
         item = season
         if let episodeCount = season.episodeCount {
@@ -151,10 +162,27 @@ class ShowItemViewModel: ViewModel {
             .share(replay: 1, scope: .forever)
     }
 
+    init(episode: Season.Episode,
+         layoutIdentifier: ShowIdentifier = ShowIdentifier.season,
+         imagesUseCase: ImagesUseCase) {
+        showIdentifier = layoutIdentifier
+        mainStyle = layoutIdentifier.style
+        item = episode
+        if let episodeNumber = episode.episodeNumber {
+            subtitle = "#\(episodeNumber)"
+        } else {
+            subtitle = ""
+        }
+        image = imagesUseCase
+            .image(for: episode)
+            .flatMapLatest { $0.getImage() }
+            .share(replay: 1, scope: .forever)
+    }
+
     init(item: Item,
          layoutIdentifier: ShowIdentifier,
          imageUseCase _: ImagesUseCase) {
-        self.layoutIdentifier = layoutIdentifier
+        showIdentifier = layoutIdentifier
         self.item = item
         mainStyle = layoutIdentifier.style
         subtitle = ""

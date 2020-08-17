@@ -29,7 +29,7 @@ extension ViewIdentifier.CarouselType {
         switch self {
         case .cast: return 180
         case .relatedShows: return 200
-        case .castMember: return 250
+        case .castInMovie, .castInShow: return 250
         case .seasons: return 200
         }
     }
@@ -39,7 +39,7 @@ extension ViewIdentifier.CarouselType {
         case .cast: return 9 / 14
         case .seasons: return Constants.showPosterRatio * 0.8
         case .relatedShows: return Constants.showPosterRatio
-        case .castMember: return Constants.showPosterRatio * 0.8
+        case .castInShow, .castInMovie: return Constants.showPosterRatio * 0.8
         }
     }
 }
@@ -64,17 +64,27 @@ class ItemDetailViewController: UIViewController {
             return Constants.detailLineSpacing
         }
 
-        override func insets(for _: UICollectionView, in section: Int) -> UIEdgeInsets {
-            switch section {
-            case 0: return UIEdgeInsets(top: 0, left: Constants.sidePadding, bottom: Constants.detailLineSpacing, right: Constants.sidePadding)
-            default: return .zero
+        override func itemSpacing(for _: UICollectionView, in _: Int) -> CGFloat {
+            Constants.detailLineSpacing
+        }
+
+        override func insets(for _: UICollectionView, in sectionIndex: Int) -> UIEdgeInsets {
+            let section = viewModel.sections[sectionIndex]
+            if section.items.first is CarouselItemViewModel {
+                return .zero
             }
+            return UIEdgeInsets(top: 0, left: Constants.sidePadding, bottom: Constants.detailLineSpacing, right: Constants.sidePadding)
         }
 
         override func sizeForItem(at indexPath: IndexPath, in collectionView: UICollectionView, direction: Direction? = nil, type: String? = nil) -> CGSize {
             guard let viewModel = viewModel(at: indexPath, for: type) else { return .zero }
 
             switch viewModel {
+            case let item as ShowItemViewModel:
+                let direction = direction ?? Direction.from(layout: collectionView.collectionViewLayout)
+                let fixedDimension = calculateFixedDimension(for: direction, collectionView: collectionView, at: indexPath, itemsPerLine: item.showIdentifier.gridCount)
+                let lock = LockingSize(direction: direction, value: fixedDimension)
+                return autosizeForItem(at: indexPath, type: type, lockedTo: lock)
             case let carousel as CarouselItemViewModel:
                 let width = calculateFixedDimension(for: .vertical, collectionView: collectionView, at: indexPath, itemsPerLine: 1)
                 return CGSize(width: width, height: carousel.carouselType.height(for: width))

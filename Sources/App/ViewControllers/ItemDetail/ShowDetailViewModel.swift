@@ -75,7 +75,9 @@ class ShowDetailViewModel: ItemDetailViewModel {
         let routeFactory = self.routeFactory
         var topSection = Section(id: UUID().stringValue,
                                  items: [itemViewModelFactory.item(show, layout: .title),
-                                         itemViewModelFactory.showDescription(show)])
+                                         itemViewModelFactory.titledDescription(title: Strings.Generic.year, description: show.year?.stringValue),
+                                         itemViewModelFactory.showDescription(show)]
+                                     .compactMap { $0 })
 
         if let fanart = [Fanart.Format.background]
             .compactMap({ fanart?.showImage(for: $0) })

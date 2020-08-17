@@ -1,6 +1,9 @@
 {
     "generic": {
-        "cast": "Cast"
+        "cast": "Cast",
+        "year": "Year",
+        "born": "Born",
+        "death": "Death"
     },
     "shows": {
         "title": "Shows",

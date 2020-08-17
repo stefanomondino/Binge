@@ -79,8 +79,12 @@ class SeasonDetailViewModel: ItemDetailViewModel {
             .map({ itemViewModelFactory.image($0) }) {
             navbarTitleViewModelRelay.accept(navbar)
         }
-
-        var carousels: [ViewModel] = []
+        var sections = [topSection]
+        if let episodes = season.episodes {
+            let items = episodes.map { itemViewModelFactory.item($0, layout: .episode) }
+            sections += [Section(id: "episodes", items: items)]
+        }
+//        var carousels: [ViewModel] = []
 //        carousels += [
 //            itemViewModelFactory.castShowsCarousel(for: self.person) { [weak self] in
 //                self?.navigate(to: $0)
@@ -103,10 +107,7 @@ class SeasonDetailViewModel: ItemDetailViewModel {
 //                }
 //            ].compactMap { $0 }
 //
-        return [
-            topSection,
-            Section(id: UUID().stringValue, items: carousels)
-        ]
+        return sections
     }
 
     func selectItem(at _: IndexPath) {}

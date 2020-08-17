@@ -26,7 +26,7 @@ public enum Season {
         public let episodeNumber: Int?
         public let overview: String?
         public let seasonNumber: Int?
-        public let posterPath: String?
+        public let stillPath: String?
         public var title: String { name ?? "" }
         public var item: Item { self }
         public var ids: Ids { Ids.empty }
