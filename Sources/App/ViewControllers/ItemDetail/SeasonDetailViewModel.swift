@@ -11,10 +11,10 @@ import RxSwift
 
 class SeasonDetailViewModel: ItemDetailViewModel {
     var routeFactory: RouteFactory
-    
+
     private let navbarTitleViewModelRelay: BehaviorRelay<ViewModel?> = BehaviorRelay(value: nil)
     var navbarTitleViewModel: Observable<ViewModel?> { navbarTitleViewModelRelay.asObservable() }
-    
+
     var backgroundImage: ObservableImage = .empty()
 
     func addToFavorite() {}
@@ -50,11 +50,11 @@ class SeasonDetailViewModel: ItemDetailViewModel {
     func reload() {
         disposeBag = DisposeBag()
         Observable.combineLatest(useCase.seasonDetail(for: season, of: show),
-                             useCase
-                                 .fanart(for: show.item)
-                                 .map { $0 }
-                                 .catchErrorJustReturn(nil))
-        .map { [weak self] in self?.map($0.0, fanart: $0.1) ?? [] }
+                                 useCase
+                                     .fanart(for: show.item)
+                                     .map { $0 }
+                                     .catchErrorJustReturn(nil))
+            .map { [weak self] in self?.map($0.0, fanart: $0.1) ?? [] }
             .catchErrorJustReturn([])
             .bind(to: sectionsRelay)
             .disposed(by: disposeBag)

@@ -44,22 +44,22 @@ public struct FanartResponse: Codable {
         case .hdtvLogo: array = hdtvlogo
         case .clearArt: array = clearart
         case .background: array = showbackground
-        case .seasonPoster(let id): array = seasonposter?.filter { $0.season == id }
-        case .seasonThumb(let id): let custom = [showbackground, seasonthumb]
+        case let .seasonPoster(id): array = seasonposter?.filter { $0.season == id }
+        case let .seasonThumb(id): let custom = [showbackground, seasonthumb]
             .compactMap { $0 }
             .flatMap { $0 }
             .filter { $0.season == id || $0.season == nil }
             .sorted(by: \.likes)
             .reversed()
             .map { $0 }
-            
+
             array = custom.isEmpty ? showbackground : custom
-            
+
         case .hdClearArt: array = hdclearart
         case .tvBanner: array = tvbanner
         case .characterArt: array = characterart
         case .tvPoster: array = tvposter
-        case .seasonBanner(let id): array = seasonbanner?.filter { $0.season == id }
+        case let .seasonBanner(id): array = seasonbanner?.filter { $0.season == id }
         }
         if let image = array?
             .sorted(by: \.likes)
@@ -156,7 +156,7 @@ extension Fanart: WithImage {
 }
 
 extension Array {
-    func sorted<Value: Comparable>(by keyPath: KeyPath<Element, Value>) -> Array<Element> {
-        self.sorted(by: { $0[keyPath: keyPath] < $1[keyPath: keyPath] })
+    func sorted<Value: Comparable>(by keyPath: KeyPath<Element, Value>) -> [Element] {
+        sorted(by: { $0[keyPath: keyPath] < $1[keyPath: keyPath] })
     }
 }
