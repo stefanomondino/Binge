@@ -36,13 +36,16 @@ class CarouselItemView: UIView, WithViewModel {
         disposeBag = DisposeBag()
         guard let viewModel = viewModel as? CarouselItemViewModel
         else { return }
-
+        collectionView.dataSource = nil
+        collectionView.delegate = nil
         if isPlaceholderForAutosize { return }
         backgroundColor = .clear
-        let collectionViewDataSource = CollectionViewDataSource(viewModel: viewModel,
-                                                                factory: viewModel.cellFactory)
 
         if let collectionView = self.collectionView {
+            let collectionViewDataSource = CollectionViewDataSource(viewModel: viewModel,
+                                                                    factory: viewModel.cellFactory)
+            collectionView.showsHorizontalScrollIndicator = false
+
             let sizeCalculator = CarouselSizeCalculator(ratio: viewModel.carouselType.ratio())
 
             let collectionViewDelegate = CollectionViewDelegate(sizeCalculator: sizeCalculator)
@@ -55,7 +58,6 @@ class CarouselItemView: UIView, WithViewModel {
                 .disposed(by: disposeBag)
 
             self.collectionViewDelegate = collectionViewDelegate
-            collectionView.reloadData()
             viewModel.reload()
         }
         if let title = self.title {

@@ -1,6 +1,8 @@
 //
-//  ShowDetailUseCaseViewModel.swift
-//  App
+//  MovieDetailViewModel.swift
+//  Binge
+//
+//  Created by Stefano Mondino on 17/08/2020.
 //
 
 import Boomerang
@@ -9,7 +11,7 @@ import Model
 import RxRelay
 import RxSwift
 
-class ShowDetailViewModel: ItemDetailViewModel {
+class MovieDetailViewModel: RxListViewModel, ItemDetailViewModel {
     let uniqueIdentifier: UniqueIdentifier = UUID()
 
     let sectionsRelay: BehaviorRelay<[Section]> = BehaviorRelay(value: [])
@@ -22,9 +24,9 @@ class ShowDetailViewModel: ItemDetailViewModel {
 
     let itemViewModelFactory: ItemViewModelFactory
 
-    private let useCase: ShowDetailUseCase
+    private let useCase: MovieDetailUseCase
 
-    private let show: ItemContainer
+    private let movie: ItemContainer
 
     private let routeFactory: RouteFactory
 
@@ -33,28 +35,28 @@ class ShowDetailViewModel: ItemDetailViewModel {
     let backgroundImage: ObservableImage
 
     init(
-        show: ItemContainer,
+        movie: ItemContainer,
         routeFactory: RouteFactory,
         itemViewModelFactory: ItemViewModelFactory,
-        useCase: ShowDetailUseCase,
+        useCase: MovieDetailUseCase,
         layout: SceneIdentifier = .itemDetail
     ) {
-        self.show = show
+        self.movie = movie
         self.routeFactory = routeFactory
         self.useCase = useCase
         layoutIdentifier = layout
         self.itemViewModelFactory = itemViewModelFactory
         backgroundImage = useCase
-            .fanart(for: show.item)
-            .flatMap { $0.showImage(for: .background)?.getImage() ?? .empty() }
+            .fanart(for: movie.item)
+            .flatMap { $0.movieImage(for: .background)?.getImage() ?? .empty() }
     }
 
     func reload() {
         disposeBag = DisposeBag()
-        Observable.combineLatest(useCase.showDetail(for: show.item), useCase.fanart(for: show.item))
+        Observable.combineLatest(useCase.movieDetail(for: movie.item), useCase.fanart(for: movie.item))
             .map { [weak self] in self?.map($0.0, fanart: $0.1) ?? [] }
+            .debug()
             .catchErrorJustReturn([])
-            .takeLast(1)
             .bind(to: sectionsRelay)
             .disposed(by: disposeBag)
     }
@@ -63,28 +65,26 @@ class ShowDetailViewModel: ItemDetailViewModel {
 
     func addToFavorite() {}
 
-    private func map(_ show: ShowDetail, fanart: FanartResponse) -> [Section] {
+    private func map(_ show: MovieDetail, fanart: FanartResponse) -> [Section] {
         let routes = self.routes
         let routeFactory = self.routeFactory
         var topSection = Section(id: UUID().stringValue,
                                  items: [itemViewModelFactory.item(show, layout: .title),
                                          itemViewModelFactory.showDescription(show)])
         if let fanart = [Fanart.Format.background]
-            .compactMap({ fanart.showImage(for: $0) })
+            .compactMap({ fanart.movieImage(for: $0) })
             .first?
             .map({ itemViewModelFactory.fanart($0) }) {
             topSection.supplementary.set(fanart, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
         }
         if let navbar = [Fanart.Format.hdtvLogo]
-            .compactMap({ fanart.showImage(for: $0) })
+            .compactMap({ fanart.movieImage(for: $0) })
             .first?
             .map({ itemViewModelFactory.fanart($0) }) {
             navbarTitleViewModelRelay.accept(navbar)
         }
         var carousels: [ViewModel] = []
-        if show.info?.seasons != nil {
-            carousels += [itemViewModelFactory.seasonsCarousel(for: show, onSelection: { _ in })]
-        }
+
         carousels += [
             itemViewModelFactory.castCarousel(for: show) {
                 routes.accept(routeFactory.personDetail(for: $0))
@@ -93,7 +93,6 @@ class ShowDetailViewModel: ItemDetailViewModel {
                 routes.accept(routeFactory.showDetail(for: $0))
             }
         ].compactMap { $0 }
-
         return [
             topSection,
             Section(id: UUID().stringValue, items: carousels)

@@ -31,7 +31,9 @@ class ShowItemView: UIView, WithViewModel {
         //        self.title.style = Identifiers.Styles.mainRegularStyle.style
 
         counter?.text = viewModel.counter
-        applyContainerStyle(viewModel.mainStyle)
+        backgroundColor = .clear
+        poster.applyContainerStyle(viewModel.mainStyle)
+//        applyContainerStyle(viewModel.mainStyle)
 
         if let title = title {
             title.applyStyle(viewModel.mainStyle)

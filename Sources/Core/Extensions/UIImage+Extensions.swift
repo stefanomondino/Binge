@@ -8,6 +8,7 @@
 
 #if os(iOS) || os(tvOS)
     import Foundation
+    import UIKit
 
     private struct AssociatedKeys {
         static var downloadtime = "imageDownloader_downloadtime"
@@ -33,9 +34,7 @@
         }
     }
 
-    import UIKit
-
-    extension UIImage {
+    public extension UIImage {
         static func shape(with bezier: UIBezierPath, strokeColor: UIColor = .clear, fillColor: UIColor = .clear, lineWidth: CGFloat = 0) -> UIImage {
             UIGraphicsBeginImageContext(bezier.bounds.insetBy(dx: lineWidth, dy: lineWidth).size)
             fillColor.setFill()
@@ -74,6 +73,20 @@
             let bezier = UIBezierPath(rect: CGRect(x: 0, y: 0, width: width * 2, height: width * 2))
             return shape(with: bezier, fillColor: color)
                 .resizableImage(withCapInsets: UIEdgeInsets(top: width, left: width, bottom: width, right: width), resizingMode: .stretch)
+        }
+
+        func circled() -> UIImage {
+            guard !size.isEmpty else { return self }
+            let dimension = min(size.width, size.height)
+            let rect = CGRect(x: 0, y: 0, width: dimension, height: dimension)
+            UIGraphicsBeginImageContext(rect.size)
+            let point = CGPoint(x: (rect.size.width - size.width) / 2, y: (rect.size.height - size.height) / 2)
+            UIBezierPath(ovalIn: rect).addClip()
+            draw(at: point)
+
+            let image = UIGraphicsGetImageFromCurrentImageContext() ?? self
+            UIGraphicsEndImageContext()
+            return image
         }
     }
 #endif

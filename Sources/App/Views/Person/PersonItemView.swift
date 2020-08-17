@@ -21,7 +21,6 @@ class PersonItemView: UIView, WithViewModel {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        image?.layer.cornerRadius = bounds.width / 2.0
     }
 
     func configure(with viewModel: ViewModel) {
@@ -48,6 +47,7 @@ class PersonItemView: UIView, WithViewModel {
             viewModel.image
                 .asDriver(onErrorJustReturn: UIImage())
                 .startWith(UIImage())
+                .map { $0.circled() }
                 .drive(image.rx.image)
                 .disposed(by: disposeBag)
         }
