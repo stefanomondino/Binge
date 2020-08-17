@@ -35,23 +35,24 @@ class DefaultStyleFactory: DependencyContainer {
     var container: Container<String> = Container()
 
     init(container _: RootContainer) {
-        register(for: Styles.Generic.container) { DefaultContainerStyle() }
-        register(for: Styles.Generic.title) { DefaultTextStyle(size: 18) }
-        register(for: Styles.Generic.subtitle) { DefaultTextStyle(size: 14, alignment: .left) }
-        register(for: Styles.Generic.card) { DefaultContainerStyle.card }
-        register(for: Styles.Generic.carouselTitle) { DefaultTextStyle(size: 14, font: .mainBold, alignment: .left) }
-        register(for: Styles.Generic.navigationBar) { [DefaultContainerStyle(backgroundColor: .navbarBackground),
-                                                       DefaultTextStyle(size: 22, color: .navbarText, font: .mainBold)] }
+        register(for: .container) { DefaultContainerStyle() }
+        register(for: .title) { DefaultTextStyle(size: 18) }
+        register(for: .subtitle) { DefaultTextStyle(size: 14, alignment: .left) }
+        register(for: .carouselTitle) { DefaultTextStyle(size: 14, font: .mainBold, alignment: .left) }
+        register(for: .navigationBar) { [DefaultContainerStyle(backgroundColor: .navbarBackground),
+                                         DefaultTextStyle(size: 22, color: .navbarText, font: .mainBold)] }
         setupShows()
     }
 
     private func setupShows() {
-        register(for: Styles.Show.titleCard) { [DefaultContainerStyle(cornerRadius: 4, backgroundColor: .clear),
-                                                DefaultTextStyle(size: 22, color: .navbarText, font: Fonts.mainBold, alignment: .left)] }
+        register(for: .titleCard) { [DefaultContainerStyle(cornerRadius: 4, backgroundColor: .clear),
+                                     DefaultTextStyle(size: 22, color: .navbarText, font: Fonts.mainBold, alignment: .left)] }
 
-        register(for: Styles.Show.itemTitle) { DefaultTextStyle(size: 10, color: .mainText, font: Fonts.mainBold, alignment: .center) }
+        register(for: .itemTitle) { DefaultTextStyle(size: 10, color: .mainText, font: Fonts.mainBold, alignment: .center) }
 
-        register(for: Styles.Show.itemSubtitle) { DefaultTextStyle(size: 10, color: .mainText, font: Fonts.mainRegular, alignment: .center) }
+        register(for: .itemSubtitle) { DefaultTextStyle(size: 10, color: .mainText, font: Fonts.mainRegular, alignment: .center) }
+
+        register(for: .card) { [DefaultContainerStyle.card, self[.itemTitle] as TextStyle] }
     }
 }
 
@@ -154,7 +155,7 @@ extension UIImageView {
     struct DefaultStyleFactory_Previews: PreviewProvider {
         static var previewContainer = InitializationRoot()
         static var previews: some View {
-            ForEach(Styles.allCases, id: \.identifier) { id in
+            ForEach(Style.allCases, id: \.identifier) { id in
 
                 VStack {
                     UIViewPreview {

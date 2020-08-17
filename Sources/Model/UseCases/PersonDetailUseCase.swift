@@ -11,4 +11,5 @@ import RxSwift
 
 public protocol PersonDetailUseCase {
     func personDetail(for person: Person) -> Observable<PersonInfo>
+    func cast(for person: Person) -> Observable<[ItemContainer]>
 }

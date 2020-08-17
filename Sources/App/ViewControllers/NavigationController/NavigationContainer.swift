@@ -107,7 +107,7 @@ class NavigationContainer: UIViewController {
         rootViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        applyContainerStyle(Styles.Generic.navigationBar)
+        applyContainerStyle(.navigationBar)
 //        updateCurrentNavbarAlpha(1)
         view.layoutIfNeeded()
 
@@ -140,14 +140,14 @@ class NavigationContainer: UIViewController {
         rightContainer.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         leftContainer.snp.makeConstraints { make in
             make.centerY.equalTo(titleContainer.snp.centerY)
-            make.right.equalTo(titleContainer.snp.left).offset(8)
-            make.left.equalToSuperview().offset(8)
+            make.right.equalTo(titleContainer.snp.left).offset(Constants.sidePadding / 2)
+            make.left.equalToSuperview().offset(Constants.sidePadding)
             make.bottom.equalToSuperview()
         }
         rightContainer.snp.makeConstraints { make in
             make.centerY.equalTo(titleContainer.snp.centerY)
-            make.left.equalTo(titleContainer.snp.right).offset(8)
-            make.right.equalToSuperview().inset(8)
+            make.left.equalTo(titleContainer.snp.right).offset(Constants.sidePadding / 2)
+            make.right.equalToSuperview().inset(Constants.sidePadding)
             make.bottom.equalToSuperview()
         }
     }
@@ -161,11 +161,13 @@ class NavigationContainer: UIViewController {
         let title = UILabel()
         titleContainer.addSubview(title)
         currentTitleView = title
-        title.applyStyle(Styles.Generic.navigationBar)
+        title.applyStyle(.navigationBar)
+        title.backgroundColor = .clear
         title.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.left.greaterThanOrEqualToSuperview()
-            make.right.lessThanOrEqualToSuperview()
+            make.top.equalToSuperview().offset(Constants.sidePadding / 4)
+            make.bottom.equalToSuperview().inset(Constants.sidePadding / 4)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
             make.centerX.equalToSuperview()
         }
     }
@@ -177,6 +179,8 @@ class NavigationContainer: UIViewController {
             return
         }
         label.styledText = title
+        label.sizeToFit()
+        view.setNeedsLayout()
     }
 
     public func setTitleView(_ view: UIView?) {
@@ -185,12 +189,13 @@ class NavigationContainer: UIViewController {
             currentTitleView = view
             titleContainer.addSubview(view)
             view.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(8)
-                make.bottom.equalToSuperview().inset(8)
+                make.top.equalToSuperview().offset(Constants.sidePadding / 4)
+                make.bottom.equalToSuperview().inset(Constants.sidePadding / 4)
                 make.left.greaterThanOrEqualToSuperview()
                 make.right.lessThanOrEqualToSuperview()
                 make.centerX.equalToSuperview()
             }
+            view.setContentHuggingPriority(.fittingSizeLevel, for: .horizontal)
         }
     }
 

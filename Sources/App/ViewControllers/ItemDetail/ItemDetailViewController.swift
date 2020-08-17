@@ -29,6 +29,7 @@ extension ViewIdentifier.CarouselType {
         switch self {
         case .cast: return 180
         case .relatedShows: return 200
+        case .castMember: return 250
         case .seasons: return 200
         }
     }
@@ -38,6 +39,7 @@ extension ViewIdentifier.CarouselType {
         case .cast: return 9 / 14
         case .seasons: return Constants.showPosterRatio * 0.8
         case .relatedShows: return Constants.showPosterRatio
+        case .castMember: return Constants.showPosterRatio * 0.8
         }
     }
 }
@@ -131,7 +133,7 @@ class ItemDetailViewController: UIViewController {
                                                                 factory: collectionViewCellFactory)
 
         collectionView.alwaysBounceVertical = true
-        view.applyContainerStyle(Styles.Generic.container)
+        view.applyContainerStyle(.container)
 
         let sizeCalculator = SizeCalculator(viewModel: viewModel,
                                             factory: collectionViewCellFactory, itemsPerLine: 1)
@@ -162,7 +164,7 @@ class ItemDetailViewController: UIViewController {
                 if let viewModel = $0 {
                     self?.setNavigationView(self?.collectionViewCellFactory.component(from: viewModel))
                 } else {
-                    self?.setNavigationView(nil)
+                    self?.title = viewModel.title
                 }
             })
             .disposed(by: disposeBag)

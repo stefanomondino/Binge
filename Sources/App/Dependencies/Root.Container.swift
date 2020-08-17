@@ -45,11 +45,11 @@ class InitializationRoot: RootContainer, DependencyContainer {
         Logger.shared.add(logger: ConsoleLogger(logLevel: .verbose))
 
         register(for: .translations, scope: .eagerSingleton) { StringsFactory(container: self) }
-        register(for: .routeFactory) { MainRouteFactory(container: self) }
+        register(for: .routeFactory, scope: .singleton) { MainRouteFactory(container: self) }
         register(for: .styleFactory, scope: .singleton) { DefaultStyleFactory(container: self) }
 
-        register(for: .viewModels) { self.viewModelImplementation() }
-        register(for: .views) { self.viewImplementation() }
+        register(for: .viewModels, scope: .singleton) { self.viewModelImplementation() }
+        register(for: .views, scope: .singleton) { self.viewImplementation() }
         register(for: .model, scope: .eagerSingleton) { DefaultModelDependencyContainer(environment: self.environment) }
     }
 }

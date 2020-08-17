@@ -7,31 +7,15 @@
 
 import Foundation
 
-protocol Style {
-    var identifier: String { get }
-}
-
-extension Style where Self: RawRepresentable, Self.RawValue == String {
+enum Style: String, CaseIterable {
+    case title
+    case container
+    case subtitle
+    case card
+    case navigationBar
+    case carouselTitle
+    case titleCard
+    case itemTitle
+    case itemSubtitle
     var identifier: String { rawValue }
-}
-
-enum Styles {
-    static var allCases: [Style] {
-        [Generic.self].flatMap { $0.allCases }
-    }
-
-    enum Generic: String, Style, CaseIterable {
-        case title
-        case container
-        case subtitle
-        case card
-        case navigationBar
-        case carouselTitle
-    }
-
-    enum Show: String, Style, CaseIterable {
-        case titleCard
-        case itemTitle
-        case itemSubtitle
-    }
 }

@@ -36,11 +36,11 @@ class ShowItemView: UIView, WithViewModel {
 
         if let title = title {
             title.applyStyle(viewModel.mainStyle)
-            title.text = viewModel.title
+            title.styledText = viewModel.title
         }
         if let subtitle = subtitle {
-            subtitle.applyStyle(Styles.Generic.subtitle)
-            subtitle.text = viewModel.subtitle
+            subtitle.applyStyle(.itemSubtitle)
+            subtitle.styledText = viewModel.subtitle
         }
         if isPlaceholderForAutosize { return }
         viewModel.image

@@ -16,6 +16,7 @@ protocol MoviesRepository {
     func people(forMovie show: Item) -> Observable<PeopleResult>
     func related(of movie: Item) -> Observable<[Movie.MovieItemImplementation]>
     func fanart(for movie: Item) -> Observable<FanartResponse>
+    func personCast(for person: Person) -> Observable<Movie.Cast.Response>
 }
 
 struct MoviesRepositoryImplementation: MoviesRepository {
@@ -72,6 +73,10 @@ struct MoviesRepositoryImplementation: MoviesRepository {
 
     func related(of show: Item) -> Observable<[Movie.MovieItemImplementation]> {
         return rest.get([Movie.MovieItemImplementation].self, at: TraktvAPI.relatedMovies(show))
+    }
+
+    func personCast(for person: Person) -> Observable<Movie.Cast.Response> {
+        return rest.get(Movie.Cast.Response.self, at: TraktvAPI.peopleMovies(person))
     }
 
     func fanart(for movie: Item) -> Observable<FanartResponse> {

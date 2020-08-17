@@ -34,4 +34,8 @@ public struct ShowDetailUseCaseImplementation: ShowDetailUseCase {
     public func fanart(for show: Item) -> Observable<FanartResponse> {
         return shows.fanart(for: show)
     }
+
+    public func seasonDetail(for season: Season.Info, of show: ShowItem) -> Observable<Season.Info> {
+        shows.seasonDetail(for: season, of: show)
+    }
 }

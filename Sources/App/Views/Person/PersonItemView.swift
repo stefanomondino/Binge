@@ -28,13 +28,13 @@ class PersonItemView: UIView, WithViewModel {
         guard let viewModel = viewModel as? ShowItemViewModel
         else { return }
         if let title = self.title {
-            title.applyStyle(Styles.Show.itemTitle)
+            title.applyStyle(.itemTitle)
 
             title.text = viewModel.title
             title.numberOfLines = 1
         }
         if let subtitle = self.subtitle {
-            subtitle.applyStyle(Styles.Show.itemSubtitle)
+            subtitle.applyStyle(.itemSubtitle)
 
             subtitle.text = viewModel.subtitle
             subtitle.numberOfLines = 1

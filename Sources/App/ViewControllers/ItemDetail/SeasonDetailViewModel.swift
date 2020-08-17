@@ -9,7 +9,7 @@ import Model
 import RxRelay
 import RxSwift
 
-class PersonViewModel: ItemDetailViewModel {
+class SeasonDetailViewModel: ItemDetailViewModel {
     var routeFactory: RouteFactory
 
     var navbarTitleViewModel: Observable<ViewModel?> = .just(nil)
@@ -27,43 +27,45 @@ class PersonViewModel: ItemDetailViewModel {
 
     let itemViewModelFactory: ItemViewModelFactory
 
-    private let useCase: PersonDetailUseCase
+    private let useCase: ShowDetailUseCase
 
-    let person: Person
-
+    let season: Season.Info
+    let show: ShowItem
     let title: String
 
-    init(person: Person,
+    init(season: Season.Info,
+         show: ShowItem,
          itemViewModelFactory: ItemViewModelFactory,
-         useCase: PersonDetailUseCase,
+         useCase: ShowDetailUseCase,
          routeFactory: RouteFactory) {
         self.useCase = useCase
-        self.person = person
+        self.season = season
+        self.show = show
         self.routeFactory = routeFactory
-        title = person.title
+        title = season.title
         self.itemViewModelFactory = itemViewModelFactory
     }
 
     func reload() {
         disposeBag = DisposeBag()
-        useCase.personDetail(for: person)
+        useCase.seasonDetail(for: season, of: show).debug()
             .map { [weak self] in self?.map($0) ?? [] }
             .catchErrorJustReturn([])
             .bind(to: sectionsRelay)
             .disposed(by: disposeBag)
     }
 
-    private func map(_ person: PersonInfo) -> [Section] {
+    private func map(_: Season.Info) -> [Section] {
 //            let routes = self.routes
 //            let routeFactory = self.routeFactory
         var topSection = Section(id: UUID().stringValue,
-                                 items: [itemViewModelFactory.item(self.person, layout: .title),
-                                         itemViewModelFactory.personDescription(person)])
-
-        if let image = person.images?.profiles?.first {
-            let supplementary = itemViewModelFactory.image(image)
-            topSection.supplementary.set(supplementary, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
-        }
+                                 items: [itemViewModelFactory.item(season, layout: .title),
+                                         itemViewModelFactory.seasonDescription(season)])
+//
+//        if let image = person.images?.profiles?.first {
+//            let supplementary = itemViewModelFactory.image(image)
+//            topSection.supplementary.set(supplementary, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
+//        }
 
 //            if let navbar = [Fanart.Format.hdtvLogo]
 //                .compactMap({ fanart.showImage(for: $0) })
@@ -73,14 +75,14 @@ class PersonViewModel: ItemDetailViewModel {
 //            }
 
         var carousels: [ViewModel] = []
-        carousels += [
-            itemViewModelFactory.castShowsCarousel(for: self.person) { [weak self] in
-                self?.navigate(to: $0)
-            },
-            itemViewModelFactory.castMoviesCarousel(for: self.person) { [weak self] in
-                self?.navigate(to: $0)
-            }
-        ]
+//        carousels += [
+//            itemViewModelFactory.castShowsCarousel(for: self.person) { [weak self] in
+//                self?.navigate(to: $0)
+//            },
+//            itemViewModelFactory.castMoviesCarousel(for: self.person) { [weak self] in
+//                          self?.navigate(to: $0)
+//                      }
+//        ]
 //            var carousels: [ViewModel] = []
 //            if show.info?.seasons != nil {
 //                carousels += [itemViewModelFactory.seasonsCarousel(for: show, onSelection: { _ in })]

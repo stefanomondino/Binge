@@ -21,6 +21,10 @@ public protocol AnticipatedItem: ItemContainer {
     var listCount: Int { get }
 }
 
+public protocol CastItem: ItemContainer {
+    var characters: [String] { get }
+}
+
 public protocol PlayedItem: ItemContainer {
     var playCount: Int { get }
 }

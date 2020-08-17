@@ -28,6 +28,7 @@ enum TraktvAPI {
     case seasons(Item)
     case showSummary(Item)
     case relatedShows(Item)
+    case peopleShows(Person)
 
     case trendingMovies(Page)
     case popularMovies(Page)
@@ -38,6 +39,7 @@ enum TraktvAPI {
     case moviePeople(Item)
     case movieSummary(Item)
     case relatedMovies(Item)
+    case peopleMovies(Person)
 }
 
 extension TraktvAPI: TargetType {
@@ -64,13 +66,20 @@ extension TraktvAPI: TargetType {
         case .watchedMovies: return "movies/watched"
         case .collectedMovies: return "movies/collected"
         case .anticipatedMovies: return "movies/anticipated"
+
         case let .seasons(show): return "shows/\(show.ids.trakt)/seasons"
+
         case let .showSummary(show): return "shows/\(show.ids.trakt)"
         case let .movieSummary(movie): return "movies/\(movie.ids.trakt)"
+
         case let .showPeople(show): return "shows/\(show.ids.trakt)/people"
         case let .moviePeople(movie): return "movies/\(movie.ids.trakt)/people"
+
         case let .relatedShows(show): return "shows/\(show.ids.trakt)/related"
         case let .relatedMovies(movie): return "movies/\(movie.ids.trakt)/related"
+
+        case let .peopleShows(person): return "people/\(person.ids.trakt)/shows"
+        case let .peopleMovies(person): return "people/\(person.ids.trakt)/movies"
         }
     }
 

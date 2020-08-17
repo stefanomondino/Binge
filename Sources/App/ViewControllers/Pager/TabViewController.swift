@@ -45,8 +45,8 @@ class TabViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyContainerStyle(Styles.Generic.container)
-        applyContainerStyle(Styles.Generic.navigationBar)
+        view.applyContainerStyle(.container)
+        applyContainerStyle(.navigationBar)
         let factory = routeFactory
         let configurationClosure = { (sections: [Section]) -> [UIViewController] in
             sections.flatMap {

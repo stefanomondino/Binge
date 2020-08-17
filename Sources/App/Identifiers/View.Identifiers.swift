@@ -18,11 +18,13 @@ enum ViewIdentifier: String, LayoutIdentifier {
     enum CarouselType: String {
         case cast
         case relatedShows
+        case castMember
         case seasons
 
         var title: Translation {
             switch self {
             case .cast: return Strings.Generic.cast
+            case .castMember: return Strings.Generic.cast
             case .relatedShows: return Strings.Shows.related
             case .seasons: return Strings.Shows.seasons
             }

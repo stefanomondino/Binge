@@ -35,7 +35,7 @@ class PagerViewController: TabmanViewController {
         automaticallyAdjustsChildInsets = true
         super.viewDidLoad()
 
-        styleFactory.apply(Styles.Generic.container, to: view)
+        styleFactory.apply(.container, to: view)
         title = (viewModel as? PagerViewModel)?.pageTitle
         dataSource = internalDataSource
         setupBar()
@@ -64,11 +64,11 @@ class PagerViewController: TabmanViewController {
         let bar = TMBarView<TMHorizontalBarLayout, TMLabelBarButton, TMLineBarIndicator>()
         bar.backgroundView.style = .flat(color: .navbarBackground)
         bar.buttons.customize { button in
-            styleFactory.apply(Styles.Generic.navigationBar, to: button)
+            styleFactory.apply(.navigationBar, to: button)
         }
-
+        bar.layout.interButtonSpacing = Constants.sidePadding
         bar.layout.contentInset = UIEdgeInsets(top: 0, left: Constants.sidePadding, bottom: 0, right: Constants.sidePadding)
-        bar.indicator.tintColor = .darkGray
+        bar.indicator.tintColor = .mainDescription
         bar.indicator.weight = .custom(value: 4)
 
         addBar(bar, dataSource: internalDataSource, at: .top)

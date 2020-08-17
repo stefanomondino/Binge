@@ -34,6 +34,8 @@ class MovieDetailViewModel: RxListViewModel, ItemDetailViewModel {
     var navbarTitleViewModel: Observable<ViewModel?> { navbarTitleViewModelRelay.asObservable() }
     let backgroundImage: ObservableImage
 
+    let title: String
+
     init(
         movie: ItemContainer,
         routeFactory: RouteFactory,
@@ -42,6 +44,7 @@ class MovieDetailViewModel: RxListViewModel, ItemDetailViewModel {
         layout: SceneIdentifier = .itemDetail
     ) {
         self.movie = movie
+        title = movie.item.title
         self.routeFactory = routeFactory
         self.useCase = useCase
         layoutIdentifier = layout

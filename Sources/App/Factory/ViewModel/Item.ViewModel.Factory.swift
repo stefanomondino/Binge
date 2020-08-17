@@ -23,8 +23,11 @@ protocol ItemViewModelFactory {
     func castMember(_ castMember: CastMember) -> ViewModel
     func showDescription(_ show: ItemDetail) -> ViewModel
     func movieDescription(_ show: ItemDetail) -> ViewModel
+    func seasonDescription(_ season: Season.Info) -> ViewModel
     func image(_ fanart: Fanart) -> ViewModel
     func image(_ personImage: Person.Image) -> ViewModel
+    func castMoviesCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel
+    func castShowsCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel
     // MURRAY DECLARATION PLACEHOLDER
 }
 
@@ -37,18 +40,25 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
 
     func item(_ item: ItemContainer, layout: ShowIdentifier) -> ViewModel {
         switch item {
-        case let show as ShowItem: return ShowItemViewModel(show: show,
-                                                            layoutIdentifier: layout,
-                                                            imageUseCase: container.model.useCases.images)
-        case let movie as MovieItem: return ShowItemViewModel(movie: movie,
-                                                              layoutIdentifier: layout,
-                                                              imageUseCase: container.model.useCases.images)
+        case let showCast as Show.Cast: return ShowItemViewModel(showCast: showCast,
+                                                                 layoutIdentifier: layout,
+                                                                 imageUseCase: container.model.useCases.images)
+        case let movieCast as Movie.Cast: return ShowItemViewModel(movieCast: movieCast,
+                                                                   layoutIdentifier: layout,
+                                                                   imageUseCase: container.model.useCases.images)
+
         case let person as Person: return ShowItemViewModel(person: person,
                                                             layoutIdentifier: layout,
                                                             imagesUseCase: container.model.useCases.images)
         case let person as CastMember: return ShowItemViewModel(castMember: person,
                                                                 layoutIdentifier: layout,
                                                                 imagesUseCase: container.model.useCases.images)
+        case let show as ShowItem: return ShowItemViewModel(show: show,
+                                                            layoutIdentifier: layout,
+                                                            imageUseCase: container.model.useCases.images)
+        case let movie as MovieItem: return ShowItemViewModel(movie: movie,
+                                                              layoutIdentifier: layout,
+                                                              imageUseCase: container.model.useCases.images)
         default: return ShowItemViewModel(item: item.item,
                                           layoutIdentifier: layout,
                                           imageUseCase: container.model.useCases.images)
@@ -160,6 +170,40 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         }
     }
 
+    func castMoviesCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel {
+        let observable = container.model.useCases.movies.person
+            .cast(for: person)
+            .map { $0.map { self.item($0, layout: .full) } }
+            .map { [Section(id: UUID().uuidString, items: $0)] }
+            .share(replay: 1, scope: .forever)
+
+        return CarouselItemViewModel(sections: observable,
+                                     layoutIdentifier: ViewIdentifier.carousel,
+                                     cellFactory: container.views.collectionCells,
+                                     type: .castMember) { itemViewModel in
+            if let show = itemViewModel.as(ShowItemViewModel.self)?.item {
+                onSelection(show.item)
+            }
+        }
+    }
+
+    func castShowsCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel {
+        let observable = container.model.useCases.shows.person
+            .cast(for: person)
+            .map { $0.map { self.item($0, layout: .full) } }
+            .map { [Section(id: UUID().uuidString, items: $0)] }
+            .share(replay: 1, scope: .forever)
+
+        return CarouselItemViewModel(sections: observable,
+                                     layoutIdentifier: ViewIdentifier.carousel,
+                                     cellFactory: container.views.collectionCells,
+                                     type: .castMember) { itemViewModel in
+            if let show = itemViewModel.as(ShowItemViewModel.self)?.item {
+                onSelection(show.item)
+            }
+        }
+    }
+
     func person(_ person: Person) -> ViewModel {
         ShowItemViewModel(person: person,
                           layoutIdentifier: .person,
@@ -196,6 +240,10 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
 
     func movieDescription(_ movie: ItemDetail) -> ViewModel {
         DescriptionItemViewModel(description: movie.overview)
+    }
+
+    func seasonDescription(_ season: Season.Info) -> ViewModel {
+        DescriptionItemViewModel(description: season.overview)
     }
 
     func personDescription(_ person: PersonInfo) -> ViewModel {

@@ -61,7 +61,7 @@ class CarouselItemView: UIView, WithViewModel {
             viewModel.reload()
         }
         if let title = self.title {
-            title.applyStyle(Styles.Generic.carouselTitle)
+            title.applyStyle(.carouselTitle)
             title.styledText = viewModel.title
             title.snp.remakeConstraints { make in
                 make.left.equalToSuperview().offset(Constants.sidePadding)

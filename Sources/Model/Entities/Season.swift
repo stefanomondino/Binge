@@ -10,11 +10,24 @@ public enum Season {
     public struct Info: Codable, Item {
         public let id: Int
         public let name: String
-        public let episodeCount: Int
+        public let episodeCount: Int?
         public let overview: String
         public let seasonNumber: Int
         public let posterPath: String?
         public var title: String { name }
+        public var item: Item { self }
+        public var ids: Ids { Ids.empty }
+        public var episodes: [Episode]?
+    }
+
+    public struct Episode: Codable, Item {
+        public let id: Int
+        public let name: String?
+        public let episodeNumber: Int?
+        public let overview: String?
+        public let seasonNumber: Int?
+        public let posterPath: String?
+        public var title: String { name ?? "" }
         public var item: Item { self }
         public var ids: Ids { Ids.empty }
     }

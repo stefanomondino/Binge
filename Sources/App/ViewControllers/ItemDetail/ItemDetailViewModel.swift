@@ -11,6 +11,7 @@ import RxSwift
 
 protocol ItemDetailViewModel: RxListViewModel, RxNavigationViewModel {
     var routeFactory: RouteFactory { get }
+    var title: String { get }
     var navbarTitleViewModel: Observable<ViewModel?> { get }
     var backgroundImage: ObservableImage { get }
     func selectItem(at _: IndexPath)

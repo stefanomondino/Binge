@@ -6,4 +6,5 @@ public protocol ShowDetailUseCase {
     func cast(for show: Item) -> Observable<[CastMember]>
     func related(for show: Item) -> Observable<[ItemContainer]>
     func fanart(for show: Item) -> Observable<FanartResponse>
+    func seasonDetail(for season: Season.Info, of show: ShowItem) -> Observable<Season.Info>
 }

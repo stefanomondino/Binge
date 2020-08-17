@@ -47,6 +47,7 @@ enum TMDBAPI {
     case show(Item)
     case movie(Item)
     case person(Person)
+    case seasonDetail(Season.Info, Item)
 }
 
 extension TMDBAPI: TargetType {
@@ -60,6 +61,7 @@ extension TMDBAPI: TargetType {
         case let .show(show): return "tv/\(show.ids.tmdb ?? -1)"
         case let .movie(movie): return "movie/\(movie.ids.tmdb ?? -1)"
         case let .person(person): return "person/\(person.ids.tmdb ?? -1)"
+        case let .seasonDetail(season, show): return "tv/\(show.ids.tmdb ?? -1)/season/\(season.seasonNumber)"
         }
     }
 
@@ -84,7 +86,7 @@ extension TMDBAPI: TargetType {
     var parameters: [String: Any] {
         var parameters = ["api_key": Model.Configuration.environment.tmdbAPIKey]
         switch self {
-        case .person: parameters["append_to_response"] = "images"
+        case .person, .seasonDetail: parameters["append_to_response"] = "images"
         default: break
         }
         return parameters

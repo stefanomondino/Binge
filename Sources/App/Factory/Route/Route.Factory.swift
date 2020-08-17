@@ -19,6 +19,7 @@ protocol RouteFactory {
     func exit() -> CompletableRoute
     func showDetail(for show: ItemContainer) -> Route
     func personDetail(for person: Person) -> Route
+    func seasonDetail(for season: Season.Info, of: ShowItem) -> Route
 }
 
 class MainRouteFactory: RouteFactory {
@@ -92,6 +93,15 @@ class MainRouteFactory: RouteFactory {
     func personDetail(for person: Person) -> Route {
         return NavigationRoute {
             let viewModel = self.container.viewModels.scenes.personDetail(for: person)
+            return self.container.views.scenes
+                .itemDetail(viewModel: viewModel)
+                .inContainer(extendUnderNavbar: true)
+        }
+    }
+
+    func seasonDetail(for season: Season.Info, of show: ShowItem) -> Route {
+        return NavigationRoute {
+            let viewModel = self.container.viewModels.scenes.seasonDetail(for: season, of: show)
             return self.container.views.scenes
                 .itemDetail(viewModel: viewModel)
                 .inContainer(extendUnderNavbar: true)

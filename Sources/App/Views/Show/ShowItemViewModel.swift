@@ -29,8 +29,8 @@ enum ShowIdentifier: String, LayoutIdentifier, CaseIterable {
 
     var style: Style {
         switch self {
-        case .title: return Styles.Show.titleCard
-        default: return Styles.Generic.card
+        case .title: return .titleCard
+        default: return .card
         }
     }
 }
@@ -60,6 +60,34 @@ class ShowItemViewModel: ViewModel {
         subtitle = show.year?.stringValue ?? ""
         image = imageUseCase
             .poster(for: show)
+            .flatMapLatest { $0.getImage() }
+            //            .share(replay: 1, scope: .forever)
+            .startWith(UIImage())
+    }
+
+    init(showCast show: Show.Cast,
+         layoutIdentifier: ShowIdentifier,
+         imageUseCase: ImagesUseCase) {
+        self.layoutIdentifier = layoutIdentifier
+        item = show.item
+        mainStyle = layoutIdentifier.style
+        subtitle = show.characters.joined(separator: ", ")
+        image = imageUseCase
+            .poster(for: show)
+            .flatMapLatest { $0.getImage() }
+            //            .share(replay: 1, scope: .forever)
+            .startWith(UIImage())
+    }
+
+    init(movieCast movie: Movie.Cast,
+         layoutIdentifier: ShowIdentifier,
+         imageUseCase: ImagesUseCase) {
+        self.layoutIdentifier = layoutIdentifier
+        item = movie.item
+        mainStyle = layoutIdentifier.style
+        subtitle = movie.characters.joined(separator: ", ")
+        image = imageUseCase
+            .poster(for: movie)
             .flatMapLatest { $0.getImage() }
             //            .share(replay: 1, scope: .forever)
             .startWith(UIImage())

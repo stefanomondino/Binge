@@ -68,6 +68,23 @@ public enum Show {
         public var year: Int? { show.year }
     }
 
+    public struct Cast: CastItem, Codable, ShowItem {
+        struct Response: Codable {
+            let cast: [Cast]
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case showItem = "show"
+            case characters
+        }
+
+        private let showItem: ShowItemImplementation
+        public let characters: [String]
+        public var item: Item { showItem }
+        public var show: ShowItem { showItem }
+        public var year: Int? { show.year }
+    }
+
 //    public struct Searched: SearchableItem, ShowItem {
 //        public let score: Double
 //        public let item: Item

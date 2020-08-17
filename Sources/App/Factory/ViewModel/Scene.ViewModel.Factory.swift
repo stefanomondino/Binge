@@ -18,6 +18,7 @@ protocol SceneViewModelFactory {
     func itemDetail(for item: ItemContainer) -> ItemDetailViewModel?
     func personDetail(for person: Person) -> PersonViewModel
     func showsPager() -> PagerViewModel
+    func seasonDetail(for season: Season.Info, of show: ShowItem) -> ItemDetailViewModel
     // MURRAY DECLARATION PLACEHOLDER
 }
 
@@ -141,6 +142,14 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
                             routeFactory: container.routeFactory,
                             itemViewModelFactory: container.viewModels.items,
                             useCase: container.model.useCases.shows.detail)
+    }
+
+    func seasonDetail(for season: Season.Info, of show: ShowItem) -> ItemDetailViewModel {
+        SeasonDetailViewModel(season: season,
+                              show: show,
+                              itemViewModelFactory: container.viewModels.items,
+                              useCase: container.model.useCases.shows.detail,
+                              routeFactory: container.routeFactory)
     }
 
     func movieDetail(for movie: MovieItem) -> ItemDetailViewModel {

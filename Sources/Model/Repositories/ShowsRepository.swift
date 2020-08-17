@@ -14,8 +14,10 @@ protocol ShowsRepository {
     func info(forPerson person: Person) -> Observable<PersonInfo>
     func detail(forShow show: Item) -> Observable<Show.DetailItem>
     func people(forShow show: Item) -> Observable<PeopleResult>
+    func personCast(for person: Person) -> Observable<Show.Cast.Response>
     func related(of show: Item) -> Observable<[Show.ShowItemImplementation]>
     func fanart(for show: Item) -> Observable<FanartResponse>
+    func seasonDetail(for season: Season.Info, of show: ShowItem) -> Observable<Season.Info>
 }
 
 struct ShowsRepositoryImplementation: ShowsRepository {
@@ -70,11 +72,19 @@ struct ShowsRepositoryImplementation: ShowsRepository {
         return rest.get(PeopleResult.self, at: TraktvAPI.showPeople(show))
     }
 
+    func personCast(for person: Person) -> Observable<Show.Cast.Response> {
+        return rest.get(Show.Cast.Response.self, at: TraktvAPI.peopleShows(person))
+    }
+
     func related(of show: Item) -> Observable<[Show.ShowItemImplementation]> {
         return rest.get([Show.ShowItemImplementation].self, at: TraktvAPI.relatedShows(show))
     }
 
     func fanart(for show: Item) -> Observable<FanartResponse> {
         return rest.get(FanartResponse.self, at: FanartAPI.show(show))
+    }
+
+    public func seasonDetail(for season: Season.Info, of show: ShowItem) -> Observable<Season.Info> {
+        return rest.get(Season.Info.self, at: TMDBAPI.seasonDetail(season, show.item))
     }
 }

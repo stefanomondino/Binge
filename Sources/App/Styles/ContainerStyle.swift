@@ -10,7 +10,7 @@ import UIKit
 
 struct DefaultContainerStyle: ContainerStyle {
     static var card: ContainerStyle {
-        DefaultContainerStyle(cornerRadius: 4, backgroundColor: .white)
+        DefaultContainerStyle(cornerRadius: 4, backgroundColor: .clear)
     }
 
     var cornerRadius: CGFloat = 0

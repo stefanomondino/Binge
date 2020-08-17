@@ -23,7 +23,7 @@ class DescriptionItemView: UIView, WithViewModel {
         guard let viewModel = viewModel as? DescriptionItemViewModel
         else { return }
         title?.numberOfLines = 0
-        title?.applyStyle(Styles.Generic.subtitle)
+        title?.applyStyle(.subtitle)
         title?.styledText = viewModel.description
         if isPlaceholderForAutosize { return }
         backgroundColor = .clear

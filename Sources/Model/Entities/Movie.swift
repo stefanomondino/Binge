@@ -58,6 +58,22 @@ public enum Movie {
         public var item: Item { movieItem }
     }
 
+    public struct Cast: CastItem, Codable, MovieItem {
+        struct Response: Codable {
+            let cast: [Cast]
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case movieItem = "movie"
+            case characters
+        }
+
+        private let movieItem: MovieItemImplementation
+        public let characters: [String]
+        public var item: Item { movieItem }
+        public var movie: MovieItem { movieItem }
+    }
+
     public struct Searched: SearchableItem, MovieItem {
         public let score: Double
         public let item: Item

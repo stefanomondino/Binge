@@ -14,6 +14,10 @@ struct ShowPersonDetailUseCaseImplementation: PersonDetailUseCase {
     func personDetail(for person: Person) -> Observable<PersonInfo> {
         return shows.info(forPerson: person)
     }
+
+    func cast(for person: Person) -> Observable<[ItemContainer]> {
+        return shows.personCast(for: person).map { $0.cast }
+    }
 }
 
 struct MoviePersonDetailUseCaseImplementation: PersonDetailUseCase {
@@ -21,5 +25,9 @@ struct MoviePersonDetailUseCaseImplementation: PersonDetailUseCase {
 
     func personDetail(for person: Person) -> Observable<PersonInfo> {
         return movies.info(forPerson: person)
+    }
+
+    func cast(for person: Person) -> Observable<[ItemContainer]> {
+        return movies.personCast(for: person).map { $0.cast }
     }
 }
