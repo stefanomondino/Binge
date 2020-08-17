@@ -36,8 +36,10 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
         //
         //        let cacheSize = 1024 * 1024 * 200
         //        URLCache.shared = URLCache(memoryCapacity: cacheSize, diskCapacity: cacheSize, diskPath: nil)
-
-        let networkLoggerPlugin = NetworkLoggerPlugin(configuration: .init(logOptions: [.formatRequestAscURL, .verbose]))
+        
+        let networkLoggerPlugin = NetworkLoggerPlugin(configuration: .init(
+            output: { type, items in items.forEach { Logger.log($0, level: .verbose, tag: .api)} },
+            logOptions: [ .verbose]))
 
         addProvider(MoyaProvider<TraktvAPI>(plugins: [networkLoggerPlugin]))
         addProvider(MoyaProvider<FanartAPI>(plugins: [networkLoggerPlugin]))

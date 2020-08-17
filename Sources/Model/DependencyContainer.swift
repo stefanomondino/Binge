@@ -54,7 +54,7 @@ extension DefaultModelDependencyContainer {
         ModelDependencyContainerKeys.allCases.forEach {
             // expect no throw
             let value: Any = self[$0]
-            print(value)
+            Logger.log(value)
         }
     }
 }

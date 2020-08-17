@@ -58,7 +58,6 @@ class MovieDetailViewModel: RxListViewModel, ItemDetailViewModel {
         disposeBag = DisposeBag()
         Observable.combineLatest(useCase.movieDetail(for: movie.item), useCase.fanart(for: movie.item))
             .map { [weak self] in self?.map($0.0, fanart: $0.1) ?? [] }
-            .debug()
             .catchErrorJustReturn([])
             .bind(to: sectionsRelay)
             .disposed(by: disposeBag)

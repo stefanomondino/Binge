@@ -100,7 +100,6 @@ class ItemListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
                 .items(currentPage: currentPage + 1, pageSize: 20)
 //                .downloadClosure(currentPage + 1, 20)
                 .share()
-                .debug()
                 .do(onNext: self.addItems(from:))
                 .subscribe()
         }

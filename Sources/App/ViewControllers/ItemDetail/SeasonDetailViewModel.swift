@@ -11,9 +11,10 @@ import RxSwift
 
 class SeasonDetailViewModel: ItemDetailViewModel {
     var routeFactory: RouteFactory
-
-    var navbarTitleViewModel: Observable<ViewModel?> = .just(nil)
-
+    
+    private let navbarTitleViewModelRelay: BehaviorRelay<ViewModel?> = BehaviorRelay(value: nil)
+    var navbarTitleViewModel: Observable<ViewModel?> { navbarTitleViewModelRelay.asObservable() }
+    
     var backgroundImage: ObservableImage = .empty()
 
     func addToFavorite() {}
@@ -48,31 +49,36 @@ class SeasonDetailViewModel: ItemDetailViewModel {
 
     func reload() {
         disposeBag = DisposeBag()
-        useCase.seasonDetail(for: season, of: show).debug()
-            .map { [weak self] in self?.map($0) ?? [] }
+        Observable.combineLatest(useCase.seasonDetail(for: season, of: show),
+                             useCase
+                                 .fanart(for: show.item)
+                                 .map { $0 }
+                                 .catchErrorJustReturn(nil))
+        .map { [weak self] in self?.map($0.0, fanart: $0.1) ?? [] }
             .catchErrorJustReturn([])
             .bind(to: sectionsRelay)
             .disposed(by: disposeBag)
     }
 
-    private func map(_: Season.Info) -> [Section] {
+    private func map(_ season: Season.Info, fanart: FanartResponse?) -> [Section] {
 //            let routes = self.routes
 //            let routeFactory = self.routeFactory
+        let itemViewModelFactory = self.itemViewModelFactory
         var topSection = Section(id: UUID().stringValue,
                                  items: [itemViewModelFactory.item(season, layout: .title),
                                          itemViewModelFactory.seasonDescription(season)])
-//
-//        if let image = person.images?.profiles?.first {
-//            let supplementary = itemViewModelFactory.image(image)
-//            topSection.supplementary.set(supplementary, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
-//        }
-
-//            if let navbar = [Fanart.Format.hdtvLogo]
-//                .compactMap({ fanart.showImage(for: $0) })
-//                .first?
-//                .map({ itemViewModelFactory.fanart($0) }) {
-//                navbarTitleViewModelRelay.accept(navbar)
-//            }
+        if let fanart = [Fanart.Format.seasonThumb("\(season.seasonNumber)")]
+            .compactMap({ fanart?.showImage(for: $0) })
+            .first?
+            .map({ itemViewModelFactory.image($0) }) {
+            topSection.supplementary.set(fanart, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
+        }
+        if let navbar = [Fanart.Format.hdtvLogo]
+            .compactMap({ fanart?.showImage(for: $0) })
+            .first?
+            .map({ itemViewModelFactory.image($0) }) {
+            navbarTitleViewModelRelay.accept(navbar)
+        }
 
         var carousels: [ViewModel] = []
 //        carousels += [

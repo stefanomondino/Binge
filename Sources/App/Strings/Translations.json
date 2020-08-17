@@ -10,8 +10,8 @@
         "collected": "Collected",
         "anticipated": "Anticipated",
         "related": "Related",
-        "seasons": "Seasons"
-        
+        "seasons": "Seasons",
+        "episodeCountFormat": "%@ episodes"
     },
     "movies": {
         "title": "Movies",

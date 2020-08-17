@@ -14,7 +14,6 @@ class CachingRESTDataSource: DefaultRESTDataSource {
     private func url<Endpoint: TargetType>(for endpoint: Endpoint) -> URL? {
         guard let key = endpoint.cacheKey.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics) else { return nil }
         let url = temporaryDirectory.appendingPathComponent("cached_\(key)", isDirectory: false)
-        print(url)
         return url
     }
 

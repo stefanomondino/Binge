@@ -42,7 +42,7 @@ class InitializationRoot: RootContainer, DependencyContainer {
     var translations: StringsFactory { self[.translations] }
 
     init() {
-        Logger.shared.add(logger: ConsoleLogger(logLevel: .verbose))
+        Logger.shared.add(logger: ConsoleLogger(logLevel: .none))
 
         register(for: .translations, scope: .eagerSingleton) { StringsFactory(container: self) }
         register(for: .routeFactory, scope: .singleton) { MainRouteFactory(container: self) }

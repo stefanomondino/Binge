@@ -64,7 +64,7 @@ class NavigationContainer: UIViewController {
 
     func addButton(_ view: UIView, position: Position) {
         view.snp.makeConstraints { make in
-            make.size.equalTo(30)
+            make.size.equalTo(30).priority(999)
         }
         if let button = view as? UIButton {
             button.imageView?.contentMode = .scaleAspectFit
@@ -115,7 +115,6 @@ class NavigationContainer: UIViewController {
             rootViewController.navigationItem.rx.observeWeakly(String.self, "title"),
             rootViewController.rx.observeWeakly(String.self, "title")
         )
-        .debug()
         .distinctUntilChanged()
         .asDriver(onErrorJustReturn: nil)
         .drive(onNext: { [weak self] title in

@@ -44,15 +44,27 @@ public struct FanartResponse: Codable {
         case .hdtvLogo: array = hdtvlogo
         case .clearArt: array = clearart
         case .background: array = showbackground
-        case .seasonPoster: array = seasonposter
-        case .seasonThumb: array = seasonthumb
+        case .seasonPoster(let id): array = seasonposter?.filter { $0.season == id }
+        case .seasonThumb(let id): let custom = [showbackground, seasonthumb]
+            .compactMap { $0 }
+            .flatMap { $0 }
+            .filter { $0.season == id || $0.season == nil }
+            .sorted(by: \.likes)
+            .reversed()
+            .map { $0 }
+            
+            array = custom.isEmpty ? showbackground : custom
+            
         case .hdClearArt: array = hdclearart
         case .tvBanner: array = tvbanner
         case .characterArt: array = characterart
         case .tvPoster: array = tvposter
-        case .seasonBanner: array = seasonbanner
+        case .seasonBanner(let id): array = seasonbanner?.filter { $0.season == id }
         }
-        if let image = array?.first(where: { $0.lang == language }) ?? array?.first {
+        if let image = array?
+            .sorted(by: \.likes)
+            .reversed()
+            .first(where: { $0.lang == language }) ?? array?.first {
             return Fanart(format: format, image: image)
         } else {
             return nil
@@ -89,19 +101,19 @@ public struct Fanart {
         let height: Double
     }
 
-    public enum Format: String, CaseIterable {
+    public enum Format {
         case clearLogo
         case hdtvLogo
         case clearArt
         case background
-        case seasonPoster
-        case seasonThumb
+        case seasonPoster(String)
+        case seasonThumb(String)
         case hdClearArt
         case tvBanner
         case characterArt
         case tvPoster
         case thumb
-        case seasonBanner
+        case seasonBanner(String)
         public var ratio: Double {
             return size.width / size.height
         }
@@ -140,5 +152,11 @@ struct FanartImage: Codable {
 extension Fanart: WithImage {
     public func getImage(with placeholder: WithImage?) -> ObservableImage {
         return image.url.getImage(with: placeholder)
+    }
+}
+
+extension Array {
+    func sorted<Value: Comparable>(by keyPath: KeyPath<Element, Value>) -> Array<Element> {
+        self.sorted(by: { $0[keyPath: keyPath] < $1[keyPath: keyPath] })
     }
 }

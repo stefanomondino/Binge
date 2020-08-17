@@ -140,7 +140,11 @@ class ShowItemViewModel: ViewModel {
         self.layoutIdentifier = layoutIdentifier
         mainStyle = layoutIdentifier.style
         item = season
-        subtitle = "\(season.episodeCount)"
+        if let episodeCount = season.episodeCount {
+            subtitle = Strings.Shows.episodeCountFormat.format(with: "\(episodeCount)")
+        } else {
+            subtitle = ""
+        }
         image = imagesUseCase
             .image(forSeason: season)
             .flatMapLatest { $0.getImage() }

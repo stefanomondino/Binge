@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let initializationRoot: RootContainer = InitializationRoot()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
         Logger.log("STARTING APP", tag: .lifecycle)
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window

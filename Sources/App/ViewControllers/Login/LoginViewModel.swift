@@ -40,7 +40,7 @@ class LoginViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
         let passwordVM = itemFactory.password(relay: password, title: "password")
 
         let items: [FormViewModelType] = [nameVM, passwordVM].withNavigation {
-            print("Final element in form")
+            Logger.log("Final element in form")
         }
 
         sections = [Section(id: "test", items: items)]
