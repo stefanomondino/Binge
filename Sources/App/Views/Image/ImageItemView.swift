@@ -8,7 +8,7 @@ import RxCocoa
 import RxSwift
 import SnapKit
 import UIKit
-class FanartItemView: UIView, WithViewModel {
+class ImageItemView: UIView, WithViewModel {
     @IBOutlet var title: UILabel?
     @IBOutlet var image: UIImageView!
 
@@ -21,7 +21,7 @@ class FanartItemView: UIView, WithViewModel {
 
     func configure(with viewModel: ViewModel) {
         disposeBag = DisposeBag()
-        guard let viewModel = viewModel as? FanartItemViewModel
+        guard let viewModel = viewModel as? ImageItemViewModel
         else { return }
         removeConstraints([constraint].compactMap { $0 })
         snp.makeConstraints { make in

@@ -14,12 +14,14 @@ enum ShowIdentifier: String, LayoutIdentifier, CaseIterable {
     case posterOnly
     case title
     case full
+    case person
 
     var identifierString: String {
         switch self {
         case .posterOnly: return "PosterShow"
         case .full: return "CompleteShow"
         case .title: return "TitleShow"
+        case .person: return "Person"
         }
     }
 
@@ -36,26 +38,28 @@ class ShowItemViewModel: ViewModel {
     var uniqueIdentifier: UniqueIdentifier { item.uniqueIdentifier }
     let item: Item
     let image: ObservableImage
-    let counter: String
+    //    let counter: String
     var title: String {
         return item.title
     }
 
+    var subtitle: String
+
     let mainStyle: Style
-//    static func preview(_ layout: ShowIdentifier) -> ViewModel {
-//        ShowItemViewModel(show: TrendingShow.demo.show, layoutIdentifier: layout, imageUseCase: StaticImageUseCase(), styleFactory: DefaultAppDependencyContainer().styleFactory)
-//    }
+    //    static func preview(_ layout: ShowIdentifier) -> ViewModel {
+    //        ShowItemViewModel(show: TrendingShow.demo.show, layoutIdentifier: layout, imageUseCase: StaticImageUseCase(), styleFactory: DefaultAppDependencyContainer().styleFactory)
+    //    }
     init(show: ShowItem,
          layoutIdentifier: ShowIdentifier,
          imageUseCase: ImagesUseCase) {
         self.layoutIdentifier = layoutIdentifier
         item = show.item
         mainStyle = layoutIdentifier.style
-        if let year = show.item.year { counter = "\(year)" } else { counter = "" }
+        subtitle = show.item.year?.stringValue ?? ""
         image = imageUseCase
             .poster(for: show)
             .flatMapLatest { $0.getImage() }
-//            .share(replay: 1, scope: .forever)
+            //            .share(replay: 1, scope: .forever)
             .startWith(UIImage())
     }
 
@@ -65,12 +69,39 @@ class ShowItemViewModel: ViewModel {
         self.layoutIdentifier = layoutIdentifier
         item = movie.item
         mainStyle = layoutIdentifier.style
-        if let year = movie.item.year { counter = "\(year)" } else { counter = "" }
+        subtitle = movie.item.year?.stringValue ?? ""
+
         image = imageUseCase
             .poster(for: movie)
             .flatMapLatest { $0.getImage() }
             //            .share(replay: 1, scope: .forever)
             .startWith(UIImage())
+    }
+
+    init(person: Person,
+         layoutIdentifier: ShowIdentifier = ShowIdentifier.person,
+         imagesUseCase: ImagesUseCase) {
+        self.layoutIdentifier = layoutIdentifier
+        mainStyle = layoutIdentifier.style
+        subtitle = ""
+        item = person
+        image = imagesUseCase
+            .image(forPerson: person)
+            .flatMapLatest { $0.getImage() }
+            .share(replay: 1, scope: .forever)
+    }
+
+    init(castMember: CastMember,
+         layoutIdentifier: ShowIdentifier = ShowIdentifier.person,
+         imagesUseCase: ImagesUseCase) {
+        self.layoutIdentifier = layoutIdentifier
+        mainStyle = layoutIdentifier.style
+        item = castMember.person
+        subtitle = castMember.characters.joined(separator: ", ")
+        image = imagesUseCase
+            .image(forPerson: castMember.person)
+            .flatMapLatest { $0.getImage() }
+            .share(replay: 1, scope: .forever)
     }
 
     init(item: Item,
@@ -79,7 +110,8 @@ class ShowItemViewModel: ViewModel {
         self.layoutIdentifier = layoutIdentifier
         self.item = item
         mainStyle = layoutIdentifier.style
-        if let year = item.year { counter = "\(year)" } else { counter = "" }
+        subtitle = ""
+//        if let year = item.year { counter = "\(year)" } else { counter = "" }
         image = .just(UIImage())
     }
 }

@@ -97,18 +97,21 @@ class ZoomEffect: PluginEffect {
         let offset = parallax * collectionOffset
         var frame = attribute.frame
         if offset < 0 {
+            attribute.alpha = 1
             frame.origin.y = collectionOffset
             frame.origin.x = offset / 2
             frame.size.height += -offset
             frame.size.width += -offset
         } else {
             frame.origin.y -= offset - collectionOffset
+            attribute.alpha = max(0, 1 - 4 * (frame.origin.y / frame.size.height))
         }
         if let decoration = attributes
             .filter({ $0.representedElementCategory == .decorationView &&
                     $0.representedElementKind == ShadowView.identifier })
             .first {
             decoration.frame = frame
+            decoration.alpha = attribute.alpha
         }
 
         attribute.frame = frame

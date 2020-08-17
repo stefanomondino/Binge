@@ -91,7 +91,9 @@ class MainRouteFactory: RouteFactory {
     func personDetail(for person: Person) -> Route {
         return NavigationRoute {
             let viewModel = self.container.viewModels.scenes.personDetail(for: person)
-            return self.container.views.scenes.person(viewModel: viewModel)
+            return self.container.views.scenes
+                .itemDetail(viewModel: viewModel)
+                .inContainer(extendUnderNavbar: true)
         }
     }
 }

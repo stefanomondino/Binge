@@ -28,7 +28,7 @@ class MovieDetailViewModel: RxListViewModel, ItemDetailViewModel {
 
     private let movie: ItemContainer
 
-    private let routeFactory: RouteFactory
+    let routeFactory: RouteFactory
 
     private let navbarTitleViewModelRelay: BehaviorRelay<ViewModel?> = BehaviorRelay(value: nil)
     var navbarTitleViewModel: Observable<ViewModel?> { navbarTitleViewModelRelay.asObservable() }
@@ -74,13 +74,13 @@ class MovieDetailViewModel: RxListViewModel, ItemDetailViewModel {
         if let fanart = [Fanart.Format.background]
             .compactMap({ fanart.movieImage(for: $0) })
             .first?
-            .map({ itemViewModelFactory.fanart($0) }) {
+            .map({ itemViewModelFactory.image($0) }) {
             topSection.supplementary.set(fanart, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
         }
         if let navbar = [Fanart.Format.hdtvLogo]
             .compactMap({ fanart.movieImage(for: $0) })
             .first?
-            .map({ itemViewModelFactory.fanart($0) }) {
+            .map({ itemViewModelFactory.image($0) }) {
             navbarTitleViewModelRelay.accept(navbar)
         }
         var carousels: [ViewModel] = []

@@ -26,7 +26,7 @@ class ShowDetailViewModel: ItemDetailViewModel {
 
     private let show: ItemContainer
 
-    private let routeFactory: RouteFactory
+    let routeFactory: RouteFactory
 
     private let navbarTitleViewModelRelay: BehaviorRelay<ViewModel?> = BehaviorRelay(value: nil)
     var navbarTitleViewModel: Observable<ViewModel?> { navbarTitleViewModelRelay.asObservable() }
@@ -72,13 +72,13 @@ class ShowDetailViewModel: ItemDetailViewModel {
         if let fanart = [Fanart.Format.background]
             .compactMap({ fanart.showImage(for: $0) })
             .first?
-            .map({ itemViewModelFactory.fanart($0) }) {
+            .map({ itemViewModelFactory.image($0) }) {
             topSection.supplementary.set(fanart, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
         }
         if let navbar = [Fanart.Format.hdtvLogo]
             .compactMap({ fanart.showImage(for: $0) })
             .first?
-            .map({ itemViewModelFactory.fanart($0) }) {
+            .map({ itemViewModelFactory.image($0) }) {
             navbarTitleViewModelRelay.accept(navbar)
         }
         var carousels: [ViewModel] = []
@@ -86,8 +86,9 @@ class ShowDetailViewModel: ItemDetailViewModel {
             carousels += [itemViewModelFactory.seasonsCarousel(for: show, onSelection: { _ in })]
         }
         carousels += [
-            itemViewModelFactory.castCarousel(for: show) {
-                routes.accept(routeFactory.personDetail(for: $0))
+            itemViewModelFactory.castCarousel(for: show) { [weak self] in
+                self?.navigate(to: $0)
+//                routes.accept(routeFactory.personDetail(for: $0))
             },
             itemViewModelFactory.relatedCarousel(for: show) {
                 routes.accept(routeFactory.showDetail(for: $0))

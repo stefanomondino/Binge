@@ -19,9 +19,12 @@ protocol ItemViewModelFactory {
     func castCarousel(for item: ItemContainer, onSelection: @escaping (Person) -> Void) -> ViewModel?
     func relatedCarousel(for show: ItemContainer, onSelection: @escaping (Item) -> Void) -> ViewModel?
     func person(_ person: Person) -> ViewModel
+    func personDescription(_ person: PersonInfo) -> ViewModel
     func castMember(_ castMember: CastMember) -> ViewModel
     func showDescription(_ show: ItemDetail) -> ViewModel
-    func fanart(_ fanart: Fanart) -> ViewModel
+    func movieDescription(_ show: ItemDetail) -> ViewModel
+    func image(_ fanart: Fanart) -> ViewModel
+    func image(_ personImage: Person.Image) -> ViewModel
     // MURRAY DECLARATION PLACEHOLDER
 }
 
@@ -40,6 +43,12 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         case let movie as MovieItem: return ShowItemViewModel(movie: movie,
                                                               layoutIdentifier: layout,
                                                               imageUseCase: container.model.useCases.images)
+        case let person as Person: return ShowItemViewModel(person: person,
+                                                            layoutIdentifier: layout,
+                                                            imagesUseCase: container.model.useCases.images)
+        case let person as CastMember: return ShowItemViewModel(castMember: person,
+                                                                layoutIdentifier: layout,
+                                                                imagesUseCase: container.model.useCases.images)
         default: return ShowItemViewModel(item: item.item,
                                           layoutIdentifier: layout,
                                           imageUseCase: container.model.useCases.images)
@@ -65,7 +74,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .cast) { itemViewModel in
-            if let person = (itemViewModel as? PersonItemViewModel)?.person {
+            if let person = (itemViewModel as? ShowItemViewModel)?.item as? Person {
                 onSelection(person)
             }
         }
@@ -82,7 +91,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .cast) { itemViewModel in
-            if let person = (itemViewModel as? PersonItemViewModel)?.person {
+            if let person = (itemViewModel as? ShowItemViewModel)?.item as? Person {
                 onSelection(person)
             }
         }
@@ -162,19 +171,32 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
     }
 
     func castMember(_ castMember: CastMember) -> ViewModel {
-        PersonItemViewModel(castMember: castMember,
-                            layoutIdentifier: ViewIdentifier.person,
-                            imagesUseCase: container.model.useCases.images)
+        ShowItemViewModel(castMember: castMember, layoutIdentifier: .person, imagesUseCase: container.model.useCases.images)
     }
 
-    func fanart(_ fanart: Fanart) -> ViewModel {
-        FanartItemViewModel(fanart: fanart,
-                            layoutIdentifier: ViewIdentifier.fanart,
-                            styleFactory: container.styleFactory)
+    func image(_ fanart: Fanart) -> ViewModel {
+        ImageItemViewModel(fanart: fanart,
+                           layoutIdentifier: ViewIdentifier.image,
+                           styleFactory: container.styleFactory)
+    }
+
+    func image(_ personImage: Person.Image) -> ViewModel {
+        ImageItemViewModel(image: personImage,
+                           useCase: container.model.useCases.images,
+                           layoutIdentifier: ViewIdentifier.image,
+                           styleFactory: container.styleFactory)
     }
 
     func showDescription(_ show: ItemDetail) -> ViewModel {
         DescriptionItemViewModel(description: show.overview)
+    }
+
+    func movieDescription(_ movie: ItemDetail) -> ViewModel {
+        DescriptionItemViewModel(description: movie.overview)
+    }
+
+    func personDescription(_ person: PersonInfo) -> ViewModel {
+        DescriptionItemViewModel(description: person.biography)
     }
 
     // MURRAY IMPLEMENTATION PLACEHOLDER

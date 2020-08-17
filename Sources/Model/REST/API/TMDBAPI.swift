@@ -82,10 +82,12 @@ extension TMDBAPI: TargetType {
     }
 
     var parameters: [String: Any] {
-        let parameters = ["api_key": Model.Configuration.environment.tmdbAPIKey]
+        var parameters = ["api_key": Model.Configuration.environment.tmdbAPIKey]
         switch self {
-        default: return parameters
+        case .person: parameters["append_to_response"] = "images"
+        default: break
         }
+        return parameters
     }
 
     var cacheTime: TimeInterval {

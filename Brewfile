@@ -10,3 +10,4 @@ brew 'swiftformat'
 # Xcodegen
 brew 'xcodegen'
 
+brew 'ImageMagick'

@@ -12,15 +12,26 @@ struct PeopleResult: Codable {
     let cast: [CastMember]
 }
 
-public struct Person: Codable {
+public struct Person: Codable, ItemContainer, Item {
+    public struct Image: Codable {
+        public let aspectRatio: Double
+        let filePath: String?
+        public var uniqueIdentifier: String { filePath ?? UUID().uuidString }
+    }
+
+    public var title: String { name }
+    public var year: Int? { nil }
+    public var item: Item { self }
     public let name: String
-    let ids: Ids
+    public let profiles: [Image]?
+    public let ids: Ids
 }
 
-public struct CastMember: Codable {
+public struct CastMember: Codable, ItemContainer {
     public let person: Person
     public let characters: [String]
     let episodeCount: Int?
+    public var item: Item { person }
 }
 
 public extension Person {
@@ -30,6 +41,10 @@ public extension Person {
 }
 
 public struct PersonInfo: Codable {
+    public struct Images: Codable {
+        public let profiles: [Person.Image]?
+    }
+
     public enum Gender: Int, Codable {
         case unknown = 0
         case female = 1
@@ -42,4 +57,5 @@ public struct PersonInfo: Codable {
     public let placeOfBirth: String?
     public let biography: String
     public let gender: Gender
+    public let images: Images?
 }

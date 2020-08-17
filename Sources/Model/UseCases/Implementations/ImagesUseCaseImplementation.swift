@@ -56,6 +56,12 @@ class ImagesUseCaseImplementation: ImagesUseCase {
         }
     }
 
+    func image(for image: Person.Image) -> Observable<WithImage> {
+        return Observable.just(image).flatMapLatest {
+            self.image(from: $0, with: \.filePath, sizes: \.profileSizes)
+        }
+    }
+
     func image(forSeason season: Season.Info) -> Observable<WithImage> {
         return Observable.just(season).flatMapLatest {
             self.image(from: $0, with: \.posterPath, sizes: \.posterSizes)

@@ -154,7 +154,7 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
         PersonViewModel(person: person,
                         itemViewModelFactory: container.viewModels.items,
                         useCase: container.model.useCases.shows.person,
-                        styleFactory: container.styleFactory)
+                        routeFactory: container.routeFactory)
     }
 
     // MURRAY IMPLEMENTATION PLACEHOLDER

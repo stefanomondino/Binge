@@ -17,7 +17,7 @@ import UIKit
 class ShowItemView: UIView, WithViewModel {
     @IBOutlet var poster: UIImageView!
     @IBOutlet var title: UILabel?
-    @IBOutlet var counter: UILabel?
+    @IBOutlet var subtitle: UILabel?
     var disposeBag = DisposeBag()
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,7 +30,6 @@ class ShowItemView: UIView, WithViewModel {
         /// Multiline text bindings should go here
         //        self.title.style = Identifiers.Styles.mainRegularStyle.style
 
-        counter?.text = viewModel.counter
         backgroundColor = .clear
         poster.applyContainerStyle(viewModel.mainStyle)
 //        applyContainerStyle(viewModel.mainStyle)
@@ -39,9 +38,9 @@ class ShowItemView: UIView, WithViewModel {
             title.applyStyle(viewModel.mainStyle)
             title.text = viewModel.title
         }
-        if let counter = counter {
-            counter.applyStyle(Styles.Generic.subtitle)
-            counter.text = viewModel.counter
+        if let subtitle = subtitle {
+            subtitle.applyStyle(Styles.Generic.subtitle)
+            subtitle.text = viewModel.subtitle
         }
         if isPlaceholderForAutosize { return }
         viewModel.image

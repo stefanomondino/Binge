@@ -12,6 +12,7 @@ public protocol ShowItem: ItemContainer {
 }
 
 public protocol ShowDetail: ItemDetail, ShowItem {
+    var overview: String { get }
     var info: Show.Info? { get }
 }
 

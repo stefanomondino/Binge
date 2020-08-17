@@ -71,9 +71,9 @@ class DefaultViewControllerFactory: ViewControllerFactory {
     }
 
     func person(viewModel: PersonViewModel) -> UIViewController {
-        return PersonViewController(nibName: name(from: viewModel.layoutIdentifier),
-                                    viewModel: viewModel,
-                                    collectionViewCellFactory: container.views.collectionCells)
+        return ItemDetailViewController(nibName: name(from: viewModel.layoutIdentifier),
+                                        viewModel: viewModel,
+                                        collectionViewCellFactory: container.views.collectionCells)
     }
 
     // MURRAY IMPLEMENTATION PLACEHOLDER
