@@ -38,7 +38,8 @@ class MainRouteFactory: RouteFactory {
 
     func home() -> Route {
         return RestartRoute {
-            self.container.views.scenes.mainTabBar()
+            self.container.views.scenes
+                .mainTabBar()
                 .inNavigationController()
 //            NavigationController(rootViewController: self.container.views.scenes.mainTabBar())
         }

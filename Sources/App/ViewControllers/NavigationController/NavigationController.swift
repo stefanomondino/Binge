@@ -17,6 +17,15 @@ class NavigationController: UINavigationController, UIGestureRecognizerDelegate 
         super.viewDidLoad()
         setNavigationBarHidden(true, animated: false)
         interactivePopGestureRecognizer?.delegate = self
+        setNeedsStatusBarAppearanceUpdate()
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        topViewController?.preferredStatusBarStyle ?? super.preferredStatusBarStyle
+    }
+
+    override var childForStatusBarStyle: UIViewController? {
+        topViewController
     }
 }
 

@@ -49,7 +49,9 @@ class DefaultViewControllerFactory: ViewControllerFactory {
 
     func mainTabBar() -> UIViewController {
         let viewModel = container.viewModels.scenes.homePager()
-        return TabViewController(viewModel: viewModel, routeFactory: container.routeFactory, styleFactory: container.styleFactory)
+        return TabViewController(viewModel: viewModel,
+                                 routeFactory: container.routeFactory,
+                                 styleFactory: container.styleFactory)
     }
 
     func login(viewModel: LoginViewModel) -> UIViewController {

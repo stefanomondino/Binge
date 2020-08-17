@@ -16,6 +16,7 @@ protocol StyleFactory {
     func apply(_ style: Style, to view: UIButton)
     func apply(_ style: Style, to view: PagerButton)
     func apply(_ style: Style, to navigationController: NavigationContainer)
+    func apply(_ style: Style, to tabViewController: TabViewController)
 }
 
 class DefaultStyleFactory: DependencyContainer {
@@ -96,9 +97,26 @@ extension DefaultStyleFactory: StyleFactory {
         guard let implementation: ContainerStyle = getStyle(style) else { return }
         navigationController.navigationBarColor = implementation.backgroundColor
     }
+
+    func apply(_ style: Style, to tabViewController: TabViewController) {
+        guard let implementation: ContainerStyle = getStyle(style) else { return }
+
+        tabViewController.tabBar.barTintColor = implementation.backgroundColor
+        guard let text: TextStyle = getStyle(style) else { return }
+        tabViewController.tabBar.isTranslucent = false
+        tabViewController.tabBar.tintColor = text.style.attributes[.foregroundColor] as? UIColor ?? .clear
+        tabViewController.statusBarStyle = .lightContent
+//        UITabBarItem.appearance().setTitleTextAttributes(text.style.attributes, for: .normal)
+    }
 }
 
 extension NavigationContainer {
+    func applyContainerStyle(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
+        factory.apply(style, to: self)
+    }
+}
+
+extension TabViewController {
     func applyContainerStyle(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
         factory.apply(style, to: self)
     }

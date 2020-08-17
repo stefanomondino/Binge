@@ -36,7 +36,6 @@ public protocol WatchedItem: ItemContainer {
 
 public protocol Item: Codable, ItemContainer {
     var title: String { get }
-    var year: Int? { get }
     var ids: Ids { get }
     var uniqueIdentifier: String { get }
 }
@@ -53,7 +52,7 @@ public struct Ids: Codable {
     let tmdb: Int?
     let imdb: String?
     let tvrage: Int?
-
+    static var empty: Ids { .init(trakt: -1, slug: UUID().uuidString) }
     init(trakt: Int, slug: String) {
         self.trakt = trakt
         self.slug = slug

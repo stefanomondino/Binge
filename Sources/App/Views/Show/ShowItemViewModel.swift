@@ -15,6 +15,7 @@ enum ShowIdentifier: String, LayoutIdentifier, CaseIterable {
     case title
     case full
     case person
+    case season
 
     var identifierString: String {
         switch self {
@@ -22,6 +23,7 @@ enum ShowIdentifier: String, LayoutIdentifier, CaseIterable {
         case .full: return "CompleteShow"
         case .title: return "TitleShow"
         case .person: return "Person"
+        case .season: return "Season"
         }
     }
 
@@ -55,7 +57,7 @@ class ShowItemViewModel: ViewModel {
         self.layoutIdentifier = layoutIdentifier
         item = show.item
         mainStyle = layoutIdentifier.style
-        subtitle = show.item.year?.stringValue ?? ""
+        subtitle = show.year?.stringValue ?? ""
         image = imageUseCase
             .poster(for: show)
             .flatMapLatest { $0.getImage() }
@@ -69,7 +71,7 @@ class ShowItemViewModel: ViewModel {
         self.layoutIdentifier = layoutIdentifier
         item = movie.item
         mainStyle = layoutIdentifier.style
-        subtitle = movie.item.year?.stringValue ?? ""
+        subtitle = ""
 
         image = imageUseCase
             .poster(for: movie)
@@ -100,6 +102,19 @@ class ShowItemViewModel: ViewModel {
         subtitle = castMember.characters.joined(separator: ", ")
         image = imagesUseCase
             .image(forPerson: castMember.person)
+            .flatMapLatest { $0.getImage() }
+            .share(replay: 1, scope: .forever)
+    }
+
+    init(season: Season.Info,
+         layoutIdentifier: ShowIdentifier = ShowIdentifier.season,
+         imagesUseCase: ImagesUseCase) {
+        self.layoutIdentifier = layoutIdentifier
+        mainStyle = layoutIdentifier.style
+        item = season
+        subtitle = "\(season.episodeCount)"
+        image = imagesUseCase
+            .image(forSeason: season)
             .flatMapLatest { $0.getImage() }
             .share(replay: 1, scope: .forever)
     }

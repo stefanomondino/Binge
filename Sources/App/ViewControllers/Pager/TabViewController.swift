@@ -16,6 +16,12 @@ class TabViewController: UITabBarController {
     let styleFactory: StyleFactory
     let routeFactory: RouteFactory
     var disposeBag = DisposeBag()
+    var statusBarStyle: UIStatusBarStyle = .lightContent {
+        didSet {
+            setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+
     init(viewModel: ListViewModel,
          routeFactory: RouteFactory,
          styleFactory: StyleFactory) {
@@ -25,13 +31,22 @@ class TabViewController: UITabBarController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        statusBarStyle
+    }
+
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override var childForStatusBarStyle: UIViewController? {
+        nil
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        styleFactory.apply(Styles.Generic.container, to: view)
+        view.applyContainerStyle(Styles.Generic.container)
+        applyContainerStyle(Styles.Generic.navigationBar)
         let factory = routeFactory
         let configurationClosure = { (sections: [Section]) -> [UIViewController] in
             sections.flatMap {
@@ -56,6 +71,7 @@ class TabViewController: UITabBarController {
             }
         }
         viewModel.reload()
+        setNeedsStatusBarAppearanceUpdate()
     }
 }
 

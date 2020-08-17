@@ -49,7 +49,7 @@ class ShadowView: UICollectionReusableView {
     }
 }
 
-class ShowHeaderPlugin: FlowLayoutPlugin {
+class DetailHeaderPlugin: FlowLayoutPlugin {
     override func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes] {
         guard let collectionView = layout.collectionView else { return [] }
         layout.register(ShadowView.self, forDecorationViewOfKind: ShadowView.identifier)

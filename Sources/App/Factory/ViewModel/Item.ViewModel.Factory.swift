@@ -74,7 +74,8 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .cast) { itemViewModel in
-            if let person = (itemViewModel as? ShowItemViewModel)?.item as? Person {
+            if let person = itemViewModel.as(ShowItemViewModel.self)?
+                .unwrap(\.item, as: Person.self) {
                 onSelection(person)
             }
         }
@@ -91,7 +92,8 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .cast) { itemViewModel in
-            if let person = (itemViewModel as? ShowItemViewModel)?.item as? Person {
+            if let person = itemViewModel.as(ShowItemViewModel.self)?
+                .unwrap(\.item, as: Person.self) {
                 onSelection(person)
             }
         }
@@ -110,7 +112,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .seasons) { itemViewModel in
-            if let season = (itemViewModel as? SeasonItemViewModel)?.season {
+            if let season = itemViewModel.as(ShowItemViewModel.self)?.unwrap(\.item, as: Season.Info.self) {
                 onSelection(season)
             }
         }
@@ -135,7 +137,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .relatedShows) { itemViewModel in
-            if let show = (itemViewModel as? ShowItemViewModel)?.item {
+            if let show = itemViewModel.as(ShowItemViewModel.self)?.item {
                 onSelection(show.item)
             }
         }
@@ -152,22 +154,23 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .relatedShows) { itemViewModel in
-            if let show = (itemViewModel as? ShowItemViewModel)?.item {
+            if let show = itemViewModel.as(ShowItemViewModel.self)?.item {
                 onSelection(show.item)
             }
         }
     }
 
     func person(_ person: Person) -> ViewModel {
-        PersonItemViewModel(person: person,
-                            layoutIdentifier: ViewIdentifier.person,
-                            imagesUseCase: container.model.useCases.images)
+        ShowItemViewModel(person: person,
+                          layoutIdentifier: .person,
+                          imagesUseCase: container.model.useCases.images)
     }
 
     func season(_ season: Season.Info) -> ViewModel {
-        SeasonItemViewModel(season: season,
-                            layoutIdentifier: ViewIdentifier.season,
-                            imagesUseCase: container.model.useCases.images)
+        ShowItemViewModel(season: season, layoutIdentifier: .season, imagesUseCase: container.model.useCases.images)
+        //        SeasonItemViewModel(season: season,
+        //                            layoutIdentifier: ViewIdentifier.season,
+        //                            imagesUseCase: container.model.useCases.images)
     }
 
     func castMember(_ castMember: CastMember) -> ViewModel {

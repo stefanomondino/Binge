@@ -46,7 +46,7 @@ class ItemDetailViewController: UIViewController {
     class Delegate: CollectionViewDelegate, PluginLayoutDelegate {
         func collectionView(_: UICollectionView, layout _: PluginLayout, pluginForSectionAt section: Int) -> PluginType? {
             switch section {
-            case 0: return ShowHeaderPlugin(delegate: self)
+            case 0: return DetailHeaderPlugin(delegate: self)
             default: return FlowLayoutPlugin(delegate: self)
             }
         }

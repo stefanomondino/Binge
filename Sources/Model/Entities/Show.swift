@@ -8,6 +8,7 @@
 import Foundation
 
 public protocol ShowItem: ItemContainer {
+    var year: Int? { get }
     var show: ShowItem { get }
 }
 
@@ -32,6 +33,7 @@ public enum Show {
         public var watcherCount: Int { watchers }
         public var item: Item { showItem }
         public var show: ShowItem { showItem }
+        public var year: Int? { show.year }
     }
 
     public struct Played: WatchedItem, PlayedItem, CollectedItem, ShowItem, Codable {
@@ -50,6 +52,7 @@ public enum Show {
         private let showItem: ShowItemImplementation
         public var item: Item { showItem }
         public var show: ShowItem { showItem }
+        public var year: Int? { show.year }
     }
 
     public struct Anticipated: AnticipatedItem, Codable, ShowItem {
@@ -62,6 +65,7 @@ public enum Show {
         public let listCount: Int
         public var item: Item { showItem }
         public var show: ShowItem { showItem }
+        public var year: Int? { show.year }
     }
 
 //    public struct Searched: SearchableItem, ShowItem {
