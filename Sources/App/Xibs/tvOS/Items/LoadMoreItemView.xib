@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="appleTV" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB" customClass="LoadMoreItemView" customModule="Binge_tvOS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="568" height="433"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="YqG-oG-PRa">
+                    <rect key="frame" x="264" y="196.5" width="40" height="40"/>
+                </activityIndicatorView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="YqG-oG-PRa" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="BdU-yT-fwX"/>
+                <constraint firstItem="YqG-oG-PRa" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="epI-58-vsR"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="activityIndicator" destination="YqG-oG-PRa" id="bzF-lM-eie"/>
+            </connections>
+            <point key="canvasLocation" x="-850" y="-298.5"/>
+        </view>
+    </objects>
+</document>

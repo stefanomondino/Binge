@@ -36,6 +36,7 @@ def ios_pods
   pod 'Tabman'
 end
 def tvos_pods
+  pod 'ParallaxView'
 end
 
 def test_pods

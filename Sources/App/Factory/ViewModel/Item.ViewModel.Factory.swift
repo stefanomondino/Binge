@@ -50,6 +50,9 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         case let season as Season.Info: return ShowItemViewModel(season: season,
                                                                  layoutIdentifier: layout,
                                                                  imagesUseCase: container.model.useCases.images)
+        case let search as Search.SearchItem: return ShowItemViewModel(search: search,
+                                                                       layoutIdentifier: layout,
+                                                                       imageUseCase: container.model.useCases.images)
 
         case let episode as Season.Episode: return ShowItemViewModel(episode: episode,
                                                                      layoutIdentifier: layout,

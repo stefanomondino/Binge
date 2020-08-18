@@ -1,5 +1,6 @@
 import RxSwift
 
 public protocol LoginUseCase {
-    func login(username: String, password: String) -> Observable<Void>
+    func webViewURL() -> URL?
+    func login() -> Observable<Void>
 }

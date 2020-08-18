@@ -16,17 +16,21 @@ class NavigationController: UINavigationController, UIGestureRecognizerDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBarHidden(true, animated: false)
-        interactivePopGestureRecognizer?.delegate = self
-        setNeedsStatusBarAppearanceUpdate()
+        #if os(iOS)
+            interactivePopGestureRecognizer?.delegate = self
+            setNeedsStatusBarAppearanceUpdate()
+        #endif
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        topViewController?.preferredStatusBarStyle ?? super.preferredStatusBarStyle
-    }
+    #if os(iOS)
+        override var preferredStatusBarStyle: UIStatusBarStyle {
+            topViewController?.preferredStatusBarStyle ?? super.preferredStatusBarStyle
+        }
 
-    override var childForStatusBarStyle: UIViewController? {
-        topViewController
-    }
+        override var childForStatusBarStyle: UIViewController? {
+            topViewController
+        }
+    #endif
 }
 
 extension UIViewController {

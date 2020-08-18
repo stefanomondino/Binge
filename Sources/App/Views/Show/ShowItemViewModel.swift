@@ -119,6 +119,25 @@ class ShowItemViewModel: ViewModel {
             .startWith(UIImage())
     }
 
+    convenience init(search: Search.SearchItem,
+                     layoutIdentifier: ShowIdentifier,
+                     imageUseCase: ImagesUseCase) {
+        switch search.item {
+        case let show as ShowItem: self.init(show: show,
+                                             layoutIdentifier: layoutIdentifier,
+                                             imageUseCase: imageUseCase)
+        case let movie as MovieItem: self.init(movie: movie,
+                                               layoutIdentifier: layoutIdentifier,
+                                               imageUseCase: imageUseCase)
+        case let person as Person: self.init(person: person,
+                                             layoutIdentifier: layoutIdentifier,
+                                             imagesUseCase: imageUseCase)
+        default: self.init(item: search.item,
+                           layoutIdentifier: layoutIdentifier,
+                           imageUseCase: imageUseCase)
+        }
+    }
+
     init(person: Person,
          layoutIdentifier: ShowIdentifier = ShowIdentifier.person,
          imagesUseCase: ImagesUseCase) {

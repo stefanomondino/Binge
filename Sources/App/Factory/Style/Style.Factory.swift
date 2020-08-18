@@ -19,60 +19,15 @@ protocol StyleFactory {
     func apply(_ style: Style, to tabViewController: TabViewController)
 }
 
-class DefaultStyleFactory: DependencyContainer {
-    static var factory: StyleFactory {
-        (UIApplication.shared.delegate as? AppDelegate ?? AppDelegate()).initializationRoot.styleFactory
-    }
-
-    private func register<Value: Any>(for style: Style, scope: Container<DependencyKey>.Scope = .unique, handler: @escaping () -> Value) {
-        register(for: style.identifier, scope: scope, handler: handler)
-    }
-
-    subscript<T>(index: Style) -> T {
-        self[index.identifier]
-    }
-
-    var container: Container<String> = Container()
-
-    init(container _: RootContainer) {
-        register(for: .container) { DefaultContainerStyle() }
-        register(for: .title) { DefaultTextStyle(size: 18) }
-        register(for: .subtitle) {
-            ComposedTextStyle(base: DefaultTextStyle(size: 12,
-                                                     color: .mainText,
-                                                     font: Fonts.mainRegular, alignment: .left),
-                              tags: (tag: .bold, style: DefaultTextStyle(size: 12,
-                                                                         color: .mainText,
-                                                                         font: Fonts.mainBold,
-                                                                         alignment: .left)))
-        }
-        register(for: .carouselTitle) { DefaultTextStyle(size: 14, font: .mainBold, alignment: .left) }
-        register(for: .navigationBar) { [DefaultContainerStyle(backgroundColor: .navbarBackground),
-                                         DefaultTextStyle(size: 22, color: .navbarText, font: .mainBold)] }
-        setupShows()
-    }
-
-    private func setupShows() {
-        register(for: .titleCard) { [DefaultContainerStyle(cornerRadius: 4, backgroundColor: .clear),
-                                     DefaultTextStyle(size: 22, color: .navbarText, font: Fonts.mainBold, alignment: .left)] }
-
-        register(for: .itemTitle) { DefaultTextStyle(size: 10, color: .mainText, font: Fonts.mainBold, alignment: .center) }
-
-        register(for: .itemSubtitle) { DefaultTextStyle(size: 10, color: .mainText, font: Fonts.mainRegular, alignment: .center) }
-
-        register(for: .card) { [DefaultContainerStyle.card, self[.itemTitle] as TextStyle] }
-
-        register(for: .episodeTitle) {
-            ComposedTextStyle(base: DefaultTextStyle(size: 10, color: .mainText, font: Fonts.mainRegular, alignment: .left),
-                              tags: (tag: .bold, style: DefaultTextStyle(size: 10, color: .mainText, font: Fonts.mainBold, alignment: .left)))
-        }
-    }
+protocol DefaultStyleFactory: DependencyContainer, StyleFactory where DependencyKey == Style {
+    //    var container: RootContainer { get }
+    static var factory: StyleFactory { get }
 }
 
-extension DefaultStyleFactory: StyleFactory {
-    private func getStyle<StyleType>(_ style: Style) -> StyleType? {
-        if let style: StyleType = resolve(style.identifier) { return style }
-        if let styles: [Any] = resolve(style.identifier) {
+extension DefaultStyleFactory {
+    func getStyle<StyleType>(_ style: Style) -> StyleType? {
+        if let style: StyleType = resolve(style) { return style }
+        if let styles: [Any] = resolve(style) {
             return styles.compactMap { $0 as? StyleType }.first
         }
         return nil
@@ -96,17 +51,6 @@ extension DefaultStyleFactory: StyleFactory {
         view.layer.masksToBounds = true
     }
 
-    func apply(_ style: Style, to view: PagerButton) {
-        guard let implementation: TextStyle = getStyle(style) else { return }
-        view.contentInset = UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 0)
-        let color = implementation.style.attributes[.foregroundColor] as? UIColor
-        view.tintColor = color?.withAlphaComponent(0.75)
-        view.font = implementation.style.attributes[.font] as? UIFont ?? view.font
-        //            button.font = Fonts.special(.regular).font(size: 20)
-        //            button.font = Fonts.main(.bold).font(size: 16)
-        view.selectedTintColor = color
-    }
-
     func apply(_ style: Style, to navigationController: NavigationContainer) {
         guard let implementation: ContainerStyle = getStyle(style) else { return }
         navigationController.navigationBarColor = implementation.backgroundColor
@@ -119,43 +63,45 @@ extension DefaultStyleFactory: StyleFactory {
         guard let text: TextStyle = getStyle(style) else { return }
         tabViewController.tabBar.isTranslucent = false
         tabViewController.tabBar.tintColor = text.style.attributes[.foregroundColor] as? UIColor ?? .clear
-        tabViewController.statusBarStyle = .lightContent
+        #if os(iOS)
+            tabViewController.statusBarStyle = .lightContent
+        #endif
         //        UITabBarItem.appearance().setTitleTextAttributes(text.style.attributes, for: .normal)
     }
 }
 
 extension NavigationContainer {
-    func applyContainerStyle(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
+    func applyContainerStyle(_ style: Style, factory: StyleFactory = StyleFactoryAlias.factory) {
         factory.apply(style, to: self)
     }
 }
 
 extension TabViewController {
-    func applyContainerStyle(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
+    func applyContainerStyle(_ style: Style, factory: StyleFactory = StyleFactoryAlias.factory) {
         factory.apply(style, to: self)
     }
 }
 
 extension UIView {
-    func applyContainerStyle(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
+    func applyContainerStyle(_ style: Style, factory: StyleFactory = StyleFactoryAlias.factory) {
         factory.apply(style, to: self)
     }
 }
 
 extension UIButton {
-    func applyStyle(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
+    func applyStyle(_ style: Style, factory: StyleFactory = StyleFactoryAlias.factory) {
         factory.apply(style, to: self)
     }
 }
 
 extension UILabel {
-    func applyStyle(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
+    func applyStyle(_ style: Style, factory: StyleFactory = StyleFactoryAlias.factory) {
         factory.apply(style, to: self)
     }
 }
 
 extension UIImageView {
-    func applyStyle(_ style: Style, factory: StyleFactory = DefaultStyleFactory.factory) {
+    func applyStyle(_ style: Style, factory: StyleFactory = StyleFactoryAlias.factory) {
         factory.apply(style, to: self)
     }
 }

@@ -40,6 +40,8 @@ enum TraktvAPI {
     case movieSummary(Item)
     case relatedMovies(Item)
     case peopleMovies(Person)
+
+    case search(String, Page)
 }
 
 extension TraktvAPI: TargetType {
@@ -80,6 +82,8 @@ extension TraktvAPI: TargetType {
 
         case let .peopleShows(person): return "people/\(person.ids.trakt)/shows"
         case let .peopleMovies(person): return "people/\(person.ids.trakt)/movies"
+
+        case .search: return "search/movie,show,person"
         }
     }
 
@@ -130,13 +134,14 @@ extension TraktvAPI: TargetType {
              let .playedMovies(page),
              let .watchedMovies(page),
              let .anticipatedMovies(page),
-             let .collectedMovies(page): return ["page": page.page, "limit": page.limit]
+             let .collectedMovies(page),
+             let .search(_, page): return ["page": page.page, "limit": page.limit]
         default: return [:]
         }
     }
 
     var parameters: [String: Any] {
-        let parameters = pagination
+        var parameters = pagination
         switch self {
         case let .token(code):
             return ["code": code,
@@ -148,9 +153,8 @@ extension TraktvAPI: TargetType {
                                  "client_id": Configuration.environment.traktClientID,
                                  "redirect_uri": Configuration.environment.traktRedirectURI]
         case .showSummary, .movieSummary: return ["extended": "full"]
-        //        case .search(let q, _):
-        //            parameters["query"] = q
-        //            return parameters
+        case let .search(query, _): parameters["query"] = query
+            return parameters
         //        case .myProfile: return ["extended":"full"]
         default: return parameters
         }

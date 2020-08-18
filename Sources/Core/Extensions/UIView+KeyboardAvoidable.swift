@@ -5,7 +5,19 @@
 //  Created by Alberto Bo on 26/01/2020.
 //  Copyright © 2020 Synesthesia. All rights reserved.
 //
-#if os(iOS)
+#if !os(iOS)
+    import RxSwift
+    import UIKit
+    public protocol KeyboardAvoidable: UIViewController {
+        func setupKeyboardAvoiding() -> Disposable
+    }
+
+    public extension KeyboardAvoidable {
+        func setupKeyboardAvoiding() -> Disposable {
+            return Disposables.create()
+        }
+    }
+#else
     import Boomerang
     import RxCocoa
     import RxSwift

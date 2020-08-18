@@ -15,6 +15,7 @@ public protocol UseCaseContainer {
     var shows: ShowsContainer { get }
     var movies: MoviesContainer { get }
     var images: ImagesUseCase { get }
+    var search: SearchUseCase { get }
     // MURRAY PROTOCOL
 }
 
@@ -24,6 +25,7 @@ enum UseCaseKeys: CaseIterable, Hashable {
     case shows
     case movies
     case images
+    case search
     // MURRAY KEY
 }
 
@@ -35,6 +37,7 @@ class DefaultUseCaseContainer: UseCaseContainer, DependencyContainer {
     var shows: ShowsContainer { self[.shows] }
     var movies: MoviesContainer { self[.movies] }
     var images: ImagesUseCase { self[.images] }
+    var search: SearchUseCase { self[.search] }
     // MURRAY VAR
 
     init(container: ModelDependencyContainer) {
@@ -49,6 +52,9 @@ class DefaultUseCaseContainer: UseCaseContainer, DependencyContainer {
         }
         register(for: .movies, scope: .singleton) {
             MoviesContainerImplementation(container: container)
+        }
+        register(for: .search, scope: .singleton) {
+            SearchUseCaseImplementation(repository: container.repositories.search)
         }
         register(for: .images, scope: .singleton) {
             ImagesUseCaseImplementation(configuration: container.repositories.configuration,

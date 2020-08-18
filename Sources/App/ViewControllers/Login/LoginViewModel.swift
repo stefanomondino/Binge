@@ -9,44 +9,40 @@ import Model
 import RxRelay
 import RxSwift
 
-class LoginViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
+class LoginViewModel: RxNavigationViewModel, WithPage {
+    let uniqueIdentifier: UniqueIdentifier = UUID()
     var routes: PublishRelay<Route> = PublishRelay()
 
-    var uniqueIdentifier: UniqueIdentifier = UUID()
-
+    var disposeBag: DisposeBag = DisposeBag()
     var pageTitle: String = "Login"
 
     var pageIcon: UIImage?
+    var layoutIdentifier: LayoutIdentifier = SceneIdentifier.login
 
-    let sectionsRelay: BehaviorRelay<[Section]> = BehaviorRelay(value: [])
+    let itemViewModelFactory: ItemViewModelFactory
 
-    var disposeBag: DisposeBag = DisposeBag()
+    private let useCase: LoginUseCase
+    let routeFactory: RouteFactory
 
-    let layoutIdentifier: LayoutIdentifier
-    let itemFactory: PickerViewModelFactory
-
-    init(itemFactory: PickerViewModelFactory,
-         routeFactory _: RouteFactory,
-         styleFactory _: StyleFactory) {
-        self.itemFactory = itemFactory
-        layoutIdentifier = SceneIdentifier.login
+    init(itemViewModelFactory: ItemViewModelFactory,
+         useCase: LoginUseCase,
+         routeFactory: RouteFactory) {
+        self.useCase = useCase
+        self.routeFactory = routeFactory
+        self.itemViewModelFactory = itemViewModelFactory
     }
 
-    func reload() {
-        let name = BehaviorRelay<String?>(value: nil)
-        let nameVM = itemFactory.email(relay: name, title: "name")
-
-        let password = BehaviorRelay<String?>(value: "")
-        let passwordVM = itemFactory.password(relay: password, title: "password")
-
-        let items: [FormViewModelType] = [nameVM, passwordVM].withNavigation {
-            Logger.log("Final element in form")
+    func openLogin() {
+        disposeBag = DisposeBag()
+        let routeFactory = self.routeFactory
+        if let url = useCase.webViewURL() {
+            useCase.login()
+                .map { routeFactory.restart() }
+                .startWith(routeFactory.url(for: url))
+                .bind(to: routes)
+                .disposed(by: disposeBag)
         }
-
-        sections = [Section(id: "test", items: items)]
     }
-
-    func selectItem(at _: IndexPath) {}
 }
 
 class ListItemViewModel: ViewModel, CustomStringConvertible, Hashable {

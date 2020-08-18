@@ -14,6 +14,7 @@ protocol RepositoryContainer {
     var configuration: ConfigurationRepository { get }
     var shows: ShowsRepository { get }
     var movies: MoviesRepository { get }
+    var search: SearchRepository { get }
     // MURRAY PROTOCOL
 }
 
@@ -23,6 +24,7 @@ class DefaultRepositoryContainer: RepositoryContainer, DependencyContainer {
         case configuration
         case shows
         case movies
+        case search
         // MURRAY KEY
     }
 
@@ -30,6 +32,7 @@ class DefaultRepositoryContainer: RepositoryContainer, DependencyContainer {
     var authorization: AuthorizationRepository { self[.authorization] }
     var shows: ShowsRepository { self[.shows] }
     var movies: MoviesRepository { self[.movies] }
+    var search: SearchRepository { self[.search] }
     // MURRAY VAR
 
     var container = Container<Keys>()
@@ -46,6 +49,9 @@ class DefaultRepositoryContainer: RepositoryContainer, DependencyContainer {
         }
         register(for: .movies, scope: .singleton) {
             MoviesRepositoryImplementation(rest: container.dataSources.rest)
+        }
+        register(for: .search, scope: .singleton) {
+            SearchRepositoryImplementation(rest: container.dataSources.rest)
         }
         // MURRAY REGISTER
     }

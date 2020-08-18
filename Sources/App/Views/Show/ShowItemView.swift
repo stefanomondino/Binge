@@ -48,6 +48,8 @@ class ShowItemView: UIView, WithViewModel {
             .drive(poster.rx.animatedImage())
             .disposed(by: disposeBag)
     }
+
+    override var canBecomeFocused: Bool { true }
 }
 
 //

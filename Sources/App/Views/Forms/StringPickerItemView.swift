@@ -99,30 +99,32 @@ class StringPickerItemView: UIView, WithViewModel {
 
     func configure(with viewModel: RxListViewModel & FormViewModelType) {
         setStyle(viewModel.additionalInfo)
-        let picker = UIPickerView()
+        #if os(iOS)
+            let picker = UIPickerView()
 
-        viewModel.sectionsRelay
-            .map { $0.flatMap { $0.items } }
-            .asDriver(onErrorJustReturn: [])
-            .drive(picker.rx.itemTitles) { _, item in
-                (item as? CustomStringConvertible)?.description
-                // return items.map { ($0 as? CustomStringConvertible)?.description }
-            }
-            .disposed(by: disposeBag)
+            viewModel.sectionsRelay
+                .map { $0.flatMap { $0.items } }
+                .asDriver(onErrorJustReturn: [])
+                .drive(picker.rx.itemTitles) { _, item in
+                    (item as? CustomStringConvertible)?.description
+                    // return items.map { ($0 as? CustomStringConvertible)?.description }
+                }
+                .disposed(by: disposeBag)
 
-        viewModel.textValue
-            .distinctUntilChanged()
-            .drive(textField.rx.text)
-            .disposed(by: disposeBag)
+            viewModel.textValue
+                .distinctUntilChanged()
+                .drive(textField.rx.text)
+                .disposed(by: disposeBag)
 
-        picker.rx.itemSelected
-            .bind { viewModel.selectItem(at: IndexPath(item: $0, section: $1)) }
-            .disposed(by: disposeBag)
+            picker.rx.itemSelected
+                .bind { viewModel.selectItem(at: IndexPath(item: $0, section: $1)) }
+                .disposed(by: disposeBag)
 
-        textField.inputView = picker
+            textField.inputView = picker
 
-        receiveFocus(from: viewModel.focus.asObservable())
+            receiveFocus(from: viewModel.focus.asObservable())
 
-        viewModel.reload()
+            viewModel.reload()
+        #endif
     }
 }

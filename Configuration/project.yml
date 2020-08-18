@@ -31,10 +31,16 @@ fileGroups:
   - Configuration
   - .gitignore
 targets:
-  ${APP_NAME}:
+  ${APP_NAME}_iOS:
     type: application
-    platform: [iOS, tvOS]
-    sources: "Sources/App"
+    platform: iOS
+    sources:
+      - path: "Sources/App"
+        excludes:
+            - "Xibs/**/*"
+            - "**/{tvOS}/**/*.{swift,xib}"
+      - path: "Sources/App/Xibs/iOS"
+        buildPhase: resources
     settings:
         base:
           DEVELOPMENT_TEAM: 6T384SC3AF
@@ -52,15 +58,61 @@ targets:
     scheme:
       gatherCoverageData: true
       testTargets:
-        - ${APP_NAME}Tests_${platform}
+        - ${APP_NAME}Tests_iOS
         - ModelTests
         - CoreTests
       configVariants:
         - Devel
         - Prod
     dependencies:
-      - target: Model_${platform}
-      - target: Core_${platform}
+      - target: Model_iOS
+      - target: Core_iOS
+    preBuildScripts:
+      - name: "SwiftLint"
+        script: |
+                swiftlint --config "${SRCROOT}/Configuration/config.swiftlint.yml"
+    postBuildScripts:
+      - name: "Crashlytics"
+        script: |
+                #"${PODS_ROOT}/FirebaseCrashlytics/run"
+        inputFiles: |
+                    $(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)
+  ${APP_NAME}_tvOS:
+    type: application
+    platform: tvOS
+    sources:
+      - path: "Sources/App"
+        excludes:
+            - "Xibs/iOS/**/*"
+            - "**/{iOS}/**/*.{swift}"
+      - path: "Sources/App/Xibs/tvOS"
+        buildPhase: resources
+    settings:
+        base:
+          DEVELOPMENT_TEAM: 6T384SC3AF
+          SUPPORTS_MACCATALYST: YES
+          DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER: YES
+        configs:
+            Devel Run:
+              PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}.devel
+            Devel Archive:
+              PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}.devel
+            Prod Run:
+              PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}
+            Prod Archive:
+              PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}
+    scheme:
+      gatherCoverageData: true
+      testTargets:
+        - ${APP_NAME}Tests_tvOS
+        - ModelTests
+        - CoreTests
+      configVariants:
+        - Devel
+        - Prod
+    dependencies:
+      - target: Model_tvOS
+      - target: Core_tvOS
     preBuildScripts:
       - name: "SwiftLint"
         script: |

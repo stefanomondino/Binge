@@ -41,3 +41,73 @@ class MainCollectionViewCellFactory: CollectionViewCellFactory {
         cell.configure(with: viewModel)
     }
 }
+
+#if os(tvOS)
+    import ParallaxView
+
+    class ContentCollectionViewCell: ParallaxCollectionViewCell, ContentCollectionViewCellType {
+        public func configure(with viewModel: ViewModel) {
+            (internalView as? WithViewModel)?.configure(with: viewModel)
+        }
+
+        public weak var internalView: UIView? {
+            didSet {
+                guard let view = internalView else { return }
+                backgroundColor = .clear
+                contentView.addSubview(view)
+                view.snp.makeConstraints { make in
+                    self.insetConstraints = make.edges.equalToSuperview().constraint.layoutConstraints
+                }
+            }
+        }
+
+        /// Constraints between cell and inner view.
+        public var insetConstraints: [NSLayoutConstraint] = []
+        override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+            super.apply(layoutAttributes)
+            (internalView as? CollectionViewCellContained)?.apply(layoutAttributes)
+        }
+
+        override open var canBecomeFocused: Bool {
+            return internalView?.canBecomeFocused ?? super.canBecomeFocused
+        }
+
+//        open override var preferredFocusEnvironments: [UIFocusEnvironment] {
+//            return internalView?.preferredFocusEnvironments ?? super.preferredFocusEnvironments
+//        }
+//        open override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+//            return internalView?.didUpdateFocus(in: context, with: coordinator) ?? super.didUpdateFocus(in: context, with: coordinator)
+//        }
+
+        override func setupParallax() {
+            cornerRadius = 8
+
+            // Here you can configure custom properties for parallax effect
+            parallaxEffectOptions.glowAlpha = 0.4
+            parallaxEffectOptions.shadowPanDeviation = 10
+            parallaxEffectOptions.parallaxMotionEffect.viewingAngleX = CGFloat(Double.pi / 4 / 30)
+            parallaxEffectOptions.parallaxMotionEffect.viewingAngleY = CGFloat(Double.pi / 4 / 30)
+            parallaxEffectOptions.parallaxMotionEffect.panValue = CGFloat(10)
+            parallaxEffectOptions.glowPosition = .center
+
+            // You can customise parallax view standard behaviours using parallaxViewActions property.
+            // Do not forget to use weak self if needed to void retain cycle
+            parallaxViewActions.setupUnfocusedState = { (view) -> Void in
+                view.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+
+                view.layer.shadowOffset = CGSize(width: 0, height: 3)
+                view.layer.shadowOpacity = 0.4
+                view.layer.shadowRadius = 5
+            }
+
+            parallaxViewActions.setupFocusedState = { (view) -> Void in
+                view.transform = CGAffineTransform(scaleX: 1, y: 1)
+
+                view.layer.shadowOffset = CGSize(width: 0, height: 20)
+                view.layer.shadowOpacity = 0.4
+                view.layer.shadowRadius = 20
+            }
+            parallaxViewActions.setupUnfocusedState?(self)
+        }
+    }
+#endif

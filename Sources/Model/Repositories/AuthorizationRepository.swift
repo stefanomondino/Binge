@@ -11,19 +11,40 @@ import RxRelay
 import RxSwift
 
 protocol AuthorizationRepository {
-    func login(username: String, password: String) -> Observable<AccessToken>
+    func token() -> Observable<Void>
+    func onAuthorizationURL(url: URL)
+    func webViewURL() -> URL?
 }
 
 class DefaultAuthorizationRepository: AuthorizationRepository {
+    private let authorizationCode = PublishRelay<String>()
     let dataSource: RESTDataSource
 
     init(dataSource: RESTDataSource) {
         self.dataSource = dataSource
     }
 
-    func login(username _: String, password _: String) -> Observable<AccessToken> {
-        .empty()
-//        dataSource.get(AccessToken.self, at: APIProvider.login(username: username, password: password))
-//            .do(onNext: { AccessToken.current = $0 })
+    func token() -> Observable<Void> {
+        authorizationCode
+            .take(1)
+            .flatMapLatest { code in
+                self.dataSource.get(AccessToken.self, at: TraktvAPI.token(code: code))
+            }
+            .do(onNext: { AccessToken.current = $0 })
+            .map { _ in }
+    }
+
+    func onAuthorizationURL(url: URL) {
+        if url.absoluteString.starts(with: Configuration.environment.traktRedirectURI),
+            let code = url.query?
+            .components(separatedBy: "&")
+            .first(where: { $0.starts(with: "code=") })?
+            .dropFirst("code=".count) {
+            authorizationCode.accept(String(code))
+        }
+    }
+
+    func webViewURL() -> URL? {
+        return dataSource.request(for: TraktvAPI.authorize)?.url
     }
 }

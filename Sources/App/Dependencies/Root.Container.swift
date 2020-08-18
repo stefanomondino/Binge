@@ -46,7 +46,7 @@ class InitializationRoot: RootContainer, DependencyContainer {
 
         register(for: .translations, scope: .eagerSingleton) { StringsFactory(container: self) }
         register(for: .routeFactory, scope: .singleton) { MainRouteFactory(container: self) }
-        register(for: .styleFactory, scope: .singleton) { DefaultStyleFactory(container: self) }
+        register(for: .styleFactory, scope: .singleton) { StyleFactoryAlias(container: self) }
 
         register(for: .viewModels, scope: .singleton) { self.viewModelImplementation() }
         register(for: .views, scope: .singleton) { self.viewImplementation() }

@@ -14,5 +14,7 @@ public class DefaultHandlers: Handlers {
         self.container = container
     }
 
-    public func onExternalURL(_: URL) {}
+    public func onExternalURL(_ url: URL) {
+        container.repositories.authorization.onAuthorizationURL(url: url)
+    }
 }

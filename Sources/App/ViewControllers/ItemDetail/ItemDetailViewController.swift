@@ -130,9 +130,11 @@ class ItemDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
-    }
+    #if os(iOS)
+        override var preferredStatusBarStyle: UIStatusBarStyle {
+            .lightContent
+        }
+    #endif
 
     override func viewDidLoad() {
         collectionView.backgroundColor = .clear

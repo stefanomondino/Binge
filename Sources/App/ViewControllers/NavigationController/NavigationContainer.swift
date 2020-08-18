@@ -96,7 +96,7 @@ class NavigationContainer: UIViewController {
             navigation.viewControllers.count > 1 {
             let button = UIButton(type: .system)
             button.setImage(Asset.arrowLeft.image, for: .normal)
-            button.rx.tap
+            button.rx.controlEvent(.touchUpInside)
                 .bind { navigation.popViewController(animated: true) }
                 .disposed(by: disposeBag)
             addButton(button, position: .left)
@@ -221,9 +221,16 @@ class NavigationContainer: UIViewController {
         navigationBarMinHeight = 64 + value
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        rootViewController.preferredStatusBarStyle
-    }
+    #if os(iOS)
+        override var preferredStatusBarStyle: UIStatusBarStyle {
+            rootViewController.preferredStatusBarStyle
+        }
+    #endif
+    #if os(tvOS)
+        override var preferredFocusEnvironments: [UIFocusEnvironment] {
+            rootViewController.preferredFocusEnvironments
+        }
+    #endif
 }
 
 extension Reactive where Base: NavigationContainer {

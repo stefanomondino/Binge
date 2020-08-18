@@ -12,14 +12,12 @@ import RxRelay
 import RxSwift
 import UIKit
 
-class LoginViewController: UIViewController, KeyboardAvoidable {
-    var keyboardAvoidingView: UIView { scrollView }
+class LoginViewController: UIViewController {
+    var viewModel: LoginViewModel
+    @IBOutlet var loginButton: UIButton!
 
-    let viewModel: LoginViewModel
-    let collectionViewCellFactory: CollectionViewCellFactory
-    @IBOutlet var stackView: UIStackView!
-    @IBOutlet var scrollView: UIScrollView!
     var disposeBag = DisposeBag()
+    private let collectionViewCellFactory: CollectionViewCellFactory
 
     init(nibName: String?,
          bundle: Bundle? = nil,
@@ -30,6 +28,7 @@ class LoginViewController: UIViewController, KeyboardAvoidable {
         super.init(nibName: nibName, bundle: bundle)
     }
 
+    @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -37,23 +36,12 @@ class LoginViewController: UIViewController, KeyboardAvoidable {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor(white: 0.97, alpha: 1)
-
         let viewModel = self.viewModel
 
-        stackView.spacing = 10
+        loginButton.rx.tap.bind { viewModel.openLogin() }.disposed(by: disposeBag)
 
-        stackView.rx
-            .bind(viewModel: viewModel, factory: collectionViewCellFactory)
-            .disposed(by: disposeBag)
-
-        scrollView.backgroundColor = .blue
-
-        viewModel.reload()
         viewModel.routes
             .bind(to: rx.routes())
             .disposed(by: disposeBag)
-
-        setupKeyboardAvoiding().disposed(by: disposeBag)
     }
 }
