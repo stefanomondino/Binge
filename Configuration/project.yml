@@ -33,29 +33,34 @@ fileGroups:
 targets:
   ${APP_NAME}:
     type: application
-    platform: iOS
+    platform: [iOS, tvOS]
     sources: "Sources/App"
-    configs:
-        Devel Run:
-          PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}.devel
-        Devel Archive:
-          PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}.devel
-        Prod Run:
-          PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}
-        Prod Archive:
-          PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}
+    settings:
+        base:
+          DEVELOPMENT_TEAM: 6T384SC3AF
+          SUPPORTS_MACCATALYST: YES
+          DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER: YES
+        configs:
+            Devel Run:
+              PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}.devel
+            Devel Archive:
+              PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}.devel
+            Prod Run:
+              PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}
+            Prod Archive:
+              PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_IDENTIFIER}
     scheme:
       gatherCoverageData: true
       testTargets:
-        - ${APP_NAME}Tests
+        - ${APP_NAME}Tests_${platform}
         - ModelTests
         - CoreTests
       configVariants:
         - Devel
         - Prod
     dependencies:
-      - target: Model
-      - target: Core
+      - target: Model_${platform}
+      - target: Core_${platform}
     preBuildScripts:
       - name: "SwiftLint"
         script: |
@@ -66,10 +71,9 @@ targets:
                 #"${PODS_ROOT}/FirebaseCrashlytics/run"
         inputFiles: |
                     $(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)
-
   Core:
     type: library.static
-    platform: iOS
+    platform: [iOS, tvOS]
     sources: "Sources/Core"
     scheme:
       gatherCoverageData: true
@@ -82,10 +86,10 @@ targets:
 #      - package: "Boomerang"
   Model:
     type: library.static
-    platform: iOS
+    platform: [iOS, tvOS]
     sources: "Sources/Model"
     dependencies:
-    - target: "Core"
+    - target: Core_${platform}
     scheme:
       gatherCoverageData: true
       testTargets:
@@ -94,7 +98,7 @@ targets:
     type: bundle.unit-test
     platform: iOS
     dependencies:
-      - target: "Core"
+      - target: "Core_iOS"
     settings:
       groups:
       - testing
@@ -113,13 +117,13 @@ targets:
     - path: "Tests/JSONMocks"
       buildPhase: resources
     dependencies:
-    - target: "Model"
-    - target: "Core"
+    - target: "Model_iOS"
+    - target: "Core_iOS"
 
         
   ${APP_NAME}Tests:
     type: bundle.unit-test
-    platform: iOS
+    platform: [iOS, tvOS]
     gatherCoverageData: true
     settings:
       groups:

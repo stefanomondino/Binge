@@ -47,7 +47,7 @@ class EpisodeItemView: UIView, WithViewModel {
             viewModel.image
                 .asDriver(onErrorJustReturn: UIImage())
                 .startWith(UIImage())
-                .drive(image.rx.image)
+                .drive(image.rx.animatedImage())
                 .disposed(by: disposeBag)
         }
     }

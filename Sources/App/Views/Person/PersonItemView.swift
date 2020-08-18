@@ -48,7 +48,7 @@ class PersonItemView: UIView, WithViewModel {
                 .asDriver(onErrorJustReturn: UIImage())
                 .startWith(UIImage())
                 .map { $0.circled() }
-                .drive(image.rx.image)
+                .drive(image.rx.animatedImage())
                 .disposed(by: disposeBag)
         }
     }

@@ -3,7 +3,7 @@
 
 inhibit_all_warnings!
 use_frameworks!
-platform :ios, '12.0'
+
 
 ENV["APP_NAME"] = ENV["APP_NAME"] || "Binge"
 
@@ -23,14 +23,19 @@ end
 
 def app_pods
   model_pods
-  pod 'Tabman'
   pod 'SnapKit'
   pod 'SwiftRichString'
   pod 'RxCocoa'
-  pod 'RxGesture'
   #pod 'PluginLayout', :git => "https://github.com/stefanomondino/PluginLayout.git", :branch => "master"
   #pod 'PluginLayout', :path => "../OpenSource/PluginLayout"
   pod 'PluginLayout'
+end
+
+def ios_pods
+  pod 'RxGesture'
+  pod 'Tabman'
+end
+def tvos_pods
 end
 
 def test_pods
@@ -41,23 +46,45 @@ def test_pods
   pod 'RxNimble'
 end
 
-target 'Core' do
+target 'Core_iOS' do
+  platform :ios, '12.0'
   boomerang
   target 'CoreTests' do
     test_pods
   end
 end
 
-target 'Model' do
+target 'Core_tvOS' do
+  platform :tvos, '12.0'
+  boomerang
+end
+
+target 'Model_iOS' do
+  platform :ios, '12.0'
   model_pods
   target 'ModelTests' do
     test_pods
   end
 end
+target 'Model_tvOS' do
+  platform :tvos, '12.0'
+  model_pods
+end
 
-target ENV["APP_NAME"] do
+target "#{ENV["APP_NAME"]}_iOS" do
+  platform :ios, '12.0'
   app_pods
-  target "#{ENV["APP_NAME"]}Tests" do
+  ios_pods
+  target "#{ENV["APP_NAME"]}Tests_iOS" do
+    test_pods
+  end
+end
+
+target "#{ENV["APP_NAME"]}_tvOS" do
+  platform :tvos, '12.0'
+  app_pods
+  tvos_pods
+  target "#{ENV["APP_NAME"]}Tests_tvOS" do
     test_pods
   end
 end
