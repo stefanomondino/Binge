@@ -88,5 +88,32 @@
             UIGraphicsEndImageContext()
             return image
         }
+
+        func tinted(with color: UIColor) -> UIImage {
+            guard let cgImage = self.cgImage else { return self }
+            UIGraphicsBeginImageContext(size)
+            let context = UIGraphicsGetCurrentContext()
+            color.setFill()
+            context?.setBlendMode(.color)
+            context?.fill(.init(origin: .zero, size: size))
+            context?.setBlendMode(.destinationIn)
+            context?.draw(cgImage, in: .init(origin: .zero, size: size))
+            draw(at: .zero)
+            let image = UIGraphicsGetImageFromCurrentImageContext() ?? self
+            UIGraphicsEndImageContext()
+            return image
+        }
+
+        func overlaying(_ image: UIImage, at point: CGPoint? = nil) -> UIImage {
+            UIGraphicsBeginImageContext(size)
+            draw(at: .zero)
+//            let dimension = min(size.width, size.height)
+            let point = point ?? CGPoint(x: (size.width - image.size.width) / 2, y: (size.height - image.size.height) / 2)
+            image.draw(at: point)
+
+            let image = UIGraphicsGetImageFromCurrentImageContext() ?? self
+            UIGraphicsEndImageContext()
+            return image
+        }
     }
 #endif

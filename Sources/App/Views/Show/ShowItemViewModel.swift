@@ -9,6 +9,7 @@
 import Boomerang
 import Foundation
 import Model
+import RxSwift
 
 enum ShowIdentifier: String, LayoutIdentifier, CaseIterable {
     case posterOnly
@@ -73,7 +74,7 @@ class ShowItemViewModel: ViewModel {
             .poster(for: show)
             .flatMapLatest { $0.getImage() }
             //            .share(replay: 1, scope: .forever)
-            .startWith(UIImage())
+            .startWith(Placeholder.show.image)
     }
 
     init(showCast show: Show.Cast,
@@ -87,7 +88,7 @@ class ShowItemViewModel: ViewModel {
             .poster(for: show)
             .flatMapLatest { $0.getImage() }
             //            .share(replay: 1, scope: .forever)
-            .startWith(UIImage())
+            .startWith(Placeholder.person.image)
     }
 
     init(movieCast movie: Movie.Cast,
@@ -101,7 +102,7 @@ class ShowItemViewModel: ViewModel {
             .poster(for: movie)
             .flatMapLatest { $0.getImage() }
             //            .share(replay: 1, scope: .forever)
-            .startWith(UIImage())
+            .startWith(Placeholder.person.image)
     }
 
     init(movie: MovieItem,
@@ -116,7 +117,7 @@ class ShowItemViewModel: ViewModel {
             .poster(for: movie)
             .flatMapLatest { $0.getImage() }
             //            .share(replay: 1, scope: .forever)
-            .startWith(UIImage())
+            .startWith(Placeholder.movie.image)
     }
 
     convenience init(search: Search.SearchItem,
@@ -148,6 +149,7 @@ class ShowItemViewModel: ViewModel {
         image = imagesUseCase
             .image(forPerson: person)
             .flatMapLatest { $0.getImage() }
+            .startWith(Placeholder.person.image)
             .share(replay: 1, scope: .forever)
     }
 
@@ -161,6 +163,7 @@ class ShowItemViewModel: ViewModel {
         image = imagesUseCase
             .image(forPerson: castMember.person)
             .flatMapLatest { $0.getImage() }
+            .startWith(Placeholder.person.image)
             .share(replay: 1, scope: .forever)
     }
 
@@ -178,6 +181,7 @@ class ShowItemViewModel: ViewModel {
         image = imagesUseCase
             .image(forSeason: season)
             .flatMapLatest { $0.getImage() }
+            .startWith(Placeholder.season.image)
             .share(replay: 1, scope: .forever)
     }
 
@@ -195,6 +199,7 @@ class ShowItemViewModel: ViewModel {
         image = imagesUseCase
             .image(for: episode)
             .flatMapLatest { $0.getImage() }
+            .startWith(Placeholder.episode.image)
             .share(replay: 1, scope: .forever)
     }
 

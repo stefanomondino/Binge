@@ -41,7 +41,8 @@ extension Core.Image: WithImage {
 
 extension URL: WithImage {
     public func getImage(with placeholder: WithImage?) -> ObservableImage {
-        return ImageDownloader().download(self)
+        return ImageDownloader()
+            .download(self)
             .catchError { _ in (placeholder ?? "")
                 .getImage()
                 .asObservable()
