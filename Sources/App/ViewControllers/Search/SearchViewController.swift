@@ -10,7 +10,9 @@ import RxSwift
 import SnapKit
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, KeyboardAvoidable {
+    var keyboardAvoidingView: UIView { collectionView }
+
     @IBOutlet var collectionView: UICollectionView!
 
     var viewModel: SearchViewModel
@@ -49,8 +51,6 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor(white: 0.97, alpha: 1)
-
         let viewModel = self.viewModel
         let collectionViewDataSource = CollectionViewDataSource(viewModel: viewModel,
                                                                 factory: collectionViewCellFactory)
@@ -58,20 +58,11 @@ class SearchViewController: UIViewController {
         title = viewModel.pageTitle
         let spacing: CGFloat = 4
         let sizeCalculator = AutomaticDeferredCollectionViewSizeCalculator(viewModel: viewModel,
-                                                                           factory: collectionViewCellFactory) { collectionView in
-            switch collectionView.bounds.width {
-            case 0 ... 375: return 3
-            case 0 ... 500: return 4
-            case 0 ... 768: return 6
-            case 0 ... 1024: return 8
-            case 0 ... 1200: return 9
-            default: return 10
-            }
-        }
-
-        .withItemSpacing { _, _ in spacing }
-        .withLineSpacing { _, _ in spacing }
-        .withInsets { _, _ in UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing) }
+                                                                           factory: collectionViewCellFactory,
+                                                                           itemsPerLine: Constants.itemsPerLineClosure)
+            .withItemSpacing { _, _ in spacing }
+            .withLineSpacing { _, _ in spacing }
+            .withInsets { _, _ in UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing) }
 
         let collectionViewDelegate = ListDelegate(sizeCalculator: sizeCalculator)
             .withSelect { viewModel.selectItem(at: $0) }
@@ -94,29 +85,45 @@ class SearchViewController: UIViewController {
 
         viewModel.reload()
         setNeedsFocusUpdate()
-//
+
+        setupKeyboardAvoiding()
+            .disposed(by: disposeBag)
+
+        setupTextField()
+    }
+
+    private func setupTextField() {
         let textField = UITextField()
 
-        textField.rx.text.asDriver().drive(viewModel.searchRelay).disposed(by: disposeBag)
         viewModel.searchRelay.asDriver().drive(textField.rx.text).disposed(by: disposeBag)
+        textField.rx.text.asDriver().drive(viewModel.searchRelay).disposed(by: disposeBag)
 
+        textField.applyStyle(.searchField)
+        let textFieldContainer = UIView().with(\.backgroundColor, to: .clear)
+        textFieldContainer.addSubview(textField)
         textField.snp.makeConstraints { make in
-//            make.height.equalTo(40)
-            make.width.greaterThanOrEqualTo(200)
+            make.height.equalTo(30)
+            make.width.greaterThanOrEqualTo(2000).priority(.medium)
+            make.centerY.equalToSuperview()
+            make.left.right.equalToSuperview()
         }
         rx.viewWillAppear()
             .take(1)
-            .bind { [weak self] in self?.setNavigationView(textField) }
+            .bind { [weak self] in self?.setNavigationView(textFieldContainer) }
             .disposed(by: disposeBag)
-//        let button = UIButton(type: .system)
-//        button.setImage(Asset.heart.image, for: .normal)
-//        button.rx.tap.bind { print("!!!") }.disposed(by: disposeBag)
-//        addRightNavigationView(button)
+
+        textField.becomeFirstResponder()
     }
 
     override var preferredFocusEnvironments: [UIFocusEnvironment] {
         collectionView.preferredFocusEnvironments
     }
+
+    #if os(iOS)
+        override var preferredStatusBarStyle: UIStatusBarStyle {
+            .lightContent
+        }
+    #endif
 }
 
 class ListDelegate: CollectionViewDelegate, StaggeredLayoutDelegate, PluginLayoutDelegate {

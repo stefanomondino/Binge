@@ -11,6 +11,7 @@ import UIKit
 
 protocol StyleFactory {
     func apply(_ style: Style, to view: UIImageView)
+    func apply(_ style: Style, to view: UITextField)
     func apply(_ style: Style, to view: UIView)
     func apply(_ style: Style, to view: UILabel)
     func apply(_ style: Style, to view: UIButton)
@@ -42,6 +43,24 @@ extension DefaultStyleFactory {
         label.style = implementation.style
         label.numberOfLines = 0
         apply(style, to: label as UIView)
+    }
+
+    func apply(_ style: Style, to textField: UITextField) {
+        guard let implementation: TextStyle = getStyle(style) else { return }
+        textField.style = implementation.style
+        textField.font = implementation.style.attributes[.font] as? UIFont
+        textField.leftView = UIView()
+            .with(\.backgroundColor, to: .clear)
+            .with(\.frame, to: CGRect(x: 0, y: 0, width: Constants.sidePadding, height: 1))
+        textField.rightView = UIView()
+            .with(\.backgroundColor, to: .clear)
+            .with(\.frame, to: CGRect(x: 0, y: 0, width: Constants.sidePadding, height: 1))
+        textField.leftViewMode = .always
+        textField.rightViewMode = .always
+        textField.tintColor = implementation.style.attributes[.foregroundColor] as? UIColor ?? .white
+        textField.autocorrectionType = .no
+        textField.returnKeyType = .search
+        apply(style, to: textField as UIView)
     }
 
     func apply(_ style: Style, to view: UIView) {
@@ -95,6 +114,12 @@ extension UIButton {
 }
 
 extension UILabel {
+    func applyStyle(_ style: Style, factory: StyleFactory = StyleFactoryAlias.factory) {
+        factory.apply(style, to: self)
+    }
+}
+
+extension UITextField {
     func applyStyle(_ style: Style, factory: StyleFactory = StyleFactoryAlias.factory) {
         factory.apply(style, to: self)
     }

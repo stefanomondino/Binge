@@ -22,6 +22,7 @@ enum Style: String, CaseIterable {
     case itemTitle
     case itemSubtitle
     case episodeTitle
+    case searchField
     var identifier: String { rawValue }
 }
 

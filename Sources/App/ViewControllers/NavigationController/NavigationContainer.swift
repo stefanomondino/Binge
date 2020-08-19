@@ -139,7 +139,7 @@ class NavigationContainer: UIViewController {
         rightContainer.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         leftContainer.snp.makeConstraints { make in
             make.centerY.equalTo(titleContainer.snp.centerY)
-            make.right.equalTo(titleContainer.snp.left).offset(Constants.sidePadding / 2)
+            make.right.equalTo(titleContainer.snp.left).offset(-Constants.sidePadding / 2)
             make.left.equalToSuperview().offset(Constants.sidePadding)
             make.bottom.equalToSuperview()
         }

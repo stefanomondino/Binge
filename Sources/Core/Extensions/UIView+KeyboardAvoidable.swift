@@ -52,6 +52,12 @@
         }
 
         var paddingForAvoidingView: CGFloat {
+            // Calculate bottom difference for Tab bar and stuff.
+            if let rootView = UIApplication.shared.delegate?.window??.rootViewController?.view {
+                let rect = view.convert(view.frame, to: rootView)
+                let padding = -(rootView.bounds.height - rect.height - rect.minY)
+                return padding
+            }
             return 0
         }
 

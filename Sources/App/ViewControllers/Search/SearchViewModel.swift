@@ -116,6 +116,7 @@ class SearchViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
                             onSubscribe: { trigger.accept(true) },
                             onDispose: { trigger.accept(true) })
                 }
+                .share()
                 .subscribe()
         }
     }

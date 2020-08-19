@@ -81,6 +81,10 @@ class ItemListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
         return items.map { factory.item($0, layout: .posterOnly) }
     }
 
+    func openSearch() {
+        routes.accept(routeFactory.search())
+    }
+
     private func addItems(from shows: [ItemContainer]) {
         guard var section = sections.first else { return }
         let newItems = items(from: shows)

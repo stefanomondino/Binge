@@ -94,11 +94,6 @@ class ItemListViewController: UIViewController {
 
         viewModel.reload()
         setNeedsFocusUpdate()
-//
-//        let button = UIButton(type: .system)
-//        button.setImage(Asset.heart.image, for: .normal)
-//        button.rx.tap.bind { print("!!!") }.disposed(by: disposeBag)
-//        addRightNavigationView(button)
     }
 
     override var preferredFocusEnvironments: [UIFocusEnvironment] {

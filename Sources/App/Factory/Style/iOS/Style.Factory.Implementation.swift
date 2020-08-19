@@ -31,6 +31,10 @@ class StyleFactoryImplementation: DefaultStyleFactory {
                                                                          alignment: .left)))
         }
         register(for: .carouselTitle) { DefaultTextStyle(size: 14, font: .mainBold, alignment: .left) }
+
+        register(for: .searchField) { [DefaultContainerStyle(cornerRadius: 4, backgroundColor: .navbarText),
+                                       DefaultTextStyle(size: 16, color: .navbarBackground, font: .mainRegular, alignment: .left)] }
+
         register(for: .navigationBar) { [DefaultContainerStyle(backgroundColor: .navbarBackground),
                                          DefaultTextStyle(size: 22, color: .navbarText, font: .mainBold)] }
         setupShows()

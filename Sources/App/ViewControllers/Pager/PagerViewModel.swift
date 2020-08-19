@@ -11,7 +11,9 @@ import Foundation
 import RxRelay
 import RxSwift
 
-class PagerViewModel: RxListViewModel, WithPage {
+class PagerViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
+    var routes: PublishRelay<Route> = PublishRelay()
+
     var pageTitle: String = ""
 
     var pageIcon: UIImage?
@@ -24,6 +26,8 @@ class PagerViewModel: RxListViewModel, WithPage {
 
     var uniqueIdentifier: UniqueIdentifier = UUID()
 
+    let isSearchable: Bool
+
     var onUpdate = {}
 //    var sections: [Section] = [] {
 //        didSet {
@@ -31,20 +35,23 @@ class PagerViewModel: RxListViewModel, WithPage {
 //        }
 //    }
     private let pages: Observable<[ViewModel]>
-    let styleFactory: StyleFactory
+    let routeFactory: RouteFactory
 
     convenience init(pages: [ViewModel],
                      layout: LayoutIdentifier = SceneIdentifier.pager,
-                     styleFactory: StyleFactory) {
-        self.init(pages: .just(pages), layout: layout, styleFactory: styleFactory)
+                     routeFactory: RouteFactory,
+                     isSearchable: Bool) {
+        self.init(pages: .just(pages), layout: layout, routeFactory: routeFactory, isSearchable: isSearchable)
     }
 
     init(pages: Observable<[ViewModel]>,
          layout: LayoutIdentifier = SceneIdentifier.pager,
-         styleFactory: StyleFactory) {
+         routeFactory: RouteFactory,
+         isSearchable: Bool) {
         self.pages = pages
         layoutIdentifier = layout
-        self.styleFactory = styleFactory
+        self.routeFactory = routeFactory
+        self.isSearchable = isSearchable
     }
 
     func reload() {
@@ -53,6 +60,10 @@ class PagerViewModel: RxListViewModel, WithPage {
             .map { [Section(items: $0)] }
             .bind(to: sectionsRelay)
             .disposed(by: disposeBag)
+    }
+
+    func openSearch() {
+        routes.accept(routeFactory.search())
     }
 
     func selectItem(at _: IndexPath) {}

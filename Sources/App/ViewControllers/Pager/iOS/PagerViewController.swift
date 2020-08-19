@@ -57,6 +57,20 @@ class PagerViewController: TabmanViewController {
         DispatchQueue.main.async {
             self.viewModel.reload()
         }
+
+        if let viewModel = viewModel as? RxNavigationViewModel {
+            viewModel.routes
+                .bind(to: rx.routes())
+                .disposed(by: disposeBag)
+        }
+
+        if let viewModel = viewModel as? PagerViewModel,
+            viewModel.isSearchable {
+            let button = UIButton(type: .system)
+            button.setImage(Asset.search.image, for: .normal)
+            button.rx.tap.bind { viewModel.openSearch() }.disposed(by: disposeBag)
+            addRightNavigationView(button)
+        }
     }
 
     private func setupBar() {

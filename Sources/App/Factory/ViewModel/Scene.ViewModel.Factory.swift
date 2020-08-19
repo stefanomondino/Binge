@@ -30,11 +30,11 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
         return PagerViewModel(pages: [
             showsPager(),
             moviesPager(),
-            search(),
             login()
         ],
         layout: SceneIdentifier.tab,
-        styleFactory: container.styleFactory)
+        routeFactory: container.routeFactory,
+        isSearchable: false)
     }
 
     func splashViewModel() -> SplashViewModel {
@@ -59,8 +59,9 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
             watchedShows(),
             collectedShows(),
             anticipatedShows()
-
-        ], styleFactory: container.styleFactory)
+        ],
+        routeFactory: container.routeFactory,
+        isSearchable: true)
             .with(\.pageTitle, to: Strings.Shows.shows.translation)
     }
 
@@ -72,7 +73,8 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
             collectedMovies(),
             anticipatedShows()
 
-        ], styleFactory: container.styleFactory)
+        ], routeFactory: container.routeFactory,
+        isSearchable: true)
             .with(\.pageTitle, to: Strings.Movies.movies.translation)
     }
 
