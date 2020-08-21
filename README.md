@@ -4,6 +4,22 @@
 This project is managed through [XcodeGen](https://github.com/yonaskolb/XcodeGen). No xcode project (or workspace) will be committed under source control, as they will always be recreated through automatic generation.
 Every change to project (or Info.plist) must be handled through `project.yml` file.
 
+## Secrets file
+This project needs some secrets to be set, in order to work.
+Those secrets cannot be shared publicly because they are tied to external services and subject to strict policies.
+
+Secrets must be placed in `Configuration/Resources/Secrets.yml` with following structure:
+```yaml
+tmdbAPIKey: "<valid api key for TheMovieDatabase API"
+fanartAPIKey: "<valid API key for Fanart.tv API>"
+traktClientID: "<valid Traktv Client Secret from Trakt.tv"
+traktClientSecret: "<valid Traktv Client Secret from Trakt.tv>"
+traktRedirectURI: "<valid redirect URI for Trakt's OAUTH process>"
+```
+A `Secrets.swift` file will be properly generated during the setup phase
+
+**Be sure those file are NEVER pushed into source control** 
+
 ## Project setup
 
 This project is using a `Makefile` for proper configuration.

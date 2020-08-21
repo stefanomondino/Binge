@@ -1,5 +1,10 @@
 # Configuration variables:
 .DEFAULT_GOAL := project
+
+#include an env file if present
+#otherwise use global vars from CI
+-include .env
+
 export APP_NAME = Binge
 export BUNDLE_IDENTIFIER = it.synesthesia.binge
 # Prepare Application workspace

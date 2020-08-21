@@ -6,5 +6,7 @@ Carthage
 *.xcworkspace
 default.profraw
 
+.env
 Configuration/Resources/Secrets.json
+Configuration/Resources/Secrets.yml
 Sources/App/Supporting Files/Generated

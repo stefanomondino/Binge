@@ -36,7 +36,7 @@ class StyleFactoryImplementation: DefaultStyleFactory {
                                        DefaultTextStyle(size: 16, color: .navbarBackground, font: .mainRegular, alignment: .left)] }
 
         register(for: .navigationBar) { [DefaultContainerStyle(backgroundColor: .navbarBackground),
-                                         DefaultTextStyle(size: 22, color: .navbarText, font: .mainBold)] }
+                                         DefaultTextStyle(size: 22, color: .navbarText, font: .mainBold, alignment: .left)] }
         setupShows()
     }
 

@@ -3,11 +3,12 @@ xcassets:
   outputs:
     templatePath: "Templates/assets.stencil"
     output: "../Sources/App/Supporting Files/Generated/Assets.swift"
-json:
+yaml:
   inputs:
-  - "Resources/Secrets.json"
+  - "Resources/Secrets.yml"
   outputs:
-    templatePath: "Templates/secrets.stencil"
+    templateName: inline-swift5
+    #templatePath: "Templates/secrets.stencil"
     output: "../Sources/App/Supporting Files/Generated/Secrets.swift"
     params:
       publicAccess: true
