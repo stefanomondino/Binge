@@ -25,8 +25,8 @@ enum ViewIdentifier: String, LayoutIdentifier {
         var title: Translation {
             switch self {
             case .cast: return Strings.Generic.cast
-            case .castInShow: return Strings.Shows.shows
-            case .castInMovie: return Strings.Movies.movies
+            case .castInShow: return Strings.Shows.title
+            case .castInMovie: return Strings.Movies.title
             case .relatedShows: return Strings.Shows.related
             case .seasons: return Strings.Shows.seasons
             }

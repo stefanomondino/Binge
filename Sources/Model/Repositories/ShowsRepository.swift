@@ -24,15 +24,16 @@ struct ShowsRepositoryImplementation: ShowsRepository {
     let rest: RESTDataSource
 
     func info(forShow show: Item) -> Observable<Show.Info> {
-        return rest.get(Show.Info.self, at: TMDBAPI.show(show))
+        return rest.get(Show.Info.self, at: TMDB.API.show(show))
     }
 
     func info(forPerson person: Person) -> Observable<PersonInfo> {
-        return rest.get(PersonInfo.self, at: TMDBAPI.person(person))
+        return rest.get(PersonInfo.self, at: TMDB.API.person(person))
     }
 
     func detail(forShow show: Item) -> Observable<Show.DetailItem> {
         return rest.get(Show.DetailItem.self, at: TraktvAPI.showSummary(show))
+//        return rest.get(Show.DetailItem.self, at: TMDB.API.show(show))
     }
 
     func trending(currentPage: Int, pageSize: Int) -> Observable<[Show.Trending]> {
@@ -85,6 +86,6 @@ struct ShowsRepositoryImplementation: ShowsRepository {
     }
 
     public func seasonDetail(for season: Season.Info, of show: ShowItem) -> Observable<Season.Info> {
-        return rest.get(Season.Info.self, at: TMDBAPI.seasonDetail(season, show.item))
+        return rest.get(Season.Info.self, at: TMDB.API.seasonDetail(season, show.item))
     }
 }

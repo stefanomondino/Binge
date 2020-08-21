@@ -24,11 +24,11 @@ protocol ItemViewModelFactory {
     func showDescription(_ show: ItemDetail) -> ViewModel
     func movieDescription(_ show: ItemDetail) -> ViewModel
     func seasonDescription(_ season: Season.Info) -> ViewModel
-    func image(_ fanart: Fanart) -> ViewModel
-    func image(_ personImage: Person.Image) -> ViewModel
+//    func image(_ fanart: Fanart) -> ViewModel
+    func image(_: DownloadableImage, fanart: Fanart?) -> ViewModel
     func castMoviesCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel
     func castShowsCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel
-    func titledDescription(title: CustomStringConvertible, description: String?) -> ViewModel?
+    func titledDescription(title: CustomStringConvertible, description: CustomStringConvertible?) -> ViewModel?
     // MURRAY DECLARATION PLACEHOLDER
 }
 
@@ -238,8 +238,9 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                            styleFactory: container.styleFactory)
     }
 
-    func image(_ personImage: Person.Image) -> ViewModel {
-        ImageItemViewModel(image: personImage,
+    func image(_ image: DownloadableImage, fanart: Fanart?) -> ViewModel {
+        ImageItemViewModel(image: image,
+                           fanart: fanart,
                            useCase: container.model.useCases.images,
                            layoutIdentifier: ViewIdentifier.image,
                            styleFactory: container.styleFactory)
@@ -261,9 +262,9 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         DescriptionItemViewModel(description: person.biography)
     }
 
-    func titledDescription(title: CustomStringConvertible, description: String?) -> ViewModel? {
+    func titledDescription(title: CustomStringConvertible, description: CustomStringConvertible?) -> ViewModel? {
         guard let description = description else { return nil }
-        return DescriptionItemViewModel(description: "\(title.inTag(.bold)): \(description)")
+        return DescriptionItemViewModel(description: "\(title.inTag(.bold))  \(description)")
     }
 
     // MURRAY IMPLEMENTATION PLACEHOLDER

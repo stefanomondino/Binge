@@ -23,11 +23,11 @@ struct MoviesRepositoryImplementation: MoviesRepository {
     let rest: RESTDataSource
 
     func info(forMovie movie: Item) -> Observable<Movie.Info> {
-        return rest.get(Movie.Info.self, at: TMDBAPI.movie(movie))
+        return rest.get(Movie.Info.self, at: TMDB.API.movie(movie))
     }
 
     func info(forPerson person: Person) -> Observable<PersonInfo> {
-        return rest.get(PersonInfo.self, at: TMDBAPI.person(person))
+        return rest.get(PersonInfo.self, at: TMDB.API.person(person))
     }
 
     func detail(forMovie show: Item) -> Observable<Movie.DetailItem> {

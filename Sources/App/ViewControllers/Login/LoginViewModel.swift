@@ -16,7 +16,7 @@ class LoginViewModel: RxNavigationViewModel, WithPage {
     var disposeBag: DisposeBag = DisposeBag()
     var pageTitle: String = "Login"
 
-    var pageIcon: UIImage?
+    var pageIcon: UIImage? = Asset.user.image
     var layoutIdentifier: LayoutIdentifier = SceneIdentifier.login
 
     let itemViewModelFactory: ItemViewModelFactory

@@ -36,6 +36,14 @@ public struct FanartResponse: Codable {
     let moviebanner: [FanartImage]?
     let moviethumb: [FanartImage]?
     // swiftlint:disable cyclomatic_complexity
+    public func showImage(for formats: [Fanart.Format], language: String = "en") -> Fanart? {
+        formats.compactMap { showImage(for: $0, language: language) }.first
+    }
+
+    public func movieImage(for formats: [Fanart.Format], language: String = "en") -> Fanart? {
+        formats.compactMap { movieImage(for: $0, language: language) }.first
+    }
+
     public func showImage(for format: Fanart.Format, language: String = "en") -> Fanart? {
         let array: [FanartImage]?
         switch format {

@@ -70,13 +70,13 @@ class SeasonDetailViewModel: ItemDetailViewModel {
         if let fanart = [Fanart.Format.seasonThumb("\(season.seasonNumber)")]
             .compactMap({ fanart?.showImage(for: $0) })
             .first?
-            .map({ itemViewModelFactory.image($0) }) {
+            .map({ itemViewModelFactory.image(season, fanart: $0) }) {
             topSection.supplementary.set(fanart, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
         }
         if let navbar = [Fanart.Format.hdtvLogo]
             .compactMap({ fanart?.showImage(for: $0) })
             .first?
-            .map({ itemViewModelFactory.image($0) }) {
+            .map({ itemViewModelFactory.image(season, fanart: $0) }) {
             navbarTitleViewModelRelay.accept(navbar)
         }
         var sections = [topSection]

@@ -60,9 +60,7 @@ class ShowItemViewModel: ViewModel {
     var subtitle: String
 
     let mainStyle: Style
-    //    static func preview(_ layout: ShowIdentifier) -> ViewModel {
-    //        ShowItemViewModel(show: TrendingShow.demo.show, layoutIdentifier: layout, imageUseCase: StaticImageUseCase(), styleFactory: DefaultAppDependencyContainer().styleFactory)
-    //    }
+
     init(show: ShowItem,
          layoutIdentifier: ShowIdentifier,
          imageUseCase: ImagesUseCase) {
@@ -72,9 +70,8 @@ class ShowItemViewModel: ViewModel {
         subtitle = show.year?.stringValue ?? ""
         image = imageUseCase
             .poster(for: show)
-            .flatMapLatest { $0.getImage() }
-            //            .share(replay: 1, scope: .forever)
-            .startWith(Placeholder.show.image)
+            .getImage(with: Placeholder.show)
+        //            .share(replay: 1, scope: .forever)
     }
 
     init(showCast show: Show.Cast,
@@ -86,9 +83,8 @@ class ShowItemViewModel: ViewModel {
         subtitle = show.characters.joined(separator: ", ")
         image = imageUseCase
             .poster(for: show)
-            .flatMapLatest { $0.getImage() }
-            //            .share(replay: 1, scope: .forever)
-            .startWith(Placeholder.person.image)
+            .getImage(with: Placeholder.person.image)
+        //            .share(replay: 1, scope: .forever)
     }
 
     init(movieCast movie: Movie.Cast,
@@ -100,9 +96,8 @@ class ShowItemViewModel: ViewModel {
         subtitle = movie.characters.joined(separator: ", ")
         image = imageUseCase
             .poster(for: movie)
-            .flatMapLatest { $0.getImage() }
-            //            .share(replay: 1, scope: .forever)
-            .startWith(Placeholder.person.image)
+            .getImage(with: Placeholder.person.image)
+        //            .share(replay: 1, scope: .forever)
     }
 
     init(movie: MovieItem,
@@ -115,9 +110,8 @@ class ShowItemViewModel: ViewModel {
 
         image = imageUseCase
             .poster(for: movie)
-            .flatMapLatest { $0.getImage() }
-            //            .share(replay: 1, scope: .forever)
-            .startWith(Placeholder.movie.image)
+            .getImage(with: Placeholder.movie)
+        //            .share(replay: 1, scope: .forever)
     }
 
     convenience init(search: Search.SearchItem,
@@ -148,8 +142,7 @@ class ShowItemViewModel: ViewModel {
         item = person
         image = imagesUseCase
             .image(forPerson: person)
-            .flatMapLatest { $0.getImage() }
-            .startWith(Placeholder.person.image)
+            .getImage(with: Placeholder.person)
             .share(replay: 1, scope: .forever)
     }
 
@@ -162,8 +155,7 @@ class ShowItemViewModel: ViewModel {
         subtitle = castMember.characters.joined(separator: ", ")
         image = imagesUseCase
             .image(forPerson: castMember.person)
-            .flatMapLatest { $0.getImage() }
-            .startWith(Placeholder.person.image)
+            .getImage(with: Placeholder.person)
             .share(replay: 1, scope: .forever)
     }
 
@@ -180,8 +172,7 @@ class ShowItemViewModel: ViewModel {
         }
         image = imagesUseCase
             .image(forSeason: season)
-            .flatMapLatest { $0.getImage() }
-            .startWith(Placeholder.season.image)
+            .getImage(with: Placeholder.season)
             .share(replay: 1, scope: .forever)
     }
 
@@ -198,8 +189,7 @@ class ShowItemViewModel: ViewModel {
         }
         image = imagesUseCase
             .image(for: episode)
-            .flatMapLatest { $0.getImage() }
-            .startWith(Placeholder.episode.image)
+            .getImage(with: Placeholder.episode)
             .share(replay: 1, scope: .forever)
     }
 

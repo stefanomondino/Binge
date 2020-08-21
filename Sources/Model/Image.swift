@@ -43,10 +43,20 @@ extension URL: WithImage {
     public func getImage(with placeholder: WithImage?) -> ObservableImage {
         return ImageDownloader()
             .download(self)
-            .catchError { _ in (placeholder ?? "")
+            .catchError { _ in (placeholder ?? Image())
                 .getImage()
                 .asObservable()
             }
+    }
+}
+
+extension ObservableType where Self: Observable<WithImage> {
+    public func getImage(with placeholder: WithImage?) -> ObservableImage {
+        return (placeholder?.getImage() ?? .just(Image())).flatMapLatest { placeholder in
+            self.flatMap {
+                $0.getImage(with: placeholder)
+            }.startWith(placeholder)
+        }
     }
 }
 

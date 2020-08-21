@@ -62,7 +62,8 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
         ],
         routeFactory: container.routeFactory,
         isSearchable: true)
-            .with(\.pageTitle, to: Strings.Shows.shows.translation)
+            .with(\.pageTitle, to: Strings.Shows.title.translation)
+            .with(\.pageIcon, to: Asset.photo.image)
     }
 
     func moviesPager() -> PagerViewModel {
@@ -75,7 +76,8 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
 
         ], routeFactory: container.routeFactory,
         isSearchable: true)
-            .with(\.pageTitle, to: Strings.Movies.movies.translation)
+            .with(\.pageTitle, to: Strings.Movies.title.translation)
+            .with(\.pageIcon, to: Asset.movie.image)
     }
 
     func popularShows() -> ItemListViewModel {

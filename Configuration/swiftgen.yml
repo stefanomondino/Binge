@@ -12,6 +12,15 @@ json:
     params:
       publicAccess: true
       enumName: Secrets
+json:
+    inputs:
+    - "../Sources/App/Strings/Translations.json"
+    outputs:
+      templatePath: "Templates/strings.stencil"
+      output: "../Sources/App/Supporting Files/Generated/Strings.swift"
+      params:
+        publicAccess: true
+        enumName: Strings
 colors:
   inputs: "Resources/Colors.json"
   outputs:

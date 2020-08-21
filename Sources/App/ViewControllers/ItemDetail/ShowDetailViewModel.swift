@@ -76,19 +76,25 @@ class ShowDetailViewModel: ItemDetailViewModel {
         var topSection = Section(id: UUID().stringValue,
                                  items: [itemViewModelFactory.item(show, layout: .title),
                                          itemViewModelFactory.titledDescription(title: Strings.Generic.year, description: show.year?.stringValue),
+                                         itemViewModelFactory.titledDescription(title: Strings.Shows.popular, description: show.info?.popularity),
+                                         itemViewModelFactory.titledDescription(title: Strings.Shows.status, description: show.info?.status),
+                                         itemViewModelFactory.titledDescription(title: Strings.Shows.genres,
+                                                                                description:
+                                                                                show.info?.genres?.compactMap { $0.name }.joined(separator: ", ")),
+                                         itemViewModelFactory.titledDescription(title: Strings.Shows.network,
+                                                                                description:
+                                                                                show.info?.networks?.compactMap { $0.name }.joined(separator: ", ")),
                                          itemViewModelFactory.showDescription(show)]
                                      .compactMap { $0 })
 
-        if let fanart = [Fanart.Format.background]
-            .compactMap({ fanart?.showImage(for: $0) })
-            .first?
-            .map({ itemViewModelFactory.image($0) }) {
-            topSection.supplementary.set(fanart, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
-        }
+        let backdrop =
+            itemViewModelFactory.image(show, fanart: fanart?.showImage(for: .background))
+        topSection.supplementary.set(backdrop, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
+
         if let navbar = [Fanart.Format.hdtvLogo]
             .compactMap({ fanart?.showImage(for: $0) })
             .first?
-            .map({ itemViewModelFactory.image($0) }) {
+            .map({ itemViewModelFactory.image(show, fanart: $0) }) {
             navbarTitleViewModelRelay.accept(navbar)
         }
         var carousels: [ViewModel] = []

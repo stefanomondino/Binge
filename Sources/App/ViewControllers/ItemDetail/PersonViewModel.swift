@@ -61,7 +61,7 @@ class PersonViewModel: ItemDetailViewModel {
                                          itemViewModelFactory.personDescription(person)])
 
         if let image = person.images?.profiles?.first {
-            let supplementary = itemViewModelFactory.image(image)
+            let supplementary = itemViewModelFactory.image(image, fanart: nil)
             topSection.supplementary.set(supplementary, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
         }
 

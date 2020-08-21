@@ -36,7 +36,7 @@
 
     public extension UIImage {
         static func shape(with bezier: UIBezierPath, strokeColor: UIColor = .clear, fillColor: UIColor = .clear, lineWidth: CGFloat = 0) -> UIImage {
-            UIGraphicsBeginImageContext(bezier.bounds.insetBy(dx: lineWidth, dy: lineWidth).size)
+            UIGraphicsBeginImageContextWithOptions(bezier.bounds.insetBy(dx: lineWidth, dy: lineWidth).size, false, UIScreen.main.scale)
             fillColor.setFill()
             bezier.fill()
             if lineWidth > 0 {
@@ -75,42 +75,67 @@
                 .resizableImage(withCapInsets: UIEdgeInsets(top: width, left: width, bottom: width, right: width), resizingMode: .stretch)
         }
 
-        func circled() -> UIImage {
+        func masked(by shape: UIBezierPath) -> UIImage {
             guard !size.isEmpty else { return self }
-            let dimension = min(size.width, size.height)
-            let rect = CGRect(x: 0, y: 0, width: dimension, height: dimension)
-            UIGraphicsBeginImageContext(rect.size)
+            let rect = shape.bounds // CGRect(x: 0, y: 0, width: dimension, height: dimension)
+            UIGraphicsBeginImageContextWithOptions(rect.size, false, scale)
             let point = CGPoint(x: (rect.size.width - size.width) / 2, y: (rect.size.height - size.height) / 2)
-            UIBezierPath(ovalIn: rect).addClip()
+            shape.addClip()
             draw(at: point)
-
             let image = UIGraphicsGetImageFromCurrentImageContext() ?? self
             UIGraphicsEndImageContext()
             return image
         }
 
+        var fillRect: CGRect {
+            let dimension = min(size.width, size.height)
+            return CGRect(x: 0, y: 0, width: dimension, height: dimension)
+        }
+
+        var fitRect: CGRect {
+            let dimension = max(size.width, size.height)
+            return CGRect(x: 0, y: 0, width: dimension, height: dimension)
+        }
+
+        func circled() -> UIImage {
+            return masked(by: UIBezierPath(ovalIn: fillRect))
+        }
+
+        func squared(with cornerRadius: CGFloat = 0.0) -> UIImage {
+            return masked(by: UIBezierPath(roundedRect: fillRect, cornerRadius: cornerRadius))
+        }
+
         func tinted(with color: UIColor) -> UIImage {
-            guard let cgImage = self.cgImage else { return self }
-            UIGraphicsBeginImageContext(size)
-            let context = UIGraphicsGetCurrentContext()
-            color.setFill()
-            context?.setBlendMode(.color)
-            context?.fill(.init(origin: .zero, size: size))
-            context?.setBlendMode(.destinationIn)
-            context?.draw(cgImage, in: .init(origin: .zero, size: size))
-            draw(at: .zero)
-            let image = UIGraphicsGetImageFromCurrentImageContext() ?? self
+            var image = withRenderingMode(.alwaysTemplate)
+            UIGraphicsBeginImageContextWithOptions(size, false, scale)
+            color.set()
+            image.draw(in: CGRect(origin: .zero, size: size))
+            image = UIGraphicsGetImageFromCurrentImageContext() ?? self
             UIGraphicsEndImageContext()
             return image
         }
 
         func overlaying(_ image: UIImage, at point: CGPoint? = nil) -> UIImage {
-            UIGraphicsBeginImageContext(size)
+            UIGraphicsBeginImageContextWithOptions(size, false, scale)
             draw(at: .zero)
-//            let dimension = min(size.width, size.height)
             let point = point ?? CGPoint(x: (size.width - image.size.width) / 2, y: (size.height - image.size.height) / 2)
             image.draw(at: point)
+            let image = UIGraphicsGetImageFromCurrentImageContext() ?? self
+            UIGraphicsEndImageContext()
+            return image
+        }
 
+        func resized(to newSize: CGSize) -> UIImage {
+            let finalSize: CGSize
+            if size.ratio > 1 {
+                let height = newSize.width / size.ratio
+                finalSize = CGSize(width: newSize.width, height: height)
+            } else {
+                let width = newSize.height / size.ratio
+                finalSize = CGSize(width: width, height: newSize.height)
+            }
+            UIGraphicsBeginImageContextWithOptions(finalSize, false, scale)
+            draw(in: .init(origin: .zero, size: finalSize))
             let image = UIGraphicsGetImageFromCurrentImageContext() ?? self
             UIGraphicsEndImageContext()
             return image

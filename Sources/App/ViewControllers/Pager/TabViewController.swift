@@ -55,7 +55,7 @@ class TabViewController: UITabBarController {
                 $0.items.compactMap { item in
                     let viewController = factory.page(from: item).createScene() as? UIViewController
                     viewController?.tabBarItem.title = (item as? WithPage)?.pageTitle
-                    viewController?.tabBarItem.image = (item as? WithPage)?.pageIcon
+                    viewController?.tabBarItem.image = (item as? WithPage)?.pageIcon?.resized(to: CGSize(width: 30, height: 30))
                     return viewController
                 }
             }

@@ -21,7 +21,7 @@ class ImagesUseCaseImplementation: ImagesUseCase {
         self.movies = movies
     }
 
-    func image<T: Codable>(from info: T?, with keyPath: KeyPath<T, String?>, sizes: KeyPath<TMDBAPI.Image, [String]>) -> Observable<WithImage> {
+    func image<T>(from info: T?, with keyPath: KeyPath<T, String?>, sizes: KeyPath<TMDB.Image, [String]>) -> Observable<WithImage> {
         return configuration.tmdbConfiguration().map { configuration -> WithImage in
 
             let url = configuration.images.secureBaseUrl
@@ -64,9 +64,9 @@ class ImagesUseCaseImplementation: ImagesUseCase {
             }
     }
 
-    func image(for image: Person.Image) -> Observable<WithImage> {
+    func image(for image: DownloadableImage) -> Observable<WithImage> {
         return Observable.just(image).flatMapLatest {
-            self.image(from: $0, with: \.filePath, sizes: \.profileSizes)
+            self.image(from: $0, with: \.defaultImage, sizes: image.allowedSizes)
         }
     }
 

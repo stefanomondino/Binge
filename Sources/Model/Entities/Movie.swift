@@ -83,10 +83,15 @@ public enum Movie {
         public let title: String
         let ids: Ids
         let year: Int?
+
         public var item: Item { return self }
     }
 
     internal struct DetailItem: MovieDetail {
+        var aspectRatio: Double { 1920 / 1080.0 }
+        var defaultImage: String? { backdropPath }
+        var allowedSizes: KeyPath<TMDB.Image, [String]> { \.backdropSizes }
+        var backdropPath: String?
         var overview: String
         var runtime: Int
         var title: String

@@ -16,10 +16,16 @@ public extension CGSize {
     var isEmpty: Bool {
         area <= 0
     }
+
+    var ratio: CGFloat {
+        width / height
+    }
 }
 
 public extension CGRect {
     var area: CGFloat { size.area }
+
+    var ratio: CGFloat { size.ratio }
 
     var isEmpty: Bool { size.isEmpty }
 }

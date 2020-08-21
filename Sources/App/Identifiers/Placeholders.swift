@@ -9,7 +9,11 @@ import Foundation
 
 enum Placeholder: String, WithImage {
     var rectangle: Image {
-        UIImage.rectangle(rect: CGRect(x: 0, y: 0, width: 200, height: 200), fillColor: .background)
+        switch self {
+        case .episode: return UIImage.rectangle(rect: CGRect(x: 0, y: 0, width: 320, height: 180), fillColor: .background)
+        case .show, .movie, .season: return UIImage.rectangle(rect: CGRect(x: 0, y: 0, width: 250, height: 375), fillColor: .clear)
+        default: return UIImage.rectangle(rect: CGRect(x: 0, y: 0, width: 200, height: 200), fillColor: .background)
+        }
     }
 
     var image: Image {
@@ -23,11 +27,11 @@ enum Placeholder: String, WithImage {
 
     private var asset: Image {
         switch self {
-        case .person: return Asset.heart.image
-        case .show: return Asset.heart.image
-        case .movie: return Asset.heart.image
-        case .season: return Asset.heart.image
-        case .episode: return Asset.heart.image
+        case .person: return Asset.users.image
+        case .show: return Asset.photo.image
+        case .movie: return Asset.movie.image
+        case .season: return Asset.photo.image
+        case .episode: return Asset.photo.image
         }
     }
 

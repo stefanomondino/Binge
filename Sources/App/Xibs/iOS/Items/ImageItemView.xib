@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ImageItemView" customModule="Binge" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ImageItemView" customModule="Binge_iOS" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="145" height="267"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -21,7 +21,7 @@
             <constraints>
                 <constraint firstItem="ySN-xM-UM8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Pko-m2-mzg"/>
                 <constraint firstAttribute="trailing" secondItem="ySN-xM-UM8" secondAttribute="trailing" id="THR-A6-IV8"/>
-                <constraint firstAttribute="bottom" secondItem="ySN-xM-UM8" secondAttribute="bottom" priority="999" id="fiD-e4-BhJ"/>
+                <constraint firstAttribute="bottom" secondItem="ySN-xM-UM8" secondAttribute="bottom" id="fiD-e4-BhJ"/>
                 <constraint firstItem="ySN-xM-UM8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="khj-k0-oYR"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

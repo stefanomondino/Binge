@@ -29,7 +29,8 @@ struct API {
     }
 }
 
-enum TMDBAPI {
+public enum TMDB {}
+public extension TMDB {
     struct Image: Codable {
         let baseUrl: URL
         let secureBaseUrl: URL
@@ -38,19 +39,23 @@ enum TMDBAPI {
         let profileSizes: [String]
         let stillSizes: [String]
     }
-
-    struct Configuration: Codable {
-        let images: Image
-    }
-
-    case configuration
-    case show(Item)
-    case movie(Item)
-    case person(Person)
-    case seasonDetail(Season.Info, Item)
 }
 
-extension TMDBAPI: TargetType {
+extension TMDB {
+    enum API {
+        struct Configuration: Codable {
+            let images: Image
+        }
+
+        case configuration
+        case show(Item)
+        case movie(Item)
+        case person(Person)
+        case seasonDetail(Season.Info, Item)
+    }
+}
+
+extension TMDB.API: TargetType {
     var baseURL: URL {
         return Model.Configuration.environment.tmdbBaseURL
     }

@@ -13,9 +13,11 @@ struct PeopleResult: Codable {
 }
 
 public struct Person: Codable, ItemContainer, Item {
-    public struct Image: Codable {
+    public struct Image: Codable, DownloadableImage {
         public let aspectRatio: Double
         let filePath: String?
+        public var defaultImage: String? { filePath }
+        public var allowedSizes: KeyPath<TMDB.Image, [String]> { \.profileSizes }
         public var uniqueIdentifier: String { filePath ?? UUID().uuidString }
     }
 

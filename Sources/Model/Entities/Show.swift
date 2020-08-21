@@ -85,12 +85,12 @@ public enum Show {
         public var year: Int? { show.year }
     }
 
-//    public struct Searched: SearchableItem, ShowItem {
-//        public let score: Double
-//        public let item: Item
-//
-//    }
-//
+    //    public struct Searched: SearchableItem, ShowItem {
+    //        public let score: Double
+    //        public let item: Item
+    //
+    //    }
+    //
     internal struct ShowItemImplementation: ShowItem, Item {
         public let title: String
         let ids: Ids
@@ -99,21 +99,47 @@ public enum Show {
         public var show: ShowItem { self }
     }
 
+    public struct Network: Codable {
+        public let name: String?
+        public let id: Int
+        public let logoPath: String?
+        public let originCountry: String?
+    }
+
+    public struct Genre: Codable {
+        public let id: Int?
+        public let name: String?
+    }
+
     internal struct DetailItem: ShowDetail {
         var overview: String
-        var runtime: Int
         var title: String
         var year: Int?
         var ids: Ids
         var info: Info?
         var item: Item { self }
         var show: ShowItem { self }
+        var aspectRatio: Double { 250 / 375.0 }
+
+        var defaultImage: String? { backdropPath }
+
+        var allowedSizes: KeyPath<TMDB.Image, [String]> { \.backdropSizes }
+        var backdropPath: String?
     }
 
     public struct Info: Codable {
         public let name: String
+        public let status: String?
         public let backdropPath: String?
         public let posterPath: String?
         public let seasons: [Season.Info]?
+        public let episodeRuntime: [Int]?
+        public let firstAirDate: String?
+        public let lastAirDate: String?
+        public let originCountry: [String]?
+        public let originalLanguage: String?
+        public let networks: [Network]?
+        public let genres: [Genre]?
+        public let popularity: Double?
     }
 }

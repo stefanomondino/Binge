@@ -7,5 +7,5 @@ public protocol ImagesUseCase {
     func image(forPerson person: Person) -> Observable<WithImage>
     func image(forSeason season: Season.Info) -> Observable<WithImage>
     func image(for episode: Season.Episode) -> Observable<WithImage>
-    func image(for image: Person.Image) -> Observable<WithImage>
+    func image(for object: DownloadableImage) -> Observable<WithImage>
 }

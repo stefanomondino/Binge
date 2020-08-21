@@ -44,9 +44,9 @@ public protocol Item: Codable, ItemContainer {
     var uniqueIdentifier: String { get }
 }
 
-public protocol ItemDetail: Item {
+public protocol ItemDetail: Item, DownloadableImage {
     var overview: String { get }
-    var runtime: Int { get }
+//    var runtime: Int { get }
 }
 
 public struct Ids: Codable {
@@ -71,4 +71,11 @@ public extension Item {
     var uniqueIdentifier: String {
         "\(ids.trakt)"
     }
+}
+
+public protocol DownloadableImage {
+    var aspectRatio: Double { get }
+    var uniqueIdentifier: String { get }
+    var defaultImage: String? { get }
+    var allowedSizes: KeyPath<TMDB.Image, [String]> { get }
 }

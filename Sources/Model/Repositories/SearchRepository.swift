@@ -18,6 +18,9 @@ struct SearchRepositoryImplementation: SearchRepository {
     func search(query: String, currentPage: Int, pageSize: Int) -> Observable<[Search.SearchItem]> {
         rest
             .get([Search.ItemResponse].self, at: TraktvAPI.search(query, .init(page: currentPage, limit: pageSize)))
-            .map { response in response.compactMap { $0.item } }
+            .map { response in response
+                .compactMap { $0.item }
+                .filter { $0.item.ids.tmdb != nil }
+            }
     }
 }

@@ -56,7 +56,10 @@ class MovieDetailViewModel: RxListViewModel, ItemDetailViewModel {
 
     func reload() {
         disposeBag = DisposeBag()
-        Observable.combineLatest(useCase.movieDetail(for: movie.item), useCase.fanart(for: movie.item))
+        Observable.combineLatest(useCase.movieDetail(for: movie.item),
+                                 useCase.fanart(for: movie.item)
+                                     .map { $0 }
+                                     .catchErrorJustReturn(nil))
             .map { [weak self] in self?.map($0.0, fanart: $0.1) ?? [] }
             .catchErrorJustReturn([])
             .bind(to: sectionsRelay)
@@ -67,31 +70,26 @@ class MovieDetailViewModel: RxListViewModel, ItemDetailViewModel {
 
     func addToFavorite() {}
 
-    private func map(_ show: MovieDetail, fanart: FanartResponse) -> [Section] {
+    private func map(_ movie: MovieDetail, fanart: FanartResponse?) -> [Section] {
         let routes = self.routes
         let routeFactory = self.routeFactory
         var topSection = Section(id: UUID().stringValue,
-                                 items: [itemViewModelFactory.item(show, layout: .title),
-                                         itemViewModelFactory.showDescription(show)])
-        if let fanart = [Fanart.Format.background]
-            .compactMap({ fanart.movieImage(for: $0) })
-            .first?
-            .map({ itemViewModelFactory.image($0) }) {
-            topSection.supplementary.set(fanart, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
-        }
-        if let navbar = [Fanart.Format.hdtvLogo]
-            .compactMap({ fanart.movieImage(for: $0) })
-            .first?
-            .map({ itemViewModelFactory.image($0) }) {
-            navbarTitleViewModelRelay.accept(navbar)
+                                 items: [itemViewModelFactory.item(movie, layout: .title),
+                                         itemViewModelFactory.showDescription(movie)])
+        let backdrop =
+            itemViewModelFactory.image(movie, fanart: fanart?.movieImage(for: [.background, .hdtvLogo]))
+        topSection.supplementary.set(backdrop, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
+
+        if let navbarItem = fanart?.movieImage(for: [Fanart.Format.hdtvLogo]) {
+            navbarTitleViewModelRelay.accept(itemViewModelFactory.image(movie, fanart: navbarItem))
         }
         var carousels: [ViewModel] = []
 
         carousels += [
-            itemViewModelFactory.castCarousel(for: show) {
+            itemViewModelFactory.castCarousel(for: movie) {
                 routes.accept(routeFactory.personDetail(for: $0))
             },
-            itemViewModelFactory.relatedCarousel(for: show) {
+            itemViewModelFactory.relatedCarousel(for: movie) {
                 routes.accept(routeFactory.showDetail(for: $0))
             }
         ].compactMap { $0 }

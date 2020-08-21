@@ -44,7 +44,7 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
 
         addProvider(MoyaProvider<TraktvAPI>(plugins: [networkLoggerPlugin]))
         addProvider(MoyaProvider<FanartAPI>(plugins: [networkLoggerPlugin]))
-        addProvider(MoyaProvider<TMDBAPI>(plugins: [networkLoggerPlugin]))
+        addProvider(MoyaProvider<TMDB.API>(plugins: [networkLoggerPlugin]))
     }
 
     func addProvider<Endpoint: TargetType>(_ provider: MoyaProvider<Endpoint>) {
@@ -112,6 +112,13 @@ extension ObservableType where Self.Element == Response {
 
     func withDecodableMapping<Result>(_ type: Result.Type, decoder: JSONDecoder, scheduler: SchedulerType) -> Observable<Result> where Result: Decodable {
         return observeOn(scheduler)
-            .map { try decoder.decode(type, from: $0.data) }
+            .map {
+                do {
+                    return try decoder.decode(type, from: $0.data)
+                } catch {
+                    Logger.log(error, level: .error)
+                    throw error
+                }
+            }
     }
 }
