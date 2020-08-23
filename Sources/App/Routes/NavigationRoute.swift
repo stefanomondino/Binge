@@ -19,10 +19,12 @@ struct NavigationRoute: UIKitRoute {
     }
 
     func execute<T>(from scene: T?) where T: UIViewController {
-        guard let navigationController = scene?.navigationController else { return }
-        if let destination = createViewController() {
+        guard let destination = createViewController() else { return }
+
+        if let navigationController = scene?.navigationController {
             navigationController.pushViewController(destination, animated: animated)
-            // scene?.present(destination, animated: true, completion: nil)
+        } else {
+            scene?.showDetailViewController(destination, sender: nil)
         }
     }
 }

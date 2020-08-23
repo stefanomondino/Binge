@@ -14,6 +14,7 @@ enum Style: String, CaseIterable {
 
     case title
     case container
+    case clear
     case subtitle
     case card
     case navigationBar

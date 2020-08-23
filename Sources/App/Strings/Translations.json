@@ -3,7 +3,8 @@
         "cast": "Cast",
         "year": "Year",
         "born": "Born",
-        "death": "Death"
+        "death": "Death",
+        "explore": "Explore"
     },
     "shows": {
         "title": "Shows",

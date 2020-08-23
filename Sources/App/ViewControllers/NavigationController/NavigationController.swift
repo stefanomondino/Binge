@@ -34,7 +34,7 @@ class NavigationController: UINavigationController, UIGestureRecognizerDelegate 
 }
 
 extension UIViewController {
-    func inNavigationController() -> NavigationController {
+    func inNavigationController() -> UIViewController {
         return NavigationController(rootViewController: self)
     }
 }

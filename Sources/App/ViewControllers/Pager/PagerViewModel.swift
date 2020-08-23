@@ -38,14 +38,14 @@ class PagerViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
     let routeFactory: RouteFactory
 
     convenience init(pages: [ViewModel],
-                     layout: LayoutIdentifier = SceneIdentifier.pager,
+                     layout: SceneIdentifier,
                      routeFactory: RouteFactory,
                      isSearchable: Bool) {
         self.init(pages: .just(pages), layout: layout, routeFactory: routeFactory, isSearchable: isSearchable)
     }
 
     init(pages: Observable<[ViewModel]>,
-         layout: LayoutIdentifier = SceneIdentifier.pager,
+         layout: SceneIdentifier,
          routeFactory: RouteFactory,
          isSearchable: Bool) {
         self.pages = pages

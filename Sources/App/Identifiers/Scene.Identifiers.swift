@@ -10,7 +10,8 @@ import Foundation
 
 enum SceneIdentifier: String, LayoutIdentifier {
     case splash
-    case pager
+    case smallPager
+    case bigPager
     case tab
     case login
     case itemList

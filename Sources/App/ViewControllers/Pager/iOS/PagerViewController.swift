@@ -35,7 +35,7 @@ class PagerViewController: TabmanViewController {
         automaticallyAdjustsChildInsets = true
         super.viewDidLoad()
 
-        styleFactory.apply(.container, to: view)
+        styleFactory.apply(.navigationBar, to: view)
         title = (viewModel as? PagerViewModel)?.pageTitle
         dataSource = internalDataSource
         setupBar()
@@ -75,16 +75,31 @@ class PagerViewController: TabmanViewController {
 
     private func setupBar() {
         let styleFactory = self.styleFactory
-        let bar = TMBarView<TMHorizontalBarLayout, TMLabelBarButton, TMLineBarIndicator>()
-        bar.backgroundView.style = .flat(color: .navbarBackground)
-        bar.buttons.customize { button in
-            styleFactory.apply(.navigationBar, to: button)
-        }
-        bar.layout.interButtonSpacing = Constants.sidePadding
-        bar.layout.contentInset = UIEdgeInsets(top: 0, left: Constants.sidePadding, bottom: 0, right: Constants.sidePadding)
-        bar.indicator.tintColor = .mainDescription
-        bar.indicator.weight = .custom(value: 4)
+        switch viewModel.layoutIdentifier {
+        case SceneIdentifier.bigPager:
+            let bar = TMBarView<TMConstrainedHorizontalBarLayout, TMLabelBarButton, TMLineBarIndicator>()
+            bar.backgroundView.style = .flat(color: .navbarBackground)
+            bar.buttons.customize { button in
+                styleFactory.apply(.navigationBar, to: button)
+            }
+            bar.layout.contentInset = UIEdgeInsets(top: 10, left: Constants.sidePadding, bottom: 10, right: Constants.sidePadding)
+            bar.indicator.tintColor = .mainDescription
+            bar.indicator.weight = .custom(value: 0)
+            bar.scrollMode = .none
+            addBar(bar, dataSource: internalDataSource, at: .top)
+        default:
 
-        addBar(bar, dataSource: internalDataSource, at: .top)
+            let bar = TMBarView<TMHorizontalBarLayout, TMLabelBarButton, TMLineBarIndicator>()
+            bar.backgroundView.style = .flat(color: .navbarBackground)
+            bar.buttons.customize { button in
+                styleFactory.apply(.navigationBar, to: button)
+            }
+            bar.layout.interButtonSpacing = Constants.sidePadding
+            bar.layout.contentInset = UIEdgeInsets(top: 0, left: Constants.sidePadding, bottom: 0, right: Constants.sidePadding)
+            bar.indicator.tintColor = .mainDescription
+            bar.indicator.weight = .custom(value: 4)
+
+            addBar(bar, dataSource: internalDataSource, at: .top)
+        }
     }
 }

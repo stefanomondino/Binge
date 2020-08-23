@@ -19,6 +19,7 @@ class StyleFactoryImplementation: DefaultStyleFactory {
     }
 
     init(container _: RootContainer) {
+        register(for: .clear) { DefaultContainerStyle(backgroundColor: .clear) }
         register(for: .container) { DefaultContainerStyle() }
         register(for: .title) { DefaultTextStyle(size: 18) }
         register(for: .subtitle) {

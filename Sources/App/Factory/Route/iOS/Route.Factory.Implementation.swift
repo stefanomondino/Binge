@@ -46,7 +46,6 @@ class MainRouteFactory: RouteFactory {
         case let viewModel as PagerViewModel:
             return EmptyRoute {
                 return self.container.views.scenes.pager(viewModel: viewModel)
-                    .inContainer()
             }
         case let viewModel as ItemListViewModel:
             return EmptyRoute {

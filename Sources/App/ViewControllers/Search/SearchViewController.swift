@@ -102,7 +102,7 @@ class SearchViewController: UIViewController, KeyboardAvoidable {
         let textFieldContainer = UIView().with(\.backgroundColor, to: .clear)
         textFieldContainer.addSubview(textField)
         textField.snp.makeConstraints { make in
-            make.height.equalTo(30)
+            make.height.equalTo(36)
             make.width.greaterThanOrEqualTo(2000).priority(.medium)
             make.centerY.equalToSuperview()
             make.left.right.equalToSuperview()
@@ -111,8 +111,10 @@ class SearchViewController: UIViewController, KeyboardAvoidable {
             .take(1)
             .bind { [weak self] in self?.setNavigationView(textFieldContainer) }
             .disposed(by: disposeBag)
-
-        textField.becomeFirstResponder()
+        rx.viewDidAppear()
+            .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance)
+            .bind { textField.becomeFirstResponder() }
+            .disposed(by: disposeBag)
     }
 
     override var preferredFocusEnvironments: [UIFocusEnvironment] {

@@ -54,7 +54,8 @@ class ItemListViewController: UIViewController {
         let viewModel = self.viewModel
         let collectionViewDataSource = CollectionViewDataSource(viewModel: viewModel,
                                                                 factory: collectionViewCellFactory)
-        view.applyContainerStyle(.container)
+        view.applyContainerStyle(.clear)
+
         title = viewModel.pageTitle
         let spacing: CGFloat = 4
         let sizeCalculator = AutomaticDeferredCollectionViewSizeCalculator(viewModel: viewModel,
