@@ -71,7 +71,7 @@ class ItemListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
     }
 
     func selectItem(at indexPath: IndexPath) {
-        guard let show = (self[indexPath] as? ShowItemViewModel)?.item else { return }
+        guard let show = (self[indexPath] as? GenericItemViewModel)?.item else { return }
         let route = routeFactory.showDetail(for: show)
         routes.accept(route)
     }

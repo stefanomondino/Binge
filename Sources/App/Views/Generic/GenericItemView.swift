@@ -14,7 +14,7 @@ import UIKit
  Contents should be entirely driven by `ViewModel`, so that this view can safely deployed in production without being tested.
 
  */
-class ShowItemView: UIView, WithViewModel {
+class GenericItemView: UIView, WithViewModel {
     @IBOutlet var poster: UIImageView!
     @IBOutlet var title: UILabel?
     @IBOutlet var subtitle: UILabel?
@@ -25,7 +25,7 @@ class ShowItemView: UIView, WithViewModel {
 
     func configure(with viewModel: ViewModel) {
         disposeBag = DisposeBag()
-        guard let viewModel = viewModel as? ShowItemViewModel else { return }
+        guard let viewModel = viewModel as? GenericItemViewModel else { return }
         /// Configure here every property that contributes to change view size
         /// Multiline text bindings should go here
         //        self.title.style = Identifiers.Styles.mainRegularStyle.style

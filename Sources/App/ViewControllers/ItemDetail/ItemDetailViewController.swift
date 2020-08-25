@@ -80,7 +80,7 @@ class ItemDetailViewController: UIViewController {
             guard let viewModel = viewModel(at: indexPath, for: type) else { return .zero }
 
             switch viewModel {
-            case let item as ShowItemViewModel:
+            case let item as GenericItemViewModel:
                 let direction = direction ?? Direction.from(layout: collectionView.collectionViewLayout)
                 let fixedDimension = calculateFixedDimension(for: direction, collectionView: collectionView, at: indexPath, itemsPerLine: item.showIdentifier.gridCount)
                 let lock = LockingSize(direction: direction, value: fixedDimension)

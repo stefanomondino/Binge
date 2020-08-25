@@ -14,7 +14,7 @@ import RxSwift
 
 protocol ItemViewModelFactory {
     func loadMore(_ closure: @escaping () -> Disposable) -> ViewModel
-    func item(_ show: ItemContainer, layout: ShowIdentifier) -> ViewModel
+    func item(_ show: ItemContainer, layout: GenericItemViewModel.Identifier) -> ViewModel
     func seasonsCarousel(for show: ItemContainer, onSelection: @escaping (Season.Info) -> Void) -> ViewModel
     func castCarousel(for item: ItemContainer, onSelection: @escaping (Person) -> Void) -> ViewModel?
     func relatedCarousel(for show: ItemContainer, onSelection: @escaping (Item) -> Void) -> ViewModel?
@@ -39,40 +39,40 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         LoadMoreItemViewModel(closure)
     }
 
-    func item(_ item: ItemContainer, layout: ShowIdentifier) -> ViewModel {
+    func item(_ item: ItemContainer, layout: GenericItemViewModel.Identifier) -> ViewModel {
         switch item {
-        case let showCast as Show.Cast: return ShowItemViewModel(showCast: showCast,
+        case let showCast as Show.Cast: return GenericItemViewModel(showCast: showCast,
+                                                                    layoutIdentifier: layout,
+                                                                    imageUseCase: container.model.useCases.images)
+        case let movieCast as Movie.Cast: return GenericItemViewModel(movieCast: movieCast,
+                                                                      layoutIdentifier: layout,
+                                                                      imageUseCase: container.model.useCases.images)
+        case let season as Season.Info: return GenericItemViewModel(season: season,
+                                                                    layoutIdentifier: layout,
+                                                                    imagesUseCase: container.model.useCases.images)
+        case let search as Search.SearchItem: return GenericItemViewModel(search: search,
+                                                                          layoutIdentifier: layout,
+                                                                          imageUseCase: container.model.useCases.images)
+
+        case let episode as Season.Episode: return GenericItemViewModel(episode: episode,
+                                                                        layoutIdentifier: layout,
+                                                                        imagesUseCase: container.model.useCases.images)
+
+        case let person as Person: return GenericItemViewModel(person: person,
+                                                               layoutIdentifier: layout,
+                                                               imagesUseCase: container.model.useCases.images)
+        case let person as CastMember: return GenericItemViewModel(castMember: person,
+                                                                   layoutIdentifier: layout,
+                                                                   imagesUseCase: container.model.useCases.images)
+        case let show as ShowItem: return GenericItemViewModel(show: show,
+                                                               layoutIdentifier: layout,
+                                                               imageUseCase: container.model.useCases.images)
+        case let movie as MovieItem: return GenericItemViewModel(movie: movie,
                                                                  layoutIdentifier: layout,
                                                                  imageUseCase: container.model.useCases.images)
-        case let movieCast as Movie.Cast: return ShowItemViewModel(movieCast: movieCast,
-                                                                   layoutIdentifier: layout,
-                                                                   imageUseCase: container.model.useCases.images)
-        case let season as Season.Info: return ShowItemViewModel(season: season,
-                                                                 layoutIdentifier: layout,
-                                                                 imagesUseCase: container.model.useCases.images)
-        case let search as Search.SearchItem: return ShowItemViewModel(search: search,
-                                                                       layoutIdentifier: layout,
-                                                                       imageUseCase: container.model.useCases.images)
-
-        case let episode as Season.Episode: return ShowItemViewModel(episode: episode,
-                                                                     layoutIdentifier: layout,
-                                                                     imagesUseCase: container.model.useCases.images)
-
-        case let person as Person: return ShowItemViewModel(person: person,
-                                                            layoutIdentifier: layout,
-                                                            imagesUseCase: container.model.useCases.images)
-        case let person as CastMember: return ShowItemViewModel(castMember: person,
-                                                                layoutIdentifier: layout,
-                                                                imagesUseCase: container.model.useCases.images)
-        case let show as ShowItem: return ShowItemViewModel(show: show,
-                                                            layoutIdentifier: layout,
-                                                            imageUseCase: container.model.useCases.images)
-        case let movie as MovieItem: return ShowItemViewModel(movie: movie,
-                                                              layoutIdentifier: layout,
-                                                              imageUseCase: container.model.useCases.images)
-        default: return ShowItemViewModel(item: item.item,
-                                          layoutIdentifier: layout,
-                                          imageUseCase: container.model.useCases.images)
+        default: return GenericItemViewModel(item: item.item,
+                                             layoutIdentifier: layout,
+                                             imageUseCase: container.model.useCases.images)
         }
     }
 
@@ -95,7 +95,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .cast) { itemViewModel in
-            if let person = itemViewModel.as(ShowItemViewModel.self)?
+            if let person = itemViewModel.as(GenericItemViewModel.self)?
                 .unwrap(\.item, as: Person.self) {
                 onSelection(person)
             }
@@ -113,7 +113,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .cast) { itemViewModel in
-            if let person = itemViewModel.as(ShowItemViewModel.self)?
+            if let person = itemViewModel.as(GenericItemViewModel.self)?
                 .unwrap(\.item, as: Person.self) {
                 onSelection(person)
             }
@@ -133,7 +133,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .seasons) { itemViewModel in
-            if let season = itemViewModel.as(ShowItemViewModel.self)?.unwrap(\.item, as: Season.Info.self) {
+            if let season = itemViewModel.as(GenericItemViewModel.self)?.unwrap(\.item, as: Season.Info.self) {
                 onSelection(season)
             }
         }
@@ -158,7 +158,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .relatedShows) { itemViewModel in
-            if let show = itemViewModel.as(ShowItemViewModel.self)?.item {
+            if let show = itemViewModel.as(GenericItemViewModel.self)?.item {
                 onSelection(show.item)
             }
         }
@@ -175,7 +175,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .relatedShows) { itemViewModel in
-            if let show = itemViewModel.as(ShowItemViewModel.self)?.item {
+            if let show = itemViewModel.as(GenericItemViewModel.self)?.item {
                 onSelection(show.item)
             }
         }
@@ -192,7 +192,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .castInMovie) { itemViewModel in
-            if let show = itemViewModel.as(ShowItemViewModel.self)?.item {
+            if let show = itemViewModel.as(GenericItemViewModel.self)?.item {
                 onSelection(show.item)
             }
         }
@@ -209,27 +209,27 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .castInShow) { itemViewModel in
-            if let show = itemViewModel.as(ShowItemViewModel.self)?.item {
+            if let show = itemViewModel.as(GenericItemViewModel.self)?.item {
                 onSelection(show.item)
             }
         }
     }
 
     func person(_ person: Person) -> ViewModel {
-        ShowItemViewModel(person: person,
-                          layoutIdentifier: .person,
-                          imagesUseCase: container.model.useCases.images)
+        GenericItemViewModel(person: person,
+                             layoutIdentifier: .person,
+                             imagesUseCase: container.model.useCases.images)
     }
 
     func season(_ season: Season.Info) -> ViewModel {
-        ShowItemViewModel(season: season, layoutIdentifier: .season, imagesUseCase: container.model.useCases.images)
+        GenericItemViewModel(season: season, layoutIdentifier: .season, imagesUseCase: container.model.useCases.images)
         //        SeasonItemViewModel(season: season,
         //                            layoutIdentifier: ViewIdentifier.season,
         //                            imagesUseCase: container.model.useCases.images)
     }
 
     func castMember(_ castMember: CastMember) -> ViewModel {
-        ShowItemViewModel(castMember: castMember, layoutIdentifier: .person, imagesUseCase: container.model.useCases.images)
+        GenericItemViewModel(castMember: castMember, layoutIdentifier: .person, imagesUseCase: container.model.useCases.images)
     }
 
     func image(_ fanart: Fanart) -> ViewModel {

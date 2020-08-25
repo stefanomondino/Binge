@@ -26,7 +26,7 @@ class PersonItemView: UIView, WithViewModel {
 
     func configure(with viewModel: ViewModel) {
         disposeBag = DisposeBag()
-        guard let viewModel = viewModel as? ShowItemViewModel
+        guard let viewModel = viewModel as? GenericItemViewModel
         else { return }
         if let title = self.title {
             title.applyStyle(.itemTitle)

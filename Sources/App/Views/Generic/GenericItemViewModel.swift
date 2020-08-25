@@ -11,19 +11,12 @@ import Foundation
 import Model
 import RxSwift
 
-enum ShowIdentifier: String, LayoutIdentifier, CaseIterable {
-    case posterOnly
-    case title
-    case full
-    case person
-    case season
-    case episode
-
+extension GenericItemViewModel.Identifier {
     var identifierString: String {
         switch self {
-        case .posterOnly: return "PosterShow"
-        case .full: return "CompleteShow"
-        case .title: return "TitleShow"
+        case .posterOnly: return "Poster"
+        case .full: return "Complete"
+        case .title: return "Title"
         case .person: return "Person"
         case .season: return "Season"
         case .episode: return "Episode"
@@ -46,9 +39,18 @@ enum ShowIdentifier: String, LayoutIdentifier, CaseIterable {
     }
 }
 
-class ShowItemViewModel: ViewModel {
+class GenericItemViewModel: ViewModel {
+    enum Identifier: String, LayoutIdentifier, CaseIterable {
+        case posterOnly
+        case title
+        case full
+        case person
+        case season
+        case episode
+    }
+
     var layoutIdentifier: LayoutIdentifier { showIdentifier }
-    let showIdentifier: ShowIdentifier
+    let showIdentifier: Identifier
     var uniqueIdentifier: UniqueIdentifier { item.uniqueIdentifier }
     let item: Item
     let image: ObservableImage
@@ -63,7 +65,7 @@ class ShowItemViewModel: ViewModel {
     let mainStyle: Style
 
     init(show: ShowItem,
-         layoutIdentifier: ShowIdentifier,
+         layoutIdentifier: Identifier,
          imageUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
         item = show.item
@@ -76,7 +78,7 @@ class ShowItemViewModel: ViewModel {
     }
 
     init(showCast show: Show.Cast,
-         layoutIdentifier: ShowIdentifier,
+         layoutIdentifier: Identifier,
          imageUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
         item = show.item
@@ -92,7 +94,7 @@ class ShowItemViewModel: ViewModel {
     }
 
     init(movieCast movie: Movie.Cast,
-         layoutIdentifier: ShowIdentifier,
+         layoutIdentifier: Identifier,
          imageUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
         item = movie.item
@@ -105,7 +107,7 @@ class ShowItemViewModel: ViewModel {
     }
 
     init(movie: MovieItem,
-         layoutIdentifier: ShowIdentifier,
+         layoutIdentifier: Identifier,
          imageUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
         item = movie.item
@@ -119,7 +121,7 @@ class ShowItemViewModel: ViewModel {
     }
 
     convenience init(search: Search.SearchItem,
-                     layoutIdentifier: ShowIdentifier,
+                     layoutIdentifier: Identifier,
                      imageUseCase: ImagesUseCase) {
         switch search.item {
         case let show as ShowItem: self.init(show: show,
@@ -138,7 +140,7 @@ class ShowItemViewModel: ViewModel {
     }
 
     init(person: Person,
-         layoutIdentifier: ShowIdentifier = ShowIdentifier.person,
+         layoutIdentifier: Identifier = .person,
          imagesUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
         mainStyle = layoutIdentifier.style
@@ -151,7 +153,7 @@ class ShowItemViewModel: ViewModel {
     }
 
     init(castMember: CastMember,
-         layoutIdentifier: ShowIdentifier = ShowIdentifier.person,
+         layoutIdentifier: Identifier = .person,
          imagesUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
         mainStyle = layoutIdentifier.style
@@ -167,7 +169,7 @@ class ShowItemViewModel: ViewModel {
     }
 
     init(season: Season.Info,
-         layoutIdentifier: ShowIdentifier = ShowIdentifier.season,
+         layoutIdentifier: Identifier = .season,
          imagesUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
         mainStyle = layoutIdentifier.style
@@ -184,7 +186,7 @@ class ShowItemViewModel: ViewModel {
     }
 
     init(episode: Season.Episode,
-         layoutIdentifier: ShowIdentifier = ShowIdentifier.season,
+         layoutIdentifier: Identifier = .season,
          imagesUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
         mainStyle = layoutIdentifier.style
@@ -201,7 +203,7 @@ class ShowItemViewModel: ViewModel {
     }
 
     init(item: Item,
-         layoutIdentifier: ShowIdentifier,
+         layoutIdentifier: Identifier,
          imageUseCase _: ImagesUseCase) {
         showIdentifier = layoutIdentifier
         self.item = item
