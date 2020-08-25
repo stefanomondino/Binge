@@ -58,6 +58,7 @@ class ShowItemViewModel: ViewModel {
     }
 
     var subtitle: String
+    var moreText: String?
 
     let mainStyle: Style
 
@@ -81,6 +82,9 @@ class ShowItemViewModel: ViewModel {
         item = show.item
         mainStyle = layoutIdentifier.style
         subtitle = show.characters.joined(separator: ", ")
+        if let episodeCount = show.episodeCount {
+            moreText = "\(episodeCount)"
+        }
         image = imageUseCase
             .poster(for: show)
             .getImage(with: Placeholder.person.image)
@@ -153,6 +157,9 @@ class ShowItemViewModel: ViewModel {
         mainStyle = layoutIdentifier.style
         item = castMember.person
         subtitle = castMember.characters.joined(separator: ", ")
+        if let episodeCount = castMember.episodeCount {
+            moreText = Strings.Shows.episodeCountFormat.format(with: "\(episodeCount)")
+        }
         image = imagesUseCase
             .image(forPerson: castMember.person)
             .getImage(with: Placeholder.person)

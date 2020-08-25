@@ -32,7 +32,7 @@ public struct Person: Codable, ItemContainer, Item {
 public struct CastMember: Codable, ItemContainer {
     public let person: Person
     public let characters: [String]
-    let episodeCount: Int?
+    public let episodeCount: Int?
     public var item: Item { person }
 }
 

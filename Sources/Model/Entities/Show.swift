@@ -75,11 +75,13 @@ public enum Show {
 
         private enum CodingKeys: String, CodingKey {
             case showItem = "show"
+            case episodeCount = "episode_count"
             case characters
         }
 
         private let showItem: ShowItemImplementation
         public let characters: [String]
+        public let episodeCount: Int?
         public var item: Item { showItem }
         public var show: ShowItem { showItem }
         public var year: Int? { show.year }

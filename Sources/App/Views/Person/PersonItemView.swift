@@ -11,6 +11,7 @@ import UIKit
 class PersonItemView: UIView, WithViewModel {
     @IBOutlet var title: UILabel?
     @IBOutlet var subtitle: UILabel?
+    @IBOutlet var otherLabel: UILabel?
     @IBOutlet var image: UIImageView?
 
     var disposeBag = DisposeBag()
@@ -38,6 +39,12 @@ class PersonItemView: UIView, WithViewModel {
 
             subtitle.text = viewModel.subtitle
             subtitle.numberOfLines = 1
+        }
+        if let otherLabel = self.otherLabel {
+            otherLabel.applyStyle(.itemSubtitle)
+
+            otherLabel.text = viewModel.moreText
+            otherLabel.numberOfLines = 1
         }
 
         backgroundColor = .clear
