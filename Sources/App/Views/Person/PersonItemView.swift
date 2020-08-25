@@ -45,9 +45,10 @@ class PersonItemView: UIView, WithViewModel {
         if isPlaceholderForAutosize { return }
         if let image = self.image {
             viewModel.image
+                .observeOn(Scheduler.background)
+                .map { $0.circled() }
                 .asDriver(onErrorJustReturn: UIImage())
                 .startWith(UIImage())
-                .map { $0.circled() }
                 .drive(image.rx.animatedImage())
                 .disposed(by: disposeBag)
         }
