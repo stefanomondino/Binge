@@ -26,6 +26,10 @@ class MainRouteFactory: RouteFactory {
         return ExitRoute()
     }
 
+    func error(_ error: Errors, retry: (() -> Void)?) -> Route {
+        return ErrorRoute(error: error, retry: retry)
+    }
+
     func home() -> Route {
         return RestartRoute {
             self.container.views.scenes

@@ -95,6 +95,14 @@ class ItemListViewController: UIViewController {
 
         viewModel.reload()
         setNeedsFocusUpdate()
+
+//        let loader = RingLoaderView()
+//        loader.tintColor = Color.mainDescription
+//        self.view.addSubview(loader)
+//        loader.snp.makeConstraints { (make) in
+//            make.center.equalToSuperview()
+//        }
+//
     }
 
     override var preferredFocusEnvironments: [UIFocusEnvironment] {

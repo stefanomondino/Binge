@@ -17,6 +17,7 @@ protocol ItemDetailViewModel: RxListViewModel, RxNavigationViewModel {
     func selectItem(at _: IndexPath)
     func navigate(to item: ItemContainer)
     func addToFavorite()
+    var isLoading: Observable<Bool> { get }
 }
 
 extension ItemDetailViewModel {

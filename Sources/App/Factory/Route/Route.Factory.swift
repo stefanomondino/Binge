@@ -21,4 +21,5 @@ protocol RouteFactory {
     func personDetail(for person: Person) -> Route
     func seasonDetail(for season: Season.Info, of show: ShowItem) -> Route
     func search() -> Route
+    func error(_ error: Errors, retry: (() -> Void)?) -> Route
 }

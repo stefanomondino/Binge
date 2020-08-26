@@ -7,7 +7,9 @@
 
 import Boomerang
 import Foundation
+import RxCocoa
 import RxSwift
+
 public typealias ObservableImage = Observable<Image>
 
 public protocol WithImage {

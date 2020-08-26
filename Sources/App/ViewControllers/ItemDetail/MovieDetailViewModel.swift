@@ -36,6 +36,9 @@ class MovieDetailViewModel: RxListViewModel, ItemDetailViewModel {
 
     let title: String
 
+    private let loadingRelay = BehaviorRelay(value: 0)
+    var isLoading: Observable<Bool> { loadingRelay.isLoading }
+
     init(
         movie: ItemContainer,
         routeFactory: RouteFactory,
@@ -61,7 +64,8 @@ class MovieDetailViewModel: RxListViewModel, ItemDetailViewModel {
                                      .map { $0 }
                                      .catchErrorJustReturn(nil))
             .map { [weak self] in self?.map($0.0, fanart: $0.1) ?? [] }
-            .catchErrorJustReturn([])
+            .bindingLoadingStatus(to: loadingRelay)
+            .bindingErrorStatus(to: routes, withRoute: { [weak self] in self?.routeFactory.error($0, retry: {}) })
             .bind(to: sectionsRelay)
             .disposed(by: disposeBag)
     }

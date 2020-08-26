@@ -187,5 +187,16 @@ class ItemDetailViewController: UIViewController {
                 .bind(to: container.rx.updateCurrentNavbarAlpha())
                 .disposed(by: disposeBag)
         }
+        setupLoader()
+    }
+
+    private func setupLoader() {
+        let loader = RingLoaderView()
+        loader.tintColor = .mainDescription
+        view.addSubview(loader)
+        loader.snp.makeConstraints { make in make.center.equalToSuperview() }
+        viewModel.isLoading.asDriver(onErrorJustReturn: false)
+            .drive(loader.rx.isAnimating)
+            .disposed(by: disposeBag)
     }
 }

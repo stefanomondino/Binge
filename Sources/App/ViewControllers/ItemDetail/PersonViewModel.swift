@@ -33,6 +33,9 @@ class PersonViewModel: ItemDetailViewModel {
 
     let title: String
 
+    private let loadingRelay = BehaviorRelay(value: 0)
+    var isLoading: Observable<Bool> { loadingRelay.isLoading }
+
     init(person: Person,
          itemViewModelFactory: ItemViewModelFactory,
          useCase: PersonDetailUseCase,
@@ -48,7 +51,10 @@ class PersonViewModel: ItemDetailViewModel {
         disposeBag = DisposeBag()
         useCase.personDetail(for: person)
             .map { [weak self] in self?.map($0) ?? [] }
-            .catchErrorJustReturn([])
+            .bindingLoadingStatus(to: loadingRelay)
+            .bindingErrorStatus(to: routes, withRoute: { [weak self] in
+                self?.routeFactory.error($0, retry: nil)
+            })
             .bind(to: sectionsRelay)
             .disposed(by: disposeBag)
     }
