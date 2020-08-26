@@ -62,7 +62,10 @@ class DetailHeaderPlugin: FlowLayoutPlugin {
         let minHeight = params.contentBounds.width / (16 / 9)
         let expectedSize = (delegate as? CollectionViewDelegate)?.sizeCalculator
             .sizeForItem(at: indexPath, in: collectionView, direction: .vertical, type: ViewIdentifier.Supplementary.parallax.identifierString)
-            ?? CGSize(width: params.contentBounds.width, height: minHeight)
+            ?? .zero
+        if expectedSize.isEmpty {
+            return super.layoutAttributes(in: section, offset: &offset, layout: layout)
+        }
         var backdropHeight = params.contentBounds.width / (expectedSize.width / expectedSize.height)
         if backdropHeight.isNaN || backdropHeight < minHeight { backdropHeight = minHeight }
         offset.y += backdropHeight - height + height / 3.0

@@ -86,9 +86,10 @@ class PagerViewController: TabmanViewController {
             bar.indicator.tintColor = .mainDescription
             bar.indicator.weight = .custom(value: 0)
             bar.scrollMode = .none
+            isScrollEnabled = false
             addBar(bar, dataSource: internalDataSource, at: .top)
         default:
-
+            isScrollEnabled = true
             let bar = TMBarView<TMHorizontalBarLayout, TMLabelBarButton, TMLineBarIndicator>()
             bar.backgroundView.style = .flat(color: .navbarBackground)
             bar.buttons.customize { button in

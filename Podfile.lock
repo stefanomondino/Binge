@@ -1,19 +1,19 @@
 PODS:
   - Alamofire (5.2.2)
-  - Boomerang/Core (6.0)
-  - Boomerang/RxSwift (6.0):
+  - Boomerang/Core (6.1)
+  - Boomerang/RxSwift (6.1):
     - Boomerang/UIKit
     - RxCocoa
     - RxDataSources
     - RxSwift
-  - Boomerang/UIKit (6.0):
+  - Boomerang/UIKit (6.1):
     - Boomerang/Core
   - Differentiator (4.0.1)
   - Gloss (3.1.0)
   - KeychainAccess (4.2.0)
-  - Kingfisher (5.14.1):
-    - Kingfisher/Core (= 5.14.1)
-  - Kingfisher/Core (5.14.1)
+  - Kingfisher (5.15.0):
+    - Kingfisher/Core (= 5.15.0)
+  - Kingfisher/Core (5.15.0)
   - Moya/Core (14.0.0):
     - Alamofire (~> 5.0)
   - Moya/RxSwift (14.0.0):
@@ -99,11 +99,11 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
-  Boomerang: 34e5429c283a7de78137a33f8ae2f6d5d838d112
+  Boomerang: 727d163a450074af3ca074c7cb1659f0282ccfca
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   Gloss: 2dbf87af0e4dd24753f7de933356ff6c5c012426
   KeychainAccess: 3f760109aa99b05d0f231e28b22642da7153e38a
-  Kingfisher: 8050bc6f7f68cbf3908bd04df7ccbac188f6d6d6
+  Kingfisher: 1acb67597a520c2d0310677e66d6e0af455ef757
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   Nimble: 5f8a2fb6fa343a7242dfdd9d42f7267419d464b2
   Pageboy: 29a2d474ad99404b4d77f325e0ab6d705930a4fb
