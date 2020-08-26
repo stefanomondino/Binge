@@ -31,10 +31,16 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="751" text="More" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ws4-u2-Sl0">
+                    <rect key="frame" x="0.0" y="270.5" width="145" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="pNt-3O-Oc3" secondAttribute="bottom" constant="8" id="Bsf-dX-6Qw"/>
+                <constraint firstItem="Ws4-u2-Sl0" firstAttribute="trailing" secondItem="pNt-3O-Oc3" secondAttribute="trailing" id="FP9-fI-oZ0"/>
                 <constraint firstItem="j1O-Gb-tYu" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="IQi-S1-7v7"/>
                 <constraint firstAttribute="trailing" secondItem="OFB-ta-c3G" secondAttribute="trailing" id="Kjw-NQ-fnF"/>
                 <constraint firstItem="pNt-3O-Oc3" firstAttribute="top" secondItem="OFB-ta-c3G" secondAttribute="bottom" constant="2" id="Kso-Uk-LWI"/>
@@ -42,12 +48,15 @@
                 <constraint firstItem="OFB-ta-c3G" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Rad-YP-yne"/>
                 <constraint firstItem="OFB-ta-c3G" firstAttribute="top" secondItem="j1O-Gb-tYu" secondAttribute="bottom" constant="8" id="Yxo-5Y-avQ"/>
                 <constraint firstAttribute="trailing" secondItem="j1O-Gb-tYu" secondAttribute="trailing" id="Zam-ZH-TXQ"/>
+                <constraint firstItem="Ws4-u2-Sl0" firstAttribute="leading" secondItem="pNt-3O-Oc3" secondAttribute="leading" id="an9-Ni-hFA"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Ws4-u2-Sl0" secondAttribute="bottom" constant="6" id="bET-Rz-hir"/>
                 <constraint firstItem="pNt-3O-Oc3" firstAttribute="leading" secondItem="OFB-ta-c3G" secondAttribute="leading" id="dTr-1T-zFH"/>
                 <constraint firstItem="j1O-Gb-tYu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="eEa-UT-uTc"/>
-                <constraint firstItem="pNt-3O-Oc3" firstAttribute="height" secondItem="OFB-ta-c3G" secondAttribute="height" id="vSG-ch-mHn"/>
+                <constraint firstItem="Ws4-u2-Sl0" firstAttribute="top" secondItem="pNt-3O-Oc3" secondAttribute="bottom" constant="2" id="g0P-7E-WR5"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="other" destination="Ws4-u2-Sl0" id="Meh-Gj-Eh5"/>
                 <outlet property="poster" destination="j1O-Gb-tYu" id="bgW-mx-5KS"/>
                 <outlet property="subtitle" destination="pNt-3O-Oc3" id="Lqo-4P-Ezg"/>
                 <outlet property="title" destination="OFB-ta-c3G" id="xWn-M1-sHp"/>

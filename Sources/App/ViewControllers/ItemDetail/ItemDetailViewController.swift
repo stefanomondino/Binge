@@ -29,17 +29,26 @@ extension ViewIdentifier.CarouselType {
         switch self {
         case .cast: return 180
         case .relatedShows: return 200
-        case .castInMovie, .castInShow: return 250
+        case .castInMovie: return 250
+        case .castInShow: return 270
         case .seasons: return 200
         }
     }
 
-    func ratio() -> CGFloat {
+    var desiredItemWidth: CGFloat? {
+        switch self {
+        case .castInShow, .castInMovie: return 100
+        default: return nil
+        }
+    }
+
+    var itemRatio: CGFloat {
         switch self {
         case .cast: return 9 / 14
         case .seasons: return Constants.showPosterRatio * 0.8
         case .relatedShows: return Constants.showPosterRatio
-        case .castInShow, .castInMovie: return Constants.showPosterRatio * 0.8
+        case .castInShow: return Constants.showPosterRatio * 0.8
+        case .castInMovie: return Constants.showPosterRatio * 0.8
         }
     }
 }

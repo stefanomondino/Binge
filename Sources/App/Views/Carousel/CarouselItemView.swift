@@ -56,7 +56,7 @@ class CarouselItemView: UIView, WithViewModel {
                                                                     factory: viewModel.cellFactory)
             collectionView.showsHorizontalScrollIndicator = false
 
-            let sizeCalculator = CarouselSizeCalculator(ratio: viewModel.carouselType.ratio())
+            let sizeCalculator = CarouselSizeCalculator(type: viewModel.carouselType)
 
             let collectionViewDelegate = CollectionViewDelegate(sizeCalculator: sizeCalculator)
                 .withSelect { viewModel.selectItem(at: $0) }
@@ -74,9 +74,9 @@ class CarouselItemView: UIView, WithViewModel {
 }
 
 class CarouselSizeCalculator: CollectionViewSizeCalculator {
-    let ratio: CGFloat
-    init(ratio: CGFloat) {
-        self.ratio = ratio
+    let carouselType: ViewIdentifier.CarouselType
+    init(type: ViewIdentifier.CarouselType) {
+        carouselType = type
     }
 
     func insets(for _: UICollectionView, in _: Int) -> UIEdgeInsets {
@@ -94,7 +94,7 @@ class CarouselSizeCalculator: CollectionViewSizeCalculator {
     func sizeForItem(at indexPath: IndexPath, in collectionView: UICollectionView, direction _: Direction?, type: String?) -> CGSize {
         if type != nil { return .zero }
         let height = calculateFixedDimension(for: .horizontal, collectionView: collectionView, at: indexPath, itemsPerLine: 1)
-        let width = height * ratio
+        let width = carouselType.desiredItemWidth ?? height * carouselType.itemRatio
         return CGSize(width: width, height: height)
     }
 }

@@ -85,7 +85,7 @@ class GenericItemViewModel: ViewModel {
         mainStyle = layoutIdentifier.style
         subtitle = show.characters.joined(separator: ", ")
         if let episodeCount = show.episodeCount {
-            moreText = "\(episodeCount)"
+            moreText = Strings.Shows.episodeCountFormat.format(with: "\(episodeCount)")
         }
         image = imageUseCase
             .poster(for: show)
@@ -209,7 +209,7 @@ class GenericItemViewModel: ViewModel {
         self.item = item
         mainStyle = layoutIdentifier.style
         subtitle = ""
-//        if let year = item.year { counter = "\(year)" } else { counter = "" }
+        //        if let year = item.year { counter = "\(year)" } else { counter = "" }
         image = .just(UIImage())
     }
 }

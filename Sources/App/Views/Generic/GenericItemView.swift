@@ -18,6 +18,7 @@ class GenericItemView: UIView, WithViewModel {
     @IBOutlet var poster: UIImageView!
     @IBOutlet var title: UILabel?
     @IBOutlet var subtitle: UILabel?
+    @IBOutlet var other: UILabel?
     var disposeBag = DisposeBag()
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,6 +42,12 @@ class GenericItemView: UIView, WithViewModel {
         if let subtitle = subtitle {
             subtitle.applyStyle(.itemSubtitle)
             subtitle.styledText = viewModel.subtitle
+        }
+        if let otherLabel = other {
+            otherLabel.applyStyle(.itemSubtitle)
+
+            otherLabel.text = viewModel.moreText
+            otherLabel.numberOfLines = 1
         }
         if isPlaceholderForAutosize { return }
         viewModel.image

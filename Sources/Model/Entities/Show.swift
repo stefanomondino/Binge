@@ -75,7 +75,7 @@ public enum Show {
 
         private enum CodingKeys: String, CodingKey {
             case showItem = "show"
-            case episodeCount = "episode_count"
+            case episodeCount
             case characters
         }
 
