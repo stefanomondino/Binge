@@ -31,17 +31,22 @@ clean:
 	rm -rf Pods/
 
 # Install dependencies, download build resources and add pre-commit hook
+
+git_setup:
+	eval "$$add_pre_commit_script"
+  
 setup:
 	make clean
 	bundle update
 	brew update && brew bundle
-	eval "$$add_pre_commit_script"
+	make git_setup
 	make resources
 	bundle exec pod repo update
 	make project
 
 # Define pre commit script to auto lint and format the code
 define _add_pre_commit
+if [ -d ".git" ]; then
 SWIFTLINT_PATH=`which swiftlint`
 SWIFTFORMAT_PATH=`which swiftformat`
 
@@ -55,8 +60,8 @@ FILES=\$(git diff --cached --name-only --diff-filter=ACMR "*.swift" | sed 's| |\
 ${SWIFTFORMAT_PATH} \$FILES
 
 # Lint
-${SWIFTLINT_PATH} autocorrect \$FILES
-${SWIFTLINT_PATH} lint \$FILES
+${SWIFTLINT_PATH} autocorrect --config "Configuration/config.swiftlint.yml" \$FILES
+${SWIFTLINT_PATH} lint --config "Configuration/config.swiftlint.yml" \$FILES
 
 # Add back the formatted/linted files to staging
 echo "\$FILES" | xargs git add
@@ -65,5 +70,7 @@ exit 0
 ENDOFFILE
 
 chmod +x .git/hooks/pre-commit
+fi
 endef
 export add_pre_commit_script = $(value _add_pre_commit)
+
