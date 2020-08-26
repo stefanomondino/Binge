@@ -15,7 +15,7 @@ import UIKit
  */
 class LoadMoreItemView: UIView, WithViewModel {
     @IBOutlet var title: UILabel!
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var activityIndicator: RingLoaderView!
 
     var disposeBag = DisposeBag()
 
@@ -37,7 +37,10 @@ class LoadMoreItemView: UIView, WithViewModel {
 //
 //        viewModel.start().disposed(by: disposeBag)
         viewModel.reload().disposed(by: disposeBag)
-        activityIndicator.startAnimating()
+        activityIndicator.lineWidth = 2
+        activityIndicator.tintColor = .navbarText
+        activityIndicator.isAnimating = true
+
         /// Configure here every property that doesn't contributes to change view size
         /// UIImage bindings should go here
     }

@@ -16,6 +16,10 @@ public class RingLoaderView: UIView {
         didSet { animate() }
     }
 
+    public var lineWidth: CGFloat = 4.0 {
+        didSet { animate() }
+    }
+
     public var isAnimating: Bool = true {
         didSet { animate() }
     }
@@ -88,7 +92,7 @@ public class RingLoaderView: UIView {
         circle.path = path.cgPath
         circle.fillColor = nil
         circle.strokeColor = tintColor.cgColor
-        circle.lineWidth = 4
+        circle.lineWidth = lineWidth
         circle.lineCap = .round
         circle.frame = bounds
 
