@@ -6,7 +6,9 @@
 //  Copyright © 2019 Synesthesia. All rights reserved.
 //
 
+import Alamofire
 import Boomerang
+import Core
 import Foundation
 import Gloss
 import Moya
@@ -25,26 +27,29 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
     let container = Container<ObjectIdentifier>()
     let jsonDecoder: JSONDecoder
     let scheduler: SchedulerType
-
+    var urlCache: URLCache = .shared
     private var urlRequestCache: [URLRequest: Observable<Response>] = [:]
 
     required init(jsonDecoder: JSONDecoder = JSONDecoder(),
-                  scheduler: SchedulerType = SerialDispatchQueueScheduler(qos: .utility)) {
+                  scheduler: SchedulerType = Scheduler.background) {
         self.jsonDecoder = jsonDecoder
         self.scheduler = scheduler
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
         //
         //        let cacheSize = 1024 * 1024 * 200
         //        URLCache.shared = URLCache(memoryCapacity: cacheSize, diskCapacity: cacheSize, diskPath: nil)
+    }
 
+    func addProvider<Endpoint: TargetType>(for _: Endpoint.Type) {
         let networkLoggerPlugin = NetworkLoggerPlugin(configuration: .init(
             output: { _, items in items.forEach { Logger.log($0, level: .verbose, tag: .api) } },
             logOptions: [.verbose]
         ))
-
-        addProvider(MoyaProvider<TraktvAPI>(plugins: [networkLoggerPlugin]))
-        addProvider(MoyaProvider<FanartAPI>(plugins: [networkLoggerPlugin]))
-        addProvider(MoyaProvider<TMDB.API>(plugins: [networkLoggerPlugin]))
+        let configuration = URLSessionConfiguration.default
+        configuration.urlCache = urlCache
+        configuration.headers = .default
+        let session = Alamofire.Session(configuration: configuration, startRequestsImmediately: false)
+        addProvider(MoyaProvider<Endpoint>(session: session, plugins: [networkLoggerPlugin]))
     }
 
     func addProvider<Endpoint: TargetType>(_ provider: MoyaProvider<Endpoint>) {
@@ -81,7 +86,6 @@ class DefaultRESTDataSource: RESTDataSource, DependencyContainer {
     }
 
     func response<Endpoint: TargetType>(at endpoint: Endpoint) -> Observable<Response> {
-//        Logger.log(urlRequestCache, tag: .lifecycle)
         return Observable.deferred {
             let provider = self.provider(for: Endpoint.self)
             let request = try provider.endpoint(endpoint).urlRequest()

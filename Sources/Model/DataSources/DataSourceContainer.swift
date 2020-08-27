@@ -26,6 +26,13 @@ class DefaultDataSourceContainer: DataSourceContainer, DependencyContainer {
     typealias Key = DataSourceKeys
 
     init(container _: ModelDependencyContainer) {
-        register(for: .rest, scope: .eagerSingleton) { CachingRESTDataSource() }
+        let dataSource = CachingRESTDataSource()
+        dataSource.addProvider(for: TMDB.API.self)
+        dataSource.addProvider(for: TraktvAPI.self)
+        dataSource.addProvider(for: FanartAPI.self)
+
+        register(for: .rest, scope: .eagerSingleton) {
+            dataSource
+        }
     }
 }
