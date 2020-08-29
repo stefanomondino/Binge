@@ -12,6 +12,8 @@ import Model
 import RxRelay
 import RxSwift
 
+protocol StringViewModel: ViewModel, CustomStringConvertible {}
+
 protocol ItemViewModelFactory {
     func loadMore(_ closure: @escaping () -> Disposable) -> ViewModel
     func item(_ show: ItemContainer, layout: GenericItemViewModel.Identifier) -> ViewModel
@@ -29,6 +31,7 @@ protocol ItemViewModelFactory {
     func castMoviesCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel
     func castShowsCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel
     func titledDescription(title: CustomStringConvertible, description: CustomStringConvertible?) -> ViewModel?
+    func settingsValue(title: CustomStringConvertible, identifier: UniqueIdentifier) -> DescriptionItemViewModel
     // MURRAY DECLARATION PLACEHOLDER
 }
 
@@ -265,6 +268,10 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
     func titledDescription(title: CustomStringConvertible, description: CustomStringConvertible?) -> ViewModel? {
         guard let description = description else { return nil }
         return DescriptionItemViewModel(description: "\(title.inTag(.bold))  \(description)")
+    }
+
+    func settingsValue(title: CustomStringConvertible, identifier: UniqueIdentifier) -> DescriptionItemViewModel {
+        return DescriptionItemViewModel(description: title.description, uniqueIdentifier: identifier)
     }
 
     // MURRAY IMPLEMENTATION PLACEHOLDER

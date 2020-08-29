@@ -59,6 +59,10 @@ class MainRouteFactory: RouteFactory {
                     .showList(viewModel: viewModel)
 //                    .inContainer()
             }
+        case let viewModel as SettingsViewModel:
+            return EmptyRoute {
+                self.container.views.scenes.settings(viewModel: viewModel).inContainer()
+            }
         case let viewModel as SearchViewModel:
             return EmptyRoute {
                 self.container.views.scenes.search(viewModel: viewModel).inContainer()
@@ -110,6 +114,12 @@ class MainRouteFactory: RouteFactory {
             return self.container.views.scenes
                 .search(viewModel: viewModel)
                 .inContainer(extendUnderNavbar: true)
+        }
+    }
+
+    func settingsList(viewModel: SettingsListViewModelType) -> Route {
+        ModalRoute {
+            self.container.views.scenes.settingsList(viewModel: viewModel)
         }
     }
 }

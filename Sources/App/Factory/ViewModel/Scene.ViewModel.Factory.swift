@@ -29,7 +29,8 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
     func homePager() -> PagerViewModel {
         return PagerViewModel(pages: [
             watchablePager(),
-            login()
+            login(),
+            settings()
         ],
         layout: SceneIdentifier.tab,
         routeFactory: container.routeFactory,
@@ -187,6 +188,10 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
                         itemViewModelFactory: container.viewModels.items,
                         useCase: container.model.useCases.shows.person,
                         routeFactory: container.routeFactory)
+    }
+
+    func settings() -> SettingsViewModel {
+        SettingsViewModel(pickers: container.viewModels.pickers, routeFactory: container.routeFactory)
     }
 
     // MURRAY IMPLEMENTATION PLACEHOLDER

@@ -30,6 +30,10 @@ protocol FormViewModel: FormViewModelType {
     var value: BehaviorRelay<Value?> { get }
 }
 
+protocol DetailedFormViewModel: FormViewModelType {
+    func open()
+}
+
 extension FormViewModel where Value: CustomStringConvertible {
     var textValue: Driver<String> {
         return value.asDriver().map { $0?.description ?? "" }

@@ -46,7 +46,7 @@ class LoginViewModel: RxNavigationViewModel, WithPage {
 }
 
 class ListItemViewModel: ViewModel, CustomStringConvertible, Hashable {
-    var uniqueIdentifier: UniqueIdentifier = UUID()
+    var uniqueIdentifier: UniqueIdentifier
 
     static func == (lhs: ListItemViewModel, rhs: ListItemViewModel) -> Bool {
         lhs.description == rhs.description
@@ -58,7 +58,8 @@ class ListItemViewModel: ViewModel, CustomStringConvertible, Hashable {
 
     var layoutIdentifier: LayoutIdentifier = ViewIdentifier.header
     var description: String
-    init(title: String) {
+    init(title: String, identifier: UniqueIdentifier = UUID()) {
         description = title
+        uniqueIdentifier = identifier
     }
 }

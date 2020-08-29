@@ -11,6 +11,8 @@ import Foundation
 import Model
 import UIKit
 
+typealias SettingsListViewModelType = RxListViewModel
+
 protocol RouteFactory {
     func restart() -> Route
     func page(from viewModel: ViewModel) -> Route
@@ -22,4 +24,5 @@ protocol RouteFactory {
     func seasonDetail(for season: Season.Info, of show: ShowItem) -> Route
     func search() -> Route
     func error(_ error: Errors, retry: (() -> Void)?) -> Route
+    func settingsList(viewModel: SettingsListViewModelType) -> Route
 }

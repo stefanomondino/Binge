@@ -20,5 +20,7 @@ protocol ViewControllerFactory {
     func itemDetail(viewModel: ItemDetailViewModel) -> UIViewController
     func person(viewModel: PersonViewModel) -> UIViewController
     func search(viewModel: SearchViewModel) -> UIViewController
+    func settings(viewModel: SettingsViewModel) -> UIViewController
+    func settingsList(viewModel: SettingsListViewModelType) -> UIViewController
     // MURRAY DECLARATION PLACEHOLDER
 }

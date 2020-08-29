@@ -10,7 +10,7 @@ import Foundation
 import RxRelay
 import RxSwift
 
-class SingleSelectionListPickerViewModel<Element: ViewModel & Hashable & CustomStringConvertible>: ListPickerViewModel<Element>, FormViewModel {
+class SingleSelectionListPickerViewModel<Element: ViewModel & Hashable & CustomStringConvertible>: ListPickerViewModel<Element>, FormViewModel, DetailedFormViewModel {
     var validate: ValidationCallback = { _ in nil }
 
     let value: BehaviorRelay<Element?>
@@ -20,15 +20,20 @@ class SingleSelectionListPickerViewModel<Element: ViewModel & Hashable & CustomS
     var onNext: NavigationCallback?
 
     var onPrevious: NavigationCallback?
-
+    let routeFactory: RouteFactory
     let additionalInfo: FormAdditionalInfo
-
+    private let routes: PublishRelay<Route>
     init(items: Observable<[Element]>,
          value: BehaviorRelay<Element?>,
          info: FormAdditionalInfo,
-         layout: LayoutIdentifier) {
+         layout: LayoutIdentifier,
+         routeFactory: RouteFactory,
+         routes: PublishRelay<Route>) {
         additionalInfo = info
         self.value = value
+        self.routes = routes
+
+        self.routeFactory = routeFactory
         selectedValue = BehaviorRelay(value: value.value)
         super.init(items: items, layout: layout)
     }
@@ -41,10 +46,17 @@ class SingleSelectionListPickerViewModel<Element: ViewModel & Hashable & CustomS
         value.accept(selectedValue.value)
     }
 
+    func open() {
+        let route = routeFactory.settingsList(viewModel: self)
+        routes.accept(route)
+    }
+
     override func selectItem(at indexPath: IndexPath) {
         super.selectItem(at: indexPath)
         if let element = self[indexPath] as? Element {
             selectedValue.accept(element)
+
+            confirm()
         }
     }
 }

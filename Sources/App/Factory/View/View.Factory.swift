@@ -16,6 +16,9 @@ class MainViewFactory: ViewFactory {
     }
 
     func view(from itemIdentifier: LayoutIdentifier) -> UIView? {
+        switch itemIdentifier {
+        default: break
+        }
         return nib(from: itemIdentifier)?
             .instantiate(withOwner: nil, options: nil)
             .first as? UIView

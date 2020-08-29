@@ -72,5 +72,17 @@ class DefaultViewControllerFactory: ViewControllerFactory {
                                     collectionViewCellFactory: container.views.collectionCells)
     }
 
+    func settingsList(viewModel: SettingsListViewModelType) -> UIViewController {
+        SettingsListViewController(nibName: name(from: viewModel.layoutIdentifier),
+                                   viewModel: viewModel,
+                                   collectionViewCellFactory: container.views.collectionCells)
+    }
+
+    func settings(viewModel: SettingsViewModel) -> UIViewController {
+        SettingsViewController(nibName: name(from: viewModel.layoutIdentifier),
+                               viewModel: viewModel,
+                               collectionViewCellFactory: container.views.collectionCells)
+    }
+
     // MURRAY IMPLEMENTATION PLACEHOLDER
 }
