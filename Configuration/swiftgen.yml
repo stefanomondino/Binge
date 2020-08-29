@@ -15,7 +15,7 @@ yaml:
       enumName: Secrets
 json:
     inputs:
-    - "../Sources/App/Strings/Translations.json"
+    - "../Sources/App/Strings/Base.lproj/Translations.json"
     outputs:
       templatePath: "Templates/strings.stencil"
       output: "../Sources/App/Supporting Files/Generated/Strings.swift"
