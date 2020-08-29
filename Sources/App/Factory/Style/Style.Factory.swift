@@ -7,8 +7,8 @@
 //
 
 import Boomerang
+import RxSwift
 import UIKit
-
 protocol StyleFactory {
     func apply(_ style: Style, to view: UIImageView)
     func apply(_ style: Style, to view: UITextField)
@@ -21,7 +21,7 @@ protocol StyleFactory {
 }
 
 protocol DefaultStyleFactory: DependencyContainer, StyleFactory where DependencyKey == Style {
-    //    var container: RootContainer { get }
+    var root: RootContainer { get }
     static var factory: StyleFactory { get }
 }
 
@@ -34,58 +34,78 @@ extension DefaultStyleFactory {
         return nil
     }
 
+    private var currentThemeDidChange: Observable<Void> {
+        root.model.useCases.themes.currentTheme()
+            .map { _ in }
+            .observeOn(MainScheduler.asyncInstance)
+    }
+
     func apply(_: Style, to _: UIImageView) {}
 
     func apply(_: Style, to _: UIButton) {}
 
     func apply(_ style: Style, to label: UILabel) {
-        guard let implementation: TextStyle = getStyle(style) else { return }
-        label.style = implementation.style
-        label.numberOfLines = 0
-        apply(style, to: label as UIView)
+        currentThemeDidChange.bind { [weak label] in
+            guard let label = label, let implementation: TextStyle = self.getStyle(style) else { return }
+            label.style = implementation.style
+            label.numberOfLines = 0
+            self.apply(style, to: label as UIView)
+        }.disposed(by: label.styleDisposeBag)
     }
 
     func apply(_ style: Style, to textField: UITextField) {
-        guard let implementation: TextStyle = getStyle(style) else { return }
-        textField.style = implementation.style
-        textField.font = implementation.style.attributes[.font] as? UIFont
-        textField.leftView = UIView()
-            .with(\.backgroundColor, to: .clear)
-            .with(\.frame, to: CGRect(x: 0, y: 0, width: Constants.sidePadding, height: 1))
-        textField.rightView = UIView()
-            .with(\.backgroundColor, to: .clear)
-            .with(\.frame, to: CGRect(x: 0, y: 0, width: Constants.sidePadding, height: 1))
-        textField.leftViewMode = .always
-        textField.rightViewMode = .always
-        textField.tintColor = implementation.style.attributes[.foregroundColor] as? UIColor ?? .white
-        textField.autocorrectionType = .no
-        textField.returnKeyType = .search
-        apply(style, to: textField as UIView)
+        currentThemeDidChange.bind { [weak textField] in
+            guard let textField = textField,
+                let implementation: TextStyle = self.getStyle(style) else { return }
+            textField.style = implementation.style
+            textField.font = implementation.style.attributes[.font] as? UIFont
+            textField.leftView = UIView()
+                .with(\.backgroundColor, to: .clear)
+                .with(\.frame, to: CGRect(x: 0, y: 0, width: Constants.sidePadding, height: 1))
+            textField.rightView = UIView()
+                .with(\.backgroundColor, to: .clear)
+                .with(\.frame, to: CGRect(x: 0, y: 0, width: Constants.sidePadding, height: 1))
+            textField.leftViewMode = .always
+            textField.rightViewMode = .always
+            textField.tintColor = implementation.style.attributes[.foregroundColor] as? UIColor ?? .white
+            textField.autocorrectionType = .no
+            textField.returnKeyType = .search
+            self.apply(style, to: textField as UIView)
+        }.disposed(by: textField.styleDisposeBag)
     }
 
     func apply(_ style: Style, to view: UIView) {
-        guard let implementation: ContainerStyle = getStyle(style) else { return }
-        view.backgroundColor = implementation.backgroundColor
-        view.layer.cornerRadius = implementation.cornerRadius
-        view.layer.masksToBounds = true
+        currentThemeDidChange.bind { [weak view] in
+            guard let view = view,
+                let implementation: ContainerStyle = self.getStyle(style) else { return }
+            view.backgroundColor = implementation.backgroundColor
+            view.layer.cornerRadius = implementation.cornerRadius
+            view.layer.masksToBounds = true
+        }
+        .disposed(by: view.styleDisposeBag)
     }
 
     func apply(_ style: Style, to navigationController: NavigationContainer) {
-        guard let implementation: ContainerStyle = getStyle(style) else { return }
-        navigationController.navigationBarColor = implementation.backgroundColor
+        currentThemeDidChange.bind { [weak navigationController] in
+            guard let implementation: ContainerStyle = self.getStyle(style) else { return }
+            navigationController?.navigationBarColor = implementation.backgroundColor
+        }.disposed(by: navigationController.disposeBag)
     }
 
     func apply(_ style: Style, to tabViewController: TabViewController) {
-        guard let implementation: ContainerStyle = getStyle(style) else { return }
+        currentThemeDidChange.bind { [weak tabViewController] in
+            guard let tabViewController = tabViewController,
+                let implementation: ContainerStyle = self.getStyle(style) else { return }
 
-        tabViewController.tabBar.barTintColor = implementation.backgroundColor
-        guard let text: TextStyle = getStyle(style) else { return }
-        tabViewController.tabBar.isTranslucent = false
-        tabViewController.tabBar.tintColor = text.style.attributes[.foregroundColor] as? UIColor ?? .clear
-        #if os(iOS)
-            tabViewController.statusBarStyle = .lightContent
-        #endif
-        //        UITabBarItem.appearance().setTitleTextAttributes(text.style.attributes, for: .normal)
+            tabViewController.tabBar.barTintColor = implementation.backgroundColor
+            guard let text: TextStyle = self.getStyle(style) else { return }
+            tabViewController.tabBar.isTranslucent = false
+            tabViewController.tabBar.tintColor = text.style.attributes[.foregroundColor] as? UIColor ?? .clear
+            #if os(iOS)
+                tabViewController.statusBarStyle = .lightContent
+            #endif
+            //        UITabBarItem.appearance().setTitleTextAttributes(text.style.attributes, for: .normal)
+        }.disposed(by: tabViewController.disposeBag)
     }
 }
 
@@ -157,3 +177,23 @@ extension UIImageView {
         }
     }
 #endif
+
+extension UIView {
+    fileprivate struct AssociatedKeys {
+        static var styleDisposeBag = "styleDisposeBag"
+    }
+
+    var styleDisposeBag: DisposeBag {
+        get {
+            guard let disposeBag = objc_getAssociatedObject(self, &AssociatedKeys.styleDisposeBag) as? DisposeBag else {
+                let disposeBag = DisposeBag()
+                objc_setAssociatedObject(self, &AssociatedKeys.styleDisposeBag, disposeBag, .OBJC_ASSOCIATION_RETAIN)
+                return disposeBag
+            }
+            return disposeBag
+        }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.styleDisposeBag, newValue, .OBJC_ASSOCIATION_RETAIN)
+        }
+    }
+}

@@ -34,9 +34,10 @@ class StyleFactoryImplementation: DefaultStyleFactory {
 
     let useCase: ThemeUseCase
     let disposeBag = DisposeBag()
-    init(useCase: ThemeUseCase) {
+    let root: RootContainer
+    init(useCase: ThemeUseCase, root: RootContainer) {
         self.useCase = useCase
-
+        self.root = root
         let themes: [Theme] = [DarkTheme(container: container),
                                LightTheme(container: container)]
 

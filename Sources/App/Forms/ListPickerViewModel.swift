@@ -13,10 +13,10 @@ import RxSwift
 open class ListPickerViewModel<ListElement: ViewModel>: RxListViewModel {
     public var uniqueIdentifier: UniqueIdentifier = UUID()
     public let sectionsRelay = BehaviorRelay<[Section]>(value: [])
-    public var disposeBag: DisposeBag = DisposeBag()
+    public var reloadDisposeBag: DisposeBag = DisposeBag()
     public var layoutIdentifier: LayoutIdentifier
     public let items: Observable<[ListElement]>
-
+    public var disposeBag: DisposeBag = DisposeBag()
     public init(items: Observable<[ListElement]>,
                 layout: LayoutIdentifier) {
         layoutIdentifier = layout
@@ -24,12 +24,12 @@ open class ListPickerViewModel<ListElement: ViewModel>: RxListViewModel {
     }
 
     open func reload() {
-        disposeBag = DisposeBag()
+        reloadDisposeBag = DisposeBag()
         items
             .catchErrorJustReturn([])
             .map { [Section(id: UUID().uuidString, items: $0)] }
             .bind(to: sectionsRelay)
-            .disposed(by: disposeBag)
+            .disposed(by: reloadDisposeBag)
     }
 
     open func selectItem(at _: IndexPath) {}
