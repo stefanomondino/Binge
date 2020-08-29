@@ -7,54 +7,18 @@
 //
 
 import Boomerang
+import Model
+import RxSwift
 import Tabman
 import UIKit
 
 typealias StyleFactoryAlias = StyleFactoryImplementation
 
 class StyleFactoryImplementation: DefaultStyleFactory {
-    var container: Container<Style> = Container()
+    let container: Container<Style> = Container()
+
     static var factory: StyleFactory {
         (UIApplication.shared.delegate as? AppDelegate ?? AppDelegate()).initializationRoot.styleFactory
-    }
-
-    init(container _: RootContainer) {
-        register(for: .clear) { DefaultContainerStyle(backgroundColor: .clear) }
-        register(for: .container) { DefaultContainerStyle() }
-        register(for: .title) { DefaultTextStyle(size: 18) }
-        register(for: .subtitle) {
-            ComposedTextStyle(base: DefaultTextStyle(size: 12,
-                                                     color: .mainText,
-                                                     font: Fonts.mainRegular, alignment: .left),
-                              tags: (tag: .bold, style: DefaultTextStyle(size: 12,
-                                                                         color: .mainText,
-                                                                         font: Fonts.mainBold,
-                                                                         alignment: .left)))
-        }
-        register(for: .carouselTitle) { DefaultTextStyle(size: 14, font: .mainBold, alignment: .left) }
-
-        register(for: .searchField) { [DefaultContainerStyle(cornerRadius: 4, backgroundColor: .navbarText),
-                                       DefaultTextStyle(size: 16, color: .navbarBackground, font: .mainRegular, alignment: .left)] }
-
-        register(for: .navigationBar) { [DefaultContainerStyle(backgroundColor: .navbarBackground),
-                                         DefaultTextStyle(size: 22, color: .navbarText, font: .mainBold, alignment: .left)] }
-        setupShows()
-    }
-
-    private func setupShows() {
-        register(for: .titleCard) { [DefaultContainerStyle(cornerRadius: 4, backgroundColor: .clear),
-                                     DefaultTextStyle(size: 22, color: .navbarText, font: Fonts.mainBold, alignment: .left)] }
-
-        register(for: .itemTitle) { DefaultTextStyle(size: 10, color: .mainText, font: Fonts.mainBold, alignment: .center) }
-
-        register(for: .itemSubtitle) { DefaultTextStyle(size: 10, color: .mainText, font: Fonts.mainRegular, alignment: .center) }
-
-        register(for: .card) { [DefaultContainerStyle.card, self[.itemTitle] as TextStyle] }
-
-        register(for: .episodeTitle) {
-            ComposedTextStyle(base: DefaultTextStyle(size: 10, color: .mainText, font: Fonts.mainRegular, alignment: .left),
-                              tags: (tag: .bold, style: DefaultTextStyle(size: 10, color: .mainText, font: Fonts.mainBold, alignment: .left)))
-        }
     }
 
     func apply(_ style: Style, to view: PagerButton) {
@@ -66,5 +30,20 @@ class StyleFactoryImplementation: DefaultStyleFactory {
         //            button.font = Fonts.special(.regular).font(size: 20)
         //            button.font = Fonts.main(.bold).font(size: 16)
         view.selectedTintColor = color
+    }
+
+    let useCase: ThemeUseCase
+    let disposeBag = DisposeBag()
+    init(useCase: ThemeUseCase) {
+        self.useCase = useCase
+
+        let themes: [Theme] = [DarkTheme(container: container),
+                               LightTheme(container: container)]
+
+        useCase.updateThemes(themes)
+
+        useCase.currentTheme()
+            .subscribe(onNext: { $0.setup() })
+            .disposed(by: disposeBag)
     }
 }
