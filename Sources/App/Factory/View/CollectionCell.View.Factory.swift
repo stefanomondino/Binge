@@ -10,6 +10,35 @@ import Boomerang
 import Foundation
 import UIKit
 
+class FixedSizeCalculator: AutomaticCollectionViewSizeCalculator {
+    let height: CGFloat
+
+    init(viewModel: ListViewModel,
+         factory: CollectionViewCellFactory,
+         height: CGFloat = 44) {
+        self.height = height
+        super.init(viewModel: viewModel, factory: factory)
+    }
+
+    override func insets(for _: UICollectionView, in _: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: Constants.sidePadding, left: Constants.sidePadding, bottom: Constants.sidePadding, right: Constants.sidePadding)
+    }
+
+    override func itemSpacing(for _: UICollectionView, in _: Int) -> CGFloat {
+        Constants.sidePadding
+    }
+
+    override func lineSpacing(for _: UICollectionView, in _: Int) -> CGFloat {
+        Constants.sidePadding
+    }
+
+    override func sizeForItem(at indexPath: IndexPath, in collectionView: UICollectionView, direction _: Direction?, type: String?) -> CGSize {
+        guard viewModel(at: indexPath, for: type) != nil else { return .zero }
+        let width = calculateFixedDimension(for: .vertical, collectionView: collectionView, at: indexPath, itemsPerLine: 1)
+        return CGSize(width: width, height: height)
+    }
+}
+
 class MainCollectionViewCellFactory: CollectionViewCellFactory {
     private var viewFactory: ViewFactory
 

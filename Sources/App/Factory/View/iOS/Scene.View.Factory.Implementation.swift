@@ -42,10 +42,10 @@ class DefaultViewControllerFactory: ViewControllerFactory {
                                  styleFactory: container.styleFactory)
     }
 
-    func login(viewModel: LoginViewModel) -> UIViewController {
-        return LoginViewController(nibName: name(from: viewModel.layoutIdentifier),
-                                   viewModel: viewModel,
-                                   collectionViewCellFactory: container.views.collectionCells)
+    func user(viewModel: UserViewModel) -> UIViewController {
+        return UserViewController(nibName: name(from: viewModel.layoutIdentifier),
+                                  viewModel: viewModel,
+                                  collectionViewCellFactory: container.views.collectionCells)
     }
 
     func showList(viewModel: ItemListViewModel) -> UIViewController {

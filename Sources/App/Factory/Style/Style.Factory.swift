@@ -37,7 +37,7 @@ extension DefaultStyleFactory {
     private var currentThemeDidChange: Observable<Void> {
         root.model.useCases.themes.currentTheme()
             .map { _ in }
-            .observeOn(MainScheduler.asyncInstance)
+            .observeOn(MainScheduler.instance)
     }
 
     func apply(_: Style, to _: UIImageView) {}
@@ -45,16 +45,17 @@ extension DefaultStyleFactory {
     func apply(_: Style, to _: UIButton) {}
 
     func apply(_ style: Style, to label: UILabel) {
-        currentThemeDidChange.bind { [weak label] in
+        currentThemeDidChange.styling { [weak label] in
             guard let label = label, let implementation: TextStyle = self.getStyle(style) else { return }
             label.style = implementation.style
             label.numberOfLines = 0
-            self.apply(style, to: label as UIView)
+//            self.apply(style, to: label as UIView)
+            label.backgroundColor = .clear
         }.disposed(by: label.styleDisposeBag)
     }
 
     func apply(_ style: Style, to textField: UITextField) {
-        currentThemeDidChange.bind { [weak textField] in
+        currentThemeDidChange.styling { [weak textField] in
             guard let textField = textField,
                 let implementation: TextStyle = self.getStyle(style) else { return }
             textField.style = implementation.style
@@ -75,7 +76,7 @@ extension DefaultStyleFactory {
     }
 
     func apply(_ style: Style, to view: UIView) {
-        currentThemeDidChange.bind { [weak view] in
+        currentThemeDidChange.styling { [weak view] in
             guard let view = view,
                 let implementation: ContainerStyle = self.getStyle(style) else { return }
             view.backgroundColor = implementation.backgroundColor
@@ -86,14 +87,14 @@ extension DefaultStyleFactory {
     }
 
     func apply(_ style: Style, to navigationController: NavigationContainer) {
-        currentThemeDidChange.bind { [weak navigationController] in
+        currentThemeDidChange.styling { [weak navigationController] in
             guard let implementation: ContainerStyle = self.getStyle(style) else { return }
             navigationController?.navigationBarColor = implementation.backgroundColor
         }.disposed(by: navigationController.disposeBag)
     }
 
     func apply(_ style: Style, to tabViewController: TabViewController) {
-        currentThemeDidChange.bind { [weak tabViewController] in
+        currentThemeDidChange.styling { [weak tabViewController] in
             guard let tabViewController = tabViewController,
                 let implementation: ContainerStyle = self.getStyle(style) else { return }
 
@@ -194,6 +195,15 @@ extension UIView {
         }
         set {
             objc_setAssociatedObject(self, &AssociatedKeys.styleDisposeBag, newValue, .OBJC_ASSOCIATION_RETAIN)
+        }
+    }
+}
+
+extension Observable where Element == Void {
+    func styling(_ closure: @escaping () -> Void) -> Disposable {
+        closure()
+        return skip(1).bind {
+            UIView.animate(withDuration: 0.25, animations: closure)
         }
     }
 }

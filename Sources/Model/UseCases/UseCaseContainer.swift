@@ -11,7 +11,7 @@ import Foundation
 
 public protocol UseCaseContainer {
     var splash: SplashUseCase { get }
-    var login: LoginUseCase { get }
+    var profile: ProfileUseCase { get }
     var shows: ShowsContainer { get }
     var movies: MoviesContainer { get }
     var images: ImagesUseCase { get }
@@ -22,7 +22,7 @@ public protocol UseCaseContainer {
 
 enum UseCaseKeys: CaseIterable, Hashable {
     case splash
-    case login
+    case profile
     case shows
     case movies
     case images
@@ -35,7 +35,7 @@ class DefaultUseCaseContainer: UseCaseContainer, DependencyContainer {
     var container = Container<UseCaseKeys>()
 
     var splash: SplashUseCase { self[.splash] }
-    var login: LoginUseCase { self[.login] }
+    var profile: ProfileUseCase { self[.profile] }
     var shows: ShowsContainer { self[.shows] }
     var movies: MoviesContainer { self[.movies] }
     var images: ImagesUseCase { self[.images] }
@@ -47,8 +47,11 @@ class DefaultUseCaseContainer: UseCaseContainer, DependencyContainer {
         register(for: .splash) {
             SplashUseCaseImplementation()
         }
-        register(for: .login, scope: .singleton) {
-            LoginUseCaseImplementation(authorization: container.repositories.authorization)
+        register(for: .profile, scope: .singleton) {
+            ProfileUseCaseImplementation(authorization: container.repositories.authorization,
+
+                                         profile:
+                                         container.repositories.profile)
         }
         register(for: .shows, scope: .singleton) {
             ShowsContainerImplementation(container: container)

@@ -37,7 +37,7 @@ class DarkTheme: Theme, DependencyContainer {
                                        DefaultTextStyle(size: 16, color: .navbarBackground, font: .mainRegular, alignment: .left)] }
 
         register(for: .navigationBar) { [DefaultContainerStyle(backgroundColor: .navbarBackground),
-                                         DefaultTextStyle(size: 22, color: .navbarText, font: .mainBold, alignment: .left)] }
+                                         DefaultTextStyle(size: 22, color: .navbarText, font: .mainBold, alignment: .center)] }
         setupShows()
     }
 

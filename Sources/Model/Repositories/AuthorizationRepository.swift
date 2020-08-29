@@ -14,6 +14,7 @@ protocol AuthorizationRepository {
     func token() -> Observable<Void>
     func onAuthorizationURL(url: URL)
     func webViewURL() -> URL?
+    func isLogged() -> Observable<Bool>
 }
 
 class DefaultAuthorizationRepository: AuthorizationRepository {
@@ -32,6 +33,10 @@ class DefaultAuthorizationRepository: AuthorizationRepository {
             }
             .do(onNext: { AccessToken.current = $0 })
             .map { _ in }
+    }
+
+    func isLogged() -> Observable<Bool> {
+        .just(AccessToken.current != nil)
     }
 
     func onAuthorizationURL(url: URL) {

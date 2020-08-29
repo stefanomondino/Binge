@@ -13,7 +13,7 @@ import RxSwift
 class SettingsViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView!
 
-    var viewModel: RxListViewModel & RxNavigationViewModel
+    var viewModel: SettingsViewModel
 
     var collectionViewDataSource: CollectionViewDataSource? {
         didSet {
@@ -34,7 +34,7 @@ class SettingsViewController: UIViewController {
 
     init(nibName: String?,
          bundle: Bundle? = nil,
-         viewModel: RxListViewModel & RxNavigationViewModel,
+         viewModel: SettingsViewModel,
          collectionViewCellFactory: CollectionViewCellFactory) {
         self.viewModel = viewModel
         self.collectionViewCellFactory = collectionViewCellFactory
@@ -63,8 +63,7 @@ class SettingsViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
         view.applyContainerStyle(.container)
 
-        let sizeCalculator = AutomaticCollectionViewSizeCalculator(viewModel: viewModel,
-                                                                   factory: collectionViewCellFactory, itemsPerLine: 1)
+        let sizeCalculator = FixedSizeCalculator(viewModel: viewModel, factory: collectionViewCellFactory)
 
         let collectionViewDelegate = CollectionViewDelegate(sizeCalculator: sizeCalculator)
             .withSelect { viewModel.selectItem(at: $0) }
@@ -83,6 +82,8 @@ class SettingsViewController: UIViewController {
             .disposed(by: disposeBag)
 
         viewModel.reload()
+
+        title = viewModel.pageTitle
 
 //        viewModel.navbarTitleViewModel
 //            .asDriver(onErrorJustReturn: nil)

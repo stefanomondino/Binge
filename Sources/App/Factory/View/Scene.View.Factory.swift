@@ -14,7 +14,7 @@ protocol ViewControllerFactory {
     func root() -> UIViewController
     func pager(viewModel: PagerViewModel) -> UIViewController
     func mainTabBar() -> UIViewController
-    func login(viewModel: LoginViewModel) -> UIViewController
+    func user(viewModel: UserViewModel) -> UIViewController
     func showPager() -> UIViewController
     func showList(viewModel: ItemListViewModel) -> UIViewController
     func itemDetail(viewModel: ItemDetailViewModel) -> UIViewController

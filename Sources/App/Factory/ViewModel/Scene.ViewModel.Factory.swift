@@ -14,12 +14,13 @@ protocol SceneViewModelFactory {
     //    func showDetail(show: Show) -> ShowDetailViewModel
     func splashViewModel() -> SplashViewModel
     func homePager() -> PagerViewModel
-    func login() -> LoginViewModel
+    func user() -> UserViewModel
     func itemDetail(for item: ItemContainer) -> ItemDetailViewModel?
     func personDetail(for person: Person) -> PersonViewModel
     func showsPager() -> PagerViewModel
     func seasonDetail(for season: Season.Info, of show: ShowItem) -> ItemDetailViewModel
     func search() -> SearchViewModel
+    func settings() -> SettingsViewModel
     // MURRAY DECLARATION PLACEHOLDER
 }
 
@@ -29,8 +30,7 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
     func homePager() -> PagerViewModel {
         return PagerViewModel(pages: [
             watchablePager(),
-            login(),
-            settings()
+            user()
         ],
         layout: SceneIdentifier.tab,
         routeFactory: container.routeFactory,
@@ -54,8 +54,10 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
         return SplashViewModel(routeFactory: container.routeFactory, useCase: container.model.useCases.splash)
     }
 
-    func login() -> LoginViewModel {
-        LoginViewModel(itemViewModelFactory: container.viewModels.items, useCase: container.model.useCases.login, routeFactory: container.routeFactory)
+    func user() -> UserViewModel {
+        UserViewModel(itemViewModelFactory: container.viewModels.items,
+                      useCase: container.model.useCases.profile,
+                      routeFactory: container.routeFactory)
     }
 
     func search() -> SearchViewModel {

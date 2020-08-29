@@ -20,11 +20,11 @@ class LightTheme: Theme, DependencyContainer {
 
     func setup() {
         register(for: .clear) { DefaultContainerStyle(backgroundColor: .clear) }
-        register(for: .container) { DefaultContainerStyle() }
-        register(for: .title) { DefaultTextStyle(size: 18) }
+        register(for: .container) { DefaultContainerStyle(cornerRadius: 0, backgroundColor: .white) }
+        register(for: .title) { DefaultTextStyle(size: 18, color: .green) }
         register(for: .subtitle) {
             ComposedTextStyle(base: DefaultTextStyle(size: 12,
-                                                     color: .mainText,
+                                                     color: .green,
                                                      font: Fonts.mainRegular, alignment: .left),
                               tags: (tag: .bold, style: DefaultTextStyle(size: 12,
                                                                          color: .mainText,

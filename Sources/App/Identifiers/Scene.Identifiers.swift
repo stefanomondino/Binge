@@ -13,7 +13,7 @@ enum SceneIdentifier: String, LayoutIdentifier {
     case smallPager
     case bigPager
     case tab
-    case login
+    case user
     case itemList
     case itemDetail
     case person

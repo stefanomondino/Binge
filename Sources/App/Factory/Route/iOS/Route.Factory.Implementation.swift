@@ -67,10 +67,11 @@ class MainRouteFactory: RouteFactory {
             return EmptyRoute {
                 self.container.views.scenes.search(viewModel: viewModel).inContainer()
             }
-        case let viewModel as LoginViewModel:
+        case let viewModel as UserViewModel:
             return EmptyRoute {
                 self.container.views.scenes
-                    .login(viewModel: viewModel)
+                    .user(viewModel: viewModel)
+                    .inContainer()
             }
         default:
             return EmptyRoute {
@@ -117,9 +118,19 @@ class MainRouteFactory: RouteFactory {
         }
     }
 
+    func settings() -> Route {
+        return ModalRoute {
+            let viewModel = self.container.viewModels.scenes.settings()
+            return self.container.views.scenes.settings(viewModel: viewModel)
+                .inContainer()
+        }
+    }
+
     func settingsList(viewModel: SettingsListViewModelType) -> Route {
         ModalRoute {
-            self.container.views.scenes.settingsList(viewModel: viewModel)
+            self.container.views.scenes
+                .settingsList(viewModel: viewModel)
+                .inContainer()
         }
     }
 }

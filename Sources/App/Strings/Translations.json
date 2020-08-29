@@ -35,6 +35,13 @@
         "anticipated": "Anticipated",
         "related": "Related",
         "seasons": "Seasons"
-        
+    },
+    "themes": {
+        "title": "Theme",
+        "dark": "Dark",
+        "light": "Light"
+    },
+    "profile": {
+        "title": "Profile"
     }
 }

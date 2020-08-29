@@ -100,6 +100,13 @@ class NavigationContainer: UIViewController {
                 .bind { navigation.popViewController(animated: true) }
                 .disposed(by: disposeBag)
             addButton(button, position: .left)
+        } else if presentingViewController != nil {
+            let button = UIButton(type: .system)
+            button.setImage(Asset.x.image, for: .normal)
+            button.rx.controlEvent(.touchUpInside)
+                .bind { [weak self] in self?.dismiss(animated: true, completion: nil) }
+                .disposed(by: disposeBag)
+            addButton(button, position: .left)
         }
 
         addChild(rootViewController)

@@ -42,6 +42,8 @@ enum TraktvAPI {
     case peopleMovies(Person)
 
     case search(String, Page)
+
+    case userSettings
 }
 
 extension TraktvAPI: TargetType {
@@ -84,6 +86,8 @@ extension TraktvAPI: TargetType {
         case let .peopleMovies(person): return "people/\(person.ids.trakt)/movies"
 
         case .search: return "search/movie,show,person"
+
+        case .userSettings: return "users/settings"
         }
     }
 

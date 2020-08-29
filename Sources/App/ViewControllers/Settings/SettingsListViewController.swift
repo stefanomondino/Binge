@@ -63,8 +63,7 @@ class SettingsListViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
         view.applyContainerStyle(.container)
 
-        let sizeCalculator = AutomaticCollectionViewSizeCalculator(viewModel: viewModel,
-                                                                   factory: collectionViewCellFactory, itemsPerLine: 1)
+        let sizeCalculator = FixedSizeCalculator(viewModel: viewModel, factory: collectionViewCellFactory, height: 40)
 
         let collectionViewDelegate = CollectionViewDelegate(sizeCalculator: sizeCalculator)
             .withSelect { viewModel.selectItem(at: $0) }
@@ -83,7 +82,7 @@ class SettingsListViewController: UIViewController {
 //            .disposed(by: disposeBag)
 
         viewModel.reload()
-
+        title = viewModel.pageTitle
 //        viewModel.navbarTitleViewModel
 //            .asDriver(onErrorJustReturn: nil)
 //            .drive(onNext: { [weak self] in

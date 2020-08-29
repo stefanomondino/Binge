@@ -45,6 +45,7 @@ struct DefaultPickerViewModelFactory: PickerViewModelFactory {
         let relay = BehaviorRelay<DescriptionItemViewModel?>(value: nil)
         let viewModel = SingleSelectionListPickerViewModel(items: items,
                                                            value: relay,
+                                                           title: Strings.Themes.title.translation,
                                                            info: info, layout: SceneIdentifier.settingsList,
                                                            routeFactory: container.routeFactory,
                                                            routes: routes)
