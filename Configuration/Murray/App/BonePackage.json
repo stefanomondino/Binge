@@ -1,7 +1,14 @@
 {
-  "name" : "App",
   "procedures" : [
-
+    {
+      "items" : [
+          "ItemViewModel/BoneItem.json",
+          "ItemView/BoneItem.json"
+      ],
+      "name" : "Item",
+      "description" : "Created from scaffold"
+    }
   ],
+  "name" : "App",
   "description" : "Created from scaffold"
 }
