@@ -11,6 +11,8 @@ import UIKit
  */
 class ProfileHeaderItemView: UIView, WithViewModel {
     @IBOutlet var title: UILabel?
+    @IBOutlet var subtitle: UILabel?
+    @IBOutlet var avatar: UIImageView?
 
     var disposeBag = DisposeBag()
     override func awakeFromNib() {
@@ -28,12 +30,22 @@ class ProfileHeaderItemView: UIView, WithViewModel {
         backgroundColor = .clear
 
         if let title = title {
-            title.applyStyle(.subtitle)
+            title.applyStyle(.title)
             title.styledText = viewModel.title
+        }
+        if let subtitle = subtitle {
+            subtitle.applyStyle(.subtitle)
+            subtitle.styledText = viewModel.subtitle
         }
 
         if isPlaceholderForAutosize { return }
-
+        if let avatar = avatar {
+            viewModel.image
+                .map { $0.circled() }
+                .asDriver(onErrorJustReturn: .init())
+                .drive(avatar.rx.animatedImage())
+                .disposed(by: disposeBag)
+        }
         // configure here everything not related to automatic sizing
     }
 

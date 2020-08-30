@@ -5,6 +5,7 @@
 //  Created by Stefano Mondino on 12/08/2020.
 //
 
+import Boomerang
 import Foundation
 import PluginLayout
 import UIKit
@@ -49,7 +50,8 @@ class ShadowView: UICollectionReusableView {
     }
 }
 
-class DetailHeaderPlugin: FlowLayoutPlugin {
+class DetailHeaderPlugin: FlowLayoutPlugin, WithPropertyAssignment {
+    var offsetForFirstElement: CGFloat = 100
     override func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes] {
         guard let collectionView = layout.collectionView else { return [] }
         layout.register(ShadowView.self, forDecorationViewOfKind: ShadowView.identifier)
@@ -58,7 +60,7 @@ class DetailHeaderPlugin: FlowLayoutPlugin {
         let size = delegate?.collectionView?(collectionView, layout: layout, sizeForItemAt: indexPath) ?? .zero
         guard size.width > 0, size.height > 0 else { return [] }
 
-        let height = size.height
+//        let height = size.height
         let minHeight = params.contentBounds.width / (16 / 9)
         let expectedSize = (delegate as? CollectionViewDelegate)?.sizeCalculator
             .sizeForItem(at: indexPath, in: collectionView, direction: .vertical, type: ViewIdentifier.Supplementary.parallax.identifierString)
@@ -68,7 +70,7 @@ class DetailHeaderPlugin: FlowLayoutPlugin {
         }
         var backdropHeight = params.contentBounds.width / (expectedSize.width / expectedSize.height)
         if backdropHeight.isNaN || backdropHeight < minHeight { backdropHeight = minHeight }
-        offset.y += backdropHeight - height + height / 3.0
+        offset.y += backdropHeight - offsetForFirstElement - collectionView.safeAreaInsets.top // height / 3.0
 
         let attributes = super.layoutAttributes(in: section, offset: &offset, layout: layout)
         attributes.forEach { $0.zIndex = 2 }
@@ -96,17 +98,19 @@ class ZoomEffect: PluginEffect {
                plugin _: PluginType,
                sectionAttributes attributes: [PluginLayoutAttributes]) -> PluginLayoutAttributes {
         guard let attribute = originalAttribute.copy() as? PluginLayoutAttributes,
-            let collectionOffset = layout.collectionView?.contentOffset.y else { return originalAttribute }
+            let defaultCollectionOffset = layout.collectionView?.contentOffset.y,
+            let defaultCollectionSafeArea = layout.collectionView?.safeAreaInsets.top else { return originalAttribute }
+        let collectionOffset = defaultCollectionOffset + defaultCollectionSafeArea
         let offset = parallax * collectionOffset
         var frame = attribute.frame
         if offset < 0 {
             attribute.alpha = 1
-            frame.origin.y = collectionOffset
+            frame.origin.y = collectionOffset - defaultCollectionSafeArea
             frame.origin.x = offset / 2
             frame.size.height += -offset
             frame.size.width += -offset
         } else {
-            frame.origin.y -= offset - collectionOffset
+            frame.origin.y -= offset - collectionOffset + defaultCollectionSafeArea
             attribute.alpha = max(0, 1 - 4 * (frame.origin.y / frame.size.height))
         }
         if let decoration = attributes

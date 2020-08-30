@@ -29,11 +29,22 @@ public struct User: Codable {
         var avatar: Image?
     }
 
+    public struct Account: Codable {
+        let coverImage: String?
+    }
+
     public struct Settings: Codable {
         public struct Connections: Codable {
             let facebook: Bool
         }
 
-        let user: User
+        public let account: Account?
+        public let user: User
+
+        public var coverURL: URL? {
+            guard let path = account?.coverImage,
+                let url = URL(string: path) else { return nil }
+            return url
+        }
     }
 }

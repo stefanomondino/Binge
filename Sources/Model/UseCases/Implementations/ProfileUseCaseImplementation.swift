@@ -19,7 +19,7 @@ struct ProfileUseCaseImplementation: ProfileUseCase {
         authorization.isLogged()
     }
 
-    func user() -> Observable<User> {
-        profile.userSettings().map { $0.user }
+    func user() -> Observable<User.Settings> {
+        profile.userSettings()
     }
 }

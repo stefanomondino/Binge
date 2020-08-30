@@ -5,5 +5,5 @@ public protocol ProfileUseCase {
     func login() -> Observable<Void>
     func logout() -> Observable<Void>
     func isLogged() -> Observable<Bool>
-    func user() -> Observable<User>
+    func user() -> Observable<User.Settings>
 }

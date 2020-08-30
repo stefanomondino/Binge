@@ -23,7 +23,11 @@ class UserViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
     }
 
     let itemViewModelFactory: ItemViewModelFactory
+    var isLoading: Observable<Bool> {
+        loadingRelay.isLoading
+    }
 
+    let loadingRelay = BehaviorRelay<Int>(value: 0)
     private let useCase: ProfileUseCase
     let routeFactory: RouteFactory
     let sectionsRelay: BehaviorRelay<[Section]> = BehaviorRelay(value: [])
@@ -56,27 +60,43 @@ class UserViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
 
     func reload() {
         reloadDisposeBag = DisposeBag()
-        let items = itemViewModelFactory
+
         let useCase = self.useCase
+        let loadingCount = loadingRelay
+        useCase
+            .isLogged()
+            .flatMapLatest { isLogged -> Observable<[Section]> in
+                if !isLogged { return .just([]) }
+                return useCase.user()
+                    .map { [weak self] in self?.mapSections(from: $0) ?? [] }
+                    .bindingLoadingStatus(to: loadingCount)
+            }
+            .catchErrorJustReturn([])
+            .bind(to: sectionsRelay)
+            .disposed(by: reloadDisposeBag)
+    }
+
+    private func mapSections(from settings: User.Settings) -> [Section] {
+        let items = itemViewModelFactory
         let disposeBag = self.disposeBag
-        useCase.isLogged().flatMapLatest { isLogged -> Observable<[Section]> in
-            if !isLogged { return .just([]) }
-            return useCase.user()
-                .map { user in
-                    [items.image(user.profileURL ?? Asset.user.image, ratio: 1),
-                     items.profileHeader(profile: user),
-                     items.titledDescription(title: "Name", description: user.name),
-                     items.titledDescription(title: "Location", description: user.location),
-                     items.button(with: ButtonContents(title: "Logout", action: {
-                         useCase.logout().subscribe().disposed(by: disposeBag)
-                     }))]
-                        .compactMap { $0 }
-                }
-                .map { [Section(items: $0)] }
-        }
-        .catchErrorJustReturn([])
-        .bind(to: sectionsRelay)
-        .disposed(by: reloadDisposeBag)
+        let user = settings.user
+        let useCase = self.useCase
+        let elements =
+            [
+                items.profileHeader(profile: user),
+                items.titledDescription(title: "Name", description: user.name),
+                items.titledDescription(title: "Location", description: user.location),
+                items.button(with: ButtonContents(title: "Logout", action: {
+                    useCase.logout().subscribe().disposed(by: disposeBag)
+                }))
+            ]
+            .compactMap { $0 }
+        var section = Section(items: elements)
+        let coverImage: WithImage = settings.coverURL ?? Asset.heart.image
+        let cover = items.image(coverImage, ratio: 16 / 9)
+        section.supplementary.set(cover, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
+
+        return [section]
     }
 
     func selectItem(at _: IndexPath) {}

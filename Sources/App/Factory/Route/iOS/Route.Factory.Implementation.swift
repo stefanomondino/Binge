@@ -71,7 +71,7 @@ class MainRouteFactory: RouteFactory {
             return EmptyRoute {
                 self.container.views.scenes
                     .user(viewModel: viewModel)
-                    .inContainer()
+                    .inContainer(extendUnderNavbar: true)
             }
         default:
             return EmptyRoute {

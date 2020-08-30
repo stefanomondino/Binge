@@ -7,12 +7,27 @@
 //
 
 import Boomerang
+import PluginLayout
 import RxCocoa
 import RxRelay
 import RxSwift
 import UIKit
 
 class UserViewController: UIViewController {
+    class Delegate: CollectionViewDelegate, PluginLayoutDelegate {
+        func collectionView(_: UICollectionView, layout _: PluginLayout, pluginForSectionAt section: Int) -> PluginType? {
+            switch section {
+            case 0: return DetailHeaderPlugin(delegate: self).with(\.offsetForFirstElement, to: 50)
+            default: return FlowLayoutPlugin(delegate: self)
+            }
+        }
+
+        func collectionView(_: UICollectionView, layout _: PluginLayout, effectsForItemAt _: IndexPath, kind: String?) -> [PluginEffect] {
+            guard kind == ViewIdentifier.Supplementary.parallax.identifierString else { return [] }
+            return [ZoomEffect(parallax: 0.7)]
+        }
+    }
+
     var viewModel: UserViewModel
     @IBOutlet var collectionView: UICollectionView!
 
@@ -54,7 +69,7 @@ class UserViewController: UIViewController {
 
 //        loginButton.rx.tap.bind { viewModel.openLogin() }.disposed(by: disposeBag)
         view.applyContainerStyle(.container)
-        collectionView.backgroundColor = .clear
+
         viewModel.routes
             .bind(to: rx.routes())
             .disposed(by: disposeBag)
@@ -67,6 +82,7 @@ class UserViewController: UIViewController {
 
     func setupCollectionView() {
         let viewModel = self.viewModel
+        collectionView.backgroundColor = .clear
         let collectionViewDataSource = CollectionViewDataSource(viewModel: viewModel,
                                                                 factory: collectionViewCellFactory)
 
@@ -76,9 +92,10 @@ class UserViewController: UIViewController {
         let sizeCalculator = AutomaticCollectionViewSizeCalculator(viewModel: viewModel,
                                                                    factory: collectionViewCellFactory, itemsPerLine: 1)
 
-        let collectionViewDelegate = CollectionViewDelegate(sizeCalculator: sizeCalculator)
+        let collectionViewDelegate = Delegate(sizeCalculator: sizeCalculator)
             .withSelect { viewModel.selectItem(at: $0) }
-
+        let layout = PluginLayout()
+        collectionView.collectionViewLayout = layout
         collectionView.backgroundColor = .clear
         self.collectionViewDelegate = collectionViewDelegate
 
@@ -86,6 +103,13 @@ class UserViewController: UIViewController {
             .reloaded(by: viewModel, dataSource: collectionViewDataSource)
             .disposed(by: disposeBag)
         viewModel.reload()
+        setDisappearingNavbar(boundTo: collectionView).disposed(by: disposeBag)
+
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .white
+        collectionView.addSubview(refreshControl)
+        refreshControl.rx.controlEvent(.valueChanged).bind { viewModel.reload() }.disposed(by: disposeBag)
+        viewModel.isLoading.bind(to: refreshControl.rx.isRefreshing).disposed(by: disposeBag)
     }
 
     func setupSettings() {

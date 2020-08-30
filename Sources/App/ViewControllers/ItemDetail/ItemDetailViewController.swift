@@ -190,22 +190,30 @@ class ItemDetailViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
+        setDisappearingNavbar(boundTo: collectionView).disposed(by: disposeBag)
+        addLoader(boundTo: viewModel.isLoading).disposed(by: disposeBag)
+    }
+}
+
+extension UIViewController {
+    func setDisappearingNavbar(boundTo scrollView: UICollectionView) -> Disposable {
         if let container = self.container {
-            collectionView.rx
+            return scrollView.rx
                 .topWindow(of: 200)
                 .bind(to: container.rx.updateCurrentNavbarAlpha())
-                .disposed(by: disposeBag)
+
+        } else {
+            return Disposables.create()
         }
-        setupLoader()
     }
 
-    private func setupLoader() {
+    func addLoader(boundTo isLoading: Observable<Bool>) -> Disposable {
         let loader = RingLoaderView()
         loader.tintColor = .mainDescription
         view.addSubview(loader)
         loader.snp.makeConstraints { make in make.center.equalToSuperview() }
-        viewModel.isLoading.asDriver(onErrorJustReturn: false)
+        return isLoading
+            .asDriver(onErrorJustReturn: false)
             .drive(loader.rx.isAnimating)
-            .disposed(by: disposeBag)
     }
 }
