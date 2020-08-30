@@ -1,22 +1,26 @@
 {
-  "paths" : [
-    {
-      "to" : "",
-      "from" : "ItemView.swift.stencil"
+    "paths" : [
+        {
+            "to" : "{{folders.views}}/{{name|firstUppercase}}/{{name|firstUppercase}}ItemView.swift",
+            "from" : "ItemView.swift.stencil"
+        },
+        {
+            "to" : "{{folders.iosXibs}}",
+            "from" : "ItemView.iOS.xib.stencil"
+        }
+    ],
+    "replacements" : [
+        {
+            "placeholder": "// MURRAY PLACEHOLDER",
+            "text": "case {{name|firstLowercase}}",
+            "destination": "{{files.identifiers.views}}"
+        }
+    ],
+    "plugins" : {
+        "xcode": { "targets": ["{{targets.ios}"] }
     },
-    {
-      "to" : "",
-      "from" : "ItemView.iOS.xib.stencil"
-    }
-  ],
-  "replacements" : [
-
-  ],
-  "plugins" : {
-
-  },
-  "parameters" : [
-
-  ],
-  "name" : "ItemView"
+    "parameters" : [
+        {"name": "name", "isRequired": true }
+    ]
+    "name" : "ItemView"
 }

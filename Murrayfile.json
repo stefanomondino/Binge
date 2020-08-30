@@ -11,6 +11,9 @@
                   "items": "Sources/App/Factory/ViewModel/Item.ViewModel.Factory.swift",
                   "pickers": "Sources/App/Factory/ViewModel/Picker.ViewModel.Factory.swift",
                   "scenes": "Sources/App/Factory/ViewModel/Scene.ViewModel.Factory.swift"
+              },
+              "view": {
+                  
               }
           },
           "identifiers": {
