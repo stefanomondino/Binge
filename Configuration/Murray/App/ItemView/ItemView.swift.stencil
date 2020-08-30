@@ -21,7 +21,7 @@ class {{name|firstUppercase}}ItemView: UIView, WithViewModel {
         //Always clear disposeBag for proper cell recycle
         disposeBag = DisposeBag()
         
-        guard let viewModel = viewModel as? {{name|firstUppercase}}ViewModel else { return }
+        guard let viewModel = viewModel as? {{name|firstUppercase}}ItemViewModel else { return }
         /// Configure here every property that contributes to change view size
         /// Multiline text bindings should go here
 
