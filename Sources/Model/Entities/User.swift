@@ -14,6 +14,7 @@ public struct User: Codable {
     public let location: String
     public let age: Int
     let images: Images?
+    let ids: Ids
 
     public var profileURL: URL? {
         guard let path = images?.avatar?.full,
@@ -33,6 +34,11 @@ public struct User: Codable {
         let coverImage: String?
     }
 
+    struct Ids: Codable {
+        let slug: String
+        let uuid: String
+    }
+
     public struct Settings: Codable {
         public struct Connections: Codable {
             let facebook: Bool
@@ -47,4 +53,20 @@ public struct User: Codable {
             return url
         }
     }
+}
+
+public struct UserWatched: Codable, ItemContainer {
+    private struct Empty: Item {
+        var title: String = ""
+        var ids: Ids = Ids(trakt: 0, slug: "")
+        var item: Item { self }
+    }
+
+    public var item: Item { (show ?? movie) ?? UserWatched.Empty() }
+
+    public var watchedAt: String
+    var show: Show.ShowItemImplementation?
+    var movie: Movie.MovieItemImplementation?
+//    var episode: Season.Episode?
+    var season: Season.Info?
 }

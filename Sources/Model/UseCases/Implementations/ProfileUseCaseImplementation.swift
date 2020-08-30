@@ -22,4 +22,8 @@ struct ProfileUseCaseImplementation: ProfileUseCase {
     func user() -> Observable<User.Settings> {
         profile.userSettings()
     }
+
+    func showsHistory() -> Observable<[UserWatched]> {
+        profile.showsHistory()
+    }
 }

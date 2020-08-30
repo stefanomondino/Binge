@@ -80,6 +80,7 @@ class UserViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
         let items = itemViewModelFactory
         let disposeBag = self.disposeBag
         let user = settings.user
+
         let useCase = self.useCase
         let elements =
             [
@@ -96,7 +97,8 @@ class UserViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
         let cover = items.image(coverImage, ratio: 16 / 9)
         section.supplementary.set(cover, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
 
-        return [section]
+        return [section,
+                Section(items: [items.userShowsHistoryCarousel(onSelection: { print($0) })])]
     }
 
     func selectItem(at _: IndexPath) {}

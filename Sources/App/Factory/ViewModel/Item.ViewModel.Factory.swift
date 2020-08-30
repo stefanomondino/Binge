@@ -33,6 +33,7 @@ protocol ItemViewModelFactory {
     func castShowsCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel
     func titledDescription(title: CustomStringConvertible, description: CustomStringConvertible?) -> ViewModel?
     func settingsValue(title: CustomStringConvertible, identifier: UniqueIdentifier) -> DescriptionItemViewModel
+    func userShowsHistoryCarousel(onSelection: @escaping (Item) -> Void) -> ViewModel
     func profileHeader(profile: User) -> ViewModel
     func button(with contents: ButtonContents) -> ViewModel
     // MURRAY DECLARATION PLACEHOLDER
@@ -156,6 +157,22 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
     func relatedShowsCarousel(for show: ItemContainer, onSelection: @escaping (Item) -> Void) -> ViewModel {
         let observable = container.model.useCases.shows.detail
             .related(for: show.item)
+            .map { $0.map { self.item($0, layout: .posterOnly) } }
+            .map { [Section(id: UUID().uuidString, items: $0)] }
+            .share(replay: 1, scope: .forever)
+
+        return CarouselItemViewModel(sections: observable,
+                                     layoutIdentifier: ViewIdentifier.carousel,
+                                     cellFactory: container.views.collectionCells,
+                                     type: .relatedShows) { itemViewModel in
+            if let show = itemViewModel.as(GenericItemViewModel.self)?.item {
+                onSelection(show.item)
+            }
+        }
+    }
+
+    func userShowsHistoryCarousel(onSelection: @escaping (Item) -> Void) -> ViewModel {
+        let observable = container.model.useCases.profile.showsHistory()
             .map { $0.map { self.item($0, layout: .posterOnly) } }
             .map { [Section(id: UUID().uuidString, items: $0)] }
             .share(replay: 1, scope: .forever)

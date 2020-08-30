@@ -10,6 +10,7 @@ import RxSwift
 
 protocol ProfileRepository {
     func userSettings() -> Observable<User.Settings>
+    func showsHistory() -> Observable<[UserWatched]>
 }
 
 class ProfileRepositoryImplementation: ProfileRepository {
@@ -24,5 +25,13 @@ class ProfileRepositoryImplementation: ProfileRepository {
 
     func userSettings() -> Observable<User.Settings> {
         rest.get(User.Settings.self, at: TraktvAPI.userSettings)
+    }
+
+    func showsHistory() -> Observable<[UserWatched]> {
+        userSettings().flatMapLatest { user in
+            self.rest
+                .get([UserWatched].self, at: TraktvAPI.userShowHistory(user.user))
+                .map { $0 }
+        }
     }
 }
