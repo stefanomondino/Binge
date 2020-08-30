@@ -11,7 +11,7 @@
   "replacements" : [
       {
           "placeholder": "// MURRAY DECLARATION PLACEHOLDER",
-          "text": "func {{name|firstLowercase}}({{name|firstLowercase}}: {{name|firstUppercase}}) -> ViewModel",
+          "text": "func {{name|firstLowercase}}({{name|firstLowercase}}: {{name|firstUppercase}}) -> ViewModel\n",
           "destination": "{{files.factory.viewModel.items}}"
       },
       {

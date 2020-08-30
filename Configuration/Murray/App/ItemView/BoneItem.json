@@ -12,7 +12,7 @@
     "replacements" : [
         {
             "placeholder": "// MURRAY PLACEHOLDER",
-            "text": "case {{name|firstLowercase}}",
+            "text": "case {{name|firstLowercase}}\n",
             "destination": "{{files.identifiers.views}}"
         }
     ],
