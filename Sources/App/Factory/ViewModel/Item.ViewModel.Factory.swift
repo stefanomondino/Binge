@@ -34,6 +34,7 @@ protocol ItemViewModelFactory {
     func titledDescription(title: CustomStringConvertible, description: CustomStringConvertible?) -> ViewModel?
     func settingsValue(title: CustomStringConvertible, identifier: UniqueIdentifier) -> DescriptionItemViewModel
     func profileHeader(profile: User) -> ViewModel
+    func button(with contents: ButtonContents) -> ViewModel
     // MURRAY DECLARATION PLACEHOLDER
 }
 
@@ -282,6 +283,10 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
 
     func profileHeader(profile: User) -> ViewModel {
         ProfileHeaderItemViewModel(profile: profile)
+    }
+
+    func button(with contents: ButtonContents) -> ViewModel {
+        ButtonItemViewModel(contents: contents)
     }
 
     // MURRAY IMPLEMENTATION PLACEHOLDER

@@ -15,14 +15,20 @@ protocol AuthorizationRepository {
     func onAuthorizationURL(url: URL)
     func webViewURL() -> URL?
     func isLogged() -> Observable<Bool>
+    func logout() -> Observable<Void>
 }
 
 class DefaultAuthorizationRepository: AuthorizationRepository {
     private let authorizationCode = PublishRelay<String>()
     let dataSource: RESTDataSource
-
+    private let isLoggedTrigger: BehaviorRelay<Void> = BehaviorRelay(value: ())
     init(dataSource: RESTDataSource) {
         self.dataSource = dataSource
+    }
+
+    private func updateAccessToken(_ token: AccessToken?) {
+        AccessToken.current = token
+        isLoggedTrigger.accept(())
     }
 
     func token() -> Observable<Void> {
@@ -31,12 +37,12 @@ class DefaultAuthorizationRepository: AuthorizationRepository {
             .flatMapLatest { code in
                 self.dataSource.get(AccessToken.self, at: TraktvAPI.token(code: code))
             }
-            .do(onNext: { AccessToken.current = $0 })
+            .do(onNext: { self.updateAccessToken($0) })
             .map { _ in }
     }
 
     func isLogged() -> Observable<Bool> {
-        .just(AccessToken.current != nil)
+        isLoggedTrigger.map { AccessToken.current != nil }
     }
 
     func onAuthorizationURL(url: URL) {
@@ -51,5 +57,16 @@ class DefaultAuthorizationRepository: AuthorizationRepository {
 
     func webViewURL() -> URL? {
         return dataSource.request(for: TraktvAPI.authorize)?.url
+    }
+
+    func logout() -> Observable<Void> {
+        .deferred {
+            guard let token = AccessToken.current?.accessToken else { return .just(()) }
+            self.updateAccessToken(nil)
+            return self.dataSource
+                .get(EmptyResource.self, at: TraktvAPI.logout(token: token))
+                .map { _ in }
+                .catchErrorJustReturn(())
+        }
     }
 }

@@ -12,7 +12,7 @@ struct ProfileUseCaseImplementation: ProfileUseCase {
     }
 
     func logout() -> Observable<Void> {
-        return .just(())
+        return authorization.logout()
     }
 
     func isLogged() -> Observable<Bool> {

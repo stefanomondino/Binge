@@ -17,6 +17,7 @@ enum TraktvAPI {
 
     case authorize
     case token(code: String)
+    case logout(token: String)
 
     case trendingShows(Page)
     case popularShows(Page)
@@ -57,6 +58,7 @@ extension TraktvAPI: TargetType {
     var path: String {
         switch self {
         case .authorize: return "oauth/authorize"
+        case .logout: return "oauth/revoke"
         case .token: return "oauth/token"
         case .trendingShows: return "shows/trending"
         case .popularShows: return "shows/popular"
@@ -93,7 +95,7 @@ extension TraktvAPI: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .token: return .post
+        case .token, .logout: return .post
         default: return .get
         }
     }
@@ -153,6 +155,9 @@ extension TraktvAPI: TargetType {
                     "client_secret": Configuration.environment.traktClientSecret,
                     "grant_type": "authorization_code",
                     "redirect_uri": Configuration.environment.traktRedirectURI]
+        case let .logout(token): return ["token": token,
+                                         "client_id": Configuration.environment.traktClientID,
+                                         "client_secret": Configuration.environment.traktClientSecret]
         case .authorize: return ["response_type": "code",
                                  "client_id": Configuration.environment.traktClientID,
                                  "redirect_uri": Configuration.environment.traktRedirectURI]
@@ -165,6 +170,9 @@ extension TraktvAPI: TargetType {
     }
 
     var cacheTime: TimeInterval {
-        return 5.minutes
+        switch method {
+        case .get: return 5.minutes
+        default: return 0
+        }
     }
 }

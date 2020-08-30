@@ -16,6 +16,7 @@ protocol RESTDataSource {
     func get<Result: JSONDecodable, Endpoint: TargetType>(_ type: Result.Type, at endpoint: Endpoint) -> Observable<[Result]>
 }
 
+struct EmptyResource: Codable {}
 extension TargetType {
     var cacheKey: String {
         return [baseURL.absoluteString, path, method.rawValue, parameters

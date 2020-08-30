@@ -58,6 +58,7 @@ class UserViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
         reloadDisposeBag = DisposeBag()
         let items = itemViewModelFactory
         let useCase = self.useCase
+        let disposeBag = self.disposeBag
         useCase.isLogged().flatMapLatest { isLogged -> Observable<[Section]> in
             if !isLogged { return .just([]) }
             return useCase.user()
@@ -65,7 +66,10 @@ class UserViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
                     [items.image(user.profileURL ?? Asset.user.image, ratio: 1),
                      items.profileHeader(profile: user),
                      items.titledDescription(title: "Name", description: user.name),
-                     items.titledDescription(title: "Location", description: user.location)]
+                     items.titledDescription(title: "Location", description: user.location),
+                     items.button(with: ButtonContents(title: "Logout", action: {
+                         useCase.logout().subscribe().disposed(by: disposeBag)
+                     }))]
                         .compactMap { $0 }
                 }
                 .map { [Section(items: $0)] }

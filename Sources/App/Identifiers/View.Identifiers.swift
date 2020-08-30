@@ -43,6 +43,7 @@ enum ViewIdentifier: String, LayoutIdentifier {
     case image
     case description
     case profileHeader
+    case button
     // MURRAY PLACEHOLDER
 
     var identifierString: String {
