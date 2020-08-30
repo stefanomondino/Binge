@@ -23,6 +23,7 @@ options:
   deploymentTarget:
     iOS: "11.0"
 fileGroups:
+  - Murrayfile.json
   - Podfile
   - Gemfile
   - Brewfile

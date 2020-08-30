@@ -1,0 +1,22 @@
+{
+  "paths" : [
+    {
+      "to" : "",
+      "from" : "ItemView.swift.stencil"
+    },
+    {
+      "to" : "",
+      "from" : "ItemView.iOS.xib.stencil"
+    }
+  ],
+  "replacements" : [
+
+  ],
+  "plugins" : {
+
+  },
+  "parameters" : [
+
+  ],
+  "name" : "ItemView"
+}

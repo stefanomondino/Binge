@@ -1,8 +1,32 @@
 {
   "environment" : {
-
+      "folders": {
+          "iosXibs": "Sources/App/Xibs/iOS",
+          "views": "Sources/App/Views",
+          "scenes": "Sources/App/ViewControllers"
+      },
+      "files": {
+          "factory": {
+              "viewModel": {
+                  "items": "Sources/App/Factory/Item.ViewModel.Factory.swift",
+                  "pickers": "Sources/App/Factory/Picker.ViewModel.Factory.swift",
+                  "scenes": "Sources/App/Factory/Scene.ViewModel.Factory.swift"
+              }
+          },
+          "identifiers": {
+              "constants": "Sources/App/Identifiers/Constants.swift",
+              "scenes": "Sources/App/Identifiers/Scene.Identifiers.swift",
+              "views": "Sources/App/Identifiers/View.Identifiers.swift",
+              "styles": "Sources/App/Identifiers/Style.Identifiers.swift"
+          }
+      },
+      "targets": {
+          "iOS": "Binge_iOS",
+          "tvOS": "Binge_tvOS"
+      }
   },
   "packages" : [
-    "Configuration\/Murray\/Model\/BonePackage.json"
+    "Configuration\/Murray\/Model\/BonePackage.json",
+    "Configuration\/Murray\/App\/BonePackage.json"
   ]
 }

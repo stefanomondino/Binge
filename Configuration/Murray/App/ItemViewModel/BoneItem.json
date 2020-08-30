@@ -1,0 +1,22 @@
+{
+  "parameters" : [
+      {"name": "name", "isRequired": true }
+  ],
+  "paths" : [
+    {
+      "to" : "{{folders.views}}/{{name|firstUppercase}}/{{name|firstUppercase}}ItemViewModel.swift",
+      "from" : "ItemViewModel.swift.stencil"
+    }
+  ],
+  "replacements" : [
+      {
+          "placeholder": "// MURRAY DECLARATION PLACEHOLDER",
+          "text": "func {{name|firstLowercase}}({{name|firstLowercase}}: {{name|firstUppercase}})",
+          "destination": "{{files.factory.viewModel.items}}"
+      }
+  ],
+  "plugins" : {
+      "xcode": { "targets": ["{{targets.ios}","{{targets.tvos}}"] }
+  },
+  "name" : "itemViewModel"
+}
