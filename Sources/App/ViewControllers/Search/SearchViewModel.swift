@@ -17,7 +17,7 @@ class SearchViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
 
     var routes: PublishRelay<Route> = PublishRelay()
 
-    typealias ShowListDownloadClosure = (_ current: Int, _ total: Int) -> Observable<[ItemContainer]>
+    typealias ShowListDownloadClosure = (_ current: Int, _ total: Int) -> Observable<[TraktItemContainer]>
 
     let sectionsRelay: BehaviorRelay<[Section]> = BehaviorRelay(value: [])
 
@@ -69,17 +69,17 @@ class SearchViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
     }
 
     func selectItem(at indexPath: IndexPath) {
-        guard let show = (self[indexPath] as? GenericItemViewModel)?.item else { return }
+        guard let show = (self[indexPath] as? GenericItemViewModel)?.item as? TraktItemContainer else { return }
         let route = routeFactory.showDetail(for: show)
         routes.accept(route)
     }
 
-    private func items(from items: [ItemContainer]) -> [ViewModel] {
+    private func items(from items: [TraktItemContainer]) -> [ViewModel] {
         let factory = itemViewModelFactory
         return items.map { factory.item($0, layout: .full) }
     }
 
-    private func addItems(from shows: [ItemContainer], query: String) {
+    private func addItems(from shows: [TraktItemContainer], query: String) {
         guard var section = sections.first else { return }
         let newItems = items(from: shows)
         section.items = section.items.dropLast()
@@ -99,7 +99,7 @@ class SearchViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
                 .filter { $0 }
                 .take(1)
 //                .delay(.milliseconds(100), scheduler: Scheduler.background)
-                .flatMapLatest { [weak self] _ -> Observable<[ItemContainer]> in
+                .flatMapLatest { [weak self] _ -> Observable<[TraktItemContainer]> in
                     guard
                         let self = self,
                         let section = self.sections.first else { return Observable.empty() }
@@ -121,7 +121,7 @@ class SearchViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
         }
     }
 
-    private func createSections(from shows: [Item], query: String) -> [Section] {
+    private func createSections(from shows: [TraktItem], query: String) -> [Section] {
         let items = query.isEmpty ? [] : self.items(from: shows) + [loadMore(query: query)]
         return [Section(id: "", items: items)]
     }

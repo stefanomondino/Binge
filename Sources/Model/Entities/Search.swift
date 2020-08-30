@@ -6,21 +6,22 @@
 //
 
 import Foundation
-
-public enum Search {
-    struct ItemResponse: Codable {
-        let movie: Movie.MovieItemImplementation?
-        let show: Show.ShowItemImplementation?
-        let person: Person?
-        let score: Double
-        var item: SearchItem? {
-            guard let item: Item = (show ?? movie ?? person) else { return nil }
-            return SearchItem(item: item, score: score)
+extension Trakt {
+    public enum Search {
+        struct ItemResponse: Codable {
+            let movie: Trakt.Movie.Item?
+            let show: Trakt.Show.Item?
+            let person: Trakt.Person?
+            let score: Double
+            var item: SearchItem? {
+                guard let item: TraktItem = (show ?? movie ?? person) else { return nil }
+                return SearchItem(item: item, score: score)
+            }
         }
-    }
 
-    public struct SearchItem: ItemContainer {
-        public let item: Item
-        public let score: Double
+        public struct SearchItem: TraktItemContainer {
+            public let item: TraktItem
+            public let score: Double
+        }
     }
 }

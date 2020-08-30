@@ -7,36 +7,52 @@
 
 import Foundation
 
-public protocol ShowItem: ItemContainer {
+public protocol TraktShowItem: TraktItemContainer {
     var year: Int? { get }
-    var show: ShowItem { get }
+    var show: TraktShowItem { get }
 }
 
-public protocol ShowDetail: ItemDetail, ShowItem {
-    var overview: String { get }
-    var info: Show.Info? { get }
+//
+// public protocol ShowDetail: ItemDetail, ShowItem {
+//    var overview: String { get }
+//    var info: Show.Info? { get }
+// }
+public extension Trakt {
+    enum Show {}
 }
 
-public enum Show {
-    public struct Trending: WatchedItem, Codable, ShowItem {
+public extension TMDB {
+    enum Show {}
+}
+
+public extension Trakt.Show {
+    internal struct Item: TraktShowItem, TraktItem {
+        public let title: String
+        let ids: Trakt.Ids
+        let year: Int?
+        public var item: TraktItem { self }
+        public var show: TraktShowItem { self }
+    }
+
+    struct Trending: TraktWatchedItem, Codable, TraktShowItem {
         private enum CodingKeys: String, CodingKey {
             case showItem = "show"
             case watchers
         }
 
         public static var demo: Trending {
-            return Trending(showItem: ShowItemImplementation(title: "Test", ids: Ids(trakt: 0, slug: "this-is-test"), year: 2000), watchers: 2)
+            return Trending(showItem: Item(title: "Test", ids: Trakt.Ids(trakt: 0, slug: "this-is-test"), year: 2000), watchers: 2)
         }
 
-        private let showItem: ShowItemImplementation
+        private let showItem: Item
         private let watchers: Int
         public var watcherCount: Int { watchers }
-        public var item: Item { showItem }
-        public var show: ShowItem { showItem }
+        public var item: TraktItem { showItem }
+        public var show: TraktShowItem { showItem }
         public var year: Int? { show.year }
     }
 
-    public struct Played: WatchedItem, PlayedItem, CollectedItem, ShowItem, Codable {
+    struct Played: TraktWatchedItem, TraktPlayedItem, TraktCollectedItem, TraktShowItem, Codable {
         private enum CodingKeys: String, CodingKey {
             case showItem = "show"
             case watcherCount
@@ -49,26 +65,26 @@ public enum Show {
         public let playCount: Int
         public let collectedCount: Int
         public let collectorCount: Int?
-        private let showItem: ShowItemImplementation
-        public var item: Item { showItem }
-        public var show: ShowItem { showItem }
+        private let showItem: Item
+        public var item: TraktItem { showItem }
+        public var show: TraktShowItem { showItem }
         public var year: Int? { show.year }
     }
 
-    public struct Anticipated: AnticipatedItem, Codable, ShowItem {
+    struct Anticipated: TraktAnticipatedItem, Codable, TraktShowItem {
         private enum CodingKeys: String, CodingKey {
             case showItem = "show"
             case listCount
         }
 
-        private let showItem: ShowItemImplementation
+        private let showItem: Item
         public let listCount: Int
-        public var item: Item { showItem }
-        public var show: ShowItem { showItem }
+        public var item: TraktItem { showItem }
+        public var show: TraktShowItem { showItem }
         public var year: Int? { show.year }
     }
 
-    public struct Cast: CastItem, Codable, ShowItem {
+    struct Cast: TraktCastItem, Codable, TraktShowItem {
         struct Response: Codable {
             let cast: [Cast]
         }
@@ -79,62 +95,47 @@ public enum Show {
             case characters
         }
 
-        private let showItem: ShowItemImplementation
+        private let showItem: Item
         public let characters: [String]
         public let episodeCount: Int?
-        public var item: Item { showItem }
-        public var show: ShowItem { showItem }
+        public var item: TraktItem { showItem }
+        public var show: TraktShowItem { showItem }
         public var year: Int? { show.year }
     }
 
-    //    public struct Searched: SearchableItem, ShowItem {
-    //        public let score: Double
-    //        public let item: Item
-    //
-    //    }
-    //
-    internal struct ShowItemImplementation: ShowItem, Item {
-        public let title: String
-        let ids: Ids
-        let year: Int?
-        public var item: Item { self }
-        public var show: ShowItem { self }
+    struct Detail: Codable, TraktShowItem, TraktItemDetail {
+        public var overview: String
+        public var title: String
+        public var year: Int?
+        public var ids: Trakt.Ids
+        public var info: TMDB.Show.Info?
+        public var item: TraktItem { self }
+        public var show: TraktShowItem { self }
     }
+}
 
-    public struct Network: Codable {
+public extension TMDB.Show {
+    struct Network: Codable {
         public let name: String?
         public let id: Int
         public let logoPath: String?
         public let originCountry: String?
     }
 
-    public struct Genre: Codable {
+    struct Genre: Codable {
         public let id: Int?
         public let name: String?
     }
 
-    internal struct DetailItem: ShowDetail {
-        var overview: String
-        var title: String
-        var year: Int?
-        var ids: Ids
-        var info: Info?
-        var item: Item { self }
-        var show: ShowItem { self }
-        var aspectRatio: Double { 250 / 375.0 }
-
-        var defaultImage: String? { backdropPath }
-
-        var allowedSizes: KeyPath<TMDB.Image, [String]> { \.backdropSizes }
-        var backdropPath: String?
-    }
-
-    public struct Info: Codable {
+    struct Info: Codable, DownloadableImage {
+        public var aspectRatio: Double { 9 / 16 }
+        let id: Int
+        public var uniqueIdentifier: String { "\(id)" }
         public let name: String
         public let status: String?
         public let backdropPath: String?
         public let posterPath: String?
-        public let seasons: [Season.Info]?
+        public let seasons: [TMDB.Season.Info]?
         public let episodeRuntime: [Int]?
         public let firstAirDate: String?
         public let lastAirDate: String?
@@ -143,5 +144,7 @@ public enum Show {
         public let networks: [Network]?
         public let genres: [Genre]?
         public let popularity: Double?
+        public var defaultImage: String? { backdropPath }
+        public var allowedSizes: KeyPath<TMDB.Image, [String]> { \.backdropSizes }
     }
 }

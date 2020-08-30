@@ -29,7 +29,7 @@ class ItemListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
 
     var routes: PublishRelay<Route> = PublishRelay()
 
-    typealias ShowListDownloadClosure = (_ current: Int, _ total: Int) -> Observable<[ItemContainer]>
+    typealias ShowListDownloadClosure = (_ current: Int, _ total: Int) -> Observable<[TraktItemContainer]>
 
     var sectionsRelay: BehaviorRelay<[Section]> = BehaviorRelay(value: [])
 
@@ -73,12 +73,12 @@ class ItemListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
     }
 
     func selectItem(at indexPath: IndexPath) {
-        guard let show = (self[indexPath] as? GenericItemViewModel)?.item else { return }
+        guard let show = (self[indexPath] as? GenericItemViewModel)?.item as? TraktItemContainer else { return }
         let route = routeFactory.showDetail(for: show)
         routes.accept(route)
     }
 
-    private func items(from items: [ItemContainer]) -> [ViewModel] {
+    private func items(from items: [TraktItemContainer]) -> [ViewModel] {
         let factory = itemViewModelFactory
         return items.map { factory.item($0, layout: .posterOnly) }
     }
@@ -87,7 +87,7 @@ class ItemListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
         routes.accept(routeFactory.search())
     }
 
-    private func addItems(from shows: [ItemContainer]) {
+    private func addItems(from shows: [TraktItemContainer]) {
         guard var section = sections.first else { return }
         let newItems = items(from: shows)
         section.items = section.items.dropLast()
@@ -107,7 +107,7 @@ class ItemListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
                 .filter { $0 }
                 .take(1)
 //                .delay(.milliseconds(100), scheduler: Scheduler.background)
-                .flatMapLatest { [weak self] _ -> Observable<[ItemContainer]> in
+                .flatMapLatest { [weak self] _ -> Observable<[TraktItemContainer]> in
                     guard
                         let self = self,
                         let section = self.sections.first else { return Observable.empty() }
@@ -126,7 +126,7 @@ class ItemListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
         }
     }
 
-    private func createSections(from shows: [Item]) -> [Section] {
+    private func createSections(from shows: [TraktItem]) -> [Section] {
         let items = self.items(from: shows) + [loadMore()]
         return [Section(id: "", items: items)]
     }

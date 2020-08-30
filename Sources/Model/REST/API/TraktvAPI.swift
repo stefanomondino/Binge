@@ -8,48 +8,49 @@
 
 import Foundation
 import Moya
+extension Trakt {
+    enum API {
+        struct Page {
+            var page: Int
+            var limit: Int
+        }
 
-enum TraktvAPI {
-    struct Page {
-        var page: Int
-        var limit: Int
+        case authorize
+        case token(code: String)
+        case logout(token: String)
+
+        case trendingShows(Page)
+        case popularShows(Page)
+        case playedShows(Page)
+        case watchedShows(Page)
+        case collectedShows(Page)
+        case anticipatedShows(Page)
+        case showPeople(TraktItem)
+        case seasons(TraktItem)
+        case showSummary(TraktItem)
+        case relatedShows(TraktItem)
+        case peopleShows(Person)
+
+        case trendingMovies(Page)
+        case popularMovies(Page)
+        case playedMovies(Page)
+        case watchedMovies(Page)
+        case collectedMovies(Page)
+        case anticipatedMovies(Page)
+        case moviePeople(TraktItem)
+        case movieSummary(TraktItem)
+        case relatedMovies(TraktItem)
+        case peopleMovies(Person)
+
+        case search(String, Page)
+
+        case userSettings
+        case userShowHistory(User)
+        case userMovieHistory(User)
     }
-
-    case authorize
-    case token(code: String)
-    case logout(token: String)
-
-    case trendingShows(Page)
-    case popularShows(Page)
-    case playedShows(Page)
-    case watchedShows(Page)
-    case collectedShows(Page)
-    case anticipatedShows(Page)
-    case showPeople(Item)
-    case seasons(Item)
-    case showSummary(Item)
-    case relatedShows(Item)
-    case peopleShows(Person)
-
-    case trendingMovies(Page)
-    case popularMovies(Page)
-    case playedMovies(Page)
-    case watchedMovies(Page)
-    case collectedMovies(Page)
-    case anticipatedMovies(Page)
-    case moviePeople(Item)
-    case movieSummary(Item)
-    case relatedMovies(Item)
-    case peopleMovies(Person)
-
-    case search(String, Page)
-
-    case userSettings
-    case userShowHistory(User)
-    case userMovieHistory(User)
 }
 
-extension TraktvAPI: TargetType {
+extension Trakt.API: TargetType {
     var baseURL: URL {
         switch self {
         case .authorize: return Configuration.environment.traktWebURL

@@ -29,14 +29,14 @@ class PersonViewModel: ItemDetailViewModel {
 
     private let useCase: PersonDetailUseCase
 
-    let person: Person
+    let person: Trakt.Person
 
     let title: String
 
     private let loadingRelay = BehaviorRelay(value: 0)
     var isLoading: Observable<Bool> { loadingRelay.isLoading }
 
-    init(person: Person,
+    init(person: Trakt.Person,
          itemViewModelFactory: ItemViewModelFactory,
          useCase: PersonDetailUseCase,
          routeFactory: RouteFactory) {
@@ -59,7 +59,7 @@ class PersonViewModel: ItemDetailViewModel {
             .disposed(by: disposeBag)
     }
 
-    private func map(_ person: PersonInfo) -> [Section] {
+    private func map(_ person: TMDB.Person.Info) -> [Section] {
 //            let routes = self.routes
 //            let routeFactory = self.routeFactory
         var topSection = Section(id: UUID().stringValue,

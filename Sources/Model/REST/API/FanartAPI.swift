@@ -10,8 +10,8 @@ import Foundation
 import Moya
 
 enum FanartAPI {
-    case show(Item)
-    case movie(Item)
+    case show(TraktItem)
+    case movie(TraktItem)
 }
 
 extension FanartAPI: TargetType {

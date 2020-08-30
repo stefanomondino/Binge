@@ -29,7 +29,6 @@ struct API {
     }
 }
 
-public enum TMDB {}
 public extension TMDB {
     struct Image: Codable {
         let baseUrl: URL
@@ -48,10 +47,10 @@ extension TMDB {
         }
 
         case configuration
-        case show(Item)
-        case movie(Item)
-        case person(Person)
-        case seasonDetail(Season.Info, Item)
+        case show(TraktItem)
+        case movie(TraktItem)
+        case person(Trakt.Person)
+        case seasonDetail(TMDB.Season.Info, TraktItem)
     }
 }
 

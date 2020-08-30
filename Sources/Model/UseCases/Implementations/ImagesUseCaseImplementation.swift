@@ -36,7 +36,7 @@ class ImagesUseCaseImplementation: ImagesUseCase {
         }
     }
 
-    func poster(for show: ShowItem) -> Observable<WithImage> {
+    func poster(for show: TraktShowItem) -> Observable<WithImage> {
         return shows.info(forShow: show.item)
             .map { $0 }
             .catchErrorJustReturn(nil)
@@ -46,7 +46,7 @@ class ImagesUseCaseImplementation: ImagesUseCase {
         //        return
     }
 
-    func poster(for movie: MovieItem) -> Observable<WithImage> {
+    func poster(for movie: TraktMovieItem) -> Observable<WithImage> {
         return movies.info(forMovie: movie.item)
             .map { $0 }
             .catchErrorJustReturn(nil)
@@ -55,7 +55,7 @@ class ImagesUseCaseImplementation: ImagesUseCase {
             }
     }
 
-    func image(forPerson person: Person) -> Observable<WithImage> {
+    func image(forPerson person: Trakt.Person) -> Observable<WithImage> {
         return shows.info(forPerson: person)
             .map { $0 }
             .catchErrorJustReturn(nil)
@@ -70,13 +70,13 @@ class ImagesUseCaseImplementation: ImagesUseCase {
         }
     }
 
-    func image(forSeason season: Season.Info) -> Observable<WithImage> {
+    func image(forSeason season: TMDB.Season.Info) -> Observable<WithImage> {
         return Observable.just(season).flatMapLatest {
             self.image(from: $0, with: \.posterPath, sizes: \.posterSizes)
         }
     }
 
-    func image(for episode: Season.Episode) -> Observable<WithImage> {
+    func image(for episode: TMDB.Season.Episode) -> Observable<WithImage> {
         return Observable.just(episode).flatMapLatest {
             self.image(from: $0, with: \.stillPath, sizes: \.stillSizes)
         }

@@ -80,7 +80,7 @@ class MainRouteFactory: RouteFactory {
         }
     }
 
-    func showDetail(for show: ItemContainer) -> Route {
+    func showDetail(for show: TraktItemContainer) -> Route {
         guard let viewModel = container.viewModels.scenes.itemDetail(for: show) else {
             return EmptyRoute { nil }
         }
@@ -91,7 +91,7 @@ class MainRouteFactory: RouteFactory {
         }
     }
 
-    func personDetail(for person: Person) -> Route {
+    func personDetail(for person: Trakt.Person) -> Route {
         return NavigationRoute {
             let viewModel = self.container.viewModels.scenes.personDetail(for: person)
             return self.container.views.scenes
@@ -100,7 +100,7 @@ class MainRouteFactory: RouteFactory {
         }
     }
 
-    func seasonDetail(for season: Season.Info, of show: ShowItem) -> Route {
+    func seasonDetail(for season: TMDB.Season.Info, of show: TraktShowItem) -> Route {
         return NavigationRoute {
             let viewModel = self.container.viewModels.scenes.seasonDetail(for: season, of: show)
             return self.container.views.scenes

@@ -35,7 +35,7 @@ class DefaultAuthorizationRepository: AuthorizationRepository {
         authorizationCode
             .take(1)
             .flatMapLatest { code in
-                self.dataSource.get(AccessToken.self, at: TraktvAPI.token(code: code))
+                self.dataSource.get(AccessToken.self, at: Trakt.API.token(code: code))
             }
             .do(onNext: { self.updateAccessToken($0) })
             .map { _ in }
@@ -56,7 +56,7 @@ class DefaultAuthorizationRepository: AuthorizationRepository {
     }
 
     func webViewURL() -> URL? {
-        return dataSource.request(for: TraktvAPI.authorize)?.url
+        return dataSource.request(for: Trakt.API.authorize)?.url
     }
 
     func logout() -> Observable<Void> {
@@ -64,7 +64,7 @@ class DefaultAuthorizationRepository: AuthorizationRepository {
             guard let token = AccessToken.current?.accessToken else { return .just(()) }
             self.updateAccessToken(nil)
             return self.dataSource
-                .get(EmptyResource.self, at: TraktvAPI.logout(token: token))
+                .get(EmptyResource.self, at: Trakt.API.logout(token: token))
                 .map { _ in }
                 .catchErrorJustReturn(())
         }

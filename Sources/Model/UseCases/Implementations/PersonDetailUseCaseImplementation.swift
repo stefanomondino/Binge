@@ -11,11 +11,11 @@ import RxSwift
 struct ShowPersonDetailUseCaseImplementation: PersonDetailUseCase {
     let shows: ShowsRepository
 
-    func personDetail(for person: Person) -> Observable<PersonInfo> {
+    func personDetail(for person: Trakt.Person) -> Observable<TMDB.Person.Info> {
         return shows.info(forPerson: person)
     }
 
-    func cast(for person: Person) -> Observable<[ItemContainer]> {
+    func cast(for person: Trakt.Person) -> Observable<[TraktItemContainer]> {
         return shows.personCast(for: person).map { $0.cast }
     }
 }
@@ -23,11 +23,11 @@ struct ShowPersonDetailUseCaseImplementation: PersonDetailUseCase {
 struct MoviePersonDetailUseCaseImplementation: PersonDetailUseCase {
     let movies: MoviesRepository
 
-    func personDetail(for person: Person) -> Observable<PersonInfo> {
+    func personDetail(for person: Trakt.Person) -> Observable<TMDB.Person.Info> {
         return movies.info(forPerson: person)
     }
 
-    func cast(for person: Person) -> Observable<[ItemContainer]> {
+    func cast(for person: Trakt.Person) -> Observable<[TraktItemContainer]> {
         return movies.personCast(for: person).map { $0.cast }
     }
 }

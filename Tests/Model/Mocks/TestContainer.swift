@@ -40,7 +40,7 @@ class TestContainer: ModelContainer {
         container.dataSources.register(for: .rest, scope: .eagerSingleton, handler: { self.dataSource })
     }
 
-    func mockJSONFile(_ name: String, statusCode: Int = 200, at target: TraktvAPI) {
+    func mockJSONFile(_ name: String, statusCode: Int = 200, at target: Trakt.API) {
         dataSource.mockJSONFile(name, bundle: Bundle(for: TestContainer.self), statusCode: statusCode, for: target)
     }
 }

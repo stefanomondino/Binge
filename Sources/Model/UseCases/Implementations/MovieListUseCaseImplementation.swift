@@ -17,7 +17,7 @@ public class PopularMoviesUseCase: ItemListUseCase {
         self.repository = repository
     }
 
-    public func items(currentPage: Int, pageSize: Int) -> Observable<[ItemContainer]> {
+    public func items(currentPage: Int, pageSize: Int) -> Observable<[TraktItemContainer]> {
         return repository
             .popular(currentPage: currentPage, pageSize: pageSize)
             .map { $0 }
@@ -33,7 +33,7 @@ public class TrendingMoviesUseCase: ItemListUseCase {
         self.repository = repository
     }
 
-    public func items(currentPage: Int, pageSize: Int) -> Observable<[ItemContainer]> {
+    public func items(currentPage: Int, pageSize: Int) -> Observable<[TraktItemContainer]> {
         return repository
             .trending(currentPage: currentPage, pageSize: pageSize)
             .map { $0 }
@@ -49,7 +49,7 @@ public class WatchedMoviesUseCase: ItemListUseCase {
         self.repository = repository
     }
 
-    public func items(currentPage: Int, pageSize: Int) -> Observable<[ItemContainer]> {
+    public func items(currentPage: Int, pageSize: Int) -> Observable<[TraktItemContainer]> {
         return repository
             .watched(currentPage: currentPage, pageSize: pageSize)
             .map { $0 }
@@ -65,7 +65,7 @@ public class CollectedMoviesUseCase: ItemListUseCase {
         self.repository = repository
     }
 
-    public func items(currentPage: Int, pageSize: Int) -> Observable<[ItemContainer]> {
+    public func items(currentPage: Int, pageSize: Int) -> Observable<[TraktItemContainer]> {
         return repository
             .collected(currentPage: currentPage, pageSize: pageSize)
             .map { $0 }
@@ -81,7 +81,7 @@ public class AnticipatedMoviesUseCase: ItemListUseCase {
         self.repository = repository
     }
 
-    public func items(currentPage: Int, pageSize: Int) -> Observable<[ItemContainer]> {
+    public func items(currentPage: Int, pageSize: Int) -> Observable<[TraktItemContainer]> {
         return repository
             .anticipated(currentPage: currentPage, pageSize: pageSize)
             .map { $0 }

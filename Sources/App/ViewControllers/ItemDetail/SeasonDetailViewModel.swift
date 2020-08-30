@@ -30,15 +30,15 @@ class SeasonDetailViewModel: ItemDetailViewModel {
 
     private let useCase: ShowDetailUseCase
 
-    let season: Season.Info
-    let show: ShowItem
+    let season: TMDB.Season.Info
+    let show: TraktShowItem
     let title: String
 
     private let loadingRelay = BehaviorRelay(value: 0)
     var isLoading: Observable<Bool> { loadingRelay.isLoading }
 
-    init(season: Season.Info,
-         show: ShowItem,
+    init(season: TMDB.Season.Info,
+         show: TraktShowItem,
          itemViewModelFactory: ItemViewModelFactory,
          useCase: ShowDetailUseCase,
          routeFactory: RouteFactory) {
@@ -64,7 +64,7 @@ class SeasonDetailViewModel: ItemDetailViewModel {
             .disposed(by: disposeBag)
     }
 
-    private func map(_ season: Season.Info, fanart: FanartResponse?) -> [Section] {
+    private func map(_ season: TMDB.Season.Info, fanart: FanartResponse?) -> [Section] {
 //            let routes = self.routes
 //            let routeFactory = self.routeFactory
         let itemViewModelFactory = self.itemViewModelFactory

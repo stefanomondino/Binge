@@ -11,5 +11,5 @@ public enum PageInfo {
 
 public protocol ItemListUseCase {
     var page: PageInfo { get }
-    func items(currentPage: Int, pageSize: Int) -> Observable<[ItemContainer]>
+    func items(currentPage: Int, pageSize: Int) -> Observable<[TraktItemContainer]>
 }

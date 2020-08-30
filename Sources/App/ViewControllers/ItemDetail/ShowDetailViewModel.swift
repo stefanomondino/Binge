@@ -24,7 +24,7 @@ class ShowDetailViewModel: ItemDetailViewModel {
 
     private let useCase: ShowDetailUseCase
 
-    private let show: ItemContainer
+    private let show: TraktItemContainer
 
     let routeFactory: RouteFactory
 
@@ -38,7 +38,7 @@ class ShowDetailViewModel: ItemDetailViewModel {
     var isLoading: Observable<Bool> { loadingRelay.isLoading }
 
     init(
-        show: ItemContainer,
+        show: TraktItemContainer,
         routeFactory: RouteFactory,
         itemViewModelFactory: ItemViewModelFactory,
         useCase: ShowDetailUseCase,
@@ -74,10 +74,11 @@ class ShowDetailViewModel: ItemDetailViewModel {
 
     func addToFavorite() {}
 
-    private func map(_ show: ShowDetail, fanart: FanartResponse?) -> [Section] {
+    private func map(_ show: Trakt.Show.Detail, fanart: FanartResponse?) -> [Section] {
+        guard let info = show.info else { return [] }
         let routes = self.routes
         let routeFactory = self.routeFactory
-        let backdrop = itemViewModelFactory.image(show, fanart: fanart?.showImage(for: .background))
+        let backdrop = itemViewModelFactory.image(info, fanart: fanart?.showImage(for: .background))
 
         let topSection = Section(items: [itemViewModelFactory.item(show, layout: .title),
                                          itemViewModelFactory.titledDescription(title: Strings.Generic.year, description: show.year?.stringValue),
@@ -96,7 +97,7 @@ class ShowDetailViewModel: ItemDetailViewModel {
         if let navbar = [Fanart.Format.hdtvLogo]
             .compactMap({ fanart?.showImage(for: $0) })
             .first?
-            .map({ itemViewModelFactory.image(show, fanart: $0) }) {
+            .map({ itemViewModelFactory.image(info, fanart: $0) }) {
             navbarTitleViewModelRelay.accept(navbar)
         }
         var carousels: [ViewModel] = []

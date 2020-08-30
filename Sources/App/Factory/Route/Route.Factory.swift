@@ -19,9 +19,9 @@ protocol RouteFactory {
     func home() -> Route
     func url(for url: URL) -> Route
     func exit() -> CompletableRoute
-    func showDetail(for show: ItemContainer) -> Route
-    func personDetail(for person: Person) -> Route
-    func seasonDetail(for season: Season.Info, of show: ShowItem) -> Route
+    func showDetail(for show: TraktItemContainer) -> Route
+    func personDetail(for person: Trakt.Person) -> Route
+    func seasonDetail(for season: TMDB.Season.Info, of show: TraktShowItem) -> Route
     func search() -> Route
     func error(_ error: Errors, retry: (() -> Void)?) -> Route
     func settings() -> Route

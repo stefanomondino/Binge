@@ -31,7 +31,7 @@ class DefaultDataSourceContainer: DataSourceContainer, DependencyContainer {
     init(container _: ModelDependencyContainer) {
         let dataSource = CachingRESTDataSource()
         dataSource.addProvider(for: TMDB.API.self)
-        dataSource.addProvider(for: TraktvAPI.self)
+        dataSource.addProvider(for: Trakt.API.self)
         dataSource.addProvider(for: FanartAPI.self)
 
         register(for: .rest, scope: .eagerSingleton) {

@@ -55,18 +55,20 @@ public struct User: Codable {
     }
 }
 
-public struct UserWatched: Codable, ItemContainer {
-    private struct Empty: Item {
-        var title: String = ""
-        var ids: Ids = Ids(trakt: 0, slug: "")
-        var item: Item { self }
-    }
+extension Trakt {
+    public struct UserWatched: Codable, TraktItemContainer {
+        private struct Empty: TraktItem {
+            var title: String = ""
+            var ids: Ids = Ids(trakt: 0, slug: "")
+            var item: TraktItem { self }
+        }
 
-    public var item: Item { (show ?? movie) ?? UserWatched.Empty() }
+        public var item: TraktItem { (show ?? movie) ?? UserWatched.Empty() }
 
-    public var watchedAt: String
-    var show: Show.ShowItemImplementation?
-    var movie: Movie.MovieItemImplementation?
+        public var watchedAt: String
+        var show: Trakt.Show.Item?
+        var movie: Trakt.Movie.Item?
 //    var episode: Season.Episode?
-    var season: Season.Info?
+        var season: Trakt.Season?
+    }
 }

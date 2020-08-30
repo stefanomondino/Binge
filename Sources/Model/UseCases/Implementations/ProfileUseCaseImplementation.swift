@@ -23,7 +23,7 @@ struct ProfileUseCaseImplementation: ProfileUseCase {
         profile.userSettings()
     }
 
-    func showsHistory() -> Observable<[UserWatched]> {
+    func showsHistory() -> Observable<[Trakt.UserWatched]> {
         profile.showsHistory()
     }
 }

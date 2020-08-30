@@ -26,7 +26,7 @@ class MovieDetailViewModel: RxListViewModel, ItemDetailViewModel {
 
     private let useCase: MovieDetailUseCase
 
-    private let movie: ItemContainer
+    private let movie: TraktItemContainer
 
     let routeFactory: RouteFactory
 
@@ -40,7 +40,7 @@ class MovieDetailViewModel: RxListViewModel, ItemDetailViewModel {
     var isLoading: Observable<Bool> { loadingRelay.isLoading }
 
     init(
-        movie: ItemContainer,
+        movie: TraktItemContainer,
         routeFactory: RouteFactory,
         itemViewModelFactory: ItemViewModelFactory,
         useCase: MovieDetailUseCase,
@@ -74,18 +74,19 @@ class MovieDetailViewModel: RxListViewModel, ItemDetailViewModel {
 
     func addToFavorite() {}
 
-    private func map(_ movie: MovieDetail, fanart: FanartResponse?) -> [Section] {
+    private func map(_ movie: Trakt.Movie.Detail, fanart: FanartResponse?) -> [Section] {
+        guard let info = movie.info else { return [] }
         let routes = self.routes
         let routeFactory = self.routeFactory
         var topSection = Section(id: UUID().stringValue,
                                  items: [itemViewModelFactory.item(movie, layout: .title),
                                          itemViewModelFactory.showDescription(movie)])
         let backdrop =
-            itemViewModelFactory.image(movie, fanart: fanart?.movieImage(for: [.background, .hdtvLogo]))
+            itemViewModelFactory.image(info, fanart: fanart?.movieImage(for: [.background, .hdtvLogo]))
         topSection.supplementary.set(backdrop, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
 
         if let navbarItem = fanart?.movieImage(for: [Fanart.Format.hdtvLogo]) {
-            navbarTitleViewModelRelay.accept(itemViewModelFactory.image(movie, fanart: navbarItem))
+            navbarTitleViewModelRelay.accept(itemViewModelFactory.image(info, fanart: navbarItem))
         }
         var carousels: [ViewModel] = []
 

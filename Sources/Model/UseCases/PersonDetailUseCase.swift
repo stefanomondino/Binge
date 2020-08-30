@@ -10,6 +10,6 @@ import Foundation
 import RxSwift
 
 public protocol PersonDetailUseCase {
-    func personDetail(for person: Person) -> Observable<PersonInfo>
-    func cast(for person: Person) -> Observable<[ItemContainer]>
+    func personDetail(for person: Trakt.Person) -> Observable<TMDB.Person.Info>
+    func cast(for person: Trakt.Person) -> Observable<[TraktItemContainer]>
 }

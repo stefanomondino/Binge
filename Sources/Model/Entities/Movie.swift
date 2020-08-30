@@ -7,30 +7,45 @@
 
 import Foundation
 
-public protocol MovieItem: ItemContainer {}
+public protocol TraktMovieItem: TraktItemContainer {}
 
-public protocol MovieDetail: ItemDetail, MovieItem {
-    var info: Movie.Info? { get }
+// public protocol MovieDetail: ItemDetail, MovieItem {
+//    var info: Movie.Info? { get }
+// }
+public extension Trakt {
+    enum Movie {}
 }
 
-public enum Movie {
-    public struct Trending: WatchedItem, Codable, MovieItem {
+public extension TMDB {
+    enum Movie {}
+}
+
+public extension Trakt.Movie {
+    internal struct Item: TraktMovieItem, TraktItem {
+        public let title: String
+        let ids: Trakt.Ids
+        let year: Int?
+        public var item: TraktItem { self }
+        public var movie: TraktMovieItem { self }
+    }
+
+    struct Trending: TraktWatchedItem, Codable, TraktMovieItem {
         private enum CodingKeys: String, CodingKey {
             case movieItem = "movie"
             case watchers
         }
 
         public static var demo: Trending {
-            return Trending(movieItem: MovieItemImplementation(title: "Test", ids: Ids(trakt: 0, slug: "this-is-test"), year: 2000), watchers: 2)
+            return Trending(movieItem: Item(title: "Test", ids: Trakt.Ids(trakt: 0, slug: "this-is-test"), year: 2000), watchers: 2)
         }
 
-        private let movieItem: MovieItemImplementation
+        private let movieItem: Item
         private let watchers: Int
         public var watcherCount: Int { watchers }
-        public var item: Item { return movieItem }
+        public var item: TraktItem { return movieItem }
     }
 
-    public struct Played: WatchedItem, PlayedItem, CollectedItem, Codable, MovieItem {
+    struct Played: TraktWatchedItem, TraktPlayedItem, TraktCollectedItem, Codable, TraktMovieItem {
         private enum CodingKeys: String, CodingKey {
             case movieItem = "movie"
             case watcherCount
@@ -43,22 +58,22 @@ public enum Movie {
         public let playCount: Int
         public let collectedCount: Int
         public let collectorCount: Int?
-        private let movieItem: MovieItemImplementation
-        public var item: Item { return movieItem }
+        private let movieItem: Item
+        public var item: TraktItem { return movieItem }
     }
 
-    public struct Anticipated: AnticipatedItem, Codable, MovieItem {
+    struct Anticipated: TraktAnticipatedItem, Codable, TraktMovieItem {
         private enum CodingKeys: String, CodingKey {
             case movieItem = "movie"
             case listCount
         }
 
-        private let movieItem: MovieItemImplementation
+        private let movieItem: Item
         public let listCount: Int
-        public var item: Item { movieItem }
+        public var item: TraktItem { movieItem }
     }
 
-    public struct Cast: CastItem, Codable, MovieItem {
+    struct Cast: TraktCastItem, Codable, TraktMovieItem {
         struct Response: Codable {
             let cast: [Cast]
         }
@@ -68,43 +83,38 @@ public enum Movie {
             case characters
         }
 
-        private let movieItem: MovieItemImplementation
+        private let movieItem: Item
         public let characters: [String]
-        public var item: Item { movieItem }
-        public var movie: MovieItem { movieItem }
+        public var item: TraktItem { movieItem }
+        public var movie: TraktMovieItem { movieItem }
     }
 
-    public struct Searched: SearchableItem, MovieItem {
-        public let score: Double
-        public let item: Item
+//    public struct Searched: SearchableItem, MovieItem {
+//        public let score: Double
+//        public let item: Item
+//    }
+
+    struct Detail: TraktMovieItem, TraktItemDetail {
+        public var overview: String
+        public var runtime: Int
+        public var title: String
+        public var year: Int?
+        public var ids: Trakt.Ids
+        public var info: TMDB.Movie.Info?
+        public var movie: TraktMovieItem { self }
+        public var item: TraktItem { self }
     }
+}
 
-    internal struct MovieItemImplementation: MovieItem, Item {
-        public let title: String
-        let ids: Ids
-        let year: Int?
-
-        public var item: Item { return self }
-    }
-
-    internal struct DetailItem: MovieDetail {
-        var aspectRatio: Double { 1920 / 1080.0 }
-        var defaultImage: String? { backdropPath }
-        var allowedSizes: KeyPath<TMDB.Image, [String]> { \.backdropSizes }
-        var backdropPath: String?
-        var overview: String
-        var runtime: Int
-        var title: String
-        var year: Int?
-        var ids: Ids
-        var info: Info?
-        var item: Item { return self }
-    }
-
-    public struct Info: Codable {
-        public let name: String?
+public extension TMDB.Movie {
+    struct Info: Codable, DownloadableImage {
+        public var id: Int
+        public var uniqueIdentifier: String { "\(id)" }
+        public let name: String
         public let backdropPath: String?
         public let posterPath: String?
-//        public let seasons: [Season.Info]?
+        public var aspectRatio: Double { 9 / 16 }
+        public var defaultImage: String? { backdropPath }
+        public var allowedSizes: KeyPath<TMDB.Image, [String]> { \.backdropSizes }
     }
 }

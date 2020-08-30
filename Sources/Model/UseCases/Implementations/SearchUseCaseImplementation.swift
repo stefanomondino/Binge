@@ -17,7 +17,7 @@ class SearchUseCaseImplementation: SearchUseCase {
         self.repository = repository
     }
 
-    func items(query: String, currentPage: Int, pageSize: Int) -> Observable<[ItemContainer]> {
+    func items(query: String, currentPage: Int, pageSize: Int) -> Observable<[TraktItemContainer]> {
         return repository
             .search(query: query, currentPage: currentPage, pageSize: pageSize)
             .map { $0 }

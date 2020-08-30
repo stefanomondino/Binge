@@ -52,7 +52,7 @@ class GenericItemViewModel: ViewModel {
     var layoutIdentifier: LayoutIdentifier { showIdentifier }
     let showIdentifier: Identifier
     var uniqueIdentifier: UniqueIdentifier { item.uniqueIdentifier }
-    let item: Item
+    let item: GenericItem
     let image: ObservableImage
     //    let counter: String
     var title: String {
@@ -64,7 +64,7 @@ class GenericItemViewModel: ViewModel {
 
     let mainStyle: Style
 
-    init(show: ShowItem,
+    init(show: TraktShowItem,
          layoutIdentifier: Identifier,
          imageUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
@@ -77,7 +77,7 @@ class GenericItemViewModel: ViewModel {
         //            .share(replay: 1, scope: .forever)
     }
 
-    init(showCast show: Show.Cast,
+    init(showCast show: Trakt.Show.Cast,
          layoutIdentifier: Identifier,
          imageUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
@@ -93,7 +93,7 @@ class GenericItemViewModel: ViewModel {
         //            .share(replay: 1, scope: .forever)
     }
 
-    init(movieCast movie: Movie.Cast,
+    init(movieCast movie: Trakt.Movie.Cast,
          layoutIdentifier: Identifier,
          imageUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
@@ -106,7 +106,7 @@ class GenericItemViewModel: ViewModel {
         //            .share(replay: 1, scope: .forever)
     }
 
-    init(movie: MovieItem,
+    init(movie: TraktMovieItem,
          layoutIdentifier: Identifier,
          imageUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
@@ -120,26 +120,26 @@ class GenericItemViewModel: ViewModel {
         //            .share(replay: 1, scope: .forever)
     }
 
-    convenience init(search: Search.SearchItem,
+    convenience init(search: Trakt.Search.SearchItem,
                      layoutIdentifier: Identifier,
                      imageUseCase: ImagesUseCase) {
         switch search.item {
-        case let show as ShowItem: self.init(show: show,
-                                             layoutIdentifier: layoutIdentifier,
-                                             imageUseCase: imageUseCase)
-        case let movie as MovieItem: self.init(movie: movie,
-                                               layoutIdentifier: layoutIdentifier,
-                                               imageUseCase: imageUseCase)
-        case let person as Person: self.init(person: person,
-                                             layoutIdentifier: layoutIdentifier,
-                                             imagesUseCase: imageUseCase)
+        case let show as TraktShowItem: self.init(show: show,
+                                                  layoutIdentifier: layoutIdentifier,
+                                                  imageUseCase: imageUseCase)
+        case let movie as TraktMovieItem: self.init(movie: movie,
+                                                    layoutIdentifier: layoutIdentifier,
+                                                    imageUseCase: imageUseCase)
+        case let person as Trakt.Person: self.init(person: person,
+                                                   layoutIdentifier: layoutIdentifier,
+                                                   imagesUseCase: imageUseCase)
         default: self.init(item: search.item,
                            layoutIdentifier: layoutIdentifier,
                            imageUseCase: imageUseCase)
         }
     }
 
-    init(person: Person,
+    init(person: Trakt.Person,
          layoutIdentifier: Identifier = .person,
          imagesUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
@@ -152,7 +152,7 @@ class GenericItemViewModel: ViewModel {
             .share(replay: 1, scope: .forever)
     }
 
-    init(castMember: CastMember,
+    init(castMember: Trakt.CastMember,
          layoutIdentifier: Identifier = .person,
          imagesUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
@@ -168,7 +168,7 @@ class GenericItemViewModel: ViewModel {
             .share(replay: 1, scope: .forever)
     }
 
-    init(season: Season.Info,
+    init(season: TMDB.Season.Info,
          layoutIdentifier: Identifier = .season,
          imagesUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
@@ -185,7 +185,7 @@ class GenericItemViewModel: ViewModel {
             .share(replay: 1, scope: .forever)
     }
 
-    init(episode: Season.Episode,
+    init(episode: TMDB.Season.Episode,
          layoutIdentifier: Identifier = .season,
          imagesUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
@@ -202,7 +202,7 @@ class GenericItemViewModel: ViewModel {
             .share(replay: 1, scope: .forever)
     }
 
-    init(item: Item,
+    init(item: GenericItem,
          layoutIdentifier: Identifier,
          imageUseCase _: ImagesUseCase) {
         showIdentifier = layoutIdentifier

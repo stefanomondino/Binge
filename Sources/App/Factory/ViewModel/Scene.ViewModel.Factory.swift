@@ -15,10 +15,10 @@ protocol SceneViewModelFactory {
     func splashViewModel() -> SplashViewModel
     func homePager() -> PagerViewModel
     func user() -> UserViewModel
-    func itemDetail(for item: ItemContainer) -> ItemDetailViewModel?
-    func personDetail(for person: Person) -> PersonViewModel
+    func itemDetail(for item: TraktItemContainer) -> ItemDetailViewModel?
+    func personDetail(for person: Trakt.Person) -> PersonViewModel
     func showsPager() -> PagerViewModel
-    func seasonDetail(for season: Season.Info, of show: ShowItem) -> ItemDetailViewModel
+    func seasonDetail(for season: TMDB.Season.Info, of show: TraktShowItem) -> ItemDetailViewModel
     func search() -> SearchViewModel
     func settings() -> SettingsViewModel
     // MURRAY DECLARATION PLACEHOLDER
@@ -155,22 +155,22 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
                           routeFactory: container.routeFactory)
     }
 
-    func itemDetail(for item: ItemContainer) -> ItemDetailViewModel? {
+    func itemDetail(for item: TraktItemContainer) -> ItemDetailViewModel? {
         switch item {
-        case let show as ShowItem: return showDetail(for: show)
-        case let movie as MovieItem: return movieDetail(for: movie)
+        case let show as TraktShowItem: return showDetail(for: show)
+        case let movie as TraktMovieItem: return movieDetail(for: movie)
         default: return nil
         }
     }
 
-    func showDetail(for show: ShowItem) -> ItemDetailViewModel {
+    func showDetail(for show: TraktShowItem) -> ItemDetailViewModel {
         ShowDetailViewModel(show: show,
                             routeFactory: container.routeFactory,
                             itemViewModelFactory: container.viewModels.items,
                             useCase: container.model.useCases.shows.detail)
     }
 
-    func seasonDetail(for season: Season.Info, of show: ShowItem) -> ItemDetailViewModel {
+    func seasonDetail(for season: TMDB.Season.Info, of show: TraktShowItem) -> ItemDetailViewModel {
         SeasonDetailViewModel(season: season,
                               show: show,
                               itemViewModelFactory: container.viewModels.items,
@@ -178,14 +178,14 @@ struct DefaultSceneViewModelFactory: SceneViewModelFactory {
                               routeFactory: container.routeFactory)
     }
 
-    func movieDetail(for movie: MovieItem) -> ItemDetailViewModel {
+    func movieDetail(for movie: TraktMovieItem) -> ItemDetailViewModel {
         MovieDetailViewModel(movie: movie,
                              routeFactory: container.routeFactory,
                              itemViewModelFactory: container.viewModels.items,
                              useCase: container.model.useCases.movies.detail)
     }
 
-    func personDetail(for person: Person) -> PersonViewModel {
+    func personDetail(for person: Trakt.Person) -> PersonViewModel {
         PersonViewModel(person: person,
                         itemViewModelFactory: container.viewModels.items,
                         useCase: container.model.useCases.shows.person,

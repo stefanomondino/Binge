@@ -16,24 +16,24 @@ protocol StringViewModel: ViewModel, CustomStringConvertible {}
 
 protocol ItemViewModelFactory {
     func loadMore(_ closure: @escaping () -> Disposable) -> ViewModel
-    func item(_ show: ItemContainer, layout: GenericItemViewModel.Identifier) -> ViewModel
-    func seasonsCarousel(for show: ItemContainer, onSelection: @escaping (Season.Info) -> Void) -> ViewModel
-    func castCarousel(for item: ItemContainer, onSelection: @escaping (Person) -> Void) -> ViewModel?
-    func relatedCarousel(for show: ItemContainer, onSelection: @escaping (Item) -> Void) -> ViewModel?
-    func person(_ person: Person) -> ViewModel
-    func personDescription(_ person: PersonInfo) -> ViewModel
-    func castMember(_ castMember: CastMember) -> ViewModel
-    func showDescription(_ show: ItemDetail) -> ViewModel
-    func movieDescription(_ show: ItemDetail) -> ViewModel
-    func seasonDescription(_ season: Season.Info) -> ViewModel
+    func item(_ show: GenericItem, layout: GenericItemViewModel.Identifier) -> ViewModel
+    func seasonsCarousel(for show: TraktItemContainer, onSelection: @escaping (TMDB.Season.Info) -> Void) -> ViewModel
+    func castCarousel(for item: TraktItemContainer, onSelection: @escaping (Trakt.Person) -> Void) -> ViewModel?
+    func relatedCarousel(for show: TraktItemContainer, onSelection: @escaping (TraktItem) -> Void) -> ViewModel?
+    func person(_ person: Trakt.Person) -> ViewModel
+    func personDescription(_ person: TMDB.Person.Info) -> ViewModel
+    func castMember(_ castMember: Trakt.CastMember) -> ViewModel
+    func showDescription(_ show: TraktItemDetail) -> ViewModel
+    func movieDescription(_ show: TraktItemDetail) -> ViewModel
+    func seasonDescription(_ season: TMDB.Season.Info) -> ViewModel
 //    func image(_ fanart: Fanart) -> ViewModel
     func image(_: DownloadableImage, fanart: Fanart?) -> ViewModel
     func image(_ image: WithImage, ratio: CGFloat) -> ViewModel
-    func castMoviesCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel
-    func castShowsCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel
+    func castMoviesCarousel(for person: Trakt.Person, onSelection: @escaping (TraktItem) -> Void) -> ViewModel
+    func castShowsCarousel(for person: Trakt.Person, onSelection: @escaping (TraktItem) -> Void) -> ViewModel
     func titledDescription(title: CustomStringConvertible, description: CustomStringConvertible?) -> ViewModel?
     func settingsValue(title: CustomStringConvertible, identifier: UniqueIdentifier) -> DescriptionItemViewModel
-    func userShowsHistoryCarousel(onSelection: @escaping (Item) -> Void) -> ViewModel
+    func userShowsHistoryCarousel(onSelection: @escaping (TraktItem) -> Void) -> ViewModel
     func profileHeader(profile: User) -> ViewModel
     func button(with contents: ButtonContents) -> ViewModel
     // MURRAY DECLARATION PLACEHOLDER
@@ -46,52 +46,52 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
         LoadMoreItemViewModel(closure)
     }
 
-    func item(_ item: ItemContainer, layout: GenericItemViewModel.Identifier) -> ViewModel {
+    func item(_ item: GenericItem, layout: GenericItemViewModel.Identifier) -> ViewModel {
         switch item {
-        case let showCast as Show.Cast: return GenericItemViewModel(showCast: showCast,
-                                                                    layoutIdentifier: layout,
-                                                                    imageUseCase: container.model.useCases.images)
-        case let movieCast as Movie.Cast: return GenericItemViewModel(movieCast: movieCast,
-                                                                      layoutIdentifier: layout,
-                                                                      imageUseCase: container.model.useCases.images)
-        case let season as Season.Info: return GenericItemViewModel(season: season,
-                                                                    layoutIdentifier: layout,
-                                                                    imagesUseCase: container.model.useCases.images)
-        case let search as Search.SearchItem: return GenericItemViewModel(search: search,
+        case let showCast as Trakt.Show.Cast: return GenericItemViewModel(showCast: showCast,
                                                                           layoutIdentifier: layout,
                                                                           imageUseCase: container.model.useCases.images)
+        case let movieCast as Trakt.Movie.Cast: return GenericItemViewModel(movieCast: movieCast,
+                                                                            layoutIdentifier: layout,
+                                                                            imageUseCase: container.model.useCases.images)
+        case let season as TMDB.Season.Info: return GenericItemViewModel(season: season,
+                                                                         layoutIdentifier: layout,
+                                                                         imagesUseCase: container.model.useCases.images)
+        case let search as Trakt.Search.SearchItem: return GenericItemViewModel(search: search,
+                                                                                layoutIdentifier: layout,
+                                                                                imageUseCase: container.model.useCases.images)
 
-        case let episode as Season.Episode: return GenericItemViewModel(episode: episode,
-                                                                        layoutIdentifier: layout,
-                                                                        imagesUseCase: container.model.useCases.images)
+        case let episode as TMDB.Season.Episode: return GenericItemViewModel(episode: episode,
+                                                                             layoutIdentifier: layout,
+                                                                             imagesUseCase: container.model.useCases.images)
 
-        case let person as Person: return GenericItemViewModel(person: person,
-                                                               layoutIdentifier: layout,
-                                                               imagesUseCase: container.model.useCases.images)
-        case let person as CastMember: return GenericItemViewModel(castMember: person,
-                                                                   layoutIdentifier: layout,
-                                                                   imagesUseCase: container.model.useCases.images)
-        case let show as ShowItem: return GenericItemViewModel(show: show,
-                                                               layoutIdentifier: layout,
-                                                               imageUseCase: container.model.useCases.images)
-        case let movie as MovieItem: return GenericItemViewModel(movie: movie,
-                                                                 layoutIdentifier: layout,
-                                                                 imageUseCase: container.model.useCases.images)
-        default: return GenericItemViewModel(item: item.item,
+        case let person as Trakt.Person: return GenericItemViewModel(person: person,
+                                                                     layoutIdentifier: layout,
+                                                                     imagesUseCase: container.model.useCases.images)
+        case let person as Trakt.CastMember: return GenericItemViewModel(castMember: person,
+                                                                         layoutIdentifier: layout,
+                                                                         imagesUseCase: container.model.useCases.images)
+        case let show as TraktShowItem: return GenericItemViewModel(show: show,
+                                                                    layoutIdentifier: layout,
+                                                                    imageUseCase: container.model.useCases.images)
+        case let movie as TraktMovieItem: return GenericItemViewModel(movie: movie,
+                                                                      layoutIdentifier: layout,
+                                                                      imageUseCase: container.model.useCases.images)
+        default: return GenericItemViewModel(item: item,
                                              layoutIdentifier: layout,
                                              imageUseCase: container.model.useCases.images)
         }
     }
 
-    func castCarousel(for item: ItemContainer, onSelection: @escaping (Person) -> Void) -> ViewModel? {
+    func castCarousel(for item: TraktItemContainer, onSelection: @escaping (Trakt.Person) -> Void) -> ViewModel? {
         switch item {
-        case let show as ShowItem: return showsCastCarousel(for: show, onSelection: onSelection)
-        case let movie as MovieItem: return moviesCastCarousel(for: movie, onSelection: onSelection)
+        case let show as TraktShowItem: return showsCastCarousel(for: show, onSelection: onSelection)
+        case let movie as TraktMovieItem: return moviesCastCarousel(for: movie, onSelection: onSelection)
         default: return nil
         }
     }
 
-    func showsCastCarousel(for show: ItemContainer, onSelection: @escaping (Person) -> Void) -> ViewModel {
+    func showsCastCarousel(for show: TraktItemContainer, onSelection: @escaping (Trakt.Person) -> Void) -> ViewModel {
         let observable = container.model.useCases.shows.detail
             .cast(for: show.item)
             .map { $0.map { self.castMember($0) } }
@@ -103,13 +103,13 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      cellFactory: container.views.collectionCells,
                                      type: .cast) { itemViewModel in
             if let person = itemViewModel.as(GenericItemViewModel.self)?
-                .unwrap(\.item, as: Person.self) {
+                .unwrap(\.item, as: Trakt.Person.self) {
                 onSelection(person)
             }
         }
     }
 
-    func moviesCastCarousel(for show: ItemContainer, onSelection: @escaping (Person) -> Void) -> ViewModel {
+    func moviesCastCarousel(for show: TraktItemContainer, onSelection: @escaping (Trakt.Person) -> Void) -> ViewModel {
         let observable = container.model.useCases.movies.detail
             .cast(for: show.item)
             .map { $0.map { self.castMember($0) } }
@@ -121,13 +121,13 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      cellFactory: container.views.collectionCells,
                                      type: .cast) { itemViewModel in
             if let person = itemViewModel.as(GenericItemViewModel.self)?
-                .unwrap(\.item, as: Person.self) {
+                .unwrap(\.item, as: Trakt.Person.self) {
                 onSelection(person)
             }
         }
     }
 
-    func seasonsCarousel(for show: ItemContainer, onSelection: @escaping (Season.Info) -> Void) -> ViewModel {
+    func seasonsCarousel(for show: TraktItemContainer, onSelection: @escaping (TMDB.Season.Info) -> Void) -> ViewModel {
         let observable = container.model
             .useCases
             .shows
@@ -140,21 +140,21 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .seasons) { itemViewModel in
-            if let season = itemViewModel.as(GenericItemViewModel.self)?.unwrap(\.item, as: Season.Info.self) {
+            if let season = itemViewModel.as(GenericItemViewModel.self)?.unwrap(\.item, as: TMDB.Season.Info.self) {
                 onSelection(season)
             }
         }
     }
 
-    func relatedCarousel(for item: ItemContainer, onSelection: @escaping (Item) -> Void) -> ViewModel? {
+    func relatedCarousel(for item: TraktItemContainer, onSelection: @escaping (TraktItem) -> Void) -> ViewModel? {
         switch item {
-        case let show as ShowItem: return relatedShowsCarousel(for: show, onSelection: onSelection)
-        case let movie as MovieItem: return relatedMoviesCarousel(for: movie, onSelection: onSelection)
+        case let show as TraktShowItem: return relatedShowsCarousel(for: show, onSelection: onSelection)
+        case let movie as TraktMovieItem: return relatedMoviesCarousel(for: movie, onSelection: onSelection)
         default: return nil
         }
     }
 
-    func relatedShowsCarousel(for show: ItemContainer, onSelection: @escaping (Item) -> Void) -> ViewModel {
+    func relatedShowsCarousel(for show: TraktItemContainer, onSelection: @escaping (TraktItem) -> Void) -> ViewModel {
         let observable = container.model.useCases.shows.detail
             .related(for: show.item)
             .map { $0.map { self.item($0, layout: .posterOnly) } }
@@ -165,13 +165,13 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .relatedShows) { itemViewModel in
-            if let show = itemViewModel.as(GenericItemViewModel.self)?.item {
+            if let show = itemViewModel.as(GenericItemViewModel.self)?.item as? TraktItemContainer {
                 onSelection(show.item)
             }
         }
     }
 
-    func userShowsHistoryCarousel(onSelection: @escaping (Item) -> Void) -> ViewModel {
+    func userShowsHistoryCarousel(onSelection: @escaping (TraktItem) -> Void) -> ViewModel {
         let observable = container.model.useCases.profile.showsHistory()
             .map { $0.map { self.item($0, layout: .posterOnly) } }
             .map { [Section(id: UUID().uuidString, items: $0)] }
@@ -181,13 +181,13 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .relatedShows) { itemViewModel in
-            if let show = itemViewModel.as(GenericItemViewModel.self)?.item {
+            if let show = itemViewModel.as(GenericItemViewModel.self)?.item as? TraktItemContainer {
                 onSelection(show.item)
             }
         }
     }
 
-    func relatedMoviesCarousel(for show: ItemContainer, onSelection: @escaping (Item) -> Void) -> ViewModel {
+    func relatedMoviesCarousel(for show: TraktItemContainer, onSelection: @escaping (TraktItem) -> Void) -> ViewModel {
         let observable = container.model.useCases.movies.detail
             .related(for: show.item)
             .map { $0.map { self.item($0, layout: .posterOnly) } }
@@ -198,13 +198,13 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .relatedShows) { itemViewModel in
-            if let show = itemViewModel.as(GenericItemViewModel.self)?.item {
+            if let show = itemViewModel.as(GenericItemViewModel.self)?.item as? TraktItemContainer {
                 onSelection(show.item)
             }
         }
     }
 
-    func castMoviesCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel {
+    func castMoviesCarousel(for person: Trakt.Person, onSelection: @escaping (TraktItem) -> Void) -> ViewModel {
         let observable = container.model.useCases.movies.person
             .cast(for: person)
             .map { $0.map { self.item($0, layout: .full) } }
@@ -215,13 +215,13 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .castInMovie) { itemViewModel in
-            if let show = itemViewModel.as(GenericItemViewModel.self)?.item {
+            if let show = itemViewModel.as(GenericItemViewModel.self)?.item as? TraktItemContainer {
                 onSelection(show.item)
             }
         }
     }
 
-    func castShowsCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel {
+    func castShowsCarousel(for person: Trakt.Person, onSelection: @escaping (TraktItem) -> Void) -> ViewModel {
         let observable = container.model.useCases.shows.person
             .cast(for: person)
             .map { $0.map { self.item($0, layout: .full) } }
@@ -232,26 +232,26 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                                      layoutIdentifier: ViewIdentifier.carousel,
                                      cellFactory: container.views.collectionCells,
                                      type: .castInShow) { itemViewModel in
-            if let show = itemViewModel.as(GenericItemViewModel.self)?.item {
+            if let show = itemViewModel.as(GenericItemViewModel.self)?.item as? TraktItemContainer {
                 onSelection(show.item)
             }
         }
     }
 
-    func person(_ person: Person) -> ViewModel {
+    func person(_ person: Trakt.Person) -> ViewModel {
         GenericItemViewModel(person: person,
                              layoutIdentifier: .person,
                              imagesUseCase: container.model.useCases.images)
     }
 
-    func season(_ season: Season.Info) -> ViewModel {
+    func season(_ season: TMDB.Season.Info) -> ViewModel {
         GenericItemViewModel(season: season, layoutIdentifier: .season, imagesUseCase: container.model.useCases.images)
         //        SeasonItemViewModel(season: season,
         //                            layoutIdentifier: ViewIdentifier.season,
         //                            imagesUseCase: container.model.useCases.images)
     }
 
-    func castMember(_ castMember: CastMember) -> ViewModel {
+    func castMember(_ castMember: Trakt.CastMember) -> ViewModel {
         GenericItemViewModel(castMember: castMember, layoutIdentifier: .person, imagesUseCase: container.model.useCases.images)
     }
 
@@ -273,19 +273,19 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
                            layoutIdentifier: ViewIdentifier.image)
     }
 
-    func showDescription(_ show: ItemDetail) -> ViewModel {
+    func showDescription(_ show: TraktItemDetail) -> ViewModel {
         DescriptionItemViewModel(description: show.overview)
     }
 
-    func movieDescription(_ movie: ItemDetail) -> ViewModel {
+    func movieDescription(_ movie: TraktItemDetail) -> ViewModel {
         DescriptionItemViewModel(description: movie.overview)
     }
 
-    func seasonDescription(_ season: Season.Info) -> ViewModel {
+    func seasonDescription(_ season: TMDB.Season.Info) -> ViewModel {
         DescriptionItemViewModel(description: season.overview)
     }
 
-    func personDescription(_ person: PersonInfo) -> ViewModel {
+    func personDescription(_ person: TMDB.Person.Info) -> ViewModel {
         DescriptionItemViewModel(description: person.biography)
     }
 
