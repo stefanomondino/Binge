@@ -61,10 +61,12 @@ class UserViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
         useCase.isLogged().flatMapLatest { isLogged -> Observable<[Section]> in
             if !isLogged { return .just([]) }
             return useCase.user()
-                .map {
-                    [items.titledDescription(title: "Username", description: $0.username),
-                     items.titledDescription(title: "Name", description: $0.name),
-                     items.titledDescription(title: "Location", description: $0.location)].compactMap { $0 }
+                .map { user in
+                    [items.image(user.profileURL ?? Asset.user.image, ratio: 1),
+                     items.profileHeader(profile: user),
+                     items.titledDescription(title: "Name", description: user.name),
+                     items.titledDescription(title: "Location", description: user.location)]
+                        .compactMap { $0 }
                 }
                 .map { [Section(items: $0)] }
         }

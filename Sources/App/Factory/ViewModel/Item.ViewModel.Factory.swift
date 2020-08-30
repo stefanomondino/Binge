@@ -28,10 +28,12 @@ protocol ItemViewModelFactory {
     func seasonDescription(_ season: Season.Info) -> ViewModel
 //    func image(_ fanart: Fanart) -> ViewModel
     func image(_: DownloadableImage, fanart: Fanart?) -> ViewModel
+    func image(_ image: WithImage, ratio: CGFloat) -> ViewModel
     func castMoviesCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel
     func castShowsCarousel(for person: Person, onSelection: @escaping (Item) -> Void) -> ViewModel
     func titledDescription(title: CustomStringConvertible, description: CustomStringConvertible?) -> ViewModel?
     func settingsValue(title: CustomStringConvertible, identifier: UniqueIdentifier) -> DescriptionItemViewModel
+    func profileHeader(profile: User) -> ViewModel
     // MURRAY DECLARATION PLACEHOLDER
 }
 
@@ -237,16 +239,20 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
 
     func image(_ fanart: Fanart) -> ViewModel {
         ImageItemViewModel(fanart: fanart,
+                           layoutIdentifier: ViewIdentifier.image)
+    }
+
+    func image(_ image: WithImage, ratio: CGFloat) -> ViewModel {
+        ImageItemViewModel(image: image,
                            layoutIdentifier: ViewIdentifier.image,
-                           styleFactory: container.styleFactory)
+                           ratio: ratio)
     }
 
     func image(_ image: DownloadableImage, fanart: Fanart?) -> ViewModel {
         ImageItemViewModel(image: image,
                            fanart: fanart,
                            useCase: container.model.useCases.images,
-                           layoutIdentifier: ViewIdentifier.image,
-                           styleFactory: container.styleFactory)
+                           layoutIdentifier: ViewIdentifier.image)
     }
 
     func showDescription(_ show: ItemDetail) -> ViewModel {
@@ -272,6 +278,10 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
 
     func settingsValue(title: CustomStringConvertible, identifier: UniqueIdentifier) -> DescriptionItemViewModel {
         return DescriptionItemViewModel(description: title.description, uniqueIdentifier: identifier)
+    }
+
+    func profileHeader(profile: User) -> ViewModel {
+        ProfileHeaderItemViewModel(profile: profile)
     }
 
     // MURRAY IMPLEMENTATION PLACEHOLDER

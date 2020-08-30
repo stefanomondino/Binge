@@ -10,9 +10,9 @@ class {{name|firstUppercase}}ItemViewModel: ViewModel {
     let title: String
 
     init({{name|firstLowercase}}: {{name|firstUppercase}},
-        layoutIdentifier: LayoutIdentifier = ViewIdentifier.{{name|firstLowercase}}) {
-        self.layoutIdentifier = layoutIdentifier
-        uniqueIdentifier = UUID()
-        self.title = ""
+         layoutIdentifier: LayoutIdentifier = ViewIdentifier.{{name|firstLowercase}}) {
+         self.layoutIdentifier = layoutIdentifier
+         uniqueIdentifier = UUID()
+         self.title = ""
     }
 }

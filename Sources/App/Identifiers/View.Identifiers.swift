@@ -42,6 +42,7 @@ enum ViewIdentifier: String, LayoutIdentifier {
     case season
     case image
     case description
+    case profileHeader
     // MURRAY PLACEHOLDER
 
     var identifierString: String {

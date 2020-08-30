@@ -14,38 +14,33 @@ class ImageItemViewModel: ViewModel {
     var uniqueIdentifier: UniqueIdentifier
 
     let image: ObservableImage
-    let styleFactory: StyleFactory
+//    let styleFactory: StyleFactory
     var ratio: CGFloat
 
     init(fanart: Fanart,
-         layoutIdentifier: LayoutIdentifier = ViewIdentifier.image,
-         styleFactory: StyleFactory) {
+         layoutIdentifier: LayoutIdentifier = ViewIdentifier.image) {
         self.layoutIdentifier = layoutIdentifier
-        self.styleFactory = styleFactory
+
         ratio = CGFloat(fanart.format.ratio)
         uniqueIdentifier = fanart.id
         image = fanart.getImage()
     }
 
-//
-//    init(image: Person.Image,
-//         useCase: ImagesUseCase,
-//         layoutIdentifier: LayoutIdentifier = ViewIdentifier.image,
-//         styleFactory: StyleFactory) {
-//        self.layoutIdentifier = layoutIdentifier
-//        self.styleFactory = styleFactory
-//        ratio = CGFloat(image.aspectRatio)
-//        uniqueIdentifier = image.uniqueIdentifier
-//        self.image = useCase.image(for: image).flatMap { $0.getImage() }
-//    }
+    init(image: WithImage,
+         layoutIdentifier: LayoutIdentifier = ViewIdentifier.image,
+         ratio: CGFloat = 16 / 9) {
+        self.layoutIdentifier = layoutIdentifier
+        uniqueIdentifier = UUID()
+        self.image = image.getImage()
+        self.ratio = ratio
+    }
 
     init(image: DownloadableImage,
          fanart: Fanart?,
          useCase: ImagesUseCase,
-         layoutIdentifier: LayoutIdentifier = ViewIdentifier.image,
-         styleFactory: StyleFactory) {
+         layoutIdentifier: LayoutIdentifier = ViewIdentifier.image) {
         self.layoutIdentifier = layoutIdentifier
-        self.styleFactory = styleFactory
+
         ratio = CGFloat(fanart?.format.ratio ?? image.aspectRatio)
         uniqueIdentifier = image.uniqueIdentifier
 
