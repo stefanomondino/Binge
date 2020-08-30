@@ -11,7 +11,12 @@
   "replacements" : [
       {
           "placeholder": "// MURRAY DECLARATION PLACEHOLDER",
-          "text": "func {{name|firstLowercase}}({{name|firstLowercase}}: {{name|firstUppercase}})",
+          "text": "func {{name|firstLowercase}}({{name|firstLowercase}}: {{name|firstUppercase}}) -> ViewModel",
+          "destination": "{{files.factory.viewModel.items}}"
+      },
+      {
+          "placeholder": "// MURRAY IMPLEMENTATION PLACEHOLDER",
+          "source": "ItemViewModel.Implementation.replacement.stencil",
           "destination": "{{files.factory.viewModel.items}}"
       }
   ],

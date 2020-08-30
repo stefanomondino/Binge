@@ -8,9 +8,9 @@
       "files": {
           "factory": {
               "viewModel": {
-                  "items": "Sources/App/Factory/Item.ViewModel.Factory.swift",
-                  "pickers": "Sources/App/Factory/Picker.ViewModel.Factory.swift",
-                  "scenes": "Sources/App/Factory/Scene.ViewModel.Factory.swift"
+                  "items": "Sources/App/Factory/ViewModel/Item.ViewModel.Factory.swift",
+                  "pickers": "Sources/App/Factory/ViewModel/Picker.ViewModel.Factory.swift",
+                  "scenes": "Sources/App/Factory/ViewModel/Scene.ViewModel.Factory.swift"
               }
           },
           "identifiers": {

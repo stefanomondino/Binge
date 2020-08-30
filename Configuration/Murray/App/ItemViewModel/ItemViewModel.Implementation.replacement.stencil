@@ -1,0 +1,3 @@
+func {{name|firstLowercase}}({{name|firstLowercase}}: {{name|firstUppercase}}) -> ViewModel {
+    {{name|firstUppercase}}({{name|firstLowercase}}: {{name|firstUppercase}})
+}

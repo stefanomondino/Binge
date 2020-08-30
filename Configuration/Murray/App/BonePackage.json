@@ -5,9 +5,24 @@
           "ItemViewModel/BoneItem.json",
           "ItemView/BoneItem.json"
       ],
-      "name" : "Item",
-      "description" : "Created from scaffold"
-    }
+      "name" : "ItemViewModel",
+      "description" : "Item view model"
+    },
+    {
+        "items" : [
+            "ItemView/BoneItem.json"
+        ],
+        "name" : "ItemView",
+        "description" : "Item View with viewModel"
+      },
+    {
+      "items" : [
+          "ItemViewModel/BoneItem.json",
+          "ItemView/BoneItem.json"
+      ],
+      "name" : "ItemSection",
+      "description" : "Item view with ViewModel"
+    },
   ],
   "name" : "App",
   "description" : "Created from scaffold"
