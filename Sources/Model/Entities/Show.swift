@@ -128,7 +128,7 @@ public extension TMDB.Show {
     }
 
     struct Info: Codable, DownloadableImage {
-        public var aspectRatio: Double { 9 / 16 }
+        public var aspectRatio: Double { 1920 / 1080 }
         let id: Int
         public var uniqueIdentifier: String { "\(id)" }
         public let name: String

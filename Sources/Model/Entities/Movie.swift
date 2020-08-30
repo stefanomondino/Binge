@@ -110,10 +110,10 @@ public extension TMDB.Movie {
     struct Info: Codable, DownloadableImage {
         public var id: Int
         public var uniqueIdentifier: String { "\(id)" }
-        public let name: String
+        public let title: String
         public let backdropPath: String?
         public let posterPath: String?
-        public var aspectRatio: Double { 9 / 16 }
+        public var aspectRatio: Double { 1920 / 1080 }
         public var defaultImage: String? { backdropPath }
         public var allowedSizes: KeyPath<TMDB.Image, [String]> { \.backdropSizes }
     }
