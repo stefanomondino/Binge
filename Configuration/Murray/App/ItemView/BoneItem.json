@@ -5,7 +5,7 @@
             "from" : "ItemView.swift.stencil"
         },
         {
-            "to" : "{{folders.iosXibs}}/{{name|firstUppercase}}/{{name|firstUppercase}}ItemView.xib",
+            "to" : "{{folders.iosXibs}}/{{name|firstUppercase}}ItemView.xib",
             "from" : "ItemView.iOS.xib.stencil"
         }
     ],
@@ -17,7 +17,7 @@
         }
     ],
     "plugins" : {
-        "xcode": { "targets": ["{{targets.ios}"] }
+        "xcode": { "targets": ["{{targets.iOS}"] }
     },
     "parameters" : [
         {"name": "name", "isRequired": true }
