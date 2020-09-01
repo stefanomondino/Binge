@@ -56,19 +56,38 @@ public struct User: Codable {
 }
 
 extension Trakt {
-    public struct UserWatched: Codable, TraktItemContainer {
+    public struct UserWatched: Codable, TraktItemContainer, TraktItem {
+        public var ids: Trakt.Ids { item.ids }
+
+        enum ItemType: String, Codable {
+            case episode
+            case movie
+            case show
+            case undefined
+        }
+
         private struct Empty: TraktItem {
             var title: String = ""
             var ids: Ids = Ids(trakt: 0, slug: "")
             var item: TraktItem { self }
         }
 
-        public var item: TraktItem { (show ?? movie) ?? UserWatched.Empty() }
+        var localItem: TraktItem? {
+            switch type ?? .undefined {
+            case .show: return show
+            case .movie: return movie
+            case .episode: return episode
+            default: return nil
+            }
+        }
 
+        public var item: TraktItem { localItem ?? Empty() }
+        private let type: ItemType?
         public var watchedAt: String
+
         var show: Trakt.Show.Item?
         var movie: Trakt.Movie.Item?
-//    var episode: Season.Episode?
+        var episode: Trakt.Episode?
         var season: Trakt.Season?
     }
 }

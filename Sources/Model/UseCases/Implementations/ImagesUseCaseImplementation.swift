@@ -36,7 +36,7 @@ class ImagesUseCaseImplementation: ImagesUseCase {
         }
     }
 
-    func poster(for show: TraktShowItem) -> Observable<WithImage> {
+    private func poster(for show: TraktShowItem) -> Observable<WithImage> {
         return shows.info(forShow: show.item)
             .map { $0 }
             .catchErrorJustReturn(nil)
@@ -46,7 +46,7 @@ class ImagesUseCaseImplementation: ImagesUseCase {
         //        return
     }
 
-    func poster(for movie: TraktMovieItem) -> Observable<WithImage> {
+    private func poster(for movie: TraktMovieItem) -> Observable<WithImage> {
         return movies.info(forMovie: movie.item)
             .map { $0 }
             .catchErrorJustReturn(nil)
@@ -55,7 +55,29 @@ class ImagesUseCaseImplementation: ImagesUseCase {
             }
     }
 
-    func image(forPerson person: Trakt.Person) -> Observable<WithImage> {
+    func poster(for item: TraktItemContainer) -> Observable<WithImage> {
+        switch item {
+        case let item as Trakt.UserWatched:
+            if let show = item.show {
+                if let episode = item.episode {
+                    return image(for: episode, of: show)
+                } else {
+                    return poster(for: show)
+                }
+            }
+            return .empty()
+        default: break
+        }
+
+        switch item.item {
+        case let item as TraktMovieItem: return poster(for: item)
+        case let item as TraktShowItem: return poster(for: item)
+        case let item as Trakt.Person: return image(for: item)
+        default: return .empty()
+        }
+    }
+
+    func image(for person: Trakt.Person) -> Observable<WithImage> {
         return shows.info(forPerson: person)
             .map { $0 }
             .catchErrorJustReturn(nil)
@@ -70,7 +92,7 @@ class ImagesUseCaseImplementation: ImagesUseCase {
         }
     }
 
-    func image(forSeason season: TMDB.Season.Info) -> Observable<WithImage> {
+    func image(for season: TMDB.Season.Info) -> Observable<WithImage> {
         return Observable.just(season).flatMapLatest {
             self.image(from: $0, with: \.posterPath, sizes: \.posterSizes)
         }
@@ -78,6 +100,12 @@ class ImagesUseCaseImplementation: ImagesUseCase {
 
     func image(for episode: TMDB.Season.Episode) -> Observable<WithImage> {
         return Observable.just(episode).flatMapLatest {
+            self.image(from: $0, with: \.stillPath, sizes: \.stillSizes)
+        }
+    }
+
+    func image(for episode: Trakt.Episode, of show: TraktShowItem) -> Observable<WithImage> {
+        shows.info(for: episode, of: show).flatMapLatest {
             self.image(from: $0, with: \.stillPath, sizes: \.stillSizes)
         }
     }

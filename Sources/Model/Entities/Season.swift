@@ -14,6 +14,14 @@ extension Trakt {
         public let ids: Trakt.Ids
         public let seasonNumber: Int
     }
+
+    public struct Episode: TraktItem, TraktItemContainer {
+        public let season: Int
+        public let number: Int
+        public let title: String
+        public let ids: Ids
+        public var item: TraktItem { self }
+    }
 }
 
 extension TMDB {

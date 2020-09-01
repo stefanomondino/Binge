@@ -32,6 +32,7 @@ extension ViewIdentifier.CarouselType {
         case .castInMovie: return 250
         case .castInShow: return 270
         case .seasons: return 200
+        case .episodes: return 200
         }
     }
 
@@ -49,6 +50,7 @@ extension ViewIdentifier.CarouselType {
         case .relatedShows: return Constants.showPosterRatio
         case .castInShow: return Constants.showPosterRatio * 0.8
         case .castInMovie: return Constants.showPosterRatio * 0.8
+        case .episodes: return Constants.episodePosterRatio * 0.8
         }
     }
 }

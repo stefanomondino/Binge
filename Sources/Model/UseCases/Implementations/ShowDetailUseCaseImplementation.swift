@@ -38,4 +38,8 @@ public struct ShowDetailUseCaseImplementation: ShowDetailUseCase {
     public func seasonDetail(for season: TMDB.Season.Info, of show: TraktShowItem) -> Observable<TMDB.Season.Info> {
         shows.seasonDetail(for: season, of: show)
     }
+
+    public func episodeDetail(for episode: Trakt.Episode, of show: TraktShowItem) -> Observable<TMDB.Season.Episode> {
+        shows.info(for: episode, of: show)
+    }
 }

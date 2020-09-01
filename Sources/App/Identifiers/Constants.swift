@@ -11,6 +11,7 @@ struct Constants {
     static let sidePadding: CGFloat = 16
     static let detailLineSpacing = sidePadding
     static let showPosterRatio: CGFloat = 250.0 / 375.0
+    static let episodePosterRatio: CGFloat = 1920 / 1080.0
 
     static let itemsPerLineClosure: (UICollectionView) -> Int = { collectionView in
         switch collectionView.bounds.width {

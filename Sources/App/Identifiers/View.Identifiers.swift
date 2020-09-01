@@ -21,6 +21,7 @@ enum ViewIdentifier: String, LayoutIdentifier {
         case castInShow
         case castInMovie
         case seasons
+        case episodes
 
         var title: Translation {
             switch self {
@@ -29,6 +30,7 @@ enum ViewIdentifier: String, LayoutIdentifier {
             case .castInMovie: return Strings.Movies.title
             case .relatedShows: return Strings.Shows.related
             case .seasons: return Strings.Shows.seasons
+            case .episodes: return Strings.Shows.seasons
             }
         }
     }

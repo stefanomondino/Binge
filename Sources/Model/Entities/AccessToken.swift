@@ -22,15 +22,15 @@ extension AccessToken {
         get {
             let keychain = Keychain()
             guard let data = keychain[data: "accessToken"] else {
-                Logger.log("No access token found", level: .verbose)
+//                Logger.log("No access token found", level: .verbose)
                 return nil
             }
             do {
                 let token = try JSONDecoder().decode(AccessToken.self, from: data)
-                Logger.log("Found access token in keychain: \(token)", level: .verbose)
+//                Logger.log("Found access token in keychain: \(token)", level: .verbose)
                 return token
             } catch {
-                Logger.log("No access token found", level: .verbose)
+//                Logger.log("No access token found", level: .verbose)
                 return nil
             }
         }

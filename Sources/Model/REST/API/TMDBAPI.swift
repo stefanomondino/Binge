@@ -50,7 +50,8 @@ extension TMDB {
         case show(TraktItem)
         case movie(TraktItem)
         case person(Trakt.Person)
-        case seasonDetail(TMDB.Season.Info, TraktItem)
+        case seasonDetail(TMDB.Season.Info, TraktShowItem)
+        case episode(Trakt.Episode, TraktShowItem)
     }
 }
 
@@ -65,7 +66,8 @@ extension TMDB.API: TargetType {
         case let .show(show): return "tv/\(show.ids.tmdb ?? -1)"
         case let .movie(movie): return "movie/\(movie.ids.tmdb ?? -1)"
         case let .person(person): return "person/\(person.ids.tmdb ?? -1)"
-        case let .seasonDetail(season, show): return "tv/\(show.ids.tmdb ?? -1)/season/\(season.seasonNumber)"
+        case let .seasonDetail(season, show): return "tv/\(show.item.ids.tmdb ?? -1)/season/\(season.seasonNumber)"
+        case let .episode(episode, show): return "tv/\(show.item.ids.tmdb ?? -1)/season/\(episode.season)/episode/\(episode.number)"
         }
     }
 

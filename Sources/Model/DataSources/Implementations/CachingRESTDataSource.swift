@@ -10,9 +10,9 @@ import RxSwift
 
 class CachingRESTDataSource: DefaultRESTDataSource {
     var temporaryDirectory: URL { FileManager.default.temporaryDirectory }
-
+//    lazy var additionalURLCache = URLCache(memoryCapacity: 1024 * 1000 * 10 , diskCapacity: 1024 * 1000 * 100, diskPath: self.temporaryDirectory.appendingPathComponent("cache", isDirectory: true).path)
     private func url<Endpoint: TargetType>(for endpoint: Endpoint) -> URL? {
-        guard let key = endpoint.cacheKey.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics) else { return nil }
+        guard let key = endpoint.cacheKey.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics)?.md5 else { return nil }
         let url = temporaryDirectory.appendingPathComponent("cached_\(key)", isDirectory: false)
         return url
     }
@@ -48,12 +48,18 @@ class CachingRESTDataSource: DefaultRESTDataSource {
     }
 
     override func response<Endpoint: TargetType>(at endpoint: Endpoint) -> Observable<Response> {
-        let observable = super.response(at: endpoint)
-            .do(onNext: { self.storeValue($0, for: endpoint) })
-        if let cachedValue = cachedValue(for: endpoint) {
-            return observable.startWith(cachedValue)
-        } else {
-            return observable
+        Observable.deferred {
+            let observable = super.response(at: endpoint)
+                .do(onNext: { self.storeValue($0, for: endpoint) })
+            if let cachedValue = self.cachedValue(for: endpoint) {
+                Logger.log("Cached value retrieved for \(endpoint.cacheKey)", level: .verbose)
+                return .just(cachedValue) // observable.startWith(cachedValue)
+            } else {
+                Logger.log("No Cached value found for \(endpoint.cacheKey)", level: .verbose)
+                return observable
+            }
+        }.distinctUntilChanged { (response1, response2) -> Bool in
+            response1.data == response2.data && response1.statusCode == response2.statusCode
         }
     }
 }

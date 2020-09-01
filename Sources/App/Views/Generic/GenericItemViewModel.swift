@@ -64,22 +64,35 @@ class GenericItemViewModel: ViewModel {
 
     let mainStyle: Style
 
-    init(show: TraktShowItem,
+    init(_ show: TraktShowItem,
          layoutIdentifier: Identifier,
-         imageUseCase: ImagesUseCase) {
+         imagesUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
         item = show.item
         mainStyle = layoutIdentifier.style
         subtitle = show.year?.stringValue ?? ""
-        image = imageUseCase
+        image = imagesUseCase
             .poster(for: show)
             .getImage(with: Placeholder.show)
         //            .share(replay: 1, scope: .forever)
     }
 
-    init(showCast show: Trakt.Show.Cast,
+    init(_ watched: Trakt.UserWatched,
          layoutIdentifier: Identifier,
-         imageUseCase: ImagesUseCase) {
+         imagesUseCase: ImagesUseCase) {
+        showIdentifier = layoutIdentifier
+        item = watched.item
+        mainStyle = layoutIdentifier.style
+        subtitle = "" // show.year?.stringValue ?? ""
+        image = imagesUseCase
+            .poster(for: watched)
+            .getImage(with: Placeholder.show)
+        //            .share(replay: 1, scope: .forever)
+    }
+
+    init(_ show: Trakt.Show.Cast,
+         layoutIdentifier: Identifier,
+         imagesUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
         item = show.item
         mainStyle = layoutIdentifier.style
@@ -87,59 +100,59 @@ class GenericItemViewModel: ViewModel {
         if let episodeCount = show.episodeCount {
             moreText = Strings.Shows.episodeCountFormat.format(with: "\(episodeCount)")
         }
-        image = imageUseCase
+        image = imagesUseCase
             .poster(for: show)
             .getImage(with: Placeholder.person.image)
         //            .share(replay: 1, scope: .forever)
     }
 
-    init(movieCast movie: Trakt.Movie.Cast,
+    init(_ movie: Trakt.Movie.Cast,
          layoutIdentifier: Identifier,
-         imageUseCase: ImagesUseCase) {
+         imagesUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
         item = movie.item
         mainStyle = layoutIdentifier.style
         subtitle = movie.characters.joined(separator: ", ")
-        image = imageUseCase
+        image = imagesUseCase
             .poster(for: movie)
             .getImage(with: Placeholder.person.image)
         //            .share(replay: 1, scope: .forever)
     }
 
-    init(movie: TraktMovieItem,
+    init(_ movie: TraktMovieItem,
          layoutIdentifier: Identifier,
-         imageUseCase: ImagesUseCase) {
+         imagesUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
         item = movie.item
         mainStyle = layoutIdentifier.style
         subtitle = ""
 
-        image = imageUseCase
+        image = imagesUseCase
             .poster(for: movie)
             .getImage(with: Placeholder.movie)
         //            .share(replay: 1, scope: .forever)
     }
 
-    convenience init(search: Trakt.Search.SearchItem,
+    convenience init(_ search: Trakt.Search.SearchItem,
                      layoutIdentifier: Identifier,
-                     imageUseCase: ImagesUseCase) {
+                     imagesUseCase: ImagesUseCase) {
         switch search.item {
-        case let show as TraktShowItem: self.init(show: show,
+        case let show as TraktShowItem: self.init(show,
                                                   layoutIdentifier: layoutIdentifier,
-                                                  imageUseCase: imageUseCase)
-        case let movie as TraktMovieItem: self.init(movie: movie,
+                                                  imagesUseCase: imagesUseCase)
+        case let movie as TraktMovieItem: self.init(movie,
                                                     layoutIdentifier: layoutIdentifier,
-                                                    imageUseCase: imageUseCase)
-        case let person as Trakt.Person: self.init(person: person,
+                                                    imagesUseCase: imagesUseCase)
+        case let person as Trakt.Person: self.init(person,
                                                    layoutIdentifier: layoutIdentifier,
-                                                   imagesUseCase: imageUseCase)
-        default: self.init(item: search.item,
+                                                   imagesUseCase: imagesUseCase)
+        default: self.init(search.item,
                            layoutIdentifier: layoutIdentifier,
-                           imageUseCase: imageUseCase)
+                           imagesUseCase: imagesUseCase)
         }
     }
 
-    init(person: Trakt.Person,
+    init(_ person: Trakt.Person,
          layoutIdentifier: Identifier = .person,
          imagesUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
@@ -147,12 +160,12 @@ class GenericItemViewModel: ViewModel {
         subtitle = ""
         item = person
         image = imagesUseCase
-            .image(forPerson: person)
+            .image(for: person)
             .getImage(with: Placeholder.person)
             .share(replay: 1, scope: .forever)
     }
 
-    init(castMember: Trakt.CastMember,
+    init(_ castMember: Trakt.CastMember,
          layoutIdentifier: Identifier = .person,
          imagesUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
@@ -163,29 +176,12 @@ class GenericItemViewModel: ViewModel {
             moreText = Strings.Shows.episodeCountFormat.format(with: "\(episodeCount)")
         }
         image = imagesUseCase
-            .image(forPerson: castMember.person)
+            .image(for: castMember.person)
             .getImage(with: Placeholder.person)
             .share(replay: 1, scope: .forever)
     }
 
-    init(season: TMDB.Season.Info,
-         layoutIdentifier: Identifier = .season,
-         imagesUseCase: ImagesUseCase) {
-        showIdentifier = layoutIdentifier
-        mainStyle = layoutIdentifier.style
-        item = season
-        if let episodeCount = season.episodeCount {
-            subtitle = Strings.Shows.episodeCountFormat.format(with: "\(episodeCount)")
-        } else {
-            subtitle = ""
-        }
-        image = imagesUseCase
-            .image(forSeason: season)
-            .getImage(with: Placeholder.season)
-            .share(replay: 1, scope: .forever)
-    }
-
-    init(episode: TMDB.Season.Episode,
+    init(_ episode: TMDB.Season.Episode,
          layoutIdentifier: Identifier = .season,
          imagesUseCase: ImagesUseCase) {
         showIdentifier = layoutIdentifier
@@ -202,14 +198,30 @@ class GenericItemViewModel: ViewModel {
             .share(replay: 1, scope: .forever)
     }
 
-    init(item: GenericItem,
+    init(_ season: TMDB.Season.Info,
+         layoutIdentifier: Identifier = .season,
+         imagesUseCase: ImagesUseCase) {
+        showIdentifier = layoutIdentifier
+        mainStyle = layoutIdentifier.style
+        item = season
+        if let episodeCount = season.episodeCount {
+            subtitle = Strings.Shows.episodeCountFormat.format(with: "\(episodeCount)")
+        } else {
+            subtitle = ""
+        }
+        image = imagesUseCase
+            .image(for: season)
+            .getImage(with: Placeholder.season)
+            .share(replay: 1, scope: .forever)
+    }
+
+    init(_ item: GenericItem,
          layoutIdentifier: Identifier,
-         imageUseCase _: ImagesUseCase) {
+         imagesUseCase _: ImagesUseCase) {
         showIdentifier = layoutIdentifier
         self.item = item
         mainStyle = layoutIdentifier.style
         subtitle = ""
-        //        if let year = item.year { counter = "\(year)" } else { counter = "" }
         image = .just(UIImage())
     }
 }

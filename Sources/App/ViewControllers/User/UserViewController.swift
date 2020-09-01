@@ -89,8 +89,8 @@ class UserViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
         view.applyContainerStyle(.container)
 
-        let sizeCalculator = AutomaticCollectionViewSizeCalculator(viewModel: viewModel,
-                                                                   factory: collectionViewCellFactory, itemsPerLine: 1)
+        let sizeCalculator = ItemDetailViewController.SizeCalculator(viewModel: viewModel,
+                                                                     factory: collectionViewCellFactory, itemsPerLine: 1)
 
         let collectionViewDelegate = Delegate(sizeCalculator: sizeCalculator)
             .withSelect { viewModel.selectItem(at: $0) }

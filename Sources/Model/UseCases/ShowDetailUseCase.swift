@@ -7,4 +7,5 @@ public protocol ShowDetailUseCase {
     func related(for show: TraktItem) -> Observable<[TraktItemContainer]>
     func fanart(for show: TraktItem) -> Observable<FanartResponse>
     func seasonDetail(for season: TMDB.Season.Info, of show: TraktShowItem) -> Observable<TMDB.Season.Info>
+    func episodeDetail(for episode: Trakt.Episode, of show: TraktShowItem) -> Observable<TMDB.Season.Episode>
 }

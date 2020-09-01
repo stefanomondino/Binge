@@ -12,7 +12,7 @@ public enum Trakt {}
 extension Trakt {
     public struct Ids: Codable {
         let trakt: Int
-        let slug: String
+        let slug: String?
         let tvdb: Int?
         let tmdb: Int?
         let imdb: String?
