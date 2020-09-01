@@ -85,9 +85,9 @@ extension Trakt {
         private let type: ItemType?
         public var watchedAt: String
 
-        var show: Trakt.Show.Item?
-        var movie: Trakt.Movie.Item?
-        var episode: Trakt.Episode?
-        var season: Trakt.Season?
+        public var show: Trakt.Show.Item?
+        public var movie: Trakt.Movie.Item?
+        public var episode: Trakt.Episode?
+        public var season: Trakt.Season?
     }
 }

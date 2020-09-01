@@ -26,10 +26,10 @@ public extension TMDB {
 }
 
 public extension Trakt.Show {
-    internal struct Item: TraktShowItem, TraktItem {
+    struct Item: TraktShowItem, TraktItem {
         public let title: String
-        let ids: Trakt.Ids
-        let year: Int?
+        public let ids: Trakt.Ids
+        public let year: Int?
         public var item: TraktItem { self }
         public var show: TraktShowItem { self }
     }

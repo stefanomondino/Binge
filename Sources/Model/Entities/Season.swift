@@ -21,6 +21,13 @@ extension Trakt {
         public let title: String
         public let ids: Ids
         public var item: TraktItem { self }
+        public var code: String { "S\(season.padded)E\(number.padded)" }
+    }
+}
+
+extension Int {
+    var padded: String {
+        self < 10 ? "0\(self)" : "\(self)"
     }
 }
 

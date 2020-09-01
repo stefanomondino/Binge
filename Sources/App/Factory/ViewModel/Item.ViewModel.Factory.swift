@@ -123,10 +123,12 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
 
     func item(_ item: GenericItem, layout: GenericItemViewModel.Identifier) -> ViewModel {
         switch item {
+        case let item as Trakt.Search.SearchItem: return self.item(item, layout: layout)
         case let item as Trakt.UserWatched: return self.item(item, layout: layout)
         case let item as TraktShowItem: return self.item(item, layout: layout)
         case let item as TraktMovieItem: return self.item(item, layout: layout)
         case let item as Trakt.Show.Cast: return self.item(item, layout: layout)
+        case let item as Trakt.Person: return self.item(item, layout: layout)
         case let item as TMDB.Season.Info: return self.item(item, layout: layout)
         case let item as TMDB.Season.Episode: return self.item(item, layout: layout)
 
@@ -224,7 +226,7 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
 
     func userShowsHistoryCarousel(onSelection: @escaping (TraktItem) -> Void) -> ViewModel {
         let observable = container.model.useCases.profile.showsHistory()
-            .map { $0.map { self.item($0, layout: .episode) } }
+            .map { $0.map { self.item($0, layout: .watchedEpisode) } }
             .map { [Section(id: UUID().uuidString, items: $0)] }
             .share(replay: 1, scope: .forever)
 

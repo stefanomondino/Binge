@@ -21,9 +21,9 @@ public extension TMDB {
 }
 
 public extension Trakt.Movie {
-    internal struct Item: TraktMovieItem, TraktItem {
+    struct Item: TraktMovieItem, TraktItem {
         public let title: String
-        let ids: Trakt.Ids
+        public let ids: Trakt.Ids
         let year: Int?
         public var item: TraktItem { self }
         public var movie: TraktMovieItem { self }

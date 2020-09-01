@@ -32,7 +32,7 @@ extension ViewIdentifier.CarouselType {
         case .castInMovie: return 250
         case .castInShow: return 270
         case .seasons: return 200
-        case .episodes: return 200
+        case .episodes: return 220
         }
     }
 
