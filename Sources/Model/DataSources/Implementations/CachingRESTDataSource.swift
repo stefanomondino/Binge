@@ -10,7 +10,6 @@ import RxSwift
 
 class CachingRESTDataSource: DefaultRESTDataSource {
     var temporaryDirectory: URL { FileManager.default.temporaryDirectory }
-//    lazy var additionalURLCache = URLCache(memoryCapacity: 1024 * 1000 * 10 , diskCapacity: 1024 * 1000 * 100, diskPath: self.temporaryDirectory.appendingPathComponent("cache", isDirectory: true).path)
     private func url<Endpoint: TargetType>(for endpoint: Endpoint) -> URL? {
         guard let key = endpoint.cacheKey.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics)?.md5 else { return nil }
         let url = temporaryDirectory.appendingPathComponent("cached_\(key)", isDirectory: false)

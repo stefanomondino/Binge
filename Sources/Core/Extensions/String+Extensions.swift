@@ -93,15 +93,16 @@ extension Data {
 
         _ = digest.withUnsafeMutableBytes { digestBytes -> UInt8 in
             self.withUnsafeBytes { messageBytes -> UInt8 in
-                if let mb = messageBytes.baseAddress, let db = digestBytes.bindMemory(to: UInt8.self).baseAddress {
+                if let mbAddress = messageBytes.baseAddress,
+                    let dbAddress = digestBytes.bindMemory(to: UInt8.self).baseAddress {
                     let length = CC_LONG(self.count)
                     switch type {
-                    case .md5: CC_MD5(mb, length, db)
-                    case .sha1: CC_SHA1(mb, length, db)
-                    case .sha224: CC_SHA224(mb, length, db)
-                    case .sha256: CC_SHA256(mb, length, db)
-                    case .sha384: CC_SHA384(mb, length, db)
-                    case .sha512: CC_SHA512(mb, length, db)
+                    case .md5: CC_MD5(mbAddress, length, dbAddress)
+                    case .sha1: CC_SHA1(mbAddress, length, dbAddress)
+                    case .sha224: CC_SHA224(mbAddress, length, dbAddress)
+                    case .sha256: CC_SHA256(mbAddress, length, dbAddress)
+                    case .sha384: CC_SHA384(mbAddress, length, dbAddress)
+                    case .sha512: CC_SHA512(mbAddress, length, dbAddress)
                     }
                 }
                 return 0
