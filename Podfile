@@ -48,11 +48,16 @@ def test_pods
   pod 'RxNimble'
 end
 
+def core_pods
+  boomerang
+end
+
 target 'Core_iOS' do
   platform :ios, '12.0'
-  boomerang
+  core_pods
   target 'CoreTests' do
     test_pods
+    core_pods
   end
 end
 
@@ -66,6 +71,7 @@ target 'Model_iOS' do
   model_pods
   target 'ModelTests' do
     test_pods
+    model_pods
   end
 end
 target 'Model_tvOS' do
@@ -81,6 +87,13 @@ target "#{ENV["APP_NAME"]}_iOS" do
     test_pods
   end
 end
+
+target "HostingApp" do
+  platform :ios, '12.0'
+  app_pods
+  ios_pods
+end
+
 
 target "#{ENV["APP_NAME"]}_tvOS" do
   platform :tvos, '12.0'

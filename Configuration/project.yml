@@ -6,7 +6,8 @@ configs:
   Prod Archive: release
 settingGroups:
   testing:
-    TEST_HOST: $(BUILT_PRODUCTS_DIR)/${APP_NAME}.app/${APP_NAME}
+    DUMMY_VALUE: ""
+    #TEST_HOST: $(BUILT_PRODUCTS_DIR)/HostingApp.app/HostingApp
 settings:
       configs:
         Devel Run:
@@ -152,6 +153,7 @@ targets:
     platform: iOS
     dependencies:
       - target: "Core_iOS"
+#      - target: "HostingApp"
     settings:
       groups:
       - testing
@@ -172,6 +174,15 @@ targets:
     dependencies:
     - target: "Model_iOS"
     - target: "Core_iOS"
+    - target: "HostingApp"
+  HostingApp:
+    type: application
+    platform: iOS
+    sources:
+    - "Sources/HostingApp"
+    settings:
+        base:
+          BUNDLE_IDENTIFIER: com.test.hostingapp
 
         
   ${APP_NAME}Tests:

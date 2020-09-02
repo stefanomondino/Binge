@@ -18,7 +18,8 @@ public extension CGSize {
     }
 
     var ratio: CGFloat {
-        width / height
+        if isEmpty { return 0 }
+        return width / height
     }
 }
 
