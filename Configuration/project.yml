@@ -183,8 +183,6 @@ targets:
     settings:
         base:
           BUNDLE_IDENTIFIER: com.test.hostingapp
-
-        
   ${APP_NAME}Tests:
     type: bundle.unit-test
     platform: [iOS, tvOS]
@@ -195,3 +193,5 @@ targets:
     sources:
     - "Tests/Shared"
     - "Tests/App"
+    - path: "Tests/JSONMocks"
+      buildPhase: resources
