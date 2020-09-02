@@ -26,6 +26,7 @@ def app_pods
   pod 'SnapKit'
   pod 'SwiftRichString'
   pod 'RxCocoa'
+  pod 'Charts'
   #pod 'PluginLayout', :git => "https://github.com/stefanomondino/PluginLayout.git", :branch => "master"
   #pod 'PluginLayout', :path => "../OpenSource/PluginLayout"
   pod 'PluginLayout'

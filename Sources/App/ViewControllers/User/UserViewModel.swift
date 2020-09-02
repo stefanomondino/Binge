@@ -68,7 +68,14 @@ class UserViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
             .flatMapLatest { isLogged -> Observable<[Section]> in
                 if !isLogged { return .just([]) }
                 return useCase.user()
-                    .map { [weak self] in self?.mapSections(from: $0) ?? [] }
+                    .flatMapLatest { user in
+                        useCase
+                            .genresStats()
+                            .map { [weak self] genres in
+                                self?.mapSections(from: user, genres: genres) ?? []
+                            }
+                    }
+
                     .bindingLoadingStatus(to: loadingCount)
             }
             .catchErrorJustReturn([])
@@ -76,7 +83,7 @@ class UserViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
             .disposed(by: reloadDisposeBag)
     }
 
-    private func mapSections(from settings: User.Settings) -> [Section] {
+    private func mapSections(from settings: User.Settings, genres: [Trakt.UserGenresStats]) -> [Section] {
         let items = itemViewModelFactory
         let disposeBag = self.disposeBag
         let user = settings.user
@@ -96,9 +103,9 @@ class UserViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
         let coverImage: WithImage = settings.coverURL ?? Asset.heart.image
         let cover = items.image(coverImage, ratio: 16 / 9)
         section.supplementary.set(cover, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
-
         return [section,
-                Section(items: [items.userShowsHistoryCarousel(onSelection: { print($0) })])]
+                Section(items: [items.userShowsHistoryCarousel(onSelection: { print($0) })]),
+                Section(items: [items.genresStats(genresStats: genres)])]
     }
 
     func selectItem(at _: IndexPath) {}

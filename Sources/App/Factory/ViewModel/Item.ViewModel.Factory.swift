@@ -51,6 +51,7 @@ protocol ItemViewModelFactory {
 //    func item(_ item: TraktShowItem, layout: GenericItemViewModel.Identifier) -> ViewModel
 //    func item(_ item: TraktMovieItem, layout: GenericItemViewModel.Identifier) -> ViewModel
 //    func item(_ item: Trakt.UserWatched, layout: GenericItemViewModel.Identifier) -> ViewModel
+    func genresStats(genresStats: [Trakt.UserGenresStats]) -> ViewModel
     // MURRAY DECLARATION PLACEHOLDER
 }
 
@@ -352,6 +353,10 @@ struct DefaultItemViewModelFactory: ItemViewModelFactory {
 
     func button(with contents: ButtonContents) -> ViewModel {
         ButtonItemViewModel(contents: contents)
+    }
+
+    func genresStats(genresStats: [Trakt.UserGenresStats]) -> ViewModel {
+        GenresStatsItemViewModel(genresStats: genresStats)
     }
 
     // MURRAY IMPLEMENTATION PLACEHOLDER

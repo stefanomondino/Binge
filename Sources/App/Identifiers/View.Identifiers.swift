@@ -46,6 +46,7 @@ enum ViewIdentifier: String, LayoutIdentifier {
     case description
     case profileHeader
     case button
+    case genresStats
     // MURRAY PLACEHOLDER
 
     var identifierString: String {

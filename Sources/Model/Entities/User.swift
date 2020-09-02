@@ -56,6 +56,12 @@ public struct User: Codable {
 }
 
 extension Trakt {
+    public struct UserGenresStats: Codable {
+        public let percentage: Double
+        public let id: Int
+        public let name: String
+    }
+
     public struct UserWatched: Codable, TraktItemContainer, TraktItem {
         public var ids: Trakt.Ids { item.ids }
 

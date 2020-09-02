@@ -26,4 +26,8 @@ struct ProfileUseCaseImplementation: ProfileUseCase {
     func showsHistory() -> Observable<[Trakt.UserWatched]> {
         profile.showsHistory()
     }
+
+    func genresStats() -> Observable<[Trakt.UserGenresStats]> {
+        profile.genresStats()
+    }
 }

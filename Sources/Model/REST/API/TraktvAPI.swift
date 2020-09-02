@@ -47,13 +47,15 @@ extension Trakt {
         case userSettings
         case userShowHistory(User)
         case userMovieHistory(User)
+        case userStats(User)
+        case userGenres(User)
     }
 }
 
 extension Trakt.API: TargetType {
     var baseURL: URL {
         switch self {
-        case .authorize: return Configuration.environment.traktWebURL
+        case .authorize, .userGenres: return Configuration.environment.traktWebURL
         default: return Configuration.environment.traktBaseURL
         }
     }
@@ -95,6 +97,8 @@ extension Trakt.API: TargetType {
         case .userSettings: return "users/settings"
         case let .userShowHistory(user): return "users/\(user.ids.slug)/history"
         case let .userMovieHistory(user): return "users/\(user.ids.slug)/history/movies"
+        case let .userStats(user): return "users/\(user.ids.slug)/stats"
+        case let .userGenres(user): return "users/\(user.ids.slug)/chart_data/watched_genres.json"
         }
     }
 

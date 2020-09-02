@@ -8,6 +8,9 @@ PODS:
     - RxSwift
   - Boomerang/UIKit (6.1):
     - Boomerang/Core
+  - Charts (3.5.0):
+    - Charts/Core (= 3.5.0)
+  - Charts/Core (3.5.0)
   - Differentiator (4.0.1)
   - Gloss (3.1.0)
   - KeychainAccess (4.2.0)
@@ -55,6 +58,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - Boomerang/RxSwift
+  - Charts
   - Gloss
   - KeychainAccess
   - Kingfisher
@@ -76,6 +80,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - Boomerang
+    - Charts
     - Differentiator
     - Gloss
     - KeychainAccess
@@ -100,6 +105,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   Boomerang: 727d163a450074af3ca074c7cb1659f0282ccfca
+  Charts: 40a08591df1f8ad5c223ddedfb1a06da92f24f7c
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   Gloss: 2dbf87af0e4dd24753f7de933356ff6c5c012426
   KeychainAccess: 3f760109aa99b05d0f231e28b22642da7153e38a
@@ -121,6 +127,6 @@ SPEC CHECKSUMS:
   SwiftRichString: d61b807db1f8834c26fee92b6dd3e1be2dc5af03
   Tabman: 085d89c65be9e883629bdaf5b1453a6397e57846
 
-PODFILE CHECKSUM: 81884a7b070baf711c48570dce7108317a51e7b3
+PODFILE CHECKSUM: 7e9c1c0440302f8f6e6c1b48234bb36ecf78d53b
 
 COCOAPODS: 1.9.3
