@@ -21,7 +21,7 @@
           "ItemView/BoneItem.json"
       ],
       "name" : "ItemSection",
-      "description" : "Item view with ViewModel"
+      "description" : "Item View with ViewModel"
     },
   ],
   "name" : "App",

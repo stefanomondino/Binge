@@ -1,0 +1,18 @@
+{
+  "parameters" : [
+      { "name": "name", "isRequired": true }
+  ],
+  "paths" : [
+    {
+      "from" : "ListViewModel.swift.stencil",
+      "to" : "{{folders.scenes}}/{{name|firstUppercase}}/{{name|firstUppercase}}ViewModel.swift",
+    }
+  ],
+  "replacements" : [
+
+  ],
+  "name" : "ListViewModel",
+  "plugins" : {
+      "xcode": { "targets": ["Binge_iOS"] }
+  }
+}

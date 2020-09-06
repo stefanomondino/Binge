@@ -4,10 +4,6 @@ configs:
   Devel Archive: release
   Prod Run: debug
   Prod Archive: release
-settingGroups:
-  testing:
-    DUMMY_VALUE: ""
-    #TEST_HOST: $(BUILT_PRODUCTS_DIR)/HostingApp.app/HostingApp
 settings:
       configs:
         Devel Run:
@@ -133,11 +129,6 @@ targets:
       gatherCoverageData: true
       testTargets:
       - CoreTests
-#    dependencies:
-#      - package: "RxSwift"
-#      - package: "RxSwift"
-#        product: "RxRelay"
-#      - package: "Boomerang"
   Model:
     type: library.static
     platform: [iOS, tvOS]
@@ -153,19 +144,12 @@ targets:
     platform: iOS
     dependencies:
       - target: "Core_iOS"
-#      - target: "HostingApp"
-    settings:
-      groups:
-      - testing
     sources:
     - "Tests/Shared"
     - "Tests/Core"
   ModelTests:
     type: bundle.unit-test
     platform: iOS
-    settings:
-      groups:
-      - testing
     sources:
     - "Tests/Shared"
     - "Tests/Model"
@@ -187,9 +171,6 @@ targets:
     type: bundle.unit-test
     platform: [iOS, tvOS]
     gatherCoverageData: true
-    settings:
-      groups:
-      - testing
     sources:
     - "Tests/Shared"
     - "Tests/App"
