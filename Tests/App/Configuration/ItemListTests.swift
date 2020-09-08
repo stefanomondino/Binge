@@ -40,32 +40,45 @@ class ItemListTests: QuickSpec {
             }
 
             context("when reloaded") {
-                beforeEach {
-                    container.mockJSONFile("Trending.Shows.Mock", at: .trendingShows(.init(page: 0, limit: 20)))
-                    container.mockJSONFile("Trending.Shows.Mock", at: .trendingShows(.init(page: 1, limit: 20)))
-                    container.mockJSONFile("TMDB.Show.List", at: TMDB.API.show(1))
-                    viewModel.reload()
-                }
+                let first = IndexPath(item: 0, section: 0)
+                let second = IndexPath(item: 1, section: 0)
+                container.mockJSONFile("Trending.Shows.Mock", at: .trendingShows(.init(page: 0, limit: 20)))
+                container.mockJSONFile("Trending.Shows.Mock", at: .trendingShows(.init(page: 1, limit: 20)))
+                container.mockJSONFile("TMDB.Show.List", at: TMDB.API.show(1))
 
-                it("should load a single loader item and then a list of objects") {
-                    expect(viewModel.sectionsRelay.asObservable()).first().to(haveCount(1))
-                    let indexPath = IndexPath(item: 0, section: 0)
+                it("should load a single loader item and then a list of objects. Each object must trigger navigation") {
+                    expect(viewModel.sectionsRelay)
+                        .triggering { viewModel.reload() }
+                        .to(haveCount(1))
 
-                    expect(viewModel[indexPath]).as(LoadMoreItemViewModel.self) { loader in
+                    expect(viewModel[first]).as(LoadMoreItemViewModel.self) { loader in
                         self.executeAndSync {
                             _ = loader.reload()
                         }
                         expect(viewModel.sections.first?.items.count) == 3
-                        expect(viewModel[indexPath])
+                        expect(viewModel[first])
                             .as(GenericItemViewModel.self) { viewModel in
                                 expect(viewModel.title) == "Breaking Bad"
                                 expect(viewModel.subtitle) == "2008"
                                 expect(viewModel.showIdentifier) == .posterOnly
                             }.notTo(throwError())
+                        expect(viewModel[second])
+                            .as(GenericItemViewModel.self) { viewModel in
+                                expect(viewModel.title) == "The Walking Dead"
+                                expect(viewModel.subtitle) == "2010"
+                                expect(viewModel.showIdentifier) == .posterOnly
+                            }.notTo(throwError())
 
-                        expect(viewModel[indexPath])
+                        expect(viewModel[first])
                             .as(ShowDetailViewModel.self)
                             .to(throwError())
+
+                        viewModel.selectItem(at: first)
+                        expect(viewModel.routes)
+                            .triggering { viewModel.selectItem(at: first) }
+                            .as(NavigationRoute.self)
+                            .notTo(throwError())
+
                     }.notTo(throwError())
                 }
             }

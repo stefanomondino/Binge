@@ -1,4 +1,6 @@
 import Nimble
+import RxRelay
+
 enum ExpectationError: Swift.Error {
     case wrongType
 }
@@ -29,4 +31,33 @@ extension Expectation {
             return nil
         }
     }
+
+    func triggering<U>(closure: @escaping () -> Void) -> Expectation<U?> where T: PublishRelay<U> {
+        let publish = (try? expression.evaluate()) ?? PublishRelay<U>()
+        let behavior = BehaviorRelay<U?>(value: nil)
+        let disposable = publish.bind(to: behavior)
+        closure()
+        return expect(behavior.do(onDispose: { disposable.dispose() })).first()
+    }
+
+    func triggering<U>(closure: @escaping () -> Void) -> Expectation<U?> where T: BehaviorRelay<U?> {
+        closure()
+        return expect(try? self.expression.evaluate()).first()
+    }
+
+    func triggering<U>(closure: @escaping () -> Void) -> Expectation<U> where T: BehaviorRelay<U> {
+        closure()
+        return expect(try? self.expression.evaluate()).first()
+    }
 }
+
+// public func expect<T>(_ relay: PublishRelay<T>, _ file: FileString = #file, line: UInt = #line, trigger: @escaping() -> Void) -> Expectation<T> {
+//
+//    let behavior = BehaviorRelay<T?>(value: nil)
+//    _ = relay.bind(to: behavior)
+//    trigger()
+//    return Expectation(expression: <#T##Expression<_>#>)
+//    return Expectation(
+//        expression: Expression(
+//            expression: { behavior.value }))
+// }
