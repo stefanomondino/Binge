@@ -17,7 +17,7 @@
         }
     ],
     "plugins" : {
-        "xcode": { "targets": ["Binge_iOS"] }
+        "xcode": { "targets": ["{{targets.iOS}}"] }
     },
     "parameters" : [
         {"name": "name", "isRequired": true }

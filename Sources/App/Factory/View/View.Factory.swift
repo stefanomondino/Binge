@@ -10,10 +10,7 @@ import Boomerang
 import UIKit
 
 class MainViewFactory: ViewFactory {
-    let styleFactory: StyleFactory
-    init(styleFactory: StyleFactory) {
-        self.styleFactory = styleFactory
-    }
+    init() {}
 
     func view(from itemIdentifier: LayoutIdentifier) -> UIView? {
         switch itemIdentifier {

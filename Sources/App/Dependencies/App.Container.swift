@@ -27,7 +27,7 @@ private class ViewContainerImplementation: ViewContainer, DependencyContainer {
     let container: Container<Keys> = Container()
 
     init(container: RootContainer) {
-        register(for: .views) { MainViewFactory(styleFactory: container.styleFactory) }
+        register(for: .views) { MainViewFactory() }
         register(for: .collectionCells) { MainCollectionViewCellFactory(viewFactory: container.views.views) }
         register(for: .scenes) { DefaultViewControllerFactory(container: container) }
     }

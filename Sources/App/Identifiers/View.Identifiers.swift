@@ -8,7 +8,7 @@
 import Boomerang
 import Foundation
 
-enum ViewIdentifier: String, LayoutIdentifier {
+enum ViewIdentifier: String, LayoutIdentifier, CaseIterable {
     enum Supplementary: String {
         case parallax
 
@@ -35,8 +35,8 @@ enum ViewIdentifier: String, LayoutIdentifier {
         }
     }
 
-    case show
-    case header
+//    case show
+//    case header
     case loadMore
     case stringPicker
     case carousel

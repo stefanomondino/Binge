@@ -9,14 +9,14 @@ import Foundation
 @testable import Model
 
 /// A test container wrapping the default one. Main focus: use mocked datasources and test how UseCases respond.
-class TestContainer: ModelContainer {
+class ModelTestContainer: ModelContainer {
     var handlers: Handlers { container.handlers }
     var useCases: UseCaseContainer { container.useCases }
 
     private struct Environment: Model.Environment {
-        var traktBaseURL: URL = URL(string: "https://google.com")!
+        var traktBaseURL = URL(string: "https://google.com")!
 
-        var traktWebURL: URL = URL(string: "https://google.com")!
+        var traktWebURL = URL(string: "https://google.com")!
 
         var traktRedirectURI: String = ""
 
@@ -26,21 +26,29 @@ class TestContainer: ModelContainer {
 
         var fanartAPIKey: String = ""
 
-        var fanartBaseURL: URL = URL(string: "https://google.com")!
+        var fanartBaseURL = URL(string: "https://google.com")!
 
-        var tmdbBaseURL: URL = URL(string: "https://google.com")!
+        var tmdbBaseURL = URL(string: "https://google.com")!
 
         var tmdbAPIKey: String = ""
     }
 
     let container: ModelDependencyContainer = DefaultModelDependencyContainer(environment: Environment())
-    let dataSource: MockDataSource = MockDataSource()
+    let dataSource = MockDataSource()
 
     init() {
         container.dataSources.register(for: .rest, scope: .eagerSingleton, handler: { self.dataSource })
     }
 
     func mockJSONFile(_ name: String, statusCode: Int = 200, at target: Trakt.API) {
-        dataSource.mockJSONFile(name, bundle: Bundle(for: TestContainer.self), statusCode: statusCode, for: target)
+        dataSource.mockJSONFile(name, bundle: Bundle(for: ModelTestContainer.self), statusCode: statusCode, for: target)
+    }
+
+    func mockJSONFile(_ name: String, statusCode: Int = 200, at target: TMDB.API) {
+        dataSource.mockJSONFile(name, bundle: Bundle(for: ModelTestContainer.self), statusCode: statusCode, for: target)
+    }
+
+    func mockJSONFile(_ name: String, statusCode: Int = 200, at target: FanartAPI) {
+        dataSource.mockJSONFile(name, bundle: Bundle(for: ModelTestContainer.self), statusCode: statusCode, for: target)
     }
 }

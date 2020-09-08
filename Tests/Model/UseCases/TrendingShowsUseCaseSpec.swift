@@ -15,7 +15,7 @@ import RxSwift
 
 class TrendingShowsUseCaseSpec: QuickSpec {
     override func spec() {
-        let container = TestContainer()
+        let container = ModelTestContainer()
 
         describe("The splash use case") {
             var useCase: ItemListUseCase { container.useCases.shows.trending }

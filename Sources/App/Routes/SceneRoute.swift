@@ -15,4 +15,7 @@ import UIKit
 struct EmptyRoute: UIKitRoute {
     var createViewController: () -> UIViewController?
     func execute<T: UIViewController>(from _: T?) {}
+    init(createViewController: @escaping () -> UIViewController? = { nil }) {
+        self.createViewController = createViewController
+    }
 }

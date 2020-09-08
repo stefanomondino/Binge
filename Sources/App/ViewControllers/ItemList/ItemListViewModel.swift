@@ -33,7 +33,7 @@ class ItemListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
 
     var sectionsRelay: BehaviorRelay<[Section]> = BehaviorRelay(value: [])
 
-    var disposeBag: DisposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
 
     var layoutIdentifier: LayoutIdentifier
 
@@ -118,6 +118,7 @@ class ItemListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
                     return useCase
                         .items(currentPage: currentPage + 1, pageSize: 20)
                         .takeLast(1)
+                        .debug("TESTING")
                         .do(onNext: { [weak self] in self?.addItems(from: $0) },
                             onSubscribe: { trigger.accept(true) },
                             onDispose: { trigger.accept(true) })

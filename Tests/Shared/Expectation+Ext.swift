@@ -1,4 +1,7 @@
 import Nimble
+enum ExpectationError: Swift.Error {
+    case wrongType
+}
 
 extension Expectation {
     #if swift(>=4.1)
@@ -15,5 +18,15 @@ extension Expectation {
         #else
             return Expectation<U>(exp)
         #endif
+    }
+
+    func `as`<U>(_: U.Type, closure: @escaping (U) throws -> Void = { _ in }) -> Expectation<Any> {
+        return expect {
+            guard let value = try self.expression.evaluate() as? U else {
+                throw ExpectationError.wrongType
+            }
+            expect { try closure(value) }.notTo(throwError())
+            return nil
+        }
     }
 }

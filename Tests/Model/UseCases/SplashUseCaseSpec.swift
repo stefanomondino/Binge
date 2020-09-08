@@ -15,7 +15,7 @@ import RxSwift
 
 class SplashUseCaseSpec: QuickSpec {
     override func spec() {
-        let container = TestContainer()
+        let container = ModelTestContainer()
 
         describe("The splash use case") {
             var useCase: SplashUseCase { container.useCases.splash }
