@@ -11,7 +11,7 @@
             "destination": "{{files.factory.scenes.protocols}}"
         },
         {
-            "placeholder": "// MURRAY DECLARATION PLACEHOLDER",
+            "placeholder": "// MURRAY IMPLEMENTATION PLACEHOLDER",
             "source": "CollectionSceneViewController.Implementation.replacement.stencil",
             "destination": "{{files.factory.scenes.implementations.iOS}}"
         }
