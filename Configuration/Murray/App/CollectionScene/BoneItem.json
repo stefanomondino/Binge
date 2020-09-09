@@ -1,0 +1,36 @@
+{
+    "replacements" : [
+        {
+            "placeholder": "// MURRAY PLACEHOLDER",
+            "text": "case {{name|firstLowercase}}\n",
+            "destination": "{{files.identifiers.scenes}}"
+        },
+        {
+            "placeholder": "// MURRAY DECLARATION PLACEHOLDER",
+            "text": "func {{name|firstUppercase}}(viewModel: {{name|firstUppercase}}ViewModel) -> UIViewController\n",
+            "destination": "{{files.factory.scenes.protocols}}"
+        },
+        {
+            "placeholder": "// MURRAY DECLARATION PLACEHOLDER",
+            "source": "CollectionSceneViewController.Implementation.replacement.stencil",
+            "destination": "{{files.factory.scenes.implementations.iOS}}"
+        }
+    ],
+    "parameters" : [
+        { "name": "name", "isRequired": true }
+    ],
+    "name" : "CollectionScene",
+    "plugins" : {
+        "xcode": { "targets": [{"{{targets.iOS}}"}] }
+    }
+    "paths" : [
+        {
+            "from" : "CollectionSceneViewController.swift.stencil",
+            "to" : "{{folders.scenesVC}}/{{name|firstUppercase}}ViewController.swift"
+        },
+        {
+            "from" : "CollectionSceneViewController.xib.stencil",
+            "to" : "{{folders.iosXibs}}/Scenes/{{name|firstUppercase}}ViewController.xib"
+        }
+    ]
+}

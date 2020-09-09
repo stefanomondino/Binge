@@ -5,14 +5,23 @@
   "paths" : [
     {
       "from" : "ListViewModel.swift.stencil",
-      "to" : "{{folders.scenes}}/{{name|firstUppercase}}/{{name|firstUppercase}}ViewModel.swift",
+      "to" : "{{folders.scenesVM}}/{{name|firstUppercase}}ViewModel.swift",
     }
   ],
   "replacements" : [
-
+      {
+          "placeholder": "// MURRAY DECLARATION PLACEHOLDER",
+          "text": "func {{name|firstLowercase}}({{name|firstLowercase}}: {{name|firstUppercase}}) -> {{name|firstUppercase}}ViewModel\n",
+          "destination": "{{files.factory.viewModel.scenes}}"
+      },
+      {
+          "placeholder": "// MURRAY IMPLEMENTATION PLACEHOLDER",
+          "source": "ListViewModel.Implementation.replacement.stencil",
+          "destination": "{{files.factory.viewModel.scenes}}"
+      }
   ],
   "name" : "ListViewModel",
   "plugins" : {
-      "xcode": { "targets": ["Binge_iOS"] }
+      "xcode": { "targets": [{"{{targets.iOS}}"}] }
   }
 }

@@ -4,103 +4,62 @@ import Model
 import RxRelay
 import RxSwift
 
-class UserViewModel: RxListViewModel, RxNavigationViewModel {
+class {{name|firstUppercase}}ViewModel: RxListViewModel, RxNavigationViewModel {
     let uniqueIdentifier: UniqueIdentifier = UUID()
     
     let routes: PublishRelay<Route> = PublishRelay()
 
     var disposeBag: DisposeBag = DisposeBag()
     
-    var layoutIdentifier: LayoutIdentifier = SceneIdentifier.user
-    var isLoginHidden: Observable<Bool> {
-        useCase.isLogged()
-    }
-
+    let layoutIdentifier: LayoutIdentifier
+    
     let itemViewModelFactory: ItemViewModelFactory
-    var isLoading: Observable<Bool> {
-        loadingRelay.isLoading
-    }
+    
+    let sectionsRelay = BehaviorRelay(value: [])
+    
+    var isLoading: Observable<Bool> { loadingRelay.isLoading }
 
-    let loadingRelay = BehaviorRelay<Int>(value: 0)
-    private let useCase: ProfileUseCase
-    let routeFactory: RouteFactory
-    let sectionsRelay: BehaviorRelay<[Section]> = BehaviorRelay(value: [])
+    private let useCase: {{name|firstUppercase}}UseCase
+    private let routeFactory: RouteFactory
+    private var reloadDisposeBag = DisposeBag()
+    private let loadingRelay = BehaviorRelay<Int>(value: 0)
+    
     init(itemViewModelFactory: ItemViewModelFactory,
-         useCase: ProfileUseCase,
+         useCase: {{name|firstUppercase}}UseCase,
          routeFactory: RouteFactory) {
         self.useCase = useCase
         self.routeFactory = routeFactory
         self.itemViewModelFactory = itemViewModelFactory
     }
-
-    func openLogin() {
-        disposeBag = DisposeBag()
-        let routeFactory = self.routeFactory
-        if let url = useCase.webViewURL() {
-            useCase.login()
-                .map { routeFactory.restart() }
-                .startWith(routeFactory.url(for: url))
-                .bind(to: routes)
-                .disposed(by: disposeBag)
-        }
-    }
-
-    func openSettings() {
-        let route = routeFactory.settings()
-        routes.accept(route)
-    }
-
-    private var reloadDisposeBag = DisposeBag()
-
+    
     func reload() {
+        //always cleanup proper dispose bag
         reloadDisposeBag = DisposeBag()
-
         let useCase = self.useCase
         let loadingCount = loadingRelay
         useCase
-            .isLogged()
-            .flatMapLatest { isLogged -> Observable<[Section]> in
-                if !isLogged { return .just([]) }
-                return useCase.user()
-                    .flatMapLatest { user in
-                        useCase
-                            .genresStats()
-                            .map { [weak self] genres in
-                                self?.mapSections(from: user, genres: genres) ?? []
-                            }
-                    }
-
-                    .bindingLoadingStatus(to: loadingCount)
-            }
+            .{{name|firstLowercase}}() //change if needed
+            .map { [weak self] in self?.mapSections(from: $0) ?? []}
+            .bindingLoadingStatus(to: loadingCount)
             .catchErrorJustReturn([])
             .bind(to: sectionsRelay)
             .disposed(by: reloadDisposeBag)
     }
 
-    private func mapSections(from settings: User.Settings, genres: [Trakt.UserGenresStats]) -> [Section] {
-        let items = itemViewModelFactory
-        let disposeBag = self.disposeBag
-        let user = settings.user
-
-        let useCase = self.useCase
-        let elements =
-            [
-                items.profileHeader(profile: user),
-                items.titledDescription(title: "Name", description: user.name),
-                items.titledDescription(title: "Location", description: user.location),
-                items.button(with: ButtonContents(title: "Logout", action: {
-                    useCase.logout().subscribe().disposed(by: disposeBag)
-                }))
-            ]
-            .compactMap { $0 }
-        var section = Section(items: elements)
-        let coverImage: WithImage = settings.coverURL ?? Asset.heart.image
-        let cover = items.image(coverImage, ratio: 16 / 9)
-        section.supplementary.set(cover, withKind: ViewIdentifier.Supplementary.parallax.identifierString, atIndex: 0)
-        return [section,
-                Section(items: [items.userShowsHistoryCarousel(onSelection: { print($0) })]),
-                Section(items: [items.genresStats(genresStats: genres)])]
+    private func mapSections(from items: [{{name|firstUppercase}}]) -> [Section] {
+        //map items to item view models using item view model factory
+        //example:
+        //
+        //let first = Section(items: items.map { self.itemViewModelFactory.{{name|firstLowercase}}($0)})
+        //return [first]
+        
+        return []
     }
 
-    func selectItem(at _: IndexPath) {}
+    func selectItem(at _: IndexPath) {
+        // change according to your needs
+        guard let item = (self[indexPath] as? {{name|firstUppercase}}ItemViewModel)?.item as? {{name|firstUppercase}} else { return }
+        let route = routeFactory.{{name|firstUppercase}}Detail(for: item)
+        routes.accept(route)
+    }
 }

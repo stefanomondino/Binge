@@ -1,29 +1,48 @@
 {
+  "description" : "Created from scaffold",
+  "name" : "App",
   "procedures" : [
     {
       "items" : [
-          "ItemViewModel/BoneItem.json",
-          "ItemView/BoneItem.json"
+        "ItemViewModel\/BoneItem.json",
+        "ItemView\/BoneItem.json"
       ],
-      "name" : "ItemViewModel",
-      "description" : "Item view model"
-    },
-    {
-        "items" : [
-            "ItemView/BoneItem.json"
-        ],
-        "name" : "ItemView",
-        "description" : "Item View with viewModel"
+      "description" : "Item view model",
+      "plugins" : {
+
       },
-    {
-      "items" : [
-          "ItemViewModel/BoneItem.json",
-          "ItemView/BoneItem.json"
-      ],
-      "name" : "ItemSection",
-      "description" : "Item View with ViewModel"
+      "name" : "ItemViewModel"
     },
-  ],
-  "name" : "App",
-  "description" : "Created from scaffold"
+    {
+      "plugins" : {
+
+      },
+      "items" : [
+        "ItemView\/BoneItem.json"
+      ],
+      "description" : "Item View with viewModel",
+      "name" : "ItemView"
+    },
+    {
+      "description" : "Item View with ViewModel",
+      "name" : "ItemSection",
+      "items" : [
+        "ItemViewModel\/BoneItem.json",
+        "ItemView\/BoneItem.json"
+      ],
+      "plugins" : {
+
+      }
+    },
+    {
+      "name" : "CollectionScene",
+      "plugins" : {
+          "shell": { "afterProcedure": ["make project"]}
+      },
+      "description" : "Created from scaffold",
+      "items" : [
+        "CollectionScene\/BoneItem.json"
+      ]
+    }
+  ]
 }

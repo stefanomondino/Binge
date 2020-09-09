@@ -1,0 +1,5 @@
+func {{name|firstLowercase}}(viewModel: {{name|firstUppercase}}ViewModel) -> UIViewController {
+        {{name|firstUppercase}}ViewController(nibName: name(from: viewModel.layoutIdentifier),
+                              viewModel: viewModel,
+                              collectionViewCellFactory: container.views.collectionCells)
+   }

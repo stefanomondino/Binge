@@ -3,7 +3,9 @@
       "folders": {
           "iosXibs": "Sources/App/Xibs/iOS",
           "views": "Sources/App/Views",
-          "scenes": "Sources/App/ViewControllers"
+          "scenes": "Sources/App/ViewControllers",
+          "scenesVC": "{{folders.scenes}}/{{name|firstUppercase}}",
+          "scenesVM": "{{folders.scenes}}/{{name|firstUppercase}}"
       },
       "files": {
           "factory": {
@@ -12,8 +14,12 @@
                   "pickers": "Sources/App/Factory/ViewModel/Picker.ViewModel.Factory.swift",
                   "scenes": "Sources/App/Factory/ViewModel/Scene.ViewModel.Factory.swift"
               },
-              "view": {
-                  
+              "scenes": {
+                  "protocols": "Sources/App/Factory/View/Scene.View.Factory.swift",
+                  "implementations": {
+                      "iOS": "Sources/App/Factory/View/iOS/Scene.View.Factory.Implementation.swift",
+                      "tvOS": "Sources/App/Factory/View/tvOS/Scene.View.Factory.Implementation.swift"
+                  }
               }
           },
           "identifiers": {

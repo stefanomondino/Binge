@@ -48,11 +48,7 @@ class ItemListViewModel: RxListViewModel, RxNavigationViewModel, WithPage {
 
     private let loadingRelay = BehaviorRelay(value: false)
     var isLoading: Observable<Bool> { loadingRelay.asObservable() }
-//    init(itemViewModelFactory: ItemViewModelFactory,
-//         downloadClosure: @escaping ShowListDownloadClosure) {
-//        self.downloadClosure = downloadClosure
-//        self.itemViewModelFactory = itemViewModelFactory
-//    }
+
     private let useCase: ItemListUseCase
 
     let routeFactory: RouteFactory

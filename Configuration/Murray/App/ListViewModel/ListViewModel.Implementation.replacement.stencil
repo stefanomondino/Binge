@@ -1,0 +1,5 @@
+func {{name|firstLowercase}}({{name|firstLowercase}}: {{name|firstUppercase}}) -> {{name|firstUppercase}}ViewModel {
+    {{name|firstUppercase}}ViewModel(itemViewModelFactory: container.viewModels.items,
+                      useCase: container.model.useCases.{{name|firstLowercase}},
+                      routeFactory: container.routeFactory)
+}
