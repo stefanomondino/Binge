@@ -5,7 +5,7 @@
   "paths" : [
     {
       "from" : "ListViewModel.swift.stencil",
-      "to" : "{{folders.scenesVM}}/{{name|firstUppercase}}ViewModel.swift",
+      "to" : "{{folders.scenesVM}}/{{name|firstUppercase}}ViewModel.swift"
     }
   ],
   "replacements" : [
