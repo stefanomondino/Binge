@@ -43,6 +43,27 @@
       "items" : [
         "CollectionScene\/BoneItem.json"
       ]
+    },
+    {
+      "name" : "ListViewModel",
+      "plugins" : {
+          "shell": { "afterProcedure": ["make project"]}
+      },
+      "description" : "Created from scaffold",
+      "items" : [
+        "ListViewModel\/BoneItem.json"
+      ]
+    },
+    {
+      "name" : "CollectionSection",
+      "plugins" : {
+          "shell": { "afterProcedure": ["make project"]}
+      },
+      "description" : "Created from scaffold",
+      "items" : [
+        "ListViewModel\/BoneItem.json",
+        "CollectionScene\/BoneItem.json"
+      ]
     }
   ]
 }
