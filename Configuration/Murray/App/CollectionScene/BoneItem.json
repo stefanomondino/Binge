@@ -7,7 +7,7 @@
         },
         {
             "placeholder": "// MURRAY DECLARATION PLACEHOLDER",
-            "text": "func {{name|firstUppercase}}(viewModel: {{name|firstUppercase}}ViewModel) -> UIViewController\n",
+            "text": "func {{name|firstLowercase}}(viewModel: {{name|firstUppercase}}ViewModel) -> UIViewController\n",
             "destination": "{{files.factory.scenes.protocols}}"
         },
         {
@@ -21,8 +21,8 @@
     ],
     "name" : "CollectionScene",
     "plugins" : {
-        "xcode": { "targets": [{"{{targets.iOS}}"}] }
-    }
+        "xcode": { "targets": ["{{targets.iOS}}"] }
+    },
     "paths" : [
         {
             "from" : "CollectionSceneViewController.swift.stencil",

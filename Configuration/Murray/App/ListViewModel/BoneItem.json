@@ -22,6 +22,6 @@
   ],
   "name" : "ListViewModel",
   "plugins" : {
-      "xcode": { "targets": [{"{{targets.iOS}}"}] }
+      "xcode": { "targets": ["{{targets.iOS}}"] }
   }
 }
