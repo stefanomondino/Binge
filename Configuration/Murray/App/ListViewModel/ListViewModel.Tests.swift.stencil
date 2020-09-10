@@ -1,0 +1,71 @@
+//
+//  ScenesTests.swift
+//  AppTests
+//
+//  Created by Stefano Mondino on 08/02/2019.
+//  Copyright © 2019 Synesthesia. All rights reserved.
+//
+
+@testable import {{targets.iOS}}
+import Boomerang
+@testable import Model
+import Nimble
+import Quick
+import RxBlocking
+import RxSwift
+
+class {{name|firstUppercase}}SceneViewModelTests: QuickSpec {
+    
+    override func spec() {
+        let container = TestContainer()
+
+        describe("A {{name}} view model") {
+            var viewModel = {{name|firstUppercase}}ViewModel(itemViewModelFactory: container.viewModels.items,
+                                              useCase: container.model.useCases.{{name|firstLowercase}},
+                                              routeFactory: container.routeFactory)
+            beforeEach {
+                viewModel = {{name|firstUppercase}}ViewModel(itemViewModelFactory: container.viewModels.items,
+                useCase: container.model.useCases.{{name|firstLowercase}},
+                routeFactory: container.routeFactory)
+            }
+
+            context("when reloaded") {
+                let first = IndexPath(item: 0, section: 0)
+                let second = IndexPath(item: 1, section: 0)
+                
+                //Mock here some API data or some use case
+//                container.mockJSONFile("Trending.Shows.Mock", at: .trendingShows(.init(page: 0, limit: 20)))
+
+                it("should properly load items") {
+                    expect(viewModel.sectionsRelay)
+                        .triggering { viewModel.reload() }
+                        .to(haveCount(1))
+//EXAMPLE, safely delete or copy paste parts if needed
+
+//                    expect(viewModel[first]).as(LoadMoreItemViewModel.self) { loader in
+//                        self.executeAndSync {
+//                            _ = loader.reload()
+//                        }
+//                        expect(viewModel.sections.first?.items.count) == 3
+//                        expect(viewModel[first])
+//                            .as(GenericItemViewModel.self) { viewModel in
+//                                expect(viewModel.title) == "Breaking Bad"
+//                                expect(viewModel.subtitle) == "2008"
+//                                expect(viewModel.showIdentifier) == .posterOnly
+//                            }.notTo(throwError())
+//                        expect(viewModel[first])
+//                            .as(ShowDetailViewModel.self)
+//                            .to(throwError())
+//
+//                        viewModel.selectItem(at: first)
+//                        expect(viewModel.routes)
+//                            .triggering { viewModel.selectItem(at: first) }
+//                            .as(NavigationRoute.self)
+//                            .notTo(throwError())
+//
+//                    }.notTo(throwError())
+                }
+            }
+        }
+    }
+}

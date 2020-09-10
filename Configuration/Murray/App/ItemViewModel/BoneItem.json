@@ -21,7 +21,7 @@
       }
   ],
   "plugins" : {
-      "xcode": { "targets": ["Binge_iOS", "Binge_tvOS"] }
+      "xcode": { "targets": ["{{targets.iOS}}"] }
   },
   "name" : "itemViewModel"
 }

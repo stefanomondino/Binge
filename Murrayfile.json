@@ -1,11 +1,15 @@
 {
   "environment" : {
       "folders": {
+          "test": {
+              "sceneViewModels": "Tests/App/ViewModels/Scenes",
+              "itemViewModels": "Tests/App/ViewModels/Items",
+          },
           "iosXibs": "Sources/App/Xibs/iOS",
           "views": "Sources/App/Views",
           "scenes": "Sources/App/ViewControllers",
           "scenesVC": "{{folders.scenes}}/{{name|firstUppercase}}",
-          "scenesVM": "{{folders.scenes}}/{{name|firstUppercase}}"
+          "scenesVM": "{{folders.scenes}}/{{name|firstUppercase}}",
       },
       "files": {
           "factory": {
@@ -31,6 +35,7 @@
       },
       "targets": {
           "iOS": "Binge_iOS",
+          "iOSTests": "BingeTests_iOS",
           "tvOS": "Binge_tvOS"
       }
   },

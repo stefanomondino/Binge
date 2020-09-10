@@ -47,7 +47,7 @@
     {
       "name" : "ListViewModel",
       "plugins" : {
-          "shell": { "afterProcedure": ["make project"]}
+          "shell": { "after": ["make project"]}
       },
       "description" : "Created from scaffold",
       "items" : [
@@ -57,7 +57,7 @@
     {
       "name" : "CollectionSection",
       "plugins" : {
-          "shell": { "afterProcedure": ["make project"]}
+          "shell": { "after": ["make project"]}
       },
       "description" : "Created from scaffold",
       "items" : [

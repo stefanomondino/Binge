@@ -5,7 +5,17 @@
   "paths" : [
     {
       "from" : "ListViewModel.swift.stencil",
-      "to" : "{{folders.scenesVM}}/{{name|firstUppercase}}ViewModel.swift"
+      "to" : "{{folders.scenesVM}}/{{name|firstUppercase}}ViewModel.swift",
+      "plugins" : {
+          "xcode": { "targets": ["{{targets.iOS}}"] }
+      }
+    },
+    {
+      "from" : "ListViewModel.Tests.swift.stencil",
+      "to" : "{{folders.test.sceneViewModels}}/{{name|firstUppercase}}SceneViewModelSpec.swift",
+      "plugins" : {
+          "xcode": { "targets": ["{{targets.iOSTests}}"] }
+      }
     }
   ],
   "replacements" : [
@@ -21,7 +31,4 @@
       }
   ],
   "name" : "ListViewModel",
-  "plugins" : {
-      "xcode": { "targets": ["{{targets.iOS}}"] }
-  }
 }
